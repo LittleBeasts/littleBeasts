@@ -1,35 +1,238 @@
-Okt. 20, 2020 2:48:32 PM de.gurkenlabs.litiengine.DefaultUncaughtExceptionHandler uncaughtException
-SEVERE: Game crashed! :(
-java.lang.NullPointerException: Cannot invoke "java.awt.Graphics2D.getRenderingHint(java.awt.RenderingHints$Key)" because "g" is null
-	at de.gurkenlabs.litiengine.graphics.RenderEngine.renderShape(RenderEngine.java:257)
-	at de.gurkenlabs.litiengine.graphics.RenderEngine.renderShape(RenderEngine.java:236)
-	at de.gurkenlabs.litiengine.graphics.RenderEngine.renderShape(RenderEngine.java:222)
-	at com.littleBeasts.ChatBox.<init>(ChatBox.java:12)
-	at com.littleBeasts.Program.main(Program.java:10)
-
-Okt. 20, 2020 3:05:14 PM de.gurkenlabs.litiengine.DefaultUncaughtExceptionHandler uncaughtException
-SEVERE: Game crashed! :(
-de.gurkenlabs.litiengine.resources.ResourceLoadException: javax.imageio.IIOException: Can't get input stream from URL!
-	at de.gurkenlabs.litiengine.resources.ResourcesContainer.loadResource(ResourcesContainer.java:391)
-	at java.base/java.util.concurrent.ConcurrentHashMap.computeIfAbsent(ConcurrentHashMap.java:1708)
-	at de.gurkenlabs.litiengine.resources.ResourcesContainer.get(ResourcesContainer.java:273)
-	at de.gurkenlabs.litiengine.resources.ResourcesContainer.get(ResourcesContainer.java:207)
-	at com.littleBeasts.ChatBox.<init>(ChatBox.java:22)
-	at com.littleBeasts.Program.main(Program.java:10)
-Caused by: javax.imageio.IIOException: Can't get input stream from URL!
-	at java.desktop/javax.imageio.ImageIO.read(ImageIO.java:1407)
-	at de.gurkenlabs.litiengine.resources.Images.load(Images.java:49)
-	at de.gurkenlabs.litiengine.resources.Images.load(Images.java:12)
-	at de.gurkenlabs.litiengine.resources.ResourcesContainer.loadResource(ResourcesContainer.java:389)
-	... 5 more
-Caused by: java.io.FileNotFoundException: C:\Users\Daniel\SEProject\littleBeasts\heart.png (Das System kann die angegebene Datei nicht finden)
-	at java.base/java.io.FileInputStream.open0(Native Method)
-	at java.base/java.io.FileInputStream.open(FileInputStream.java:211)
-	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:153)
-	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:108)
-	at java.base/sun.net.www.protocol.file.FileURLConnection.connect(FileURLConnection.java:86)
-	at java.base/sun.net.www.protocol.file.FileURLConnection.getInputStream(FileURLConnection.java:189)
-	at java.base/java.net.URL.openStream(URL.java:1167)
-	at java.desktop/javax.imageio.ImageIO.read(ImageIO.java:1405)
-	... 8 more
-
+Okt. 25, 2020 11:18:22 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 25, 2020 11:18:22 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 25, 2020 11:19:24 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 25, 2020 11:19:24 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 25, 2020 11:19:56 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 25, 2020 11:19:56 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 25, 2020 11:21:26 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 25, 2020 11:21:26 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 25, 2020 11:21:59 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 25, 2020 11:21:59 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 25, 2020 11:23:17 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 25, 2020 11:23:17 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 25, 2020 11:25:10 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 25, 2020 11:25:10 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 25, 2020 11:25:21 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 25, 2020 11:25:21 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 25, 2020 11:26:17 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 25, 2020 11:26:17 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 25, 2020 11:27:20 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 25, 2020 11:27:20 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:41:38 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:41:38 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:48:50 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:48:50 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:49:37 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:49:37 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:50:33 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:50:33 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:50:51 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:50:51 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:51:01 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:51:01 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:51:16 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:51:16 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:51:28 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:51:28 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:51:38 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:51:38 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:51:58 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:51:58 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:52:16 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:52:16 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:52:33 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:52:33 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:52:54 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:52:54 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:54:42 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:54:42 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:54:57 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:54:57 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:55:29 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:55:29 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:55:59 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:56:00 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:56:11 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:56:11 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:56:23 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:56:23 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:56:38 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 9:56:38 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 1:27:15 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 1:27:15 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 1:28:56 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 1:28:56 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 1:30:37 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 1:30:37 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 1:39:08 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 1:39:08 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 10:17:15 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Arkham" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 10:17:15 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 10:17:15 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 10:17:39 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Arkham" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 10:17:39 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 10:17:39 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 10:18:42 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Arkham" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 10:18:42 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 10:18:42 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 10:19:39 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Arkham" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 10:19:39 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 10:19:39 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 10:20:10 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Arkham" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 10:20:10 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 26, 2020 10:20:10 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:05:25 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Arkham" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:05:25 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:05:25 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:10:04 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Arkham" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:10:04 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:10:04 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:13:53 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Arkham" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:13:53 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:13:53 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:25:06 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Arkham" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:25:06 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:25:06 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:26:21 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Arkham" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:26:21 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:26:21 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:26:37 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Arkham" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:26:37 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:26:37 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:27:18 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Arkham" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:27:18 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:27:18 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:27:31 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Arkham" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:27:31 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:27:31 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:27:54 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Arkham" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:27:54 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:27:54 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:28:22 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Arkham" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:28:22 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:28:22 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:28:47 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Arkham" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:28:47 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:28:47 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:29:03 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Arkham" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:29:03 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Gurknukem" is greater than the supported version 1.2.x. Some features may not work.
+Okt. 27, 2020 12:29:03 AM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.4.2 of map "Level1" is greater than the supported version 1.2.x. Some features may not work.
