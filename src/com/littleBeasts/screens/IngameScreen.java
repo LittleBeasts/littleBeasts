@@ -2,19 +2,16 @@ package com.littleBeasts.screens;
 
 import com.littleBeasts.GameLogic;
 import com.littleBeasts.GameState;
-import com.littleBeasts.Player;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
-import de.gurkenlabs.litiengine.graphics.ImageRenderer;
-import de.gurkenlabs.litiengine.gui.screens.GameScreen;
 import de.gurkenlabs.litiengine.gui.screens.Screen;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 
 public class IngameScreen extends Screen implements IUpdateable {
     public static final String NAME = "INGAME-SCREEN";
     public static KeyboardMenu ingameMenu;
+    private Hud hud;
 
     public IngameScreen() {
         super(NAME);
@@ -36,6 +33,7 @@ public class IngameScreen extends Screen implements IUpdateable {
 
 
     protected void initializeComponents() {
+        this.hud = new Hud();
 
         final double centerX = Game.window().getResolution().getWidth() / 2.0;
         final double centerY = Game.window().getResolution().getHeight() * 1 / 2;
@@ -54,6 +52,7 @@ public class IngameScreen extends Screen implements IUpdateable {
                     break;
             }
         });
+        this.getComponents().add(this.hud);
         this.getComponents().add(ingameMenu);
     }
 

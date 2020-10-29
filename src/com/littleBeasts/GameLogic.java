@@ -1,14 +1,11 @@
 package com.littleBeasts;
 
+import com.littleBeasts.entities.Player;
 import com.littleBeasts.screens.IngameScreen;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.entities.Spawnpoint;
-import de.gurkenlabs.litiengine.environment.CreatureMapObjectLoader;
-import de.gurkenlabs.litiengine.environment.CustomMapObjectLoader;
-import de.gurkenlabs.litiengine.environment.Environment;
 import de.gurkenlabs.litiengine.graphics.Camera;
 import de.gurkenlabs.litiengine.graphics.PositionLockCamera;
-import de.gurkenlabs.litiengine.resources.Resources;
 
 import java.awt.*;
 
