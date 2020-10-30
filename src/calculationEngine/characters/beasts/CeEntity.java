@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Beast {
+public class CeEntity {
 // |--------------------------------------------------------------------------|
 // |    This class is the parent class for every littleBeast.                 |
 // |    Every Beast will inherit the props and funcs of this class and        |
@@ -14,7 +14,7 @@ public class Beast {
     // properties
     private BeastTypes type;
     private Nature nature;
-    private Beast development;
+    private CeEntity development;
     private Attack[] attacks;
 
     // stats
@@ -26,7 +26,7 @@ public class Beast {
     private int attack;
     private int defense;
 
-    public Beast(BeastTypes type, Nature nature, Attack[] attacks, int hitPoints, int level, int friendshipPoints, int speed, int stamina, int attack, int defense) {
+    public CeEntity(BeastTypes type, Nature nature, Attack[] attacks, int hitPoints, int level, int friendshipPoints, int speed, int stamina, int attack, int defense) {
         this.type = type;
         this.nature = nature;
         this.attacks = attacks;
@@ -39,7 +39,7 @@ public class Beast {
         this.defense = defense;
     }
 
-    public Beast(BeastTypes type, int speed, int stamina, int attack, int defense) {
+    public CeEntity(BeastTypes type, int speed, int stamina, int attack, int defense) {
         Random random = new Random();
 
         this.hitPoints = calcHP();
@@ -50,18 +50,22 @@ public class Beast {
         this.type = type;
         this.level = 1; // TODO: Change to calc level based on Player Level / Story Progress
         this.speed = speed;
-        this.attack = attack;
+        this.attack = attack + rollSalt();
         this.stamina = stamina;
-        this.defense = defense;
+        this.defense = defense + rollSalt();
         this.attacks = pickAttacks();
     }
 
-    private Attack[] pickAttacks() {
+    private int rollSalt() {
+        return 0;
+    }
+
+    private Attack[] pickAttacks() { // TODO: Attacks need to be deleted to avoid double use
         Random random = new Random();
         Attack[] pickedAttacks = new Attack[4];
         List<Attacks> typedAttacks = new ArrayList<>();
-        for (Attacks attack: Attacks.values()) {
-            if(attack.getType() == type){
+        for (Attacks attack : Attacks.values()) {
+            if (attack.getType() == type) {
                 typedAttacks.add(attack);
             }
         }
@@ -85,7 +89,7 @@ public class Beast {
         return nature;
     }
 
-    public Beast getDevelopment() {
+    public CeEntity getDevelopment() {
         return development;
     }
 
@@ -125,7 +129,7 @@ public class Beast {
         this.type = type;
     }
 
-    public void setDevelopment(Beast development) {
+    public void setDevelopment(CeEntity development) {
         this.development = development;
     }
 
