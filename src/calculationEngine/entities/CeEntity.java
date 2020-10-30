@@ -16,9 +16,11 @@ public class CeEntity {
     // properties
     private BeastTypes type;
     private Nature nature;
+    private Attack[] attacks;
+
+    // development logic isn't implemented yet -> has to be decided if we want to use this.
     private Beasts development; // Development beast
     private int developmentLvl; // level at which development will take place
-    private Attack[] attacks;
 
     // stats
     private int hitPoints;
