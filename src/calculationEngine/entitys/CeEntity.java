@@ -1,5 +1,7 @@
 package calculationEngine.entitys;
 
+import config.EntityConstants;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -15,6 +17,7 @@ public class CeEntity {
     private BeastTypes type;
     private Nature nature;
     private CeEntity development;
+    private int developmentLvl;
     private Attack[] attacks;
 
     // stats
@@ -26,7 +29,7 @@ public class CeEntity {
     private int attack;
     private int defense;
 
-    public CeEntity(BeastTypes type, Nature nature, Attack[] attacks, int hitPoints, int level, int friendshipPoints, int speed, int stamina, int attack, int defense) {
+    public CeEntity(BeastTypes type, Nature nature, Attack[] attacks, int hitPoints, int level, int friendshipPoints, int speed, int stamina, int attack, int defense, int developmentLvl) {
         this.type = type;
         this.nature = nature;
         this.attacks = attacks;
@@ -37,30 +40,52 @@ public class CeEntity {
         this.stamina = stamina;
         this.attack = attack;
         this.defense = defense;
+        this.developmentLvl = developmentLvl;
     }
 
-    public CeEntity(BeastTypes type, int speed, int stamina, int attack, int defense) {
+    public CeEntity(Regions region, CeEntity player) { // Constructor for new Encounter Beast
         Random random = new Random();
+        Beasts beast = pickBeast(region);
 
-        this.hitPoints = calcHP();
+        // calculate Level
+        int tmpLvl = calcLvl(player);
+        boolean lvlInRange = EntityConstants.MAX_LVL >= tmpLvl && EntityConstants.START_LVL <= tmpLvl;
+        this.level = lvlInRange ? tmpLvl : (tmpLvl <= EntityConstants.MAX_LVL ? EntityConstants.START_LVL : EntityConstants.MAX_LVL); // Sets Level to constant if level isn't in specified range
 
         Nature[] natures = Nature.values();
         this.nature = natures[random.nextInt(natures.length)];
 
-        this.type = type;
-        this.level = 1; // TODO: Change to calc level based on Player Level / Story Progress
-        this.speed = speed;
-        this.attack = attack + rollSalt();
-        this.stamina = stamina;
-        this.defense = defense + rollSalt();
+        this.developmentLvl = beast.getDevelopmentlvl();
+        this.hitPoints = scaleOnLvl(beast.getBaseHp(), beast.getHpLvlScaling());
+        this.type = beast.getType();
+        this.speed = scaleOnLvl(beast.getBaseSpeed(), beast.getSpeedLvlScaling());
+        this.attack = scaleOnLvl(beast.getBaseAttack(), beast.getAttackLvlScaling()) + (random.nextInt(EntityConstants.ATTACK_RANGE * 2) - EntityConstants.ATTACK_RANGE);
+        this.stamina = scaleOnLvl(beast.getBaseAttack(), beast.getStaminaLvlScaling());
+        this.defense = scaleOnLvl(beast.getBaseDefense(), beast.getDefenseLvlScaling()) +(random.nextInt(EntityConstants.DEFENSE_RANGE * 2) - EntityConstants.DEFENSE_RANGE);
         this.attacks = pickAttacks();
     }
 
-    private int rollSalt() {
-        return 0;
+    private int scaleOnLvl(int base, int lvlScaling){
+        return base + this.getLevel() * lvlScaling;
     }
 
-    private Attack[] pickAttacks() { // TODO: Attacks need to be deleted to avoid double use
+    private int calcLvl(CeEntity player) {
+        Random random = new Random();
+        return player.getLevel() + (random.nextInt(EntityConstants.LVL_RANGE * 2) - EntityConstants.LVL_RANGE);
+
+    }
+
+    private Beasts pickBeast(Regions region) {
+        Beasts[] allBeasts = Beasts.values();
+        List<Beasts> availableBeasts = new ArrayList<>();
+        Random random = new Random();
+        for (Beasts beast: allBeasts) {
+            if (beast.getRegion() == region) availableBeasts.add(beast);
+        }
+        return availableBeasts.get(random.nextInt(availableBeasts.size()));
+    }
+
+    private Attack[] pickAttacks() {
         Random random = new Random();
         Attack[] pickedAttacks = new Attack[4];
         List<Attacks> typedAttacks = new ArrayList<>();
@@ -70,15 +95,16 @@ public class CeEntity {
             }
         }
         for (int i = 0; i < pickedAttacks.length; i++) {
-            pickedAttacks[i] = new Attack(typedAttacks.get(random.nextInt(typedAttacks.size())));
+            int index = random.nextInt(typedAttacks.size());
+            pickedAttacks[i] = new Attack(typedAttacks.get(index));
+            typedAttacks.remove(index);
         }
 
         return pickedAttacks;
     }
 
-    private int calcHP() {
-        // TODO: Calc HP based on lvl
-        return 100;
+    public int getDevelopmentLvl() {
+        return developmentLvl;
     }
 
     public BeastTypes getType() {
