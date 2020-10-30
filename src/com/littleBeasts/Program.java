@@ -1,10 +1,12 @@
 package com.littleBeasts;
 
+import calculationEngine.Loot;
 import com.littleBeasts.screens.MenuScreen;
 import com.littleBeasts.screens.IngameScreen;
 
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.resources.Resources;
+import org.json.JSONObject;
 
 public class Program {
 
@@ -39,10 +41,11 @@ public class Program {
         // enter main menu
         GameLogic.setState(GameState.MENU);
         Game.screens().display("MAINMENU");
-       // GameLogic.setState(GameState.INGAME);
-       // Game.screens().display("INGAME-SCREEN");
-       // Game.world().loadEnvironment("Arkham");
-
+        // GameLogic.setState(GameState.INGAME);
+        // Game.screens().display("INGAME-SCREEN");
+        // Game.world().loadEnvironment("Arkham");
+        JSONObject jsonObject = Loot.getLootBySource("monster");
+        System.out.println(jsonObject);
         Game.start();
     }
 }

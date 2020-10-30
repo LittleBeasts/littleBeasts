@@ -1,0 +1,62 @@
+{
+  "itemTable": {
+    "common": {
+      "items": [
+        {
+          "id": "#2",
+          "name": "A healing potion",
+          "description": "Heals a portion of your life",
+          "dependencies": [
+            "boolean Array which determines if the conditions for finding the item are fulfilled"
+          ],
+          "probability": "80",
+          "effects": "Heals 10HP",
+          "usage": "consumable"
+        }
+      ]
+    },
+    "rare": {
+      "items": [
+        {
+          "id": "#3",
+          "name": "The Stick of Beating",
+          "description": "It's a stick, you can hit someone with it. Don't.",
+          "dependencies": [
+            "boolean Array which determines if the conditions for finding the item are fulfilled"
+          ],
+          "probability": "70",
+          "effects": "It hurts.",
+          "usage": "consumable"
+        }
+      ]
+    },
+    "legendary": {
+      "items": [
+        {
+          "id": "#1",
+          "name": "The Hammer of Zordon",
+          "description": "It's Zordons Hammer, what do you think it will do?",
+          "dependencies": [
+            "boolean Array which determines if the conditions for finding the item are fulfilled"
+          ],
+          "probability": "10",
+          "effects": "Hammers like crazy",
+          "usage": "item"
+        }
+      ]
+    }
+  },
+  "containerTable": {
+    "monster": {
+      "numberOfItems": "3",
+      "minAmountOfItems": "1",
+      "probabilities": [
+        "50",
+        "45",
+        "5"
+      ],
+      "item": "",
+      "rarity": ""
+    }
+  }
+}
