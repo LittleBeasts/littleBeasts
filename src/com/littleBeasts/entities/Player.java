@@ -32,6 +32,7 @@ public class Player extends Creature implements IUpdateable {
 
     @Override
     public void update() {
+
     }
 
     // @Override
