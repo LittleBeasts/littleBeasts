@@ -16,8 +16,8 @@ public class CeEntity {
     // properties
     private BeastTypes type;
     private Nature nature;
-    private CeEntity development;
-    private int developmentLvl;
+    private Beasts development; // Development beast
+    private int developmentLvl; // level at which development will take place
     private Attack[] attacks;
 
     // stats
@@ -96,8 +96,7 @@ public class CeEntity {
         }
         for (int i = 0; i < pickedAttacks.length; i++) {
             int index = random.nextInt(typedAttacks.size());
-            pickedAttacks[i] = new Attack(typedAttacks.get(index));
-            typedAttacks.remove(index);
+            pickedAttacks[i] = new Attack(typedAttacks.remove(index));
         }
 
         return pickedAttacks;
@@ -115,7 +114,7 @@ public class CeEntity {
         return nature;
     }
 
-    public CeEntity getDevelopment() {
+    public Beasts getDevelopment() {
         return development;
     }
 
@@ -155,7 +154,7 @@ public class CeEntity {
         this.type = type;
     }
 
-    public void setDevelopment(CeEntity development) {
+    public void setDevelopment(Beasts development) {
         this.development = development;
     }
 

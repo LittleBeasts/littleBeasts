@@ -17,8 +17,8 @@ public enum Beasts {
     private int defenseLvlScaling;
     private int speedLvlScaling;
     private int staminaLvlScaling;
-    private int developmentlvl;
-    private String developmentId;
+    private int developmentlvl; // Level at which development will take place
+    private String developmentId; // ID of development of beast
     private Regions region;
 
     Beasts(BeastTypes type, int baseHp, int baseAttack, int baseDefense, int baseSpeed, int baseStamina, int hpLvlScaling, int attackLvlScaling, int defenseLvlScaling, int speedLvlScaling, int staminaLvlScaling, int developmentlvl, String developmentId, Regions region) {
