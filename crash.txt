@@ -1,5 +1,8 @@
-Fri Oct 30 19:23:05 CET 2020 Main Update Loop threw an exception:
-java.lang.NullPointerException: Cannot invoke "de.gurkenlabs.litiengine.gui.screens.ScreenManager.current()" because the return value of "de.gurkenlabs.litiengine.Game.screens()" is null
-	at de.gurkenlabs.litiengine.graphics.RenderComponent.render(RenderComponent.java:120)
+Fri Oct 30 23:52:50 CET 2020 Main Update Loop threw an exception:
+java.lang.NullPointerException: Cannot invoke "de.gurkenlabs.litiengine.graphics.ICamera.getViewport()" because the return value of "de.gurkenlabs.litiengine.environment.GameWorld.camera()" is null
+	at de.gurkenlabs.litiengine.environment.Environment.render(Environment.java:2069)
+	at de.gurkenlabs.litiengine.environment.Environment.render(Environment.java:1914)
+	at com.littleBeasts.screens.MenuScreen.render(MenuScreen.java:73)
+	at de.gurkenlabs.litiengine.graphics.RenderComponent.render(RenderComponent.java:123)
 	at de.gurkenlabs.litiengine.GameLoop.process(GameLoop.java:87)
 	at de.gurkenlabs.litiengine.UpdateLoop.run(UpdateLoop.java:57)

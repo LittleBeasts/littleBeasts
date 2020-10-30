@@ -44,8 +44,10 @@ public class Program {
         // GameLogic.setState(GameState.INGAME);
         // Game.screens().display("INGAME-SCREEN");
         // Game.world().loadEnvironment("Arkham");
-        JSONObject jsonObject = Loot.getLootBySource("monster");
-        System.out.println(jsonObject);
+        JSONObject[] jsonObject = Loot.getLootBySource("monster");
+        for (JSONObject jo : jsonObject) {
+            System.out.println(jo);
+        }
         Game.start();
     }
 }
