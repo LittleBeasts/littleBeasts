@@ -1,4 +1,4 @@
-package calculationEngine.entitys;
+package calculationEngine.entities;
 
 public enum Attacks {
 
