@@ -1,4 +1,4 @@
-package calculationEngine.characters.beasts;
+package calculationEngine.entitys;
 
 public enum Nature {
     PLAYFUL,

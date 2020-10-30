@@ -1,4 +1,4 @@
-package calculationEngine.characters.beasts;
+package calculationEngine.entitys;
 
 import java.util.ArrayList;
 import java.util.List;
