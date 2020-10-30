@@ -1,9 +1,9 @@
 package com.littleBeasts;
 
+import com.littleBeasts.screens.MenuScreen;
 import com.littleBeasts.screens.IngameScreen;
 
 import de.gurkenlabs.litiengine.Game;
-import de.gurkenlabs.litiengine.environment.tilemap.IMap;
 import de.gurkenlabs.litiengine.resources.Resources;
 
 public class Program {
@@ -25,13 +25,24 @@ public class Program {
         // Load data from the utiLiti game file
         Resources.load("game.litidata");
 
-        PlayerInput.init();
-        GameLogic.init();
 
         // add the screens
         Game.screens().add(new IngameScreen());
+        Game.screens().add(new MenuScreen());
 
-        Game.world().loadEnvironment("Arkham");
+
+        // initialize modules
+        PlayerInput.init();
+        GameLogic.init();
+
+
+        // enter main menu
+        GameLogic.setState(GameState.MENU);
+        Game.screens().display("MAINMENU");
+       // GameLogic.setState(GameState.INGAME);
+       // Game.screens().display("INGAME-SCREEN");
+       // Game.world().loadEnvironment("Arkham");
+
         Game.start();
     }
 }
