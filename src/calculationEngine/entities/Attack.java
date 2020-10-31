@@ -12,7 +12,7 @@ public class Attack {
     private int executions;
     private static final int maxLevel = 10;
     // probability distribution of random levels: level1:60% ; level2:30% ; level3: 10%;
-    private static final int[] props = {1, 1, 1, 1, 1, 1, 2, 2, 2, 3};
+    private static final int[] probabilityDistribution = {1, 1, 1, 1, 1, 1, 2, 2, 2, 3};
 
     public Attack(Attacks attack) {
         this.name = attack.getName();
@@ -37,7 +37,7 @@ public class Attack {
 
     private int calculateRandomLevel() {
         Random random = new Random();
-        return props[random.nextInt(props.length)];
+        return probabilityDistribution[random.nextInt(probabilityDistribution.length)];
     }
 
 
