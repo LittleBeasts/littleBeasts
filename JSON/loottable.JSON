@@ -1,0 +1,115 @@
+{
+  "itemTable": {
+    "common": {
+      "items": [
+        {
+          "id": "#2",
+          "name": "A healing potion",
+          "description": "Heals a portion of your life",
+          "dependencies": [
+            "boolean Array which determines if the conditions for finding the item are fulfilled"
+          ],
+          "probability": "80",
+          "effects": "Heals 10HP",
+          "usage": "consumable",
+          "rarity": "common"
+        },
+        {
+          "id": "#5",
+          "name": "A greater healing potion",
+          "description": "Heals a portion of your life",
+          "dependencies": [
+            "boolean Array which determines if the conditions for finding the item are fulfilled"
+          ],
+          "probability": "20",
+          "effects": "Heals 10HP",
+          "usage": "consumable",
+          "rarity": "common"
+        }
+      ]
+    },
+    "rare": {
+      "items": [
+        {
+          "id": "#3",
+          "name": "The Stick of Beating",
+          "description": "It's a stick, you can hit someone with it. Don't.",
+          "dependencies": [
+            "boolean Array which determines if the conditions for finding the item are fulfilled"
+          ],
+          "probability": "80",
+          "effects": "It hurts.",
+          "usage": "consumable",
+          "rarity": "rare"
+        },
+        {
+          "id": "#4",
+          "name": "The Stick of more Beating",
+          "description": "It's a stick, you can hit someone with it. Do.",
+          "dependencies": [
+            "boolean Array which determines if the conditions for finding the item are fulfilled"
+          ],
+          "probability": "20",
+          "effects": "It hurts.",
+          "usage": "consumable",
+          "rarity": "rare"
+        }
+      ]
+    },
+    "legendary": {
+      "items": [
+        {
+          "id": "#1",
+          "name": "The Hammer of Zordon",
+          "description": "It's Zordons Hammer, what do you think it will do?",
+          "dependencies": [
+            "boolean Array which determines if the conditions for finding the item are fulfilled"
+          ],
+          "probability": "90",
+          "effects": "Hammers like crazy",
+          "usage": "item",
+          "rarity": "legendary"
+        },
+        {
+          "id": "#6",
+          "name": "The Hammer of Karl",
+          "description": "It's Karls Hammer, it hammers",
+          "dependencies": [
+            "boolean Array which determines if the conditions for finding the item are fulfilled"
+          ],
+          "probability": "10",
+          "effects": "Hammers like totally crazy",
+          "usage": "item",
+          "rarity": "legendary"
+        }
+      ]
+    }
+  },
+  "containerTable": {
+    "monster": {
+      "numberOfItems": "3",
+      "minAmountOfItems": "1",
+      "probabilities": [
+        "50",
+        "45",
+        "5"
+      ],
+      "item": "",
+      "rarity": ""
+    },
+    "chest": {
+      "numberOfItems": "2",
+      "minAmountOfItems": "0",
+      "probabilities": [
+        "10",
+        "55",
+        "35"
+      ],
+      "item": [
+        "#6",
+        "#2"
+      ],
+      "rarity": ""
+    }
+  }
+}
