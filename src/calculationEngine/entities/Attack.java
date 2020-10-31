@@ -42,18 +42,18 @@ public class Attack {
 
 
     public void levelUp() {
-        if (level < maxLevel) {
-            level++;
+        if (this.level < maxLevel) {
+            this.level++;
         }
         scaleStats();
     }
 
     private void scaleStats() {
         //e.g. level3 increases stats by 30%
-        double factor = 1 + level * 0.1;
-        damage = (int) Math.round(damage * factor);
-        accuracy = (int) Math.round(accuracy * factor);
-        criticalChance = (int) Math.round(criticalChance * factor);
+        double factor = 1 + this.level * 0.1;
+        this.damage = (int) Math.round(this.damage * factor);
+        this.accuracy = (int) Math.round(this.accuracy * factor);
+        this.criticalChance = (int) Math.round(this.criticalChance * factor);
     }
 
     public void incrementExecution(int executions) {
@@ -73,30 +73,30 @@ public class Attack {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public int getDamage() {
-        return damage;
+        return this.damage;
     }
 
     public int getAccuracy() {
-        return accuracy;
+        return this.accuracy;
     }
 
     public BeastTypes getType() {
-        return type;
+        return this.type;
     }
 
     public int getCriticalChance() {
-        return criticalChance;
+        return this.criticalChance;
     }
 
     public int getLevel() {
-        return level;
+        return this.level;
     }
 
     public int getExecutions() {
-        return executions;
+        return this.executions;
     }
 }
