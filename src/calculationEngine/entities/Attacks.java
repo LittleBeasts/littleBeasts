@@ -4,12 +4,12 @@ public enum Attacks {
 
     Punch(BeastTypes.Earth, 10, 10, 2, 3, "Punch"); //TODO: Add attacks
 
-    private BeastTypes type;
+    private String name;
     private int baseDamage;
     private int baseAccuracy;
+    private BeastTypes type;
     private int baseCriticalChance;
     private int executions;
-    private String name;
 
 
     Attacks(BeastTypes type, int baseDamage, int baseAccuracy, int baseCriticalChance, int executions, String name) {
@@ -39,5 +39,9 @@ public enum Attacks {
 
     public int getExecutions() {
         return executions;
+    }
+
+    public String getName() {
+        return name;
     }
 }
