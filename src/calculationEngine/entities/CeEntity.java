@@ -23,6 +23,7 @@ public class CeEntity {
     private int developmentLvl; // level at which development will take place
 
     // stats
+    private int maxHitPoints; //TODO: added max hit points, calculations for it need to be addressed.
     private int hitPoints;
     private int level;
     private int friendshipPoints;
@@ -31,11 +32,12 @@ public class CeEntity {
     private int attack;
     private int defense;
 
-    public CeEntity(BeastTypes type, Nature nature, Attack[] attacks, int hitPoints, int level, int friendshipPoints, int speed, int stamina, int attack, int defense, int developmentLvl) {
+    public CeEntity(BeastTypes type, Nature nature, Attack[] attacks, int hitPoints, int maxHitPoints, int level, int friendshipPoints, int speed, int stamina, int attack, int defense, int developmentLvl) {
         this.type = type;
         this.nature = nature;
         this.attacks = attacks;
         this.hitPoints = hitPoints;
+        this.maxHitPoints = maxHitPoints;
         this.level = level;
         this.friendshipPoints = friendshipPoints;
         this.speed = speed;
@@ -63,11 +65,11 @@ public class CeEntity {
         this.speed = scaleOnLvl(beast.getBaseSpeed(), beast.getSpeedLvlScaling());
         this.attack = scaleOnLvl(beast.getBaseAttack(), beast.getAttackLvlScaling()) + (random.nextInt(EntityConstants.ATTACK_RANGE * 2) - EntityConstants.ATTACK_RANGE);
         this.stamina = scaleOnLvl(beast.getBaseAttack(), beast.getStaminaLvlScaling());
-        this.defense = scaleOnLvl(beast.getBaseDefense(), beast.getDefenseLvlScaling()) +(random.nextInt(EntityConstants.DEFENSE_RANGE * 2) - EntityConstants.DEFENSE_RANGE);
+        this.defense = scaleOnLvl(beast.getBaseDefense(), beast.getDefenseLvlScaling()) + (random.nextInt(EntityConstants.DEFENSE_RANGE * 2) - EntityConstants.DEFENSE_RANGE);
         this.attacks = pickAttacks();
     }
 
-    private int scaleOnLvl(int base, int lvlScaling){
+    private int scaleOnLvl(int base, int lvlScaling) {
         return base + this.getLevel() * lvlScaling;
     }
 
@@ -81,7 +83,7 @@ public class CeEntity {
         Beasts[] allBeasts = Beasts.values();
         List<Beasts> availableBeasts = new ArrayList<>();
         Random random = new Random();
-        for (Beasts beast: allBeasts) {
+        for (Beasts beast : allBeasts) {
             if (beast.getRegion() == region) availableBeasts.add(beast);
         }
         return availableBeasts.get(random.nextInt(availableBeasts.size()));
@@ -128,6 +130,10 @@ public class CeEntity {
         return hitPoints;
     }
 
+    public int getMaxHitPoints() {
+        return maxHitPoints;
+    }
+
     public int getLevel() {
         return level;
     }
@@ -162,5 +168,9 @@ public class CeEntity {
 
     public void setHitPoints(int hitPoints) {
         this.hitPoints = hitPoints;
+    }
+
+    public void setMaxHitPoints(int maxHitPoints) {
+        this.maxHitPoints = maxHitPoints;
     }
 }
