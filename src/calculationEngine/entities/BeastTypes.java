@@ -21,4 +21,13 @@ public enum BeastTypes {
     public BeastTypes getWeakness() {
         return BeastTypes.valueOf(this.weaknessId);
     }
+// get modifier for type match-ups
+    public double getModifier(BeastTypes beastTypes) {
+        if (this.weaknessId.equals(beastTypes.name())) {
+            return 0.5;
+        } else if (this.resistanceId.equals(beastTypes.name())) {
+            return 2.0;
+        }
+        return 1.0;
+    }
 }
