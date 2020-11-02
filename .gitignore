@@ -1,2 +1,3 @@
 *.log
 crash.txt
+target/
