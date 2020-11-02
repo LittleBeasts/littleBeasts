@@ -1,4 +1,5 @@
 *.log
 crash.txt
+target/
 .idea/
 out/
