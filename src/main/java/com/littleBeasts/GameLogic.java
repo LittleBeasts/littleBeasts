@@ -15,6 +15,7 @@ import java.awt.event.KeyListener;
 
 public class GameLogic {
     private static GameState state = GameState.INGAME;
+    private static boolean firstStart = true;
 
     public static final Font MENU_FONT = new Font("Serif", Font.BOLD, 13);
     public static String START_LEVEL = "Arkham";
@@ -86,6 +87,7 @@ public class GameLogic {
         Game.loop().setTimeScale(1);
         Input.keyboard().removeKeyListener(chatKeyboard);
         if (getState() == GameState.INGAME) {
+            firstStart = false;
             IngameScreen.chatWindow.setVisible(false);
             IngameScreen.ingameMenu.setVisible(false);
             //    Player.instance().addController();
@@ -101,6 +103,11 @@ public class GameLogic {
             //  Player.instance().removeController();
             Input.keyboard().addKeyListener(chatKeyboard);
         }
+        if (getState() == GameState.MENU && !firstStart) {
+            Game.loop().setTimeScale(0);
+            Game.screens().display("MAINMENU");
+        }
+
         System.out.println(GameLogic.state.name());
     }
 

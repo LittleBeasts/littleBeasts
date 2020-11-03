@@ -122,6 +122,7 @@
       <property name="spawnDirection" value="RIGHT"/>
      </properties>
     </object>
+    <object id="8" name="door" type="AREA" x="144" y="144" width="32" height="16"/>
    </objectgroup>
   </map>
   <map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="60" height="34" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="1" name="Gurknukem">
