@@ -41,13 +41,16 @@ public class IngameScreen extends Screen implements IUpdateable {
         final double centerY = Game.window().getResolution().getHeight() * 1 / 2;
         final double buttonWidth = 450;
 
-        ingameMenu = new KeyboardMenu(centerX - buttonWidth / 2, centerY * 1.3, buttonWidth, centerY / 2, "Continue", "Exit");
+        ingameMenu = new KeyboardMenu(centerX - buttonWidth / 2, centerY * 1.3, buttonWidth, centerY / 2, "Continue", "To Main Menu", "Exit");
         ingameMenu.onConfirm(c -> {
             switch (c.intValue()) {
                 case 0:
                     GameLogic.setState(GameState.INGAME);
                     break;
                 case 1:
+                    GameLogic.setState(GameState.MENU);
+                    break;
+                case 2:
                     System.exit(0);
                     break;
                 default:

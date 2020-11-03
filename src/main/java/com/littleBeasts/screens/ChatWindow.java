@@ -179,11 +179,22 @@ public class ChatWindow extends GuiComponent implements IUpdateable, KeyListener
         //  }
     }
 
+    int tick = 0;
+
     @Override
     public synchronized void render(Graphics2D g) {
+
+        this.width = (int) Game.window().getResolution().getWidth();
+        this.height = (int) Game.window().getResolution().getHeight();
+
+        tick++;
+        if (tick % 60 == 0) {
+            System.out.println("width: " + Game.window().getResolution().getWidth() + " | height: " + (int) Game.window().getResolution().getHeight());
+        }
+
         g.setColor(new Color(150, 150, 150, 150));
-        g.fillRect(0, 0, Game.window().getWidth(), Game.window().getHeight());
-        /* Draw component */
+        g.fillRect(0, 0, (int) Game.window().getResolution().getWidth(), (int) Game.window().getResolution().getHeight());
+
         int textHeight = 70;
         g.setFont(font);
         g.setColor(Color.WHITE);
@@ -206,7 +217,7 @@ public class ChatWindow extends GuiComponent implements IUpdateable, KeyListener
         g.setColor(Color.BLACK);
         int fineTuning = 20;
         drawString(g, chatHistory, textPoint.x + hPadding + fineTuning, this.y + vPadding + fineTuning);
-        g.drawString(text, textPoint.x + hPadding + fineTuning, Game.window().getHeight() - vPadding - fineTuning);
+        g.drawString(text, textPoint.x + hPadding + fineTuning, this.height - vPadding - fineTuning);
     }
 
 

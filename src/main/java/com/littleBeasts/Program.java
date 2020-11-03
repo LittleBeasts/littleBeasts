@@ -38,14 +38,12 @@ public class Program {
         PlayerInput.init();
         GameLogic.init();
 
-
         // enter main menu
         GameLogic.setState(GameState.MENU);
         Game.screens().display("MAINMENU");
         // GameLogic.setState(GameState.INGAME);
         // Game.screens().display("INGAME-SCREEN");
         // Game.world().loadEnvironment("Arkham");
-
 
         //-----------------------------------------------------------------------------------------------------------
         // test "fight"
@@ -57,14 +55,13 @@ public class Program {
         System.out.println("Damage: " + damage);
         //-------------------------------------------------------------------------------------------------------------
 
-
-
-
-
+        //-------------------------------------------------------------------------------------------------------------
+        // test "loot"
         JSONObject[] jsonObject = Loot.getLootBySource("monster");
         for (JSONObject jo : jsonObject) {
             System.out.println(jo);
         }
+        //-------------------------------------------------------------------------------------------------------------
         Game.start();
     }
 }
