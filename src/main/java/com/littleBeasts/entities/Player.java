@@ -45,4 +45,12 @@ public class Player extends Creature implements IUpdateable {
         return state;
     }
 
+    public void removeController(){
+        this.detachControllers();
+    }
+
+    public void addController(){
+        this.addController(new KeyboardEntityController<>(this));
+    }
+
 }

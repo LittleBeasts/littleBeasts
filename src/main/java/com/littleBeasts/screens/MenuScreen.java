@@ -94,12 +94,12 @@ public class MenuScreen extends Screen implements IUpdateable {
         //Game.audio().playSound("confirm.ogg");
         Game.window().getRenderComponent().fadeOut(2500);
 
-        Game.loop().perform(3500, () -> {
+        Game.loop().perform(300, () -> {
             //Game.screens().display("INGAME-SCREEN");
             //Game.world().loadEnvironment(GameLogic.START_LEVEL);
-            GameLogic.setState(GameState.INGAME);
             Game.screens().display("INGAME-SCREEN");
             Game.world().loadEnvironment("Arkham");
+            GameLogic.setState(GameState.INGAME);
         });
     }
 

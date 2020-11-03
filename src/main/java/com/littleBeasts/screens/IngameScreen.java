@@ -11,6 +11,7 @@ import java.awt.*;
 public class IngameScreen extends Screen implements IUpdateable {
     public static final String NAME = "INGAME-SCREEN";
     public static KeyboardMenu ingameMenu;
+    public static ChatWindow chatWindow;
     private Hud hud;
 
     public IngameScreen() {
@@ -34,6 +35,7 @@ public class IngameScreen extends Screen implements IUpdateable {
 
     protected void initializeComponents() {
         this.hud = new Hud();
+        this.chatWindow = new ChatWindow();
 
         final double centerX = Game.window().getResolution().getWidth() / 2.0;
         final double centerY = Game.window().getResolution().getHeight() * 1 / 2;
@@ -52,46 +54,48 @@ public class IngameScreen extends Screen implements IUpdateable {
                     break;
             }
         });
+        chatWindow.init();
         this.getComponents().add(this.hud);
         this.getComponents().add(ingameMenu);
+        this.getComponents().add(chatWindow);
     }
 
     @Override
     public void render(Graphics2D g) {
-      //  if (Player.instance().getState() == PlayerState.LOCKED) {
-      //      g.setClip(new Rectangle2D.Double(0, CINEMATIC_BORDER, Game.window().getResolution().getWidth(), Game.window().getResolution().getHeight() - CINEMATIC_BORDER * 2));
-      //      Game.world().camera().setZoom(1.25f, 600);
-      //  } else {
-      //      Game.world().camera().setZoom(1, 600);
-      //  }
+        //  if (Player.instance().getState() == PlayerState.LOCKED) {
+        //      g.setClip(new Rectangle2D.Double(0, CINEMATIC_BORDER, Game.window().getResolution().getWidth(), Game.window().getResolution().getHeight() - CINEMATIC_BORDER * 2));
+        //      Game.world().camera().setZoom(1.25f, 600);
+        //  } else {
+        //      Game.world().camera().setZoom(1, 600);
+        //  }
 
         if (Game.world().environment() != null) {
             Game.world().environment().render(g);
         }
 
-       // deathMenu.setVisible(GameManager.getState() == GameState.INGAME && Player.instance().isDead() || GameManager.getState() == GameState.SLAVES_DEAD);
+        // deathMenu.setVisible(GameManager.getState() == GameState.INGAME && Player.instance().isDead() || GameManager.getState() == GameState.SLAVES_DEAD);
 
         if (GameLogic.getState() == GameState.INGAME_MENU) {
             g.setColor(new Color(0, 0, 0, 100));
             g.fillRect(0, 0, (int) Game.window().getResolution().getWidth(), (int) Game.window().getResolution().getHeight());
 
-           //final double logoX = Game.window().getCenter().getX() - MenuScreen.LOGO_COIN.getWidth() / 2;
-           //final double logoY = Game.window().getResolution().getHeight() * 1 / 12;
+            //final double logoX = Game.window().getCenter().getX() - MenuScreen.LOGO_COIN.getWidth() / 2;
+            //final double logoY = Game.window().getResolution().getHeight() * 1 / 12;
             //ImageRenderer.render(g, MenuScreen.LOGO_COIN, logoX, logoY);
 
-           // final double controlsY = Game.window().getResolution().getHeight() - MenuScreen.CONTROLS.getHeight() - 20;
-           // ImageRenderer.render(g, MenuScreen.CONTROLS, 20, controlsY);
+            // final double controlsY = Game.window().getResolution().getHeight() - MenuScreen.CONTROLS.getHeight() - 20;
+            // ImageRenderer.render(g, MenuScreen.CONTROLS, 20, controlsY);
         }
 
-      //  if (GameLogic.getState() == GameState.SLAVES_DEAD) {
-      //      double x = Game.window().getCenter().getX() - NOTE_SLAVES.getWidth() / 2.0;
-      //      double y = Game.window().getCenter().getY() - NOTE_SLAVES.getHeight();
-      //      ImageRenderer.render(g, NOTE_SLAVES, x, y);
-      //  } else if (GameManager.getState() == GameState.INGAME && Player.instance().isDead()) {
-      //      double x = Game.window().getCenter().getX() - NOTE_DEATH.getWidth() / 2.0;
-      //      double y = Game.window().getCenter().getY() - NOTE_DEATH.getHeight();
-      //      ImageRenderer.render(g, NOTE_DEATH, x, y);
-      //  }
+        //  if (GameLogic.getState() == GameState.SLAVES_DEAD) {
+        //      double x = Game.window().getCenter().getX() - NOTE_SLAVES.getWidth() / 2.0;
+        //      double y = Game.window().getCenter().getY() - NOTE_SLAVES.getHeight();
+        //      ImageRenderer.render(g, NOTE_SLAVES, x, y);
+        //  } else if (GameManager.getState() == GameState.INGAME && Player.instance().isDead()) {
+        //      double x = Game.window().getCenter().getX() - NOTE_DEATH.getWidth() / 2.0;
+        //      double y = Game.window().getCenter().getY() - NOTE_DEATH.getHeight();
+        //      ImageRenderer.render(g, NOTE_DEATH, x, y);
+        //  }
 
         super.render(g);
 

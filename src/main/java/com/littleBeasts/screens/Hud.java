@@ -25,7 +25,6 @@ public class Hud extends GuiComponent {
 
     protected Hud() {
         super(0, 0, Game.window().getResolution().getWidth(), Game.window().getResolution().getHeight());
-
     }
 
     @Override
