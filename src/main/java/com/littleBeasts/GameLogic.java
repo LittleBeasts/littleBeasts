@@ -107,6 +107,9 @@ public class GameLogic {
             Game.loop().setTimeScale(0);
             Game.screens().display("MAINMENU");
         }
+        if (getState() == GameState.BATTLE) {
+            Game.loop().setTimeScale(0);
+        }
 
         System.out.println(GameLogic.state.name());
     }

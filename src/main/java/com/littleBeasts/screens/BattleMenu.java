@@ -1,5 +1,6 @@
 package com.littleBeasts.screens;
 
+import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.input.Input;
 
 import java.awt.*;
@@ -27,14 +28,17 @@ public class BattleMenu {
         Input.keyboard().onKeyTyped(e -> {
             if (!focus) return;
             if (e.getKeyCode() == KeyEvent.VK_UP) {
+                Game.audio().playSound("Menu_change");
                 decPosition();
                 System.out.println("Up | " + currentFocus);
             }
             if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                Game.audio().playSound("Menu_change");
                 incPosition();
                 System.out.println("Down | " + currentFocus);
             }
             if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                Game.audio().playSound("Menu_pick");
                 System.out.println(items[currentFocus]);
                 this.confirm();
             }
@@ -53,7 +57,7 @@ public class BattleMenu {
         }
     }
 
-    public void drawMenu(Graphics2D g) {
+    public void draw(Graphics2D g) {
         g.setColor(Color.WHITE);
         g.fillRect(x, y, width, height);
         int buttonPad = 2;

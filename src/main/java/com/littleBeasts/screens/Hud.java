@@ -3,6 +3,7 @@ package com.littleBeasts.screens;
 import com.littleBeasts.GameLogic;
 import com.littleBeasts.GameState;
 import com.littleBeasts.PlayerState;
+import com.littleBeasts.entities.Beast;
 import com.littleBeasts.entities.Player;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.graphics.ImageRenderer;
@@ -23,7 +24,7 @@ public class Hud extends GuiComponent {
     boolean debug = true;
     private BattleMenu bm;
     private BattleMenu attackMenu;
-    boolean drawAttackMenu = false;
+    private boolean drawAttackMenu = false;
 
     protected Hud() {
         super(0, 0, Game.window().getResolution().getWidth(), Game.window().getResolution().getHeight());
@@ -49,7 +50,7 @@ public class Hud extends GuiComponent {
         });
         String[] attacks = new String[]{"Attack1", "Attack2", "Attack3", "Attack4"};
         attackMenu = new BattleMenu(350, height - 140, 200, 100, attacks);
-        attackMenu.onConfirm(c->{
+        attackMenu.onConfirm(c -> {
             switch (c.intValue()) {
                 case 0:
                     drawAttackMenu = drawAttackMenu ? false : true;
@@ -82,13 +83,13 @@ public class Hud extends GuiComponent {
         this.renderHP(g);
         this.renderBeasts(g);
         if (GameLogic.getState() == GameState.BATTLE) {
-            this.drawIngameHud(g);
             try {
                 this.drawBattleHud(g);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
+            this.drawIngameHud(g);
             bm.setFocus(false);
         }
         // if (GameLogic.getState() == GameState.BATTLE) {
@@ -106,9 +107,10 @@ public class Hud extends GuiComponent {
         //Action menu
         drawActionMenu(g);
         bm.setFocus(drawAttackMenu ? false : true);
-        bm.drawMenu(g);
+        bm.draw(g);
+
         if (drawAttackMenu) {
-            attackMenu.drawMenu(g);
+            attackMenu.draw(g);
             attackMenu.setFocus(true);
         } else {
             attackMenu.setFocus(false);
@@ -146,7 +148,9 @@ public class Hud extends GuiComponent {
     }
 
     private void drawBeastPortraits(Graphics2D g) {
-
+        for (Beast beast : Player.instance().getLittleBeastTeam()) {
+            beast.getBeastStats().draw(g);
+        }
     }
 
     private void drawActionMenu(Graphics2D g) {
