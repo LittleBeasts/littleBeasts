@@ -11,10 +11,8 @@ import com.littleBeasts.entities.Player;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.MapArea;
-import de.gurkenlabs.litiengine.entities.Spawnpoint;
 import de.gurkenlabs.litiengine.graphics.TextRenderer;
 import de.gurkenlabs.litiengine.gui.screens.Screen;
-import gherkin.lexer.Pl;
 
 public class MenuScreen extends Screen implements IUpdateable {
 
@@ -68,7 +66,7 @@ public class MenuScreen extends Screen implements IUpdateable {
         Game.loop().attach(this);
         Game.window().getRenderComponent().setBackground(Color.BLACK);
         Game.graphics().setBaseRenderScale(6f * Game.window().getResolutionScale());
-        this.mainMenu.incFocus();
+        this.mainMenu.incPosition();
         Game.world().loadEnvironment("Arkham");
         points = Game.world().environment().getAreas();
         Game.world().camera().setFocus(Game.world().environment().getCenter());

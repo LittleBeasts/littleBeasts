@@ -5,5 +5,6 @@ public enum GameState {
     INGAME,
     INGAME_MENU,
     INGAME_CHAT,
-    GAME_OVER
+    BATTLE,
+    GAME_OVER;
 }
