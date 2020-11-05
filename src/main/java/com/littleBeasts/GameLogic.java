@@ -1,5 +1,7 @@
 package com.littleBeasts;
 
+import calculationEngine.entities.Beasts;
+import com.littleBeasts.entities.Beast;
 import com.littleBeasts.entities.Player;
 import com.littleBeasts.screens.IngameScreen;
 import de.gurkenlabs.litiengine.Game;
@@ -8,6 +10,7 @@ import de.gurkenlabs.litiengine.entities.Spawnpoint;
 import de.gurkenlabs.litiengine.graphics.Camera;
 import de.gurkenlabs.litiengine.graphics.PositionLockCamera;
 import de.gurkenlabs.litiengine.input.Input;
+import gherkin.lexer.Pl;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -114,8 +117,12 @@ public class GameLogic implements IUpdateable {
             Game.screens().display("MAINMENU");
         }
         if (getState() == GameState.BATTLE) {
-            Game.loop().setTimeScale(0);
+//            Game.loop().setTimeScale(0);
+
           //  Game.audio().playMusic("bgm");
+            new Beast(Beasts.FeuerFurz, (int) Player.instance().getX()+50,
+                        (int) (Player.instance().getY()-(Player.instance().getHeight()/2)),
+                         Player.instance().getFacingDirection().getOpposite()); //for dev purposes
         }
 
         System.out.println(GameLogic.state.name());

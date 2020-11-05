@@ -3,6 +3,7 @@ package com.littleBeasts.entities;
 import calculationEngine.entities.Beasts;
 import com.littleBeasts.PlayerState;
 import config.HudConstants;
+import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.*;
 import de.gurkenlabs.litiengine.input.KeyboardEntityController;
@@ -18,13 +19,14 @@ public class Player extends Creature implements IUpdateable {
     private static Player instance;
     private static PlayerState state = PlayerState.CONTROLLABLE;
     private List<Beast> littleBeastTeam;
+    private boolean spawned;
 
     private Player() {
         super("test");
         this.addController(new KeyboardEntityController<>(this));
         this.littleBeastTeam = new ArrayList<>();
-        this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY()));
-        this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY()));
+        this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY(),this.getFacingDirection().getOpposite()));
+        this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY(),this.getFacingDirection().getOpposite()));
         //this.littleBeastTeam.add(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY()));
         // setup the player's abilities
     }
@@ -38,7 +40,16 @@ public class Player extends Creature implements IUpdateable {
 
     @Override
     public void update() {
+        spawnPlayer();
 
+    }
+
+    public void spawnPlayer() {
+        if (!spawned) {
+            Spawnpoint spawnpoint = Game.world().environment().getSpawnpoint("west");
+            spawnpoint.spawn(this);
+            spawned = true;
+        }
     }
 
     // @Override

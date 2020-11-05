@@ -3,6 +3,7 @@ package com.littleBeasts.entities;
 import calculationEngine.entities.Beasts;
 import calculationEngine.entities.CeEntity;
 import com.littleBeasts.screens.BeastStats;
+import de.gurkenlabs.litiengine.Direction;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.Creature;
 import de.gurkenlabs.litiengine.entities.Spawnpoint;
@@ -16,8 +17,9 @@ public class Beast extends Creature implements IUpdateable {
     private Image portrait;
     private BeastStats beastStats;
     private int x, y;
+    private boolean spwaned;
 
-    public Beast(Beasts beasts, int x, int y) {
+    public Beast(Beasts beasts, int x, int y, Direction facingDirection) {
         // super(beasts.name());
         super("test");
         this.portrait = Resources.images().get("sprites/icon.png");
@@ -26,6 +28,7 @@ public class Beast extends Creature implements IUpdateable {
         this.x = x;
         this.y = y;
         Spawnpoint e = new Spawnpoint(x, y);
+        this.setFacingDirection(facingDirection);
         e.spawn(this);
     }
 
@@ -44,6 +47,11 @@ public class Beast extends Creature implements IUpdateable {
 
     @Override
     public void update() {
+        if (!spwaned) {
+            Spawnpoint spawnpoint = new Spawnpoint(x, y);
+            spawnpoint.spawn(this);
+            spwaned = true;
+        }
 
     }
 
