@@ -1,6 +1,7 @@
 package com.littleBeasts;
 
-import calculationEngine.Loot;
+import calculationEngine.battle.Damage;
+import calculationEngine.environment.Loot;
 import calculationEngine.entities.*;
 import com.littleBeasts.screens.MenuScreen;
 import com.littleBeasts.screens.IngameScreen;
