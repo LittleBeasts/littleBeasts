@@ -106,6 +106,7 @@ public class Hud extends GuiComponent {
         drawPlayPortrait(g, width, height);
         //Action menu
         drawActionMenu(g);
+
         bm.setFocus(!drawAttackMenu);
         bm.draw(g);
 

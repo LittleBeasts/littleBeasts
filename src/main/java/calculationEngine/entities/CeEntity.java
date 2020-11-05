@@ -70,6 +70,7 @@ public class CeEntity {
         this.attacks = pickAttacks();
     }
 
+
     public CeEntity(Beasts beast) { // dev constructor
         this.type = beast.getType();
         Nature[] natures = Nature.values();

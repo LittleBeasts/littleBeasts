@@ -23,6 +23,7 @@ public class BattleMenu {
         this.height = height;
         this.items = items;
         this.currentPosition = 0;
+
         this.confirmConsumer = new CopyOnWriteArrayList<>();
 
         Input.keyboard().onKeyTyped(e -> {
@@ -64,6 +65,7 @@ public class BattleMenu {
         int i = 0;
         for (String item : items) {
             g.setColor(Color.RED);
+
             if (i == currentPosition) {
                 g.drawRect(x, y + height * i / items.length, width, height / items.length);
             }
