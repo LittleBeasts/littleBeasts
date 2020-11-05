@@ -3,6 +3,7 @@ package calculationEngine.entities;
 import config.EntityConstants;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -33,6 +34,8 @@ public class CeEntity {
     private int defense;
     private boolean wild;
     private Random random = new Random();
+
+    private int playerNumber;
 
     public CeEntity(BeastTypes type, Nature nature, Attack[] attacks, int hitPoints, int maxHitPoints, int level, int friendshipPoints, int speed, int stamina, int attack, int defense, int developmentLvl, boolean wild) {
         this.type = type;
@@ -79,7 +82,7 @@ public class CeEntity {
         Nature[] natures = Nature.values();
         this.nature = natures[random.nextInt(natures.length)];
         //this.attacks = beast.getAttacks;
-        this.hitPoints = beast.getBaseAttack();
+        this.hitPoints = beast.getBaseHp();
         this.maxHitPoints = beast.getBaseHp();
         this.level = 1;
         this.friendshipPoints = 0;
@@ -199,5 +202,34 @@ public class CeEntity {
 
     public void setMaxHitPoints(int maxHitPoints) {
         this.maxHitPoints = maxHitPoints;
+    }
+
+    public int getPlayerNumber() {
+        return playerNumber;
+    }
+
+    public void setPlayerNumber(int playerNumber) {
+        this.playerNumber = playerNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "CeEntity{" +
+                "type=" + type +
+                ", nature=" + nature +
+                ", attacks=" + Arrays.toString(attacks) +
+                ", development=" + development +
+                ", developmentLvl=" + developmentLvl +
+                ", maxHitPoints=" + maxHitPoints +
+                ", hitPoints=" + hitPoints +
+                ", level=" + level +
+                ", friendshipPoints=" + friendshipPoints +
+                ", speed=" + speed +
+                ", stamina=" + stamina +
+                ", attack=" + attack +
+                ", defense=" + defense +
+                ", wild=" + wild +
+                ", random=" + random +
+                '}';
     }
 }
