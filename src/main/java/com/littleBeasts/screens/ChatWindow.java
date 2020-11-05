@@ -15,7 +15,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.function.Consumer;
 
-public class ChatWindow extends GuiComponent implements IUpdateable, KeyListener {
+public class ChatWindow extends GuiComponent implements IUpdateable {
     private static final String CURSOR = "|";
     private static StringBuffer buffer;
     private static String showableText;
@@ -220,29 +220,12 @@ public class ChatWindow extends GuiComponent implements IUpdateable, KeyListener
         g.drawString(text, textPoint.x + hPadding + fineTuning, this.height - vPadding - fineTuning);
     }
 
-
     public void setFocus(boolean focus) {
         this.focus = focus;
     }
 
-
     @Override
     public void update() {
-
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
 
     }
 

@@ -10,7 +10,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
 public class BattleMenu {
-    private int x, y, width, height, currentFocus;
+    private int x, y, width, height, currentPosition;
     private String[] items;
     private Graphics2D g;
     private boolean focus = false;
@@ -22,24 +22,25 @@ public class BattleMenu {
         this.width = width;
         this.height = height;
         this.items = items;
-        this.currentFocus = 0;
+        this.currentPosition = 0;
+
         this.confirmConsumer = new CopyOnWriteArrayList<>();
 
         Input.keyboard().onKeyTyped(e -> {
             if (!focus) return;
             if (e.getKeyCode() == KeyEvent.VK_UP) {
-                Game.audio().playSound("Menu_change");
+                //Game.audio().playSound("Menu_change");
                 decPosition();
-                System.out.println("Up | " + currentFocus);
+                System.out.println("Up | " + currentPosition);
             }
             if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                Game.audio().playSound("Menu_change");
+               // Game.audio().playSound("Menu_change");
                 incPosition();
-                System.out.println("Down | " + currentFocus);
+                System.out.println("Down | " + currentPosition);
             }
             if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                Game.audio().playSound("Menu_pick");
-                System.out.println(items[currentFocus]);
+                //Game.audio().playSound("Menu_pick");
+                System.out.println(items[currentPosition]);
                 this.confirm();
             }
         });
@@ -53,7 +54,7 @@ public class BattleMenu {
 
     private void confirm() {
         for (Consumer<Integer> cons : this.confirmConsumer) {
-            cons.accept(this.currentFocus);
+            cons.accept(this.currentPosition);
         }
     }
 
@@ -64,7 +65,8 @@ public class BattleMenu {
         int i = 0;
         for (String item : items) {
             g.setColor(Color.RED);
-            if (i == currentFocus) {
+
+            if (i == currentPosition) {
                 g.drawRect(x, y + height * i / items.length, width, height / items.length);
             }
 
@@ -76,16 +78,16 @@ public class BattleMenu {
     }
 
     public void incPosition() {
-        this.currentFocus = ++this.currentFocus % (this.items.length);
+        this.currentPosition = ++this.currentPosition % (this.items.length);
     }
 
     public void decPosition() {
-        this.currentFocus--;
-        if (this.currentFocus < 0) {
-            this.currentFocus = (this.items.length - 1);
+        this.currentPosition--;
+        if (this.currentPosition < 0) {
+            this.currentPosition = (this.items.length - 1);
             return;
         }
-        this.currentFocus = this.currentFocus % (this.items.length);
+        this.currentPosition = this.currentPosition % (this.items.length);
     }
 
     public void setFocus(boolean focus) {
@@ -93,7 +95,7 @@ public class BattleMenu {
     }
 
     public int getCurrentFocus() {
-        return currentFocus;
+        return currentPosition;
     }
 
 }

@@ -1,7 +1,6 @@
 package com.littleBeasts.screens;
 
 import java.awt.Color;
-import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -11,8 +10,6 @@ import com.littleBeasts.GameLogic;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.gui.Menu;
 import de.gurkenlabs.litiengine.input.Input;
-import de.gurkenlabs.litiengine.resources.Resources;
-import de.gurkenlabs.litiengine.sound.Sound;
 
 public class KeyboardMenu extends Menu {
 
@@ -23,7 +20,7 @@ public class KeyboardMenu extends Menu {
     public static final int MENU_DELAY = 180;
 
     private final List<Consumer<Integer>> confirmConsumer;
-    protected int currentFocus = -1;
+    protected int currentPosition = -1;
 
     public static long lastMenuInput;
 
@@ -38,6 +35,7 @@ public class KeyboardMenu extends Menu {
                 }
 
                 this.confirm();
+                //Game.audio().playSound("Menu_pick");
                 lastMenuInput = Game.time().now();
             }
         });
@@ -46,16 +44,17 @@ public class KeyboardMenu extends Menu {
             if (this.menuInputIsLocked()) {
                 return;
             }
-
-            decFocus();
+           // Game.audio().playSound("Menu_change");
+            decPosition();
         });
 
         Input.keyboard().onKeyPressed(KeyEvent.VK_DOWN, e -> {
+
             if (this.menuInputIsLocked()) {
                 return;
             }
-
-            incFocus();
+           // Game.audio().playSound("Menu_change");
+            incPosition();
         });
 
     }
@@ -65,7 +64,6 @@ public class KeyboardMenu extends Menu {
         if (this.isSuspended() || !this.isVisible() || !this.isEnabled()) {
             return true;
         }
-
         return Game.time().since(lastMenuInput) < MENU_DELAY;
     }
 
@@ -76,7 +74,7 @@ public class KeyboardMenu extends Menu {
         this.getCellComponents().forEach(comp -> comp.setForwardMouseEvents(false));
 
         if (!this.getCellComponents().isEmpty()) {
-            this.currentFocus = 0;
+            this.currentPosition = 0;
             this.getCellComponents().get(0).setHovered(true);
         }
 
@@ -98,24 +96,24 @@ public class KeyboardMenu extends Menu {
 
     private void confirm() {
         for (Consumer<Integer> cons : this.confirmConsumer) {
-            cons.accept(this.currentFocus);
+            cons.accept(this.currentPosition);
         }
     }
 
-    protected void decFocus() {
-        this.currentFocus = Math.floorMod(--this.currentFocus, this.getCellComponents().size());
-        this.updateFocus();
+    protected void decPosition() {
+        this.currentPosition = Math.floorMod(--this.currentPosition, this.getCellComponents().size());
+        this.updatePosition();
     }
 
-    protected void incFocus() {
-        this.currentFocus = ++this.currentFocus % this.getCellComponents().size();
-        this.updateFocus();
+    protected void incPosition() {
+        this.currentPosition = ++this.currentPosition % this.getCellComponents().size();
+        this.updatePosition();
     }
 
-    protected void updateFocus() {
-        this.setCurrentSelection(this.currentFocus);
+    protected void updatePosition() {
+        this.setCurrentSelection(this.currentPosition);
         for (int i = 0; i < this.getCellComponents().size(); i++) {
-            this.getCellComponents().get(i).setHovered(i == this.currentFocus);
+            this.getCellComponents().get(i).setHovered(i == this.currentPosition);
         }
 
         lastMenuInput = Game.time().now();

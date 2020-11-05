@@ -36,7 +36,7 @@ public class Hud extends GuiComponent {
         bm.onConfirm(c -> {
             switch (c.intValue()) {
                 case 0:
-                    drawAttackMenu = drawAttackMenu ? false : true;
+                    drawAttackMenu = !drawAttackMenu;
                     break;
                 case 1:
                     break;
@@ -53,7 +53,7 @@ public class Hud extends GuiComponent {
         attackMenu.onConfirm(c -> {
             switch (c.intValue()) {
                 case 0:
-                    drawAttackMenu = drawAttackMenu ? false : true;
+                    drawAttackMenu = !drawAttackMenu;
                     break;
                 case 1:
                     break;
@@ -106,7 +106,8 @@ public class Hud extends GuiComponent {
         drawPlayPortrait(g, width, height);
         //Action menu
         drawActionMenu(g);
-        bm.setFocus(drawAttackMenu ? false : true);
+
+        bm.setFocus(!drawAttackMenu);
         bm.draw(g);
 
         if (drawAttackMenu) {

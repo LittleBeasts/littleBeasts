@@ -25,6 +25,7 @@ public class Program {
         Game.window().setIcon(Resources.images().get("sprites/icon.png"));
         Game.graphics().setBaseRenderScale(4.001f);
 
+
         // Load data from the utiLiti game file
         Resources.load("game.litidata");
 
@@ -41,6 +42,7 @@ public class Program {
         // enter main menu
         GameLogic.setState(GameState.MENU);
         Game.screens().display("MAINMENU");
+        //Game.audio().playMusic("mainMenu");
         // GameLogic.setState(GameState.INGAME);
         // Game.screens().display("INGAME-SCREEN");
         // Game.world().loadEnvironment("Arkham");
