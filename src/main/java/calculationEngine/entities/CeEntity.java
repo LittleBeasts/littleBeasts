@@ -31,9 +31,10 @@ public class CeEntity {
     private int stamina;
     private int attack;
     private int defense;
+    private boolean wild;
     private Random random = new Random();
 
-    public CeEntity(BeastTypes type, Nature nature, Attack[] attacks, int hitPoints, int maxHitPoints, int level, int friendshipPoints, int speed, int stamina, int attack, int defense, int developmentLvl) {
+    public CeEntity(BeastTypes type, Nature nature, Attack[] attacks, int hitPoints, int maxHitPoints, int level, int friendshipPoints, int speed, int stamina, int attack, int defense, int developmentLvl, boolean wild) {
         this.type = type;
         this.nature = nature;
         this.attacks = attacks;
@@ -46,6 +47,7 @@ public class CeEntity {
         this.attack = attack;
         this.defense = defense;
         this.developmentLvl = developmentLvl;
+        this.wild = false;
     }
 
     public CeEntity(Regions region, CeEntity player) { // Constructor for new Encounter Beast
@@ -68,6 +70,7 @@ public class CeEntity {
         this.stamina = scaleOnLvl(beast.getBaseAttack(), beast.getStaminaLvlScaling());
         this.defense = scaleOnLvl(beast.getBaseDefense(), beast.getDefenseLvlScaling()) + (random.nextInt(EntityConstants.DEFENSE_RANGE * 2) - EntityConstants.DEFENSE_RANGE);
         this.attacks = pickAttacks();
+        this.wild = true;
     }
 
 
@@ -85,6 +88,7 @@ public class CeEntity {
         this.attack = beast.getBaseAttack();
         this.defense = beast.getBaseDefense();
         this.developmentLvl = beast.getDevelopmentlvl();
+        this.wild = true;
     }
 
 
@@ -171,6 +175,10 @@ public class CeEntity {
 
     public int getAttack() {
         return attack;
+    }
+
+    public boolean isWild() {
+        return wild;
     }
 
     public int getDefense() {
