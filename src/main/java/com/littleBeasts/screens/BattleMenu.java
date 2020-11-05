@@ -1,6 +1,7 @@
 package com.littleBeasts.screens;
 
-import de.gurkenlabs.litiengine.Game;
+import calculationEngine.entities.Attack;
+import config.HudConstants;
 import de.gurkenlabs.litiengine.input.Input;
 
 import java.awt.*;
@@ -9,20 +10,32 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
-public class BattleMenu {
-    private int x, y, width, height, currentPosition;
+/*--------------------------------------------
+This class creates a menu for use in battle.
+It is called in the HUD class.
+Height, width and bottom pad should be adjusted in HudConstants
+
+20201105 D.B. Created Class
+--------------------------------------------*/
+
+public class BattleMenu { // dev constructor
+    private final int x, y, width, height, amountOfItems, amountOfDrawnItems;
+    private int firstDrawnItem, lastDrawnItem, currentPosition;
     private String[] items;
-    private Graphics2D g;
     private boolean focus = false;
     private final List<Consumer<Integer>> confirmConsumer;
 
-    public BattleMenu(int x, int y, int width, int height, String[] items) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
+    public BattleMenu(int x, String[] items) {
+        this.x = x; //position left
+        this.y = HudConstants.HEIGHT - HudConstants.BOTTOM_PAD;
+        this.amountOfItems = items.length;
+        this.amountOfDrawnItems = (Math.min(amountOfItems, HudConstants.ITEMLISTLENGTH));
+        this.width = HudConstants.BATTLE_MENU_WIDTH;
+        this.height = HudConstants.HUD_ROW_HEIGHT * amountOfDrawnItems / HudConstants.ITEMLISTLENGTH;
         this.items = items;
         this.currentPosition = 0;
+        this.firstDrawnItem = 0;
+        this.lastDrawnItem = amountOfDrawnItems;
 
         this.confirmConsumer = new CopyOnWriteArrayList<>();
 
@@ -34,7 +47,41 @@ public class BattleMenu {
                 System.out.println("Up | " + currentPosition);
             }
             if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-               // Game.audio().playSound("Menu_change");
+                // Game.audio().playSound("Menu_change");
+                incPosition();
+                System.out.println("Down | " + currentPosition);
+            }
+            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                //Game.audio().playSound("Menu_pick");
+                System.out.println(items[currentPosition]);
+                this.confirm();
+            }
+        });
+    }
+
+    public BattleMenu(int x, List<Attack> attacks) {
+        this.x = x; //position left
+        this.y = HudConstants.HEIGHT - HudConstants.BOTTOM_PAD;
+        this.amountOfItems = attacks.size();
+        this.amountOfDrawnItems = (Math.min(amountOfItems, HudConstants.ITEMLISTLENGTH));
+        this.width = HudConstants.BATTLE_MENU_WIDTH;
+        this.height = HudConstants.HUD_ROW_HEIGHT * amountOfDrawnItems / HudConstants.ITEMLISTLENGTH;
+        this.setItemsFromAttacks(attacks);
+        this.currentPosition = 0;
+        this.firstDrawnItem = 0;
+        this.lastDrawnItem = amountOfDrawnItems;
+
+        this.confirmConsumer = new CopyOnWriteArrayList<>();
+
+        Input.keyboard().onKeyTyped(e -> {
+            if (!focus) return;
+            if (e.getKeyCode() == KeyEvent.VK_UP) {
+                //Game.audio().playSound("Menu_change");
+                decPosition();
+                System.out.println("Up | " + currentPosition);
+            }
+            if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                // Game.audio().playSound("Menu_change");
                 incPosition();
                 System.out.println("Down | " + currentPosition);
             }
@@ -51,7 +98,7 @@ public class BattleMenu {
         this.confirmConsumer.add(cons);
     }
 
-
+    // get events from constructor
     private void confirm() {
         for (Consumer<Integer> cons : this.confirmConsumer) {
             cons.accept(this.currentPosition);
@@ -59,35 +106,53 @@ public class BattleMenu {
     }
 
     public void draw(Graphics2D g) {
-        g.setColor(Color.WHITE);
+        // draw background
+        g.setColor(HudConstants.BACKGROUND);
         g.fillRect(x, y, width, height);
-        int buttonPad = 2;
-        int i = 0;
-        for (String item : items) {
-            g.setColor(Color.RED);
 
+        // draw buttons
+        int buttonPad = 2;
+
+        for (int i = firstDrawnItem; i < lastDrawnItem; i++) {
+            // draw buttons
+            g.setColor(HudConstants.BUTTONCOLOR);
+            g.fillRect(x + buttonPad, y + buttonPad + height * (i - firstDrawnItem) / amountOfDrawnItems, width - 2 * buttonPad, height / amountOfDrawnItems - 2 * buttonPad);
+
+            // draw selection
+            g.setColor(HudConstants.SELECTCOLOR);
             if (i == currentPosition) {
-                g.drawRect(x, y + height * i / items.length, width, height / items.length);
+                g.drawRect(x, y + height * (i - firstDrawnItem) / amountOfDrawnItems, width, height / amountOfDrawnItems);
             }
 
-            g.setColor(Color.GRAY);
-            g.fillRect(x + buttonPad, y + buttonPad + height * i / items.length, width - 2 * buttonPad, height / items.length - 2 * buttonPad);
-            g.setColor(Color.BLACK);
-            g.drawString(item, x + buttonPad, (y + 20 + buttonPad) + height * i++ / items.length);
+            // draw text
+            g.setColor(HudConstants.TEXTCOLOR);
+            g.drawString(items[i], x + buttonPad, (y + 20 + buttonPad) + height * (i - firstDrawnItem) / amountOfDrawnItems);
         }
     }
 
     public void incPosition() {
-        this.currentPosition = ++this.currentPosition % (this.items.length);
+        this.currentPosition = ++this.currentPosition % (amountOfItems);
+        if (this.currentPosition == 0) {
+            this.firstDrawnItem = 0;
+            this.lastDrawnItem = this.amountOfDrawnItems;
+        } else if (this.currentPosition >= this.lastDrawnItem) {
+            this.firstDrawnItem++;
+            this.lastDrawnItem++;
+        }
     }
 
     public void decPosition() {
         this.currentPosition--;
         if (this.currentPosition < 0) {
-            this.currentPosition = (this.items.length - 1);
+            this.currentPosition = amountOfItems - 1;
+            this.lastDrawnItem = amountOfItems;
+            this.firstDrawnItem = amountOfItems - amountOfDrawnItems;
             return;
+        } else if (this.currentPosition < this.firstDrawnItem) {
+            this.firstDrawnItem--;
+            this.lastDrawnItem--;
         }
-        this.currentPosition = this.currentPosition % (this.items.length);
+        this.currentPosition = this.currentPosition % (amountOfItems);
     }
 
     public void setFocus(boolean focus) {
@@ -96,6 +161,13 @@ public class BattleMenu {
 
     public int getCurrentFocus() {
         return currentPosition;
+    }
+
+    public void setItemsFromAttacks(List<Attack> attacks) {
+        items = new String[attacks.size()];
+        for (int i = 0; i < attacks.size(); i++) {
+            items[0] = attacks.get(i).getName();
+        }
     }
 
 }
