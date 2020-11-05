@@ -31,6 +31,7 @@ public class CeEntity {
     private int stamina;
     private int attack;
     private int defense;
+    private Random random = new Random();
 
     public CeEntity(BeastTypes type, Nature nature, Attack[] attacks, int hitPoints, int maxHitPoints, int level, int friendshipPoints, int speed, int stamina, int attack, int defense, int developmentLvl) {
         this.type = type;
@@ -48,7 +49,7 @@ public class CeEntity {
     }
 
     public CeEntity(Regions region, CeEntity player) { // Constructor for new Encounter Beast
-        Random random = new Random();
+
         Beasts beast = pickBeast(region);
 
         // calculate Level
@@ -68,6 +69,23 @@ public class CeEntity {
         this.defense = scaleOnLvl(beast.getBaseDefense(), beast.getDefenseLvlScaling()) + (random.nextInt(EntityConstants.DEFENSE_RANGE * 2) - EntityConstants.DEFENSE_RANGE);
         this.attacks = pickAttacks();
     }
+
+    public CeEntity(Beasts beast) {
+        this.type = beast.getType();
+        Nature[] natures = Nature.values();
+        this.nature = natures[random.nextInt(natures.length)];
+        //this.attacks = beast.getAttacks;
+        this.hitPoints = beast.getBaseAttack();
+        this.maxHitPoints = beast.getBaseHp();
+        this.level = 1;
+        this.friendshipPoints = 0;
+        this.speed = beast.getBaseSpeed();
+        this.stamina = beast.getBaseStamina();
+        this.attack = beast.getBaseAttack();
+        this.defense = beast.getBaseDefense();
+        this.developmentLvl = beast.getDevelopmentlvl();
+    }
+
 
     private int scaleOnLvl(int base, int lvlScaling) {
         return base + this.getLevel() * lvlScaling;

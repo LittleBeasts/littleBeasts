@@ -2,8 +2,8 @@ package calculationEngine.entities;
 
 public enum Beasts {
 
-    FeuerFurz(BeastTypes.Fire, 100, 25,25,25,25,25,25,25,25,25, 15, "StinkenderFeuerFurz", Regions.MiscatonicMountains),
-    StinkenderFeuerFurz(BeastTypes.Fire, 100, 25,25,25,25,25,25,25,25,25, Integer.MAX_VALUE, "", Regions.MiscatonicMountains);
+    FeuerFurz(BeastTypes.Fire, 100, 25, 25, 25, 25, 25, 25, 25, 25, 25, 15, "StinkenderFeuerFurz", Regions.MiscatonicMountains),
+    StinkenderFeuerFurz(BeastTypes.Fire, 100, 25, 25, 25, 25, 25, 25, 25, 25, 25, Integer.MAX_VALUE, "", Regions.MiscatonicMountains);
 
 
     private BeastTypes type;
@@ -36,6 +36,10 @@ public enum Beasts {
         this.developmentId = developmentId;
         this.developmentlvl = developmentlvl;
         this.region = region;
+    }
+
+    public static Beasts getBeast(String name) {
+        return Beasts.valueOf(name);
     }
 
     public Regions getRegion() {
