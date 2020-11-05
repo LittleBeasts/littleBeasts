@@ -1,4 +1,9 @@
-package calculationEngine.entities;
+package calculationEngine.battle;
+
+import calculationEngine.entities.Attack;
+import calculationEngine.entities.BeastTypes;
+import calculationEngine.entities.CeEntity;
+import calculationEngine.environment.Item;
 
 import java.util.Random;
 
