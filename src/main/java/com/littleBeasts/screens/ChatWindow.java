@@ -95,9 +95,16 @@ public class ChatWindow extends GuiComponent implements IUpdateable {
             String value = buffer.toString();
             chatHistory.add(value);
             if (chatHistory.size() > amountOfDrawnElements) {
-                topElement++;
-                bottomElement++;
+                if (bottomElement != chatHistory.size()) {
+                    bottomElement = chatHistory.size();
+                    topElement = chatHistory.size() - amountOfDrawnElements;
+                    System.out.println("Top: " + topElement + " | Bottom: " + bottomElement);
+                } else {
+                    topElement++;
+                    bottomElement++;
+                }
             }
+
         }
         clearTextField();
     }
