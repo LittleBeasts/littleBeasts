@@ -25,7 +25,7 @@ public class CeEntity {
     private int developmentLvl; // level at which development will take place
 
     // stats
-    private int maxHitPoints; //TODO: added max hit points, calculations for it need to be addressed.
+    private int maxHitPoints;
     private int hitPoints;
     private int level;
     private int friendshipPoints;
@@ -63,11 +63,11 @@ public class CeEntity {
         boolean lvlInRange = EntityConstants.MAX_LVL >= tmpLvl && EntityConstants.START_LVL <= tmpLvl;
         this.level = lvlInRange ? tmpLvl : (tmpLvl <= EntityConstants.MAX_LVL ? EntityConstants.START_LVL : EntityConstants.MAX_LVL); // Sets Level to constant if level isn't in specified range
 
-        Nature[] natures = Nature.values(); // TODO: Eventuell in Nature enum auslagern
-        this.nature = natures[random.nextInt(natures.length)];
+        this.nature = Nature.getRandomNature();
 
         this.developmentLvl = beast.getDevelopmentlvl();
         this.hitPoints = scaleOnLvl(beast.getBaseHp(), this.level, beast.getHpLvlScaling());
+        this.maxHitPoints = this.hitPoints;
         this.type = beast.getType();
         this.speed = scaleOnLvl(beast.getBaseSpeed(),  this.level, beast.getSpeedLvlScaling());
         this.attack = scaleOnLvl(beast.getBaseAttack(),  this.level, beast.getAttackLvlScaling()) + (random.nextInt(EntityConstants.ATTACK_RANGE * 2) - EntityConstants.ATTACK_RANGE);
@@ -80,8 +80,7 @@ public class CeEntity {
 
     public CeEntity(Beasts beast) { // dev constructor
         this.type = beast.getType();
-        Nature[] natures = Nature.values(); // TODO: Eventuell in Nature enum auslagern
-        this.nature = natures[random.nextInt(natures.length)];
+        this.nature = Nature.getRandomNature();
         this.attacks = new Attack[]{new Attack(Attacks.Punch)};
         this.hitPoints = beast.getBaseHp();
         this.maxHitPoints = beast.getBaseHp();
