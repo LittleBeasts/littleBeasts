@@ -53,11 +53,7 @@ public class testBattle {
             if(battle.getTurn() != null){
                 if (battle.getTurn().getNumber() == cePlayer1.getNumber()) {
                     System.out.println("Turn of: Player 1");
-                    CeEntity[] returned = battle.useAttack(new Attack(Attacks.Punch));
-                    for (CeEntity entitiy : returned
-                    ) {
-                        System.out.println(entitiy.toString());
-                    }
+                    battle.useAttack(new Attack(Attacks.Punch));
                 }
             }
             else {System.out.println("End of fight"); break;}
@@ -82,11 +78,7 @@ public class testBattle {
             if(battle.getTurn() != null){
                 if (battle.getTurn() != BattleConstants.noneTurnCePlayer) {
                     System.out.println("Turn of player:" + (battle.getTurn() == cePlayer1 ? "1" : "2"));
-                    CeEntity[] returned = battle.useAttack(new Attack(Attacks.Punch));
-                    for (CeEntity entitiy : returned
-                    ) {
-                        System.out.println(entitiy.toString());
-                    }
+                    battle.useAttack(new Attack(Attacks.Punch));
                 }
             }
             else {System.out.println("End of fight"); break;}

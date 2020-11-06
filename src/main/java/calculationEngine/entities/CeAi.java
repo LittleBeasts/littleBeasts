@@ -68,8 +68,7 @@ public class CeAi extends Thread {
             if(battle.getTurn() != null){
                 if (battle.getTurn().getNumber() == this.aiPlayer.getNumber()) {
                     System.out.println("Turn of AI");
-                    CeEntity[] returned = battle.useAttack(pickAttack());
-                    this.currentMonster = returned[0];
+                    battle.useAttack(pickAttack());
                 }
             }
             else break;

@@ -104,25 +104,28 @@ public class Battle extends Thread {
         return caught;
     }
 
-    public CeEntity[] useAttack(Attack attack){
+    public void useAttack(Attack attack){
         if(turnPlayer1){
             turnPlayer1 = false;
-            return applyAttack(selectedFightEntityPlayer1, selectedFightEntityPlayer2, attack);
+            applyAttack(selectedFightEntityPlayer1, selectedFightEntityPlayer2, attack);
         }
         else if (turnPlayer2) {
             turnPlayer2 = false;
-            return applyAttack(selectedFightEntityPlayer2, selectedFightEntityPlayer1, attack);
+            applyAttack(selectedFightEntityPlayer2, selectedFightEntityPlayer1, attack);
 
         }
-        return new CeEntity[]{null, null};
     }
 
-    private CeEntity[] applyAttack(CeEntity attacker, CeEntity defender, Attack attack){
+    private void applyAttack(CeEntity attacker, CeEntity defender, Attack attack){
         int damage =  Damage.calculateDamage(attacker, defender, attack);
         if(damage != -1){
             System.out.println("Damage:" + damage);
             int newHitPoints = defender.getHitPoints() - damage;
             defender.setHitPoints(newHitPoints);
+            if(defender.getType() == BeastTypes.PlayerStandard){
+                if(defender.getPlayerNumber() == 1) cePlayer1.setHitPoints(newHitPoints);
+                else cePlayer2.setHitPoints(newHitPoints);
+            }
             if(defender.getHitPoints() <= 0){
                 defender.setHitPoints(0);
                 if(defender.getType() == BeastTypes.PlayerStandard) {
@@ -153,7 +156,7 @@ public class Battle extends Thread {
         }
         else System.out.println("Missed!");
         setActionDone();
-        return new CeEntity[]{attacker, defender};
+//        return new CeEntity[]{attacker, defender};
 
     }
 
