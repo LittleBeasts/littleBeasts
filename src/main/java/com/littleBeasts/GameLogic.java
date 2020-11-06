@@ -1,6 +1,9 @@
 package com.littleBeasts;
 
+import calculationEngine.battle.Battle;
 import calculationEngine.entities.Beasts;
+import calculationEngine.entities.CeAi;
+import calculationEngine.entities.CePlayer;
 import com.littleBeasts.entities.Beast;
 import com.littleBeasts.entities.Player;
 import com.littleBeasts.screens.IngameScreen;
@@ -12,6 +15,7 @@ import de.gurkenlabs.litiengine.entities.Spawnpoint;
 import de.gurkenlabs.litiengine.graphics.Camera;
 import de.gurkenlabs.litiengine.graphics.PositionLockCamera;
 import de.gurkenlabs.litiengine.input.Input;
+import gherkin.lexer.Pl;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -128,6 +132,10 @@ public class GameLogic implements IUpdateable {
         Beast beast = new Beast(Beasts.FeuerFurz, x, (int) (Player.instance().getY() - (Player.instance().getHeight() / 2)));
         beast.setFacingDirection(Player.instance().getFacingDirection().getOpposite());
         beastList.add(beast);
+
+        CePlayer cePlayer = Player.instance().getCePlayer();
+        CeAi ai = new CeAi(cePlayer);
+        Battle battle = new Battle(ai,Player.instance().getCePlayer());
     }
 
     @Override
