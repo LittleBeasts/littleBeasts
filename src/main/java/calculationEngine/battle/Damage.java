@@ -1,4 +1,7 @@
-package calculationEngine.entities;
+package calculationEngine.battle;
+
+import calculationEngine.entities.Attack;
+import calculationEngine.entities.CeEntity;
 
 import java.util.Random;
 

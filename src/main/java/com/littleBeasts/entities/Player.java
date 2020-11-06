@@ -1,5 +1,7 @@
 package com.littleBeasts.entities;
 
+import calculationEngine.entities.Attack;
+import calculationEngine.entities.Attacks;
 import calculationEngine.entities.Beasts;
 import com.littleBeasts.PlayerState;
 import config.HudConstants;
@@ -20,6 +22,7 @@ public class Player extends Creature implements IUpdateable {
     private static PlayerState state = PlayerState.CONTROLLABLE;
     private List<Beast> littleBeastTeam;
     private boolean spawned;
+    private List<Attack> playerAttacks; // TODO: reference to CE_Player
 
     private Player() {
         super("test");
@@ -27,6 +30,8 @@ public class Player extends Creature implements IUpdateable {
         this.littleBeastTeam = new ArrayList<>();
         this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY(),this.getFacingDirection().getOpposite()));
         this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY(),this.getFacingDirection().getOpposite()));
+        this.playerAttacks = new ArrayList<>(); // TODO: get CE_Player attacks
+        this.addAttack(new Attack(Attacks.Punch));
         //this.littleBeastTeam.add(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY()));
         // setup the player's abilities
     }
@@ -78,6 +83,14 @@ public class Player extends Creature implements IUpdateable {
         littleBeastTeam.add(beast);
         int position = littleBeastTeam.indexOf(beast);
         littleBeastTeam.get(position).createBeastStats(HudConstants.TEAM_START_POINT + position * (HudConstants.TILE_GAP + HudConstants.HUD_TILE_WIDTH), HudConstants.HEIGHT - HudConstants.BOTTOM_PAD, HudConstants.HUD_TILE_WIDTH, HudConstants.HUD_ROW_HEIGHT);
+    }
+
+    public void addAttack(Attack attack) {
+        playerAttacks.add(attack);
+    } // TODO: not needed, when CE_Player is implemented
+
+    public List<Attack> getAttacks() {
+        return playerAttacks;
     }
 
     public void removeFromLittleBeastTeam(Beast beast) {

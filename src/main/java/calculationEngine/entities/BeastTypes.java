@@ -4,7 +4,8 @@ public enum BeastTypes {
 
     Fire("Water", "Earth"),
     Water("Earth", "Fire"),
-    Earth("Water", "Fire");
+    Earth("Water", "Fire"),
+    PlayerStandard("NONE", "NONE");
 
     private String resistanceId;
     private String weaknessId;
