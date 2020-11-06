@@ -4,6 +4,7 @@ import calculationEngine.entities.Beasts;
 import com.littleBeasts.entities.Beast;
 import com.littleBeasts.entities.Player;
 import com.littleBeasts.screens.IngameScreen;
+import de.gurkenlabs.litiengine.Direction;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.MapArea;
@@ -47,41 +48,17 @@ public class GameLogic implements IUpdateable {
         camera.setZoom(1.0f, 0);
         Game.world().setCamera(camera);
 
-        // set a basic gravity for all levels.
-        //Game.world().setGravity(120);
-
-        // add default game logic for when a level was loaded
-        // Game.world().onLoaded(e -> {
-        //     // spawn the player instance on the spawn point with the name "enter"
-        //     Spawnpoint enter = e.getSpawnpoint("west");
-        //     if (enter != null) {
-        //         enter.spawn(Player.instance());
-        //     }
-        // });
-
         Game.world().onLoaded(e -> {
             if (e.getMap().getName().equals("title")) {
                 return;
             }
 
-            // for (Prop prop : Game.world().environment().getProps()) {
-            //     prop.setIndestructible(true);
-            // }
-
             Game.loop().perform(500, () -> Game.window().getRenderComponent().fadeIn(0));
 
-            // if (startups.containsKey(e.getMap().getName())) {
-            //     startups.get(e.getMap().getName()).run();
-            // }
-//
-            // if (e.getMap().getName().equals("end")) {
-            //     return;
-            // }
-
-            // Player.instance().getHitPoints().setToMaxValue();
             Player.instance().setIndestructible(false);
             Player.instance().setCollision(true);
-            // spawn the player instance on the spawn point with the name "enter"
+
+            // spawn the player instance on the spawn point with the name "west"
             Spawnpoint enter = e.getSpawnpoint("west");
             if (enter != null) {
                 enter.spawn(Player.instance());
@@ -145,8 +122,12 @@ public class GameLogic implements IUpdateable {
 
     @Override
     public void update() {
+        loadNewArea();
+    }
+
+    public void loadNewArea(){
         Collection<MapArea> areas = Game.world().environment().getAreas();
-        Point2D playerPosition = Player.instance().getCenter();
+        Point2D playerPosition;
         Rectangle2D mapArea;
         for (MapArea area : areas) {
             mapArea = area.getBoundingBox();
@@ -160,6 +141,8 @@ public class GameLogic implements IUpdateable {
                 if (spawnpoint != null) {
                     spawnpoint.spawn(Player.instance());
                 }
+                Player.instance().setFacingDirection(Direction.DOWN);
+                Player.instance().setRenderWithLayer(true);
             }
         }
     }

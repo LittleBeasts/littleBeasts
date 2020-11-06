@@ -13,7 +13,7 @@ import java.util.List;
 
 @EntityInfo(width = 16, height = 16)
 @MovementInfo(velocity = 70)
-@CollisionInfo(collisionBoxWidth = 14, collisionBoxHeight = 2, collision = true)
+@CollisionInfo(collisionBoxWidth = 14, collisionBoxHeight = 14, collision = true)
 @CombatInfo(hitpoints = 100, team = 1)
 public class Player extends Creature implements IUpdateable {
     private static Player instance;
