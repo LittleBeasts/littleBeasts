@@ -1,19 +1,15 @@
 package com.littleBeasts.screens;
 
-import com.littleBeasts.GameLogic;
-import com.littleBeasts.GameState;
-import com.littleBeasts.PlayerState;
-import com.littleBeasts.entities.Player;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.gui.GuiComponent;
-import de.gurkenlabs.litiengine.input.IKeyboard;
-import de.gurkenlabs.litiengine.input.Input;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.function.Consumer;
+import java.util.ArrayList;
+import java.util.List;
+
+import static config.HudConstants.ChatWindowFont;
 
 public class ChatWindow extends GuiComponent implements IUpdateable {
     private static final String CURSOR = "|";
@@ -21,28 +17,28 @@ public class ChatWindow extends GuiComponent implements IUpdateable {
     private static String showableText;
     private static int maxLength;
     private static String validCharacters;
-    private static String chatHistory;
+    private static List<String> chatHistory;
     private static int index;
-    private Font font;
+    private static int topElement, bottomElement;
+    private static int scrollbarHeight, scrollPointHeight;
+    private static int scrollPointPosition;
+    private static final int amountOfDrawnElements = 6;
+    /* Set attributes with constructor parameters */
+    private final Font font = ChatWindowFont;
     private float alpha;
 
     private Rectangle rectangle;
-    private Point textPoint;
+    private final Point textPoint;
     ;
     private int padding;
 
-    private int cursorDelay = 30;
     private int countDelay;
     private boolean cursor;
-    private int cursorLength;
-    private int x = 0;
-    private int y = 0;
-    private int width = Game.window().getWidth();
-    private int height = Game.window().getHeight();
-    private int vPadding = 200;
-    private int hPadding = 400;
+    private final int x = 0;
+    private final int y = 0;
 
     private static boolean focus;
+
 
     public static void init() {
     }
@@ -50,28 +46,29 @@ public class ChatWindow extends GuiComponent implements IUpdateable {
 
     public ChatWindow() {
         super(0, 0, Game.window().getWidth(), Game.window().getHeight());
-        /* Set attributes with constructor parameters */
-        this.font = new Font("Serif", Font.PLAIN, 55);
-        chatHistory = "";
+        chatHistory = new ArrayList<>();
         validCharacters = "qwertzuiopüasdfghjklöäyxcvbnmQWERTZUIOPÜASDFGHJKLÖÄYXCVBNM1234567890ß!?., ";
         /* Set text point */
         int x = this.x + this.padding;
         int y = this.y - this.padding;
         this.textPoint = new Point(x, y);
 
+
         /* Create variables to control buffer */
-        this.buffer = new StringBuffer();
-        this.showableText = "";
-        this.maxLength = 50;
-        this.clearIndex();
+        buffer = new StringBuffer();
+        showableText = "";
+        maxLength = 38;
+        clearIndex();
 
         /* Create variables to control cursor */
         this.countDelay = 0;
         this.cursor = false;
-        this.cursorLength = this.font.getSize();
+        int cursorLength = this.font.getSize();
+        this.topElement = 0;
+        this.bottomElement = amountOfDrawnElements;
 
         /* Starts without focus */
-        this.focus = false;
+        focus = false;
     }
 
     private static void clearTextField() {
@@ -83,7 +80,7 @@ public class ChatWindow extends GuiComponent implements IUpdateable {
     }
 
     private static void clearHistory() {
-        chatHistory = "";
+        chatHistory.clear();
     }
 
     public synchronized void onFocus() {
@@ -96,11 +93,11 @@ public class ChatWindow extends GuiComponent implements IUpdateable {
     public static synchronized void returnKey() {
         if (buffer.length() > 0) {
             String value = buffer.toString();
-            chatHistory += value + "\n";
-            //this.returnKeyCommand.setParameters(value);
-            //this.returnKeyCommand.execute();
-        } else {
-            //this.escapeKeyCommand.execute();
+            chatHistory.add(value);
+            if (chatHistory.size() > amountOfDrawnElements) {
+                topElement++;
+                bottomElement++;
+            }
         }
         clearTextField();
     }
@@ -111,7 +108,6 @@ public class ChatWindow extends GuiComponent implements IUpdateable {
     public static synchronized void escapeKey() {
         clearTextField();
         clearHistory();
-        //this.escapeKeyCommand.execute();
     }
 
     private static void clearIndex() {
@@ -130,31 +126,28 @@ public class ChatWindow extends GuiComponent implements IUpdateable {
         if (buffer.length() > 0) {
             clearIndex();
             buffer.deleteCharAt(buffer.length() - 1);
-
-            /* Get showable text with index */
             showableText = buffer.substring(getIndex(), buffer.length());
-
-            /* Adjust showable text if necessary */
-            // while (getAdjustedTextWidth(showableText) > rectangle.width) {
-            //     increaseIndex();
-            //     showableText = buffer.substring(getIndex(), buffer.length());
-            // }
         }
     }
 
-    public static void add(char character) {
-        if (character == KeyEvent.VK_BACK_SPACE) {
-            delete();
-            return;
+    public static void add(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_BACK_SPACE:
+                delete();
+                break;
+            case KeyEvent.VK_ENTER:
+                returnKey();
+                break;
+            case KeyEvent.VK_ESCAPE:
+                escapeKey();
+            case KeyEvent.VK_UP:
+                decIncrement();
+                break;
+            case KeyEvent.VK_DOWN:
+                incIncrement();
+                break;
         }
-        if (character == KeyEvent.VK_ENTER) {
-            returnKey();
-            return;
-        }
-        if (character == KeyEvent.VK_ESCAPE) {
-            escapeKey();
-            return;
-        }
+
 
         /* Validate size */
         if (buffer.length() >= maxLength) {
@@ -162,21 +155,35 @@ public class ChatWindow extends GuiComponent implements IUpdateable {
         }
 
         /* Validate character */
-        if (validCharacters.indexOf(character) == -1) {
+        if (validCharacters.indexOf(e.getKeyChar()) == -1) {
             return;
         }
 
         /* Add char in buffer */
-        buffer.append(character);
+        buffer.append(e.getKeyChar());
 
         /* Get showable text with index */
         showableText = buffer.substring(getIndex(), buffer.length());
+    }
 
-        /* Adjust showable text if necessary */
-        //  while (getAdjustedTextWidth(showableText) > rectangle.width) {
-        //      increaseIndex();
-        //      showableText = buffer.substring(getIndex(), buffer.length());
-        //  }
+    private static void incIncrement() {
+        if (chatHistory.size() < amountOfDrawnElements)
+            return;
+        if (bottomElement != chatHistory.size()) {
+            bottomElement++;
+            topElement++;
+        }
+        System.out.println("Down: Bottom: " + bottomElement + " | Top: " + topElement);
+    }
+
+    private static void decIncrement() {
+        if (chatHistory.size() < amountOfDrawnElements)
+            return;
+        if (topElement > 0) {
+            bottomElement--;
+            topElement--;
+        }
+        System.out.println("Up: Bottom: " + bottomElement + " | Top: " + topElement);
     }
 
     int tick = 0;
@@ -184,8 +191,9 @@ public class ChatWindow extends GuiComponent implements IUpdateable {
     @Override
     public synchronized void render(Graphics2D g) {
 
-        this.width = (int) Game.window().getResolution().getWidth();
-        this.height = (int) Game.window().getResolution().getHeight();
+        int width = (int) Game.window().getResolution().getWidth();
+        int height = (int) Game.window().getResolution().getHeight();
+
 
         tick++;
         if (tick % 60 == 0) {
@@ -198,13 +206,16 @@ public class ChatWindow extends GuiComponent implements IUpdateable {
         int textHeight = 70;
         g.setFont(font);
         g.setColor(Color.WHITE);
-        g.fillRoundRect(this.x + hPadding, this.y + vPadding, this.width - (hPadding * 2), this.height - (vPadding * 2), 20, 20);
+        int vPadding = 200;
+        int hPadding = 400;
+        g.fillRoundRect(this.x + hPadding, this.y + vPadding, width - (hPadding * 2), height - (vPadding * 2), 20, 20);
         g.setColor(Color.gray);
-        g.fillRoundRect(this.x + hPadding, this.y + vPadding, this.width - (hPadding * 2), this.height - (vPadding * 2) - textHeight, 20, 20);
-        g.fillRect(this.x + hPadding, this.height - vPadding - textHeight, this.width - (hPadding * 2), -textHeight);
+        g.fillRoundRect(this.x + hPadding, this.y + vPadding, width - (hPadding * 2), height - (vPadding * 2) - textHeight, 20, 20);
+        g.fillRect(this.x + hPadding, height - vPadding - textHeight, width - (hPadding * 2), -textHeight);
 
         /* Verifier if can draw cursor */
         countDelay++;
+        int cursorDelay = 30;
         countDelay = countDelay % cursorDelay;
         if (countDelay == 0) {
             cursor = !cursor;
@@ -217,11 +228,21 @@ public class ChatWindow extends GuiComponent implements IUpdateable {
         g.setColor(Color.BLACK);
         int fineTuning = 20;
         drawString(g, chatHistory, textPoint.x + hPadding + fineTuning, this.y + vPadding + fineTuning);
-        g.drawString(text, textPoint.x + hPadding + fineTuning, this.height - vPadding - fineTuning);
+        g.drawString(text, textPoint.x + hPadding + fineTuning, height - vPadding - fineTuning);
+
+
+        scrollbarHeight = -height + vPadding * 2;
+        scrollPointHeight = Math.min((scrollbarHeight / (Math.max(chatHistory.size() - amountOfDrawnElements + 1, 1))), -30);
+        scrollPointPosition = chatHistory.size() > amountOfDrawnElements ? scrollPointHeight * (chatHistory.size() - bottomElement) : 0;
+
+        g.setColor(Color.BLUE);
+        g.fillRect(this.x + hPadding + (width - 2 * hPadding), height - vPadding, 30, scrollbarHeight);
+        g.setColor(Color.GREEN);
+        g.fillRect(this.x + hPadding + (width - 2 * hPadding), height - vPadding + scrollPointPosition, 30, scrollPointHeight);
     }
 
     public void setFocus(boolean focus) {
-        this.focus = focus;
+        ChatWindow.focus = focus;
     }
 
     @Override
@@ -229,8 +250,10 @@ public class ChatWindow extends GuiComponent implements IUpdateable {
 
     }
 
-    private static void drawString(Graphics g, String text, int x, int y) {
-        for (String line : text.split("\n"))
-            g.drawString(line, x, y += g.getFontMetrics().getHeight());
+    private static void drawString(Graphics g, List<String> text, int x, int y) {
+        for (int i = topElement; i < bottomElement; i++) {
+            if (i < text.size())
+                g.drawString(text.get(i), x, y += g.getFontMetrics().getHeight());
+        }
     }
 }

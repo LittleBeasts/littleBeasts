@@ -22,4 +22,6 @@ public class HudConstants {
     public static final Color TEXTCOLOR = Color.BLACK;
     public static final Color HPBARCOLOR = new Color(255, 0, 0, 100);
 
+    public static final Font ChatWindowFont = new Font("Serif", Font.PLAIN, 55);
+
 }

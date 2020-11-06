@@ -122,7 +122,7 @@ public class GameLogic implements IUpdateable {
                 IngameScreen.chatWindow.setVisible(true);
                 IngameScreen.chatWindow.setFocus(true);
                 Input.keyboard().onKeyTyped(e -> {
-                    IngameScreen.chatWindow.add(e.getKeyChar());
+                    IngameScreen.chatWindow.add(e);
                 });
                 Game.audio().playMusic("ingameMenu");
                 break;
