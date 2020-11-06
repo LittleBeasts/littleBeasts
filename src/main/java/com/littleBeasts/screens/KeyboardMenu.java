@@ -1,15 +1,15 @@
 package com.littleBeasts.screens;
 
-import java.awt.Color;
-import java.awt.event.KeyEvent;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.function.Consumer;
-
 import com.littleBeasts.GameLogic;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.gui.Menu;
 import de.gurkenlabs.litiengine.input.Input;
+
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Consumer;
 
 public class KeyboardMenu extends Menu {
 
@@ -35,26 +35,29 @@ public class KeyboardMenu extends Menu {
                 }
 
                 this.confirm();
-                //Game.audio().playSound("Menu_pick");
+                Game.audio().playSound("Menu_pick");
                 lastMenuInput = Game.time().now();
             }
         });
 
-        Input.keyboard().onKeyPressed(KeyEvent.VK_UP, e -> {
-            if (this.menuInputIsLocked()) {
-                return;
+        Input.keyboard().onKeyPressed(e -> {
+            if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
+                if (this.menuInputIsLocked()) {
+                    return;
+                }
+                Game.audio().playSound("Menu_change");
+                decPosition();
             }
-           // Game.audio().playSound("Menu_change");
-            decPosition();
         });
 
-        Input.keyboard().onKeyPressed(KeyEvent.VK_DOWN, e -> {
-
-            if (this.menuInputIsLocked()) {
-                return;
+        Input.keyboard().onKeyPressed(e -> {
+            if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
+                if (this.menuInputIsLocked()) {
+                    return;
+                }
+                Game.audio().playSound("Menu_change");
+                incPosition();
             }
-           // Game.audio().playSound("Menu_change");
-            incPosition();
         });
 
     }

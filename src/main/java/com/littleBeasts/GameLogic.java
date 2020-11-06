@@ -12,8 +12,6 @@ import de.gurkenlabs.litiengine.graphics.PositionLockCamera;
 import de.gurkenlabs.litiengine.input.Input;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 public class GameLogic implements IUpdateable {
     private static GameState state = GameState.INGAME;
@@ -88,61 +86,49 @@ public class GameLogic implements IUpdateable {
         Game.audio().stopMusic();
         GameLogic.state = state;
         Game.loop().setTimeScale(1);
-        Input.keyboard().removeKeyListener(chatKeyboard);
+        Player.instance().attachControllers();
+        // Input.keyboard().removeKeyListener(chatKeyboard);
 
-        if (getState() == GameState.INGAME) { //TODO: Change to switch case
-            firstStart = false;
-            IngameScreen.chatWindow.setVisible(false);
-            IngameScreen.ingameMenu.setVisible(false);
-            //Game.audio().playMusic("ingame");
-            //    Player.instance().addController();
+        switch (state) {
+            case MENU:
+                if (!firstStart) {
+                    Game.loop().setTimeScale(0);
+                    Game.screens().display("MAINMENU");
+                    Game.audio().playMusic("titlemenu");
+                }
+                break;
+            case BATTLE:
+                Player.instance().detachControllers();
+                Game.audio().playMusic("battle");
+                new Beast(Beasts.FeuerFurz, (int) Player.instance().getX() + 50,
+                        (int) (Player.instance().getY() - (Player.instance().getHeight() / 2)),
+                        Player.instance().getFacingDirection().getOpposite()); //for dev purposes
+                break;
+            case INGAME:
+                firstStart = false;
+                IngameScreen.chatWindow.setVisible(false);
+                IngameScreen.ingameMenu.setVisible(false);
+                Game.audio().playMusic("arkham");
+                break;
+            case INGAME_MENU:
+                Game.loop().setTimeScale(0);
+                Player.instance().detachControllers();
+                IngameScreen.ingameMenu.setVisible(true);
+                Game.audio().playMusic("ingameMenu");
+                break;
+            case INGAME_CHAT:
+                Game.loop().setTimeScale(0);
+                Player.instance().detachControllers();
+                IngameScreen.chatWindow.setVisible(true);
+                IngameScreen.chatWindow.setFocus(true);
+                Input.keyboard().onKeyTyped(e -> {
+                    IngameScreen.chatWindow.add(e.getKeyChar());
+                });
+                Game.audio().playMusic("ingameMenu");
+                break;
         }
-        if (getState() == GameState.INGAME_MENU) {
-            Game.loop().setTimeScale(0);
-            IngameScreen.ingameMenu.setVisible(true);
-           // Game.audio().playMusic("inGameMenu");
-        }
-        if (getState() == GameState.INGAME_CHAT) {
-            Game.loop().setTimeScale(0);
-            IngameScreen.chatWindow.setVisible(true);
-            IngameScreen.chatWindow.setFocus(true);
-            //  Player.instance().removeController();
-            Input.keyboard().addKeyListener(chatKeyboard); // TODO: Use liti key input
-           // Game.audio().playMusic("inGameMenu");
-        }
-        if (getState() == GameState.MENU && !firstStart) {
-           // Game.audio().playMusic("mainMenu");
-            Game.loop().setTimeScale(0);
-            Game.screens().display("MAINMENU");
-        }
-        if (getState() == GameState.BATTLE) {
-//            Game.loop().setTimeScale(0);
-
-          //  Game.audio().playMusic("bgm");
-            new Beast(Beasts.FeuerFurz, (int) Player.instance().getX()+50,
-                        (int) (Player.instance().getY()-(Player.instance().getHeight()/2)),
-                         Player.instance().getFacingDirection().getOpposite()); //for dev purposes
-        }
-
         System.out.println(GameLogic.state.name());
     }
-
-    private static KeyListener chatKeyboard = new KeyListener() {
-        @Override
-        public void keyTyped(KeyEvent e) {
-            IngameScreen.chatWindow.add(e.getKeyChar());
-        }
-
-        @Override
-        public void keyPressed(KeyEvent e) {
-            // System.out.println("test");
-        }
-
-        @Override
-        public void keyReleased(KeyEvent e) {
-            // System.out.println("test");
-        }
-    };
 
     @Override
     public void update() {

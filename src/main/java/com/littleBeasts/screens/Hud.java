@@ -7,6 +7,7 @@ import com.littleBeasts.PlayerState;
 import com.littleBeasts.entities.Beast;
 import com.littleBeasts.entities.Player;
 import config.HudConstants;
+import config.PlayerConfig;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.graphics.ImageRenderer;
 import de.gurkenlabs.litiengine.graphics.ShapeRenderer;
@@ -19,7 +20,6 @@ import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 public class Hud extends GuiComponent {
 
@@ -32,8 +32,8 @@ public class Hud extends GuiComponent {
     protected Hud() {
         super(0, 0, Game.window().getResolution().getWidth(), Game.window().getResolution().getHeight());
 
-        String[] menuItems = new String[]{"Attack", "Catch", "Tame", "Pick Beast", "Item"}; //TODO: move to PlayerConfig
-        bm = new BattleMenu(300, menuItems);
+
+        bm = new BattleMenu(300, PlayerConfig.PLAYER_ACTIONS);
         bm.onConfirm(c -> {
             switch (c.intValue()) {
                 case 0:
@@ -49,7 +49,7 @@ public class Hud extends GuiComponent {
                     break;
             }
         });
-        List<Attack> attacks = Player.instance().getAttacks();
+        Attack[] attacks = Player.instance().getPlayerAttacks();
         attackMenu = new BattleMenu(350, attacks);
         attackMenu.onConfirm(c -> {
             switch (c.intValue()) {
@@ -138,8 +138,8 @@ public class Hud extends GuiComponent {
         g.drawImage(originalImage, padding, HudConstants.HEIGHT - HudConstants.BOTTOM_PAD, 80, 100, null);
         g.setColor(Color.BLACK);
         g.setFont(new Font("Serif", Font.PLAIN, 15));
-        String playerStats = "Player Name\n";
-        playerStats += "Player Life\n";
+        String playerStats = Player.instance().getPlayerName() + "\n";
+        playerStats += Player.instance().getCurrentHP() + "/" + Player.instance().getMaxHP() + "\n";
         playerStats += "Player Whatever\n";
         drawString(g, playerStats, padding + 100, height - padding - elementHeight);
     }

@@ -2,6 +2,7 @@ package com.littleBeasts.screens;
 
 import calculationEngine.entities.Attack;
 import config.HudConstants;
+import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.input.Input;
 
 import java.awt.*;
@@ -25,7 +26,7 @@ public class BattleMenu { // dev constructor
     private boolean focus = false;
     private final List<Consumer<Integer>> confirmConsumer;
 
-    public BattleMenu(int x, String[] items) {
+    public BattleMenu(int x, String[] items) { // for dev purposes
         this.x = x; //position left
         this.y = HudConstants.HEIGHT - HudConstants.BOTTOM_PAD;
         this.amountOfItems = items.length;
@@ -41,28 +42,35 @@ public class BattleMenu { // dev constructor
 
         Input.keyboard().onKeyTyped(e -> {
             if (!focus) return;
-            if (e.getKeyCode() == KeyEvent.VK_UP) { //TODO: Switch Case
-                //Game.audio().playSound("Menu_change");
-                decPosition();
-                System.out.println("Up | " + currentPosition);
-            }
-            if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                // Game.audio().playSound("Menu_change");
-                incPosition();
-                System.out.println("Down | " + currentPosition);
-            }
-            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                //Game.audio().playSound("Menu_pick");
-                System.out.println(items[currentPosition]);
-                this.confirm();
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_UP:
+                case KeyEvent.VK_W:
+                    Game.audio().playSound("Menu_change");
+                    decPosition();
+                    System.out.println("Up | " + currentPosition);
+                    break;
+                case KeyEvent.VK_DOWN:
+                case KeyEvent.VK_S:
+                    Game.audio().playSound("Menu_change");
+                    incPosition();
+                    System.out.println("Down | " + currentPosition);
+                    break;
+                case KeyEvent.VK_ENTER:
+                case KeyEvent.VK_D:
+                case KeyEvent.VK_SPACE:
+                case KeyEvent.VK_E:
+                    Game.audio().playSound("Menu_pick");
+                    System.out.println(items[currentPosition]);
+                    this.confirm();
+                    break;
             }
         });
     }
 
-    public BattleMenu(int x, List<Attack> attacks) {
+    public BattleMenu(int x, Attack[] attacks) {
         this.x = x; //position left
         this.y = HudConstants.HEIGHT - HudConstants.BOTTOM_PAD;
-        this.amountOfItems = attacks.size();
+        this.amountOfItems = attacks.length;
         this.amountOfDrawnItems = (Math.min(amountOfItems, HudConstants.ITEMLISTLENGTH));
         this.width = HudConstants.BATTLE_MENU_WIDTH;
         this.height = HudConstants.HUD_ROW_HEIGHT * amountOfDrawnItems / HudConstants.ITEMLISTLENGTH;
@@ -75,20 +83,27 @@ public class BattleMenu { // dev constructor
 
         Input.keyboard().onKeyTyped(e -> {
             if (!focus) return;
-            if (e.getKeyCode() == KeyEvent.VK_UP) {
-                //Game.audio().playSound("Menu_change");
-                decPosition();
-                System.out.println("Up | " + currentPosition);
-            }
-            if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                // Game.audio().playSound("Menu_change");
-                incPosition();
-                System.out.println("Down | " + currentPosition);
-            }
-            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                //Game.audio().playSound("Menu_pick");
-                System.out.println(items[currentPosition]);
-                this.confirm();
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_UP:
+                case KeyEvent.VK_W:
+                    Game.audio().playSound("Menu_change");
+                    decPosition();
+                    System.out.println("Up | " + currentPosition);
+                    break;
+                case KeyEvent.VK_DOWN:
+                case KeyEvent.VK_S:
+                    Game.audio().playSound("Menu_change");
+                    incPosition();
+                    System.out.println("Down | " + currentPosition);
+                    break;
+                case KeyEvent.VK_ENTER:
+                case KeyEvent.VK_D:
+                case KeyEvent.VK_SPACE:
+                case KeyEvent.VK_E:
+                    Game.audio().playSound("Menu_pick");
+                    System.out.println(items[currentPosition]);
+                    this.confirm();
+                    break;
             }
         });
     }
@@ -166,10 +181,10 @@ public class BattleMenu { // dev constructor
         return currentPosition;
     }
 
-    public void setItemsFromAttacks(List<Attack> attacks) {
-        items = new String[attacks.size()];
-        for (int i = 0; i < attacks.size(); i++) {
-            items[0] = attacks.get(i).getName();
+    public void setItemsFromAttacks(Attack[] attacks) {
+        items = new String[attacks.length];
+        for (int i = 0; i < attacks.length; i++) {
+            items[0] = attacks[i].getName();
         }
     }
 

@@ -43,6 +43,7 @@ public class Program {
         // enter main menu
         GameLogic.setState(GameState.MENU);
         Game.screens().display("MAINMENU");
+        Game.audio().playMusic("titlemenu");
         //Game.audio().playMusic("mainMenu");
         // GameLogic.setState(GameState.INGAME);
         // Game.screens().display("INGAME-SCREEN");
