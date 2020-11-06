@@ -5,6 +5,7 @@ import calculationEngine.entities.Attacks;
 import calculationEngine.entities.Beasts;
 import com.littleBeasts.PlayerState;
 import config.HudConstants;
+import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.*;
 import de.gurkenlabs.litiengine.input.KeyboardEntityController;
@@ -20,14 +21,15 @@ public class Player extends Creature implements IUpdateable {
     private static Player instance;
     private static PlayerState state = PlayerState.CONTROLLABLE;
     private List<Beast> littleBeastTeam;
+    private boolean spawned;
     private List<Attack> playerAttacks; // TODO: reference to CE_Player
 
     private Player() {
         super("test");
         this.addController(new KeyboardEntityController<>(this));
         this.littleBeastTeam = new ArrayList<>();
-        this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY()));
-        this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY()));
+        this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY(),this.getFacingDirection().getOpposite()));
+        this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY(),this.getFacingDirection().getOpposite()));
         this.playerAttacks = new ArrayList<>(); // TODO: get CE_Player attacks
         this.addAttack(new Attack(Attacks.Punch));
         //this.littleBeastTeam.add(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY()));
@@ -43,7 +45,16 @@ public class Player extends Creature implements IUpdateable {
 
     @Override
     public void update() {
+        spawnPlayer();
 
+    }
+
+    public void spawnPlayer() {
+        if (!spawned) {
+            Spawnpoint spawnpoint = Game.world().environment().getSpawnpoint("west");
+            spawnpoint.spawn(this);
+            spawned = true;
+        }
     }
 
     // @Override
