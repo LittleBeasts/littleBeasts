@@ -10,7 +10,6 @@ import de.gurkenlabs.litiengine.entities.Spawnpoint;
 import de.gurkenlabs.litiengine.graphics.Camera;
 import de.gurkenlabs.litiengine.graphics.PositionLockCamera;
 import de.gurkenlabs.litiengine.input.Input;
-import gherkin.lexer.Pl;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
