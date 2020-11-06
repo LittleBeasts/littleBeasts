@@ -29,9 +29,9 @@ public class Battle extends Thread {
 
     @Override
     public void run() {
-        int MaxTickAmount = BattleConstants.tickAmount;
-        int tickAmountPlayer1 = MaxTickAmount;
-        int tickAmountPlayer2 = MaxTickAmount;
+        int maxTickAmount = BattleConstants.tickAmount;
+        int tickAmountPlayer1 = maxTickAmount;
+        int tickAmountPlayer2 = maxTickAmount;
         System.out.println("Battle Thread Started!");
         while (fightOngoing){
             tickAmountPlayer1 -= selectedFightEntityPlayer1.getSpeed();
@@ -39,13 +39,13 @@ public class Battle extends Thread {
             if(tickAmountPlayer1 <= 0){
                 System.out.println("[THREAD]: PLAYER 1 TURN");
                 turnPlayer1 = true;
-                tickAmountPlayer1 = MaxTickAmount;
+                tickAmountPlayer1 = maxTickAmount + tickAmountPlayer1;
                 threadSleep();
             }
             if (tickAmountPlayer2 <= 0){
                 System.out.println("[THREAD]: PLAYER 2 TURN");
                 turnPlayer2 = true;
-                tickAmountPlayer2 = MaxTickAmount;
+                tickAmountPlayer2 = maxTickAmount + tickAmountPlayer2;
                 threadSleep();
             }
         }
