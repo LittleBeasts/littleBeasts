@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
+import static config.PlayerConfig.PLAYER_ACTIONS;
+
 /*--------------------------------------------
 This class creates a menu for use in battle.
 It is called in the HUD class.
@@ -62,7 +64,15 @@ public class BattleMenu { // dev constructor
                 case KeyEvent.VK_E:
                     Game.audio().playSound("Menu_pick");
                     System.out.println(items[currentPosition]);
-                    this.confirm();
+                    switch (items[currentPosition]) {
+                        case "Attack":
+                            this.confirm();
+                            break;
+                        case "Catch":
+                            System.out.println("Action_Catch");
+                            Player.instance().getBattle().catchBeast();
+                            break;
+                    }
                     break;
             }
         });
@@ -103,8 +113,17 @@ public class BattleMenu { // dev constructor
                 case KeyEvent.VK_SPACE:
                 case KeyEvent.VK_E:
                     Game.audio().playSound("Menu_pick");
-                    Player.instance().getBattle().useAttack(attacks[currentPosition]);
                     System.out.println(items[currentPosition]);
+                    switch (PLAYER_ACTIONS[currentPosition]) {
+                        case "Attack":
+                            Player.instance().getBattle().useAttack(attacks[currentPosition]);
+                            break;
+                        case "Catch":
+                            Player.instance().getBattle().catchBeast();
+                            break;
+                        default:
+                            break;
+                    }
                     this.confirm();
                     break;
             }

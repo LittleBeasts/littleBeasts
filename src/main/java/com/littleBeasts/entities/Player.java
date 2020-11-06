@@ -38,11 +38,10 @@ public class Player extends Creature implements IUpdateable {
         this.littleBeastTeam = new ArrayList<>();
         this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY()));
         this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY()));
-        this.cePlayer = new CePlayer(Nature.ANGRY, new Attack[]{new Attack(Attacks.Punch)}, 100, 100, 1, 1, 100, 1, 100, 100, 1, beastToCeEntity(littleBeastTeam));
-        this.playerAttacks = cePlayer.getAttacks();
-
-        this.maxHP = cePlayer.getMaxHitPoints();
-        this.currentHP = cePlayer.getHitPoints();
+        this.cePlayer = new CePlayer(Nature.ANGRY, new Attack[]{new Attack(Attacks.Punch)}, 100, 100, 1, 1, 10, 1, 10, 10, 1, beastToCeEntity(littleBeastTeam));
+        this.playerAttacks = cePlayer.getCeEntity().getAttacks();
+        this.maxHP = cePlayer.getCeEntity().getMaxHitPoints();
+        this.currentHP = cePlayer.getCeEntity().getHitPoints();
 
         // LITIengine
         this.addController(new KeyboardEntityController<>(this));
