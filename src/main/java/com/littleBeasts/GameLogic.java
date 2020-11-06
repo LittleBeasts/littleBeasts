@@ -4,16 +4,21 @@ import calculationEngine.entities.Beasts;
 import com.littleBeasts.entities.Beast;
 import com.littleBeasts.entities.Player;
 import com.littleBeasts.screens.IngameScreen;
+import de.gurkenlabs.litiengine.Direction;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
+import de.gurkenlabs.litiengine.entities.MapArea;
 import de.gurkenlabs.litiengine.entities.Spawnpoint;
 import de.gurkenlabs.litiengine.graphics.Camera;
 import de.gurkenlabs.litiengine.graphics.PositionLockCamera;
 import de.gurkenlabs.litiengine.input.Input;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class GameLogic implements IUpdateable {
     private static GameState state = GameState.INGAME;
@@ -22,62 +27,44 @@ public class GameLogic implements IUpdateable {
     public static final Font MENU_FONT = new Font("Serif", Font.BOLD, 13);
     public static String START_LEVEL = "Arkham";
 
-    private GameLogic() {
+    private static List<Beast> beastList;
+    private Camera camera;
+
+    public GameLogic() {
+
     }
 
     /**
      * Initializes the game logic for the game.
      */
-    public static void init() {
-
+    public void init() {
+        Game.loop().attach(this);
+        beastList = new ArrayList<>();
         //  Environment.registerMapObjectLoader(new CustomMapObjectLoader());
 
         // we'll use a camera in our game that is locked to the location of the player
-        Camera camera = new PositionLockCamera(Player.instance());
+        camera = new PositionLockCamera(Player.instance());
         camera.setClampToMap(true); // Camara stop at edge of map.
         camera.setZoom(1.0f, 0);
         Game.world().setCamera(camera);
-
-        // set a basic gravity for all levels.
-        //Game.world().setGravity(120);
-
-        // add default game logic for when a level was loaded
-        // Game.world().onLoaded(e -> {
-        //     // spawn the player instance on the spawn point with the name "enter"
-        //     Spawnpoint enter = e.getSpawnpoint("west");
-        //     if (enter != null) {
-        //         enter.spawn(Player.instance());
-        //     }
-        // });
 
         Game.world().onLoaded(e -> {
             if (e.getMap().getName().equals("title")) {
                 return;
             }
 
-            // for (Prop prop : Game.world().environment().getProps()) {
-            //     prop.setIndestructible(true);
-            // }
+            Game.loop().perform(500, () -> Game.window().getRenderComponent().fadeIn(0));
 
-            Game.loop().perform(500, () -> Game.window().getRenderComponent().fadeIn(500));
-
-            // if (startups.containsKey(e.getMap().getName())) {
-            //     startups.get(e.getMap().getName()).run();
-            // }
-//
-            // if (e.getMap().getName().equals("end")) {
-            //     return;
-            // }
-
-            // Player.instance().getHitPoints().setToMaxValue();
             Player.instance().setIndestructible(false);
             Player.instance().setCollision(true);
-            // spawn the player instance on the spawn point with the name "enter"
+
+            // spawn the player instance on the spawn point with the name "west"
             Spawnpoint enter = e.getSpawnpoint("west");
             if (enter != null) {
                 enter.spawn(Player.instance());
             }
         });
+
     }
 
     public static GameState getState() {
@@ -88,64 +75,80 @@ public class GameLogic implements IUpdateable {
         Game.audio().stopMusic();
         GameLogic.state = state;
         Game.loop().setTimeScale(1);
-        Input.keyboard().removeKeyListener(chatKeyboard);
-
-        if (getState() == GameState.INGAME) { //TODO: Change to switch case
-            firstStart = false;
-            IngameScreen.chatWindow.setVisible(false);
-            IngameScreen.ingameMenu.setVisible(false);
-            //Game.audio().playMusic("ingame");
-            //    Player.instance().addController();
+        Player.instance().attachControllers();
+        for (int i = 0; i < beastList.size(); i++) {
+            beastList.get(i).removeFromMap();
         }
-        if (getState() == GameState.INGAME_MENU) {
-            Game.loop().setTimeScale(0);
-            IngameScreen.ingameMenu.setVisible(true);
-           // Game.audio().playMusic("inGameMenu");
+        switch (state) {
+            case MENU:
+                if (!firstStart) {
+                    Game.loop().setTimeScale(0);
+                    Game.screens().display("MAINMENU");
+                    Game.audio().playMusic("titlemenu");
+                }
+                break;
+            case BATTLE:
+                Player.instance().detachControllers();
+                Game.audio().playMusic("battle");
+                beastList.add(new Beast(Beasts.FeuerFurz, (int) Player.instance().getX() + 50,
+                        (int) (Player.instance().getY() - (Player.instance().getHeight() / 2)),
+                        Player.instance().getFacingDirection().getOpposite())); //for dev purposes
+                break;
+            case INGAME:
+                firstStart = false;
+                IngameScreen.chatWindow.setVisible(false);
+                IngameScreen.ingameMenu.setVisible(false);
+                Game.audio().playMusic("arkham");
+                break;
+            case INGAME_MENU:
+                Game.loop().setTimeScale(0);
+                Player.instance().detachControllers();
+                IngameScreen.ingameMenu.setVisible(true);
+                Game.audio().playMusic("ingameMenu");
+                break;
+            case INGAME_CHAT:
+                Game.loop().setTimeScale(0);
+                Player.instance().detachControllers();
+                IngameScreen.chatWindow.setVisible(true);
+                IngameScreen.chatWindow.setFocus(true);
+                Input.keyboard().onKeyTyped(e -> {
+                    IngameScreen.chatWindow.add(e);
+                });
+                Game.audio().playMusic("ingameMenu");
+                break;
         }
-        if (getState() == GameState.INGAME_CHAT) {
-            Game.loop().setTimeScale(0);
-            IngameScreen.chatWindow.setVisible(true);
-            IngameScreen.chatWindow.setFocus(true);
-            //  Player.instance().removeController();
-            Input.keyboard().addKeyListener(chatKeyboard); // TODO: Use liti key input
-           // Game.audio().playMusic("inGameMenu");
-        }
-        if (getState() == GameState.MENU && !firstStart) {
-           // Game.audio().playMusic("mainMenu");
-            Game.loop().setTimeScale(0);
-            Game.screens().display("MAINMENU");
-        }
-        if (getState() == GameState.BATTLE) {
-//            Game.loop().setTimeScale(0);
-
-          //  Game.audio().playMusic("bgm");
-            new Beast(Beasts.FeuerFurz, (int) Player.instance().getX()+50,
-                        (int) (Player.instance().getY()-(Player.instance().getHeight()/2)),
-                         Player.instance().getFacingDirection().getOpposite()); //for dev purposes
-        }
-
         System.out.println(GameLogic.state.name());
     }
 
-    private static KeyListener chatKeyboard = new KeyListener() {
-        @Override
-        public void keyTyped(KeyEvent e) {
-            IngameScreen.chatWindow.add(e.getKeyChar());
-        }
-
-        @Override
-        public void keyPressed(KeyEvent e) {
-            // System.out.println("test");
-        }
-
-        @Override
-        public void keyReleased(KeyEvent e) {
-            // System.out.println("test");
-        }
-    };
-
     @Override
     public void update() {
+        loadNewArea();
+    }
 
+    public void loadNewArea(){
+        Collection<MapArea> areas = Game.world().environment().getAreas();
+        Point2D playerPosition;
+        Rectangle2D mapArea;
+        for (MapArea area : areas) {
+            mapArea = area.getBoundingBox();
+            playerPosition = Player.instance().getCenter();
+            playerPosition.setLocation(playerPosition.getX(), playerPosition.getY() + 12);
+            if (mapArea.contains(playerPosition)) {
+                String originName = Game.world().environment().getMap().getName();
+                System.out.println(area.getName());
+                Game.world().loadEnvironment(area.getName());
+                Spawnpoint spawnpoint = Game.world().environment().getSpawnpoint(originName);
+                if (spawnpoint != null) {
+                    spawnpoint.spawn(Player.instance());
+                }
+                Player.instance().setFacingDirection(Direction.DOWN);
+                Player.instance().setRenderWithLayer(true);
+            }
+        }
     }
 }
+
+
+
+
+
