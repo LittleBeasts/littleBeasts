@@ -135,7 +135,7 @@ public class GameLogic implements IUpdateable {
 
         CePlayer cePlayer = Player.instance().getCePlayer();
         CeAi ai = new CeAi(cePlayer);
-        Battle battle = new Battle(ai,Player.instance().getCePlayer());
+        Battle battle = new Battle(Player.instance().getCePlayer(),ai);
     }
 
     @Override
