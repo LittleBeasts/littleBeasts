@@ -2,7 +2,8 @@ package calculationEngine.entities;
 
 public enum Attacks {
 
-    Punch(BeastTypes.Earth, 10, 10, 2, 3, "Punch"); //TODO: Add attacks
+    Punch(BeastTypes.Earth, 10, 10, 2, 3, "Punch"), //TODO: Add attacks
+    Flee(BeastTypes.PlayerStandard, 0, 0, 0, 0, "Flee");
 
     private String name;
     private int baseDamage;

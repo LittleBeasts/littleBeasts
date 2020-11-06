@@ -1,5 +1,7 @@
 package calculationEngine.entities;
 
+import calculationEngine.environment.Regions;
+
 public enum Beasts {
 
     FeuerFurz(BeastTypes.Fire, 100, 25, 25, 25, 25, 25, 25, 25, 25, 25, 15, "StinkenderFeuerFurz", Regions.MiscatonicMountains),
