@@ -50,16 +50,16 @@ public class Battle extends Thread {
         int tickAmountPlayer1 = maxTickAmount;
         int tickAmountPlayer2 = maxTickAmount;
         System.out.println("Battle Thread Started!");
-        while (fightOngoing){
+        while (fightOngoing) {
             tickAmountPlayer1 -= selectedFightEntityPlayer1.getSpeed();
             tickAmountPlayer2 -= selectedFightEntityPlayer2.getSpeed();
-            if(tickAmountPlayer1 <= 0){
+            if (tickAmountPlayer1 <= 0) {
                 System.out.println("[THREAD]: PLAYER 1 TURN");
                 turnPlayer1 = true;
                 tickAmountPlayer1 = maxTickAmount + tickAmountPlayer1;
                 threadSleep();
             }
-            if (tickAmountPlayer2 <= 0){
+            if (tickAmountPlayer2 <= 0) {
                 System.out.println("[THREAD]: PLAYER 2 TURN");
                 turnPlayer2 = true;
                 tickAmountPlayer2 = maxTickAmount + tickAmountPlayer2;
@@ -70,47 +70,46 @@ public class Battle extends Thread {
         turnPlayer2 = false;
     }
 
-    public void setSelectedFightEntityPlayer1(CeEntity entity){
+    public void setSelectedFightEntityPlayer1(CeEntity entity) {
         this.selectedFightEntityPlayer1 = entity;
     }
 
-    public void setSelectedFightEntityPlayer2(CeEntity entity){
+    public void setSelectedFightEntityPlayer2(CeEntity entity) {
         this.selectedFightEntityPlayer2 = entity;
     }
 
 
-    private void setBattleEnd(){
+    private void setBattleEnd() {
         this.fightOngoing = false;
     }
 
-    public void flee(){
-        if((turnPlayer1 && cePlayer2.isAI()) || (turnPlayer2 && cePlayer1.isAI())){
+    public void flee() {
+        if ((turnPlayer1 && cePlayer2.isAI()) || (turnPlayer2 && cePlayer1.isAI())) {
             Random random = new Random();
-            if(random.nextInt(2) == 1){
+            if (random.nextInt(2) == 1) {
                 setBattleEnd();
             }
         }
     }
 
-    public void catchBeast(){
+    public void catchBeast() {
         Random random = new Random();
-        if(turnPlayer1){
-                Item item = new Item(1);
-                Catching.isCaught(cePlayer1.getCeEntity(), selectedFightEntityPlayer2, new Item(0));
+        if (turnPlayer1) {
+            Item item = new Item(1);
+            Catching.isCaught(cePlayer1.getCeEntity(), selectedFightEntityPlayer2, new Item(0));
         }
 
-        if(turnPlayer2){
-                Item item = new Item(1);
-                Catching.isCaught(cePlayer2.getCeEntity(), selectedFightEntityPlayer1, new Item(0));
+        if (turnPlayer2) {
+            Item item = new Item(1);
+            Catching.isCaught(cePlayer2.getCeEntity(), selectedFightEntityPlayer1, new Item(0));
         }
     }
 
-    public CeEntity[] useAttack(Attack attack){
-        if(turnPlayer1){
+    public CeEntity[] useAttack(Attack attack) {
+        if (turnPlayer1) {
             turnPlayer1 = false;
             return applyAttack(selectedFightEntityPlayer1, selectedFightEntityPlayer2, attack);
-        }
-        else if (turnPlayer2) {
+        } else if (turnPlayer2) {
             turnPlayer2 = false;
             return applyAttack(selectedFightEntityPlayer2, selectedFightEntityPlayer1, attack);
 
@@ -118,29 +117,28 @@ public class Battle extends Thread {
         return new CeEntity[]{null, null};
     }
 
-    private CeEntity[] applyAttack(CeEntity attacker, CeEntity defender, Attack attack){
-        int damage =  Damage.calculateDamage(attacker, defender, attack);
-        if(damage != -1){
+    private CeEntity[] applyAttack(CeEntity attacker, CeEntity defender, Attack attack) {
+        int damage = Damage.calculateDamage(attacker, defender, attack);
+        if (damage != -1) {
             System.out.println("Damage:" + damage);
             int newHitPoints = defender.getHitPoints() - damage;
+            System.out.println("HP: " + newHitPoints);
             defender.setHitPoints(newHitPoints);
-            if(defender.getHitPoints() <= 0){
+            if (defender.getHitPoints() <= 0) {
                 defender.setHitPoints(0);
-                if(defender.getType() == BeastTypes.PlayerStandard) {
+                if (defender.getType() == BeastTypes.PlayerStandard) {
                     if (defender.getPlayerNumber() == 1) {
                         cePlayer1.setHitPoints(0);
                     } else {
                         cePlayer2.setHitPoints(0);
                     }
                     this.fightOngoing = false;
-                }
-                else{
+                } else {
                     if (defender.getPlayerNumber() == 1) {
                         setSelectedFightEntityPlayer1(cePlayer1.getCeEntity());
                         this.selectedFightEntityPlayer1.setPlayerNumber(1);
                         defender = selectedFightEntityPlayer1;
-                    }
-                    else{
+                    } else {
                         setSelectedFightEntityPlayer2(cePlayer2.getCeEntity());
                         this.selectedFightEntityPlayer2.setPlayerNumber(2);
                         defender = selectedFightEntityPlayer2;
@@ -148,17 +146,15 @@ public class Battle extends Thread {
 
                 }
             }
-        }
-        else System.out.println("Missed!");
+        } else System.out.println("Missed!");
         setActionDone();
         return new CeEntity[]{attacker, defender};
-
     }
 
-    private void threadSleep(){
+    private void threadSleep() {
         threadSleep = true;
         System.out.println("Thread now sleeping!");
-        while (threadSleep){
+        while (threadSleep) {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
@@ -168,15 +164,16 @@ public class Battle extends Thread {
         System.out.println("Thread continue");
     }
 
-    private void setActionDone(){
+    private void setActionDone() {
         this.threadSleep = false;
     }
 
-    public CePlayer getTurn(){
-        if(turnPlayer1) return cePlayer1;
-        else if(turnPlayer2) return cePlayer2;
-        else if(fightOngoing) return BattleConstants.noneTurnCePlayer;
+    public CePlayer getTurn() {
+        if (turnPlayer1) return cePlayer1;
+        else if (turnPlayer2) return cePlayer2;
+        else if (fightOngoing) return BattleConstants.noneTurnCePlayer;
         else return null;
     }
+
 
 }

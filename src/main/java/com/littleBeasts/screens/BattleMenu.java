@@ -1,6 +1,7 @@
 package com.littleBeasts.screens;
 
 import calculationEngine.entities.Attack;
+import com.littleBeasts.entities.Player;
 import config.HudConstants;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.input.Input;
@@ -83,6 +84,7 @@ public class BattleMenu { // dev constructor
 
         Input.keyboard().onKeyTyped(e -> {
             if (!focus) return;
+            if (!Player.instance().isFighting()) return;
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_UP:
                 case KeyEvent.VK_W:
@@ -101,6 +103,7 @@ public class BattleMenu { // dev constructor
                 case KeyEvent.VK_SPACE:
                 case KeyEvent.VK_E:
                     Game.audio().playSound("Menu_pick");
+                    Player.instance().getBattle().useAttack(attacks[currentPosition]);
                     System.out.println(items[currentPosition]);
                     this.confirm();
                     break;
