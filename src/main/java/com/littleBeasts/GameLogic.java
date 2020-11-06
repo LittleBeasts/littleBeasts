@@ -4,6 +4,7 @@ import calculationEngine.entities.Beasts;
 import com.littleBeasts.entities.Beast;
 import com.littleBeasts.entities.Player;
 import com.littleBeasts.screens.IngameScreen;
+import de.gurkenlabs.litiengine.Direction;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.Spawnpoint;
@@ -100,7 +101,7 @@ public class GameLogic implements IUpdateable {
         if (getState() == GameState.INGAME_MENU) {
             Game.loop().setTimeScale(0);
             IngameScreen.ingameMenu.setVisible(true);
-           // Game.audio().playMusic("inGameMenu");
+            // Game.audio().playMusic("inGameMenu");
         }
         if (getState() == GameState.INGAME_CHAT) {
             Game.loop().setTimeScale(0);
@@ -108,23 +109,33 @@ public class GameLogic implements IUpdateable {
             IngameScreen.chatWindow.setFocus(true);
             //  Player.instance().removeController();
             Input.keyboard().addKeyListener(chatKeyboard); // TODO: Use liti key input
-           // Game.audio().playMusic("inGameMenu");
+            // Game.audio().playMusic("inGameMenu");
         }
         if (getState() == GameState.MENU && !firstStart) {
-           // Game.audio().playMusic("mainMenu");
+            // Game.audio().playMusic("mainMenu");
             Game.loop().setTimeScale(0);
             Game.screens().display("MAINMENU");
         }
         if (getState() == GameState.BATTLE) {
 //            Game.loop().setTimeScale(0);
 
-          //  Game.audio().playMusic("bgm");
-            new Beast(Beasts.FeuerFurz, (int) Player.instance().getX()+50,
-                        (int) (Player.instance().getY()-(Player.instance().getHeight()/2)),
-                         Player.instance().getFacingDirection().getOpposite()); //for dev purposes
+            //  Game.audio().playMusic("bgm");
+            triggerBattle();
         }
 
         System.out.println(GameLogic.state.name());
+    }
+
+    private static void triggerBattle() {
+        int x = 0;
+        if (Player.instance().getFacingDirection() == Direction.LEFT) {
+            x = (int) Player.instance().getX() - 50;
+        } else {
+            x = (int) Player.instance().getX() + 50;
+        }
+        //for dev purposes
+        Beast beast = new Beast(Beasts.FeuerFurz, x, (int) (Player.instance().getY() - (Player.instance().getHeight() / 2)));
+        beast.setFacingDirection(Player.instance().getFacingDirection().getOpposite());
     }
 
     private static KeyListener chatKeyboard = new KeyListener() {
