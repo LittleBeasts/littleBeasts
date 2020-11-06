@@ -37,9 +37,7 @@ public class BeastStats {
         beastInfo += littleBeast.getMonsterName() + "\n";
         beastInfo += littleBeast.getLittleBeast().getHitPoints() + "/" + littleBeast.getLittleBeast().getMaxHitPoints() + "\n";
 
-
         drawString(g, beastInfo, x + portraitWidth, y);
-
     }
 
     private static void drawString(Graphics g, String text, int x, int y) {

@@ -41,7 +41,7 @@ public class BattleMenu { // dev constructor
 
         Input.keyboard().onKeyTyped(e -> {
             if (!focus) return;
-            if (e.getKeyCode() == KeyEvent.VK_UP) {
+            if (e.getKeyCode() == KeyEvent.VK_UP) { //TODO: Switch Case
                 //Game.audio().playSound("Menu_change");
                 decPosition();
                 System.out.println("Up | " + currentPosition);
@@ -116,7 +116,10 @@ public class BattleMenu { // dev constructor
         for (int i = firstDrawnItem; i < lastDrawnItem; i++) {
             // draw buttons
             g.setColor(HudConstants.BUTTONCOLOR);
-            g.fillRect(x + buttonPad, y + buttonPad + height * (i - firstDrawnItem) / amountOfDrawnItems, width - 2 * buttonPad, height / amountOfDrawnItems - 2 * buttonPad);
+            g.fillRect(x + buttonPad,
+                    y + buttonPad + height * (i - firstDrawnItem) / amountOfDrawnItems,
+                    width - 2 * buttonPad,
+                    height / amountOfDrawnItems - 2 * buttonPad);
 
             // draw selection
             g.setColor(HudConstants.SELECTCOLOR);

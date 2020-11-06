@@ -20,7 +20,7 @@ public class Player extends Creature implements IUpdateable {
     private static Player instance;
     private static PlayerState state = PlayerState.CONTROLLABLE;
     private List<Beast> littleBeastTeam;
-    private List<Attack> playerAttacks;
+    private List<Attack> playerAttacks; // TODO: reference to CE_Player
 
     private Player() {
         super("test");
@@ -28,7 +28,7 @@ public class Player extends Creature implements IUpdateable {
         this.littleBeastTeam = new ArrayList<>();
         this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY()));
         this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY()));
-        this.playerAttacks = new ArrayList<>();
+        this.playerAttacks = new ArrayList<>(); // TODO: get CE_Player attacks
         this.addAttack(new Attack(Attacks.Punch));
         //this.littleBeastTeam.add(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY()));
         // setup the player's abilities
@@ -76,7 +76,7 @@ public class Player extends Creature implements IUpdateable {
 
     public void addAttack(Attack attack) {
         playerAttacks.add(attack);
-    }
+    } // TODO: not needed, when CE_Player is implemented
 
     public List<Attack> getAttacks() {
         return playerAttacks;

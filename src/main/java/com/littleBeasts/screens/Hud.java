@@ -32,7 +32,7 @@ public class Hud extends GuiComponent {
     protected Hud() {
         super(0, 0, Game.window().getResolution().getWidth(), Game.window().getResolution().getHeight());
 
-        String[] menuItems = new String[]{"Attack", "Catch", "Tame", "Pick Beast", "Item"};
+        String[] menuItems = new String[]{"Attack", "Catch", "Tame", "Pick Beast", "Item"}; //TODO: move to PlayerConfig
         bm = new BattleMenu(300, menuItems);
         bm.onConfirm(c -> {
             switch (c.intValue()) {
