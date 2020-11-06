@@ -68,7 +68,7 @@ public class GameLogic implements IUpdateable {
             //     prop.setIndestructible(true);
             // }
 
-            Game.loop().perform(500, () -> Game.window().getRenderComponent().fadeIn(500));
+            Game.loop().perform(500, () -> Game.window().getRenderComponent().fadeIn(0));
 
             // if (startups.containsKey(e.getMap().getName())) {
             //     startups.get(e.getMap().getName()).run();
@@ -153,12 +153,13 @@ public class GameLogic implements IUpdateable {
             playerPosition = Player.instance().getCenter();
             playerPosition.setLocation(playerPosition.getX(), playerPosition.getY() + 12);
             if (mapArea.contains(playerPosition)) {
+                String originName = Game.world().environment().getMap().getName();
+                System.out.println(area.getName());
                 Game.world().loadEnvironment(area.getName());
-                for (Spawnpoint sp : Game.world().environment().getSpawnPoints()) {
-                    sp.spawn(Player.instance());
+                Spawnpoint spawnpoint = Game.world().environment().getSpawnpoint(originName);
+                if (spawnpoint != null) {
+                    spawnpoint.spawn(Player.instance());
                 }
-
-
             }
         }
     }
