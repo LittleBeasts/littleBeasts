@@ -33,8 +33,8 @@ public class CeAi extends Thread {
         this.team.add(new CeEntity(Beasts.FeuerFurz));
         this.nature = pickNature();
         this.attacks = new Attack[]{new Attack(Attacks.Punch)};
-        this.hitPoints = CeEntity.scaleOnLvl(AiConstants.AI_BASE_HP, player.getLevel(), AiConstants.AI_LEVEL_SCALING);
-        this.maxHitPoints = this.hitPoints;
+        this.hitPoints = 0;
+        this.maxHitPoints = 0;
         this.level = player.getLevel();
         this.speed = CeEntity.scaleOnLvl(AiConstants.AI_BASE_SPEED, player.getLevel(), AiConstants.AI_LEVEL_SCALING);
         this.stamina = CeEntity.scaleOnLvl(AiConstants.AI_BASE_STAMINA, player.getLevel(), AiConstants.AI_LEVEL_SCALING);
@@ -68,8 +68,7 @@ public class CeAi extends Thread {
             if(battle.getTurn() != null){
                 if (battle.getTurn().getNumber() == this.aiPlayer.getNumber()) {
                     System.out.println("Turn of AI");
-                    CeEntity[] returned = battle.useAttack(pickAttack());
-                    this.currentMonster = returned[0];
+                    battle.useAttack(pickAttack());
                 }
             }
             else break;
