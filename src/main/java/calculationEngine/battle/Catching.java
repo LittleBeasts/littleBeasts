@@ -3,6 +3,7 @@ package calculationEngine.battle;
 import calculationEngine.entities.Attack;
 import calculationEngine.entities.BeastTypes;
 import calculationEngine.entities.CeEntity;
+import calculationEngine.entities.CePlayer;
 import calculationEngine.environment.Item;
 
 import java.util.Random;
@@ -12,13 +13,13 @@ public class Catching {
     private static String debugInfo; //string to store debug information
     private static boolean bDebug = false; //show rolls in console
 
-    public static boolean isCaught(CeEntity player, CeEntity beast, Item cage) {
+    public static boolean isCaught(CePlayer player, CeEntity beast, Item cage) {
 
         if(beast.getType() == BeastTypes.PlayerStandard && !beast.isWild()) return false;
         //roll to d50 to get a quasi normal distribution
         int attackRoll = rnd.nextInt(51) + rnd.nextInt(51);
         debugInfo = "Roll: " + attackRoll + "\n";
-        Attack catchingSkill = player.getAttacks()[0]; //TODO: We need to specify, which skill the catching skill will be.
+        Attack catchingSkill = player.getPlayerStandardAttacks()[0];
 
         if (catchingMisses(player, beast, catchingSkill, attackRoll, cage)) {
             debugInfo += "Miss\n";
