@@ -1,10 +1,12 @@
 package com.littleBeasts.screens;
 
+import calculationEngine.entities.Attack;
 import com.littleBeasts.GameLogic;
 import com.littleBeasts.GameState;
 import com.littleBeasts.PlayerState;
 import com.littleBeasts.entities.Beast;
 import com.littleBeasts.entities.Player;
+import config.HudConstants;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.graphics.ImageRenderer;
 import de.gurkenlabs.litiengine.graphics.ShapeRenderer;
@@ -17,6 +19,7 @@ import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class Hud extends GuiComponent {
 
@@ -29,10 +32,8 @@ public class Hud extends GuiComponent {
     protected Hud() {
         super(0, 0, Game.window().getResolution().getWidth(), Game.window().getResolution().getHeight());
 
-        String[] menuItems = new String[]{"Attack", "Catch", "Item", "Flee"};
-        int height = (int) Game.window().getResolution().getHeight();
-        int width = (int) Game.window().getResolution().getWidth();
-        bm = new BattleMenu(300, height - 140, 200, 100, menuItems);
+        String[] menuItems = new String[]{"Attack", "Catch", "Tame", "Pick Beast", "Item"}; //TODO: move to PlayerConfig
+        bm = new BattleMenu(300, menuItems);
         bm.onConfirm(c -> {
             switch (c.intValue()) {
                 case 0:
@@ -48,8 +49,8 @@ public class Hud extends GuiComponent {
                     break;
             }
         });
-        String[] attacks = new String[]{"Attack1", "Attack2", "Attack3", "Attack4"};
-        attackMenu = new BattleMenu(350, height - 140, 200, 100, attacks);
+        List<Attack> attacks = Player.instance().getAttacks();
+        attackMenu = new BattleMenu(350, attacks);
         attackMenu.onConfirm(c -> {
             switch (c.intValue()) {
                 case 0:
@@ -130,11 +131,11 @@ public class Hud extends GuiComponent {
         // cint++;
         g.setColor(Color.WHITE);
         Image originalImage = ImageIO.read(new File("sprites/char.png"));
-        int padding = 40;
-        int elementHeight = 100;
-        int elementWidth = 200;
-        g.fillRect(padding, height - padding - elementHeight, elementWidth, elementHeight);
-        g.drawImage(originalImage, padding, height - padding - elementHeight, 80, 100, null);
+        int padding = HudConstants.HUD_START_POINT;
+        int elementHeight = HudConstants.HUD_ROW_HEIGHT;
+        int elementWidth = HudConstants.HUD_TILE_WIDTH + 50;
+        g.fillRect(padding, HudConstants.HEIGHT - HudConstants.BOTTOM_PAD, elementWidth, elementHeight);
+        g.drawImage(originalImage, padding, HudConstants.HEIGHT - HudConstants.BOTTOM_PAD, 80, 100, null);
         g.setColor(Color.BLACK);
         g.setFont(new Font("Serif", Font.PLAIN, 15));
         String playerStats = "Player Name\n";
