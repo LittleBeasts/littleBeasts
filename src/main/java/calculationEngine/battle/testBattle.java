@@ -18,10 +18,9 @@ public class testBattle {
         team.add(new CeEntity(Beasts.StinkenderFeuerFurz));
 
         CePlayer cePlayer1 = new CePlayer(Nature.ANGRY, new Attack[]{new Attack(Attacks.Punch)}, 1,1,1,1,1,1,1,1,1,team);
+        cePlayer1.setActiveMonsterIndex(0);
         CeAi cePlayer2 = new CeAi(cePlayer1);
-        CeEntity entplayer1 = new CeEntity(Beasts.StinkenderFeuerFurz);
-        CeEntity entplayer2 = cePlayer2.getTeam().get(0);
-        Battle battle = new Battle(entplayer1, entplayer2, cePlayer1, cePlayer2);
+        Battle battle = new Battle(cePlayer1, cePlayer2);
         System.out.println("Battle started");
 
         while (true){
@@ -47,9 +46,9 @@ public class testBattle {
 
         CePlayer cePlayer1 = new CePlayer(Nature.ANGRY, new Attack[]{new Attack(Attacks.Punch)}, 1,1,1,1,1,1,1,1,1,team);
         CePlayer cePlayer2 = new CePlayer(Nature.ANGRY, new Attack[]{new Attack(Attacks.Punch)}, 1,1,2,1,1,1,1,1,1,team);
-        CeEntity entplayer1 = new CeEntity(Beasts.StinkenderFeuerFurz);
-        CeEntity entplayer2 = new CeEntity(Beasts.FeuerFurz);
-        Battle battle = new Battle(entplayer1, entplayer2, cePlayer1, cePlayer2);
+        cePlayer1.setActiveMonsterIndex(0);
+        cePlayer2.setActiveMonsterIndex(0);
+        Battle battle = new Battle(cePlayer1, cePlayer2);
         battle.start();
         System.out.println("Battle started");
 

@@ -7,6 +7,7 @@ public class CePlayer extends CeEntity {
     private List<CeEntity> team;
     private boolean isAI = false;
     private int playerNumber;
+    private int activeMonsterIndex = 0;
 
     public CePlayer(Nature nature, Attack[] attacks, int hitPoints, int maxHitPoints, int level, int friendshipPoints, int speed, int stamina, int attack, int defense, int developmentLvl, List<CeEntity> team) {
         super(BeastTypes.PlayerStandard, nature, attacks, hitPoints, maxHitPoints, level, friendshipPoints, speed, stamina, attack, defense, developmentLvl, false);
@@ -37,4 +38,11 @@ public class CePlayer extends CeEntity {
         return playerNumber;
     }
 
+    public void setActiveMonsterIndex(int activeMonsterIndex) {
+        if(activeMonsterIndex < team.size() && activeMonsterIndex > 0) this.activeMonsterIndex = activeMonsterIndex;
+    }
+
+    public int getActiveMonsterIndex() {
+        return activeMonsterIndex;
+    }
 }

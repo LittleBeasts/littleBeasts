@@ -18,10 +18,10 @@ public class Battle extends Thread {
     private boolean threadSleep;
     private boolean onServer = false;
 
-    public Battle(CeEntity selectedFightEntityPlayer1, CeEntity selectedFightEntityPlayer2, CePlayer cePlayer1, CePlayer cePlayer2) {
-        this.selectedFightEntityPlayer1 = selectedFightEntityPlayer1;
+    public Battle(CePlayer cePlayer1, CePlayer cePlayer2) {
+        this.selectedFightEntityPlayer1 = cePlayer1.getTeam().get(cePlayer1.getActiveMonsterIndex());
         this.selectedFightEntityPlayer1.setPlayerNumber(1);
-        this.selectedFightEntityPlayer2 = selectedFightEntityPlayer2;
+        this.selectedFightEntityPlayer2 = cePlayer2.getTeam().get(cePlayer2.getActiveMonsterIndex());
         this.selectedFightEntityPlayer2.setPlayerNumber(2);
         this.cePlayer1 = cePlayer1;
         this.cePlayer2 = cePlayer2;
@@ -30,10 +30,10 @@ public class Battle extends Thread {
         this.start();
     }
 
-    public Battle(CeEntity selectedFightEntityPlayer1, CeEntity selectedFightEntityPlayer2, CePlayer cePlayer1, CeAi cePlayer2) {
-        this.selectedFightEntityPlayer1 = selectedFightEntityPlayer1;
+    public Battle(CePlayer cePlayer1, CeAi cePlayer2) {
+        this.selectedFightEntityPlayer1 = cePlayer1.getTeam().get(cePlayer1.getActiveMonsterIndex());
         this.selectedFightEntityPlayer1.setPlayerNumber(1);
-        this.selectedFightEntityPlayer2 = selectedFightEntityPlayer2;
+        this.selectedFightEntityPlayer2 = cePlayer2.getTeam().get(cePlayer2.getAiPlayer().getActiveMonsterIndex());
         this.selectedFightEntityPlayer2.setPlayerNumber(2);
         this.cePlayer1 = cePlayer1;
         this.cePlayer2 = cePlayer2.getAiPlayer();
