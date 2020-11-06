@@ -38,9 +38,9 @@ public final class PlayerInput {
         });
 
         Input.keyboard().onKeyTyped(e -> {
-            if (e.getKeyCode() == KeyEvent.VK_B && GameLogic.getState() != GameState.BATTLE) {
+            if (e.getKeyCode() == KeyEvent.VK_B && GameLogic.getState() == GameState.INGAME) {
                 GameLogic.setState(GameState.BATTLE);
-            } else if(e.getKeyCode() == KeyEvent.VK_B && GameLogic.getState() == GameState.BATTLE){
+            } else if (e.getKeyCode() == KeyEvent.VK_B && GameLogic.getState() == GameState.BATTLE) {
                 GameLogic.setState(GameState.INGAME);
             }
         });

@@ -54,8 +54,8 @@ public class Beast extends Creature implements IUpdateable {
             spawnpoint.spawn(this);
             spwaned = true;
         }
-
     }
+
 
     public CeEntity getLittleBeast() {
         return littleBeast;

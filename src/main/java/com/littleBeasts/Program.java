@@ -1,16 +1,17 @@
 package com.littleBeasts;
 
 import calculationEngine.battle.Damage;
-import calculationEngine.environment.Loot;
 import calculationEngine.entities.*;
-import com.littleBeasts.screens.MenuScreen;
+import calculationEngine.environment.Loot;
 import com.littleBeasts.screens.IngameScreen;
-
+import com.littleBeasts.screens.MenuScreen;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.resources.Resources;
 import org.json.JSONObject;
 
 public class Program {
+
+    private static GameLogic gameLogic;
 
     public static void main(String[] args) {
 
@@ -38,11 +39,13 @@ public class Program {
 
         // initialize modules
         PlayerInput.init();
-        GameLogic.init();
+        gameLogic = new GameLogic();
+        gameLogic.init();
 
         // enter main menu
         GameLogic.setState(GameState.MENU);
         Game.screens().display("MAINMENU");
+        Game.audio().playMusic("titlemenu");
         //Game.audio().playMusic("mainMenu");
         // GameLogic.setState(GameState.INGAME);
         // Game.screens().display("INGAME-SCREEN");
