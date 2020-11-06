@@ -20,6 +20,8 @@ public class Player extends Creature implements IUpdateable {
     private static PlayerState state = PlayerState.CONTROLLABLE;
     private List<Beast> littleBeastTeam;
     private boolean spawned;
+
+
     private CePlayer cePlayer;
     private Attack[] playerAttacks;
     private String playerName = "Horst";
@@ -30,8 +32,8 @@ public class Player extends Creature implements IUpdateable {
 
         // Calculation Engine
         this.littleBeastTeam = new ArrayList<>();
-        this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY(), this.getFacingDirection().getOpposite()));
-        this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY(), this.getFacingDirection().getOpposite()));
+        this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY()));
+        this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY()));
         this.cePlayer = new CePlayer(Nature.ANGRY, new Attack[]{new Attack(Attacks.Punch)}, 1, 1, 1, 1, 1, 1, 1, 1, 1, beastToCeEntity(littleBeastTeam));
         this.playerAttacks = cePlayer.getAttacks();
 
@@ -108,5 +110,8 @@ public class Player extends Creature implements IUpdateable {
 
     public int getCurrentHP() {
         return currentHP;
+    }
+    public CePlayer getCePlayer() {
+        return cePlayer;
     }
 }

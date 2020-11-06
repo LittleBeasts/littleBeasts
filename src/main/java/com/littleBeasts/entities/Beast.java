@@ -5,11 +5,14 @@ import calculationEngine.entities.CeEntity;
 import com.littleBeasts.screens.BeastStats;
 import de.gurkenlabs.litiengine.Direction;
 import de.gurkenlabs.litiengine.IUpdateable;
+import de.gurkenlabs.litiengine.entities.CollisionInfo;
 import de.gurkenlabs.litiengine.entities.Creature;
 import de.gurkenlabs.litiengine.entities.Spawnpoint;
 import de.gurkenlabs.litiengine.resources.Resources;
 
 import java.awt.*;
+
+@CollisionInfo(collisionBoxWidth = 14, collisionBoxHeight = 8, collision = true)
 
 public class Beast extends Creature implements IUpdateable {
     private CeEntity littleBeast;
@@ -19,7 +22,7 @@ public class Beast extends Creature implements IUpdateable {
     private int x, y;
     private boolean spwaned;
 
-    public Beast(Beasts beasts, int x, int y, Direction facingDirection) {
+    public Beast(Beasts beasts, int x, int y) {
         // super(beasts.name());
         super("test");
         this.portrait = Resources.images().get("sprites/icon.png");
@@ -28,7 +31,6 @@ public class Beast extends Creature implements IUpdateable {
         this.x = x;
         this.y = y;
         Spawnpoint e = new Spawnpoint(x, y);
-        this.setFacingDirection(facingDirection);
         e.spawn(this);
     }
 

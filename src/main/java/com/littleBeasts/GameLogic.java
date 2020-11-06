@@ -1,6 +1,9 @@
 package com.littleBeasts;
 
+import calculationEngine.battle.Battle;
 import calculationEngine.entities.Beasts;
+import calculationEngine.entities.CeAi;
+import calculationEngine.entities.CePlayer;
 import com.littleBeasts.entities.Beast;
 import com.littleBeasts.entities.Player;
 import com.littleBeasts.screens.IngameScreen;
@@ -12,6 +15,7 @@ import de.gurkenlabs.litiengine.entities.Spawnpoint;
 import de.gurkenlabs.litiengine.graphics.Camera;
 import de.gurkenlabs.litiengine.graphics.PositionLockCamera;
 import de.gurkenlabs.litiengine.input.Input;
+import gherkin.lexer.Pl;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -90,9 +94,7 @@ public class GameLogic implements IUpdateable {
             case BATTLE:
                 Player.instance().detachControllers();
                 Game.audio().playMusic("battle");
-                beastList.add(new Beast(Beasts.FeuerFurz, (int) Player.instance().getX() + 50,
-                        (int) (Player.instance().getY() - (Player.instance().getHeight() / 2)),
-                        Player.instance().getFacingDirection().getOpposite())); //for dev purposes
+                triggerBattle();
                 break;
             case INGAME:
                 firstStart = false;
@@ -118,6 +120,22 @@ public class GameLogic implements IUpdateable {
                 break;
         }
         System.out.println(GameLogic.state.name());
+    }
+    private static void triggerBattle() {
+        int x = 0;
+        if (Player.instance().getFacingDirection() == Direction.LEFT) {
+            x = (int) Player.instance().getX() - 50;
+        } else {
+            x = (int) Player.instance().getX() + 50;
+        }
+        //for dev purposes
+        Beast beast = new Beast(Beasts.FeuerFurz, x, (int) (Player.instance().getY() - (Player.instance().getHeight() / 2)));
+        beast.setFacingDirection(Player.instance().getFacingDirection().getOpposite());
+        beastList.add(beast);
+
+        CePlayer cePlayer = Player.instance().getCePlayer();
+        CeAi ai = new CeAi(cePlayer);
+        Battle battle = new Battle(Player.instance().getCePlayer(),ai);
     }
 
     @Override
