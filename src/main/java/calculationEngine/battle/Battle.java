@@ -25,6 +25,23 @@ public class Battle extends Thread {
         this.selectedFightEntityPlayer2.setPlayerNumber(2);
         this.cePlayer1 = cePlayer1;
         this.cePlayer2 = cePlayer2;
+        this.cePlayer1.setNumber(1);
+        this.cePlayer2.setNumber(2);
+        this.start();
+    }
+
+    public Battle(CeEntity selectedFightEntityPlayer1, CeEntity selectedFightEntityPlayer2, CePlayer cePlayer1, CeAi cePlayer2) {
+        this.selectedFightEntityPlayer1 = selectedFightEntityPlayer1;
+        this.selectedFightEntityPlayer1.setPlayerNumber(1);
+        this.selectedFightEntityPlayer2 = selectedFightEntityPlayer2;
+        this.selectedFightEntityPlayer2.setPlayerNumber(2);
+        this.cePlayer1 = cePlayer1;
+        this.cePlayer2 = cePlayer2.getAiPlayer();
+        this.cePlayer1.setNumber(1);
+        this.cePlayer2.setNumber(2);
+        cePlayer2.start();
+        cePlayer2.setBattle(this);
+        this.start();
     }
 
     @Override

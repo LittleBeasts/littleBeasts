@@ -25,7 +25,7 @@ public class Player extends Creature implements IUpdateable {
     private String playerName = "Horst";
     private int maxHP, currentHP;
 
-    private Player() {
+    public Player() {
         super("test");
 
         // Calculation Engine
