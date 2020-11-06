@@ -63,7 +63,7 @@ public class CeEntity {
         boolean lvlInRange = EntityConstants.MAX_LVL >= tmpLvl && EntityConstants.START_LVL <= tmpLvl;
         this.level = lvlInRange ? tmpLvl : (tmpLvl <= EntityConstants.MAX_LVL ? EntityConstants.START_LVL : EntityConstants.MAX_LVL); // Sets Level to constant if level isn't in specified range
 
-        Nature[] natures = Nature.values();
+        Nature[] natures = Nature.values(); // TODO: Eventuell in Nature enum auslagern
         this.nature = natures[random.nextInt(natures.length)];
 
         this.developmentLvl = beast.getDevelopmentlvl();
@@ -80,7 +80,7 @@ public class CeEntity {
 
     public CeEntity(Beasts beast) { // dev constructor
         this.type = beast.getType();
-        Nature[] natures = Nature.values();
+        Nature[] natures = Nature.values(); // TODO: Eventuell in Nature enum auslagern
         this.nature = natures[random.nextInt(natures.length)];
         this.attacks = new Attack[]{new Attack(Attacks.Punch)};
         this.hitPoints = beast.getBaseHp();
