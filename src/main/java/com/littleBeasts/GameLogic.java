@@ -15,7 +15,6 @@ import de.gurkenlabs.litiengine.entities.Spawnpoint;
 import de.gurkenlabs.litiengine.graphics.Camera;
 import de.gurkenlabs.litiengine.graphics.PositionLockCamera;
 import de.gurkenlabs.litiengine.input.Input;
-import gherkin.lexer.Pl;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -33,6 +32,8 @@ public class GameLogic implements IUpdateable {
 
     private static List<Beast> beastList;
     private Camera camera;
+    private static Battle battle;
+    private static CePlayer cePlayer;
 
     public GameLogic() {
 
@@ -80,8 +81,10 @@ public class GameLogic implements IUpdateable {
         GameLogic.state = state;
         Game.loop().setTimeScale(1);
         Player.instance().attachControllers();
+        Player.instance().setFighting(false);
         for (int i = 0; i < beastList.size(); i++) {
             beastList.get(i).removeFromMap();
+            beastList.get(i).setCollision(false);
         }
         switch (state) {
             case MENU:
@@ -121,6 +124,7 @@ public class GameLogic implements IUpdateable {
         }
         System.out.println(GameLogic.state.name());
     }
+
     private static void triggerBattle() {
         int x = 0;
         if (Player.instance().getFacingDirection() == Direction.LEFT) {
@@ -133,17 +137,20 @@ public class GameLogic implements IUpdateable {
         beast.setFacingDirection(Player.instance().getFacingDirection().getOpposite());
         beastList.add(beast);
 
-        CePlayer cePlayer = Player.instance().getCePlayer();
+        cePlayer = Player.instance().getCePlayer();
         CeAi ai = new CeAi(cePlayer);
-        Battle battle = new Battle(Player.instance().getCePlayer(),ai);
+        battle = new Battle(Player.instance().getCePlayer(), ai);
+        Player.instance().setBattle(battle);
+        Player.instance().setFighting(true);
     }
 
     @Override
     public void update() {
         loadNewArea();
+        startBattle();
     }
 
-    public void loadNewArea(){
+    public void loadNewArea() {
         Collection<MapArea> areas = Game.world().environment().getAreas();
         Point2D playerPosition;
         Rectangle2D mapArea;
@@ -161,6 +168,19 @@ public class GameLogic implements IUpdateable {
                 }
                 Player.instance().setFacingDirection(Direction.DOWN);
                 Player.instance().setRenderWithLayer(true);
+            }
+        }
+    }
+
+    public void startBattle() {
+        if (Player.instance().isFighting()) {
+            if (battle.getTurn() != null) {
+                if (battle.getTurn().getNumber() == cePlayer.getNumber()) {
+
+                }
+            } else {
+                System.out.println("End of fight");
+                setState(GameState.INGAME);
             }
         }
     }

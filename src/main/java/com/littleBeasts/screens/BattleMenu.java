@@ -1,6 +1,7 @@
 package com.littleBeasts.screens;
 
 import calculationEngine.entities.Attack;
+import com.littleBeasts.entities.Player;
 import config.HudConstants;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.input.Input;
@@ -10,6 +11,8 @@ import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
+
+import static config.PlayerConfig.PLAYER_ACTIONS;
 
 /*--------------------------------------------
 This class creates a menu for use in battle.
@@ -61,7 +64,15 @@ public class BattleMenu { // dev constructor
                 case KeyEvent.VK_E:
                     Game.audio().playSound("Menu_pick");
                     System.out.println(items[currentPosition]);
-                    this.confirm();
+                    switch (items[currentPosition]) {
+                        case "Attack":
+                            this.confirm();
+                            break;
+                        case "Catch":
+                            System.out.println("Action_Catch");
+                            Player.instance().getBattle().catchBeast();
+                            break;
+                    }
                     break;
             }
         });
@@ -83,6 +94,7 @@ public class BattleMenu { // dev constructor
 
         Input.keyboard().onKeyTyped(e -> {
             if (!focus) return;
+            if (!Player.instance().isFighting()) return;
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_UP:
                 case KeyEvent.VK_W:
@@ -102,6 +114,16 @@ public class BattleMenu { // dev constructor
                 case KeyEvent.VK_E:
                     Game.audio().playSound("Menu_pick");
                     System.out.println(items[currentPosition]);
+                    switch (PLAYER_ACTIONS[currentPosition]) {
+                        case "Attack":
+                            Player.instance().getBattle().useAttack(attacks[currentPosition]);
+                            break;
+                        case "Catch":
+                            Player.instance().getBattle().catchBeast();
+                            break;
+                        default:
+                            break;
+                    }
                     this.confirm();
                     break;
             }

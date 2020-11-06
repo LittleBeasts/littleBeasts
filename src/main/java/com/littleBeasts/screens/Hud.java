@@ -37,15 +37,8 @@ public class Hud extends GuiComponent {
         bm.onConfirm(c -> {
             switch (c.intValue()) {
                 case 0:
-                    drawAttackMenu = !drawAttackMenu;
-                    break;
                 case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                default:
+                    drawAttackMenu = !drawAttackMenu;
                     break;
             }
         });
@@ -54,15 +47,8 @@ public class Hud extends GuiComponent {
         attackMenu.onConfirm(c -> {
             switch (c.intValue()) {
                 case 0:
-                    drawAttackMenu = !drawAttackMenu;
-                    break;
                 case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                default:
+                    drawAttackMenu = !drawAttackMenu;
                     break;
             }
         });
@@ -139,7 +125,7 @@ public class Hud extends GuiComponent {
         g.setColor(Color.BLACK);
         g.setFont(new Font("Serif", Font.PLAIN, 15));
         String playerStats = Player.instance().getPlayerName() + "\n";
-        playerStats += Player.instance().getCurrentHP() + "/" + Player.instance().getMaxHP() + "\n";
+        playerStats += Player.instance().getCePlayer().getCeEntity().getHitPoints() + "/" + Player.instance().getMaxHP() + "\n";
         playerStats += "Player Whatever\n";
         drawString(g, playerStats, padding + 100, height - padding - elementHeight);
     }
