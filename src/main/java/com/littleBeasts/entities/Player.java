@@ -24,7 +24,7 @@ public class Player extends Creature implements IUpdateable {
     private boolean spawned;
     private List<Attack> playerAttacks; // TODO: reference to CE_Player
 
-    private Player() {
+    public Player() {
         super("test");
         this.addController(new KeyboardEntityController<>(this));
         this.littleBeastTeam = new ArrayList<>();

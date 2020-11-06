@@ -67,12 +67,12 @@ public class CeEntity {
         this.nature = natures[random.nextInt(natures.length)];
 
         this.developmentLvl = beast.getDevelopmentlvl();
-        this.hitPoints = scaleOnLvl(beast.getBaseHp(), beast.getHpLvlScaling());
+        this.hitPoints = scaleOnLvl(beast.getBaseHp(), this.level, beast.getHpLvlScaling());
         this.type = beast.getType();
-        this.speed = scaleOnLvl(beast.getBaseSpeed(), beast.getSpeedLvlScaling());
-        this.attack = scaleOnLvl(beast.getBaseAttack(), beast.getAttackLvlScaling()) + (random.nextInt(EntityConstants.ATTACK_RANGE * 2) - EntityConstants.ATTACK_RANGE);
-        this.stamina = scaleOnLvl(beast.getBaseAttack(), beast.getStaminaLvlScaling());
-        this.defense = scaleOnLvl(beast.getBaseDefense(), beast.getDefenseLvlScaling()) + (random.nextInt(EntityConstants.DEFENSE_RANGE * 2) - EntityConstants.DEFENSE_RANGE);
+        this.speed = scaleOnLvl(beast.getBaseSpeed(),  this.level, beast.getSpeedLvlScaling());
+        this.attack = scaleOnLvl(beast.getBaseAttack(),  this.level, beast.getAttackLvlScaling()) + (random.nextInt(EntityConstants.ATTACK_RANGE * 2) - EntityConstants.ATTACK_RANGE);
+        this.stamina = scaleOnLvl(beast.getBaseAttack(),  this.level, beast.getStaminaLvlScaling());
+        this.defense = scaleOnLvl(beast.getBaseDefense(),  this.level, beast.getDefenseLvlScaling()) + (random.nextInt(EntityConstants.DEFENSE_RANGE * 2) - EntityConstants.DEFENSE_RANGE);
         this.attacks = pickAttacks();
         this.wild = true;
     }
@@ -82,7 +82,7 @@ public class CeEntity {
         this.type = beast.getType();
         Nature[] natures = Nature.values();
         this.nature = natures[random.nextInt(natures.length)];
-        //this.attacks = beast.getAttacks;
+        this.attacks = new Attack[]{new Attack(Attacks.Punch)};
         this.hitPoints = beast.getBaseHp();
         this.maxHitPoints = beast.getBaseHp();
         this.level = 1;
@@ -96,8 +96,8 @@ public class CeEntity {
     }
 
 
-    private int scaleOnLvl(int base, int lvlScaling) {
-        return base + this.getLevel() * lvlScaling;
+    public static int scaleOnLvl(int base, int lvl, int lvlScaling) {
+        return base + lvl * lvlScaling;
     }
 
     private int calcLvl(CeEntity player) {
