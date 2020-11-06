@@ -92,17 +92,16 @@ public class Battle extends Thread {
         }
     }
 
-    public void catchBeast(){
-        Random random = new Random();
+    public boolean catchBeast(){
+        boolean caught = false;
         if(turnPlayer1){
-                Item item = new Item(1);
-                Catching.isCaught(cePlayer1.getCeEntity(), selectedFightEntityPlayer2, new Item(0));
+            turnPlayer1 = false;
+            Item item = new Item(1);
+            caught = Catching.isCaught(cePlayer1, selectedFightEntityPlayer2, new Item(0));
+            if(caught) setBattleEnd();
+            setActionDone();
         }
-
-        if(turnPlayer2){
-                Item item = new Item(1);
-                Catching.isCaught(cePlayer2.getCeEntity(), selectedFightEntityPlayer1, new Item(0));
-        }
+        return caught;
     }
 
     public CeEntity[] useAttack(Attack attack){
@@ -144,6 +143,9 @@ public class Battle extends Thread {
                         setSelectedFightEntityPlayer2(cePlayer2.getCeEntity());
                         this.selectedFightEntityPlayer2.setPlayerNumber(2);
                         defender = selectedFightEntityPlayer2;
+                        if(selectedFightEntityPlayer2.getHitPoints() == 0){
+                            setBattleEnd();
+                        }
                     }
 
                 }

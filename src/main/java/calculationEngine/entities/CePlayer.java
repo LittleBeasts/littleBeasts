@@ -1,5 +1,7 @@
 package calculationEngine.entities;
 
+import config.PlayerConfig;
+
 import java.util.List;
 
 public class CePlayer extends CeEntity {
@@ -8,6 +10,7 @@ public class CePlayer extends CeEntity {
     private boolean isAI = false;
     private int playerNumber;
     private int activeMonsterIndex = 0;
+    private Attack[] playerStandardAttacks = PlayerConfig.PLAYER_STANDARD_ATTACKS;
 
     public CePlayer(Nature nature, Attack[] attacks, int hitPoints, int maxHitPoints, int level, int friendshipPoints, int speed, int stamina, int attack, int defense, int developmentLvl, List<CeEntity> team) {
         super(BeastTypes.PlayerStandard, nature, attacks, hitPoints, maxHitPoints, level, friendshipPoints, speed, stamina, attack, defense, developmentLvl, false);
@@ -44,5 +47,9 @@ public class CePlayer extends CeEntity {
 
     public int getActiveMonsterIndex() {
         return activeMonsterIndex;
+    }
+
+    public Attack[] getPlayerStandardAttacks() {
+        return playerStandardAttacks;
     }
 }
