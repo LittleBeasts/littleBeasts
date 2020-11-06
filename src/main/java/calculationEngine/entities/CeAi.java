@@ -103,4 +103,12 @@ public class CeAi extends Thread {
     public List<CeEntity> getTeam() {
         return team;
     }
+
+    public int getActiveMonsterIndex(){
+        return this.getAiPlayer().getActiveMonsterIndex();
+    }
+
+    public void setActiveMonsterIndex(int index){
+        this.getAiPlayer().setActiveMonsterIndex(index);
+    }
 }
