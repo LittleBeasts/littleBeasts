@@ -29,6 +29,7 @@ public class Hud extends GuiComponent {
     private BattleMenu attackMenu;
     private boolean drawAttackMenu = false;
     private Graphics2D g;
+    private int rollIn = 0;
 
     protected Hud() {
         super(0, 0, Game.window().getResolution().getWidth(), Game.window().getResolution().getHeight());
@@ -66,24 +67,35 @@ public class Hud extends GuiComponent {
             return;
         }
 
-        this.drawDamageRolls(g);
+
         //this.renderEnemyUI(g);
+        this.drawDamageRolls(g);
         this.renderPlayerUI(g);
         this.renderHP(g);
         this.renderBeasts(g);
         if (GameLogic.getState() == GameState.BATTLE) {
             try {
+                this.rollInBars(g);
                 this.drawBattleHud(g);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
             this.drawIngameHud(g);
+            rollIn = 0;
             bm.setFocus(false);
         }
         // if (GameLogic.getState() == GameState.BATTLE) {
 
         //  }
+    }
+
+    private void rollInBars(Graphics2D g) {
+        g.setColor(Color.BLACK);
+        if (rollIn < HudConstants.BATTLEBARHEIGHT)
+            rollIn += 5;
+        g.fillRect(0, 0, HudConstants.WIDTH, rollIn);
+        g.fillRect(0, HudConstants.HEIGHT, HudConstants.WIDTH, -rollIn);
     }
 
     private void drawDamageRolls(Graphics2D g) {

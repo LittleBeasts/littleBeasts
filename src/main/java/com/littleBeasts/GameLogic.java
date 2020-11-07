@@ -31,7 +31,7 @@ public class GameLogic implements IUpdateable {
     public static String START_LEVEL = "Arkham";
 
     private static List<Beast> beastList = new ArrayList<>();
-    private Camera camera;
+    private static Camera camera;
     private static Battle battle;
     private static CePlayer cePlayer;
 
@@ -77,14 +77,16 @@ public class GameLogic implements IUpdateable {
 
     public static void setState(GameState state) {
         Game.audio().stopMusic();
+        Game.world().setCamera(camera);
+        Game.world().camera().setZoom(1, 500);
         GameLogic.state = state;
         Game.loop().setTimeScale(1);
         Player.instance().attachControllers();
         Player.instance().setFighting(false);
-       // for (int i = 0; i < beastList.size(); i++) {
-       //         beastList.get(i).setVisible(false);
-       //         beastList.get(i).setCollision(false);
-       // }
+        // for (int i = 0; i < beastList.size(); i++) {
+        //         beastList.get(i).setVisible(false);
+        //         beastList.get(i).setCollision(false);
+        // }
 
         // beastList.clear();
         switch (state) {
@@ -133,6 +135,12 @@ public class GameLogic implements IUpdateable {
         } else {
             x = (int) Player.instance().getX() + 50;
         }
+        Camera battleCam = new PositionLockCamera(Player.instance());
+        battleCam.setClampToMap(true);
+        Point2D point2D = Game.world().camera().getViewportLocation(Player.instance());
+        Game.world().setCamera(battleCam);
+        Game.world().camera().setZoom(1.5f, 500);
+
         //for dev purposes
         Beast beast = new Beast(Beasts.FeuerFurz, x, (int) (Player.instance().getY() - (Player.instance().getHeight() / 2)), false);
         beast.setFacingDirection(Player.instance().getFacingDirection().getOpposite());

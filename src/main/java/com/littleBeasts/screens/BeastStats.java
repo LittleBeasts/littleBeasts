@@ -55,7 +55,7 @@ public class BeastStats {
 
 
             for (Integer dmg : this.littleBeast.getLittleBeast().getDamages()) {
-                damageAnimationList.add(new DamageAnimation(Game.world().camera().getViewportLocation(Player.instance().getCenter()), dmg));
+                damageAnimationList.add(new DamageAnimation((Player.instance().getCenter()), dmg));
             }
 
             damageAnimationOutOfBounds(g);
@@ -63,7 +63,7 @@ public class BeastStats {
         } else {
 
             for (Integer dmg : this.littleBeast.getLittleBeast().getDamages()) {
-                damageAnimationList.add(new DamageAnimation(Game.world().camera().getViewportLocation(this.littleBeast), dmg));
+                damageAnimationList.add(new DamageAnimation(this.littleBeast.getCenter(), dmg));
             }
 
             damageAnimationOutOfBounds(g);
