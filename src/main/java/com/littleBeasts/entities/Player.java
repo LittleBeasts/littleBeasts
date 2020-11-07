@@ -2,6 +2,7 @@ package com.littleBeasts.entities;
 
 import calculationEngine.battle.Battle;
 import calculationEngine.entities.*;
+import com.littleBeasts.GameLogic;
 import com.littleBeasts.PlayerState;
 import config.HudConstants;
 import de.gurkenlabs.litiengine.Game;
@@ -22,6 +23,7 @@ public class Player extends Creature implements IUpdateable {
     private List<Beast> littleBeastTeam;
     private boolean spawned;
     private Battle battle;
+    private GameLogic gameLogic;
 
 
     private CePlayer cePlayer;
@@ -36,8 +38,8 @@ public class Player extends Creature implements IUpdateable {
 
         // Calculation Engine
         this.littleBeastTeam = new ArrayList<>();
-        this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY()));
-        this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY()));
+        this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY(), true));
+        this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY(), true));
         this.cePlayer = new CePlayer(Nature.ANGRY, new Attack[]{new Attack(Attacks.Punch)}, 100, 100, 1, 1, 10, 1, 10, 10, 1, beastToCeEntity(littleBeastTeam));
         this.playerAttacks = cePlayer.getCeEntity().getAttacks();
         this.maxHP = cePlayer.getCeEntity().getMaxHitPoints();
@@ -114,6 +116,7 @@ public class Player extends Creature implements IUpdateable {
     public int getCurrentHP() {
         return currentHP;
     }
+
     public CePlayer getCePlayer() {
         return cePlayer;
     }
@@ -132,5 +135,13 @@ public class Player extends Creature implements IUpdateable {
 
     public boolean isFighting() {
         return isFighting;
+    }
+
+    public GameLogic getGameLogic() {
+        return gameLogic;
+    }
+
+    public void setGameLogic(GameLogic gameLogic) {
+        this.gameLogic = gameLogic;
     }
 }

@@ -70,7 +70,7 @@ public class BattleMenu { // dev constructor
                             break;
                         case "Catch":
                             System.out.println("Action_Catch");
-                            Player.instance().getBattle().catchBeast();
+                            System.out.println("Beast caught: " + Player.instance().getBattle().catchBeast());
                             break;
                     }
                     break;

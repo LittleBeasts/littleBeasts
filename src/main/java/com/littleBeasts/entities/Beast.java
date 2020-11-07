@@ -3,7 +3,6 @@ package com.littleBeasts.entities;
 import calculationEngine.entities.Beasts;
 import calculationEngine.entities.CeEntity;
 import com.littleBeasts.screens.BeastStats;
-import de.gurkenlabs.litiengine.Direction;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.CollisionInfo;
 import de.gurkenlabs.litiengine.entities.Creature;
@@ -21,8 +20,10 @@ public class Beast extends Creature implements IUpdateable {
     private BeastStats beastStats;
     private int x, y;
     private boolean spwaned;
+    private boolean playerBeast;
+    private Spawnpoint e;
 
-    public Beast(Beasts beasts, int x, int y) {
+    public Beast(Beasts beasts, int x, int y, boolean playerBeast) {
         // super(beasts.name());
         super("test");
         this.portrait = Resources.images().get("sprites/icon.png");
@@ -30,21 +31,16 @@ public class Beast extends Creature implements IUpdateable {
         this.monsterName = monsterName;
         this.x = x;
         this.y = y;
-        Spawnpoint e = new Spawnpoint(x, y);
+        this.playerBeast = playerBeast;
+        e = new Spawnpoint(x, y);
         e.spawn(this);
-    }
-
-    public void removeFromMap() {
-        this.setVisible(false);
-    }
-
-    public void addToMap(int x, int y) {
-        this.setVisible(true);
-        this.setLocation(x, y);
+        if (!playerBeast) {
+            this.beastStats = new BeastStats(this, false);
+        }
     }
 
     public void createBeastStats(int x, int y, int width, int height) {
-        this.beastStats = new BeastStats(x, y, width, height, this);
+        this.beastStats = new BeastStats(x, y, width, height, this, playerBeast);
     }
 
     @Override
@@ -71,5 +67,9 @@ public class Beast extends Creature implements IUpdateable {
 
     public BeastStats getBeastStats() {
         return beastStats;
+    }
+
+    public Spawnpoint getE() {
+        return e;
     }
 }

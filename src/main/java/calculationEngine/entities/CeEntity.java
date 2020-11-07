@@ -35,6 +35,7 @@ public class CeEntity {
     private int defense;
     private boolean wild;
     private Random random = new Random();
+    private List<Integer> damages = new ArrayList<>();
 
     private int playerNumber;
 
@@ -69,10 +70,10 @@ public class CeEntity {
         this.hitPoints = scaleOnLvl(beast.getBaseHp(), this.level, beast.getHpLvlScaling());
         this.maxHitPoints = this.hitPoints;
         this.type = beast.getType();
-        this.speed = scaleOnLvl(beast.getBaseSpeed(),  this.level, beast.getSpeedLvlScaling());
-        this.attack = scaleOnLvl(beast.getBaseAttack(),  this.level, beast.getAttackLvlScaling()) + (random.nextInt(EntityConstants.ATTACK_RANGE * 2) - EntityConstants.ATTACK_RANGE);
-        this.stamina = scaleOnLvl(beast.getBaseAttack(),  this.level, beast.getStaminaLvlScaling());
-        this.defense = scaleOnLvl(beast.getBaseDefense(),  this.level, beast.getDefenseLvlScaling()) + (random.nextInt(EntityConstants.DEFENSE_RANGE * 2) - EntityConstants.DEFENSE_RANGE);
+        this.speed = scaleOnLvl(beast.getBaseSpeed(), this.level, beast.getSpeedLvlScaling());
+        this.attack = scaleOnLvl(beast.getBaseAttack(), this.level, beast.getAttackLvlScaling()) + (random.nextInt(EntityConstants.ATTACK_RANGE * 2) - EntityConstants.ATTACK_RANGE);
+        this.stamina = scaleOnLvl(beast.getBaseAttack(), this.level, beast.getStaminaLvlScaling());
+        this.defense = scaleOnLvl(beast.getBaseDefense(), this.level, beast.getDefenseLvlScaling()) + (random.nextInt(EntityConstants.DEFENSE_RANGE * 2) - EntityConstants.DEFENSE_RANGE);
         this.attacks = pickAttacks();
         this.wild = true;
     }
@@ -198,6 +199,16 @@ public class CeEntity {
 
     public void setHitPoints(int hitPoints) {
         this.hitPoints = hitPoints;
+    }
+
+    public void dealDamage(int damage) {
+        this.hitPoints -= damage;
+        this.damages.add(damage);
+    }
+    public List<Integer> getDamages() {
+        List<Integer> tmp = new ArrayList<>(damages);
+        damages.clear();
+        return tmp;
     }
 
     public void setMaxHitPoints(int maxHitPoints) {

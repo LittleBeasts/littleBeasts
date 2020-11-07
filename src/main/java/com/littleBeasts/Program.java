@@ -3,6 +3,7 @@ package com.littleBeasts;
 import calculationEngine.battle.Damage;
 import calculationEngine.entities.*;
 import calculationEngine.environment.Loot;
+import com.littleBeasts.entities.Player;
 import com.littleBeasts.screens.IngameScreen;
 import com.littleBeasts.screens.MenuScreen;
 import de.gurkenlabs.litiengine.Game;
@@ -40,6 +41,7 @@ public class Program {
         // initialize modules
         PlayerInput.init();
         gameLogic = new GameLogic();
+        Player.instance().setGameLogic(gameLogic);
         gameLogic.init();
 
         // enter main menu

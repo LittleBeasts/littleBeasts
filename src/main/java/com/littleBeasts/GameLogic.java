@@ -30,7 +30,7 @@ public class GameLogic implements IUpdateable {
     public static final Font MENU_FONT = new Font("Serif", Font.BOLD, 13);
     public static String START_LEVEL = "Arkham";
 
-    private static List<Beast> beastList;
+    private static List<Beast> beastList = new ArrayList<>();
     private Camera camera;
     private static Battle battle;
     private static CePlayer cePlayer;
@@ -44,7 +44,6 @@ public class GameLogic implements IUpdateable {
      */
     public void init() {
         Game.loop().attach(this);
-        beastList = new ArrayList<>();
         //  Environment.registerMapObjectLoader(new CustomMapObjectLoader());
 
         // we'll use a camera in our game that is locked to the location of the player
@@ -82,10 +81,12 @@ public class GameLogic implements IUpdateable {
         Game.loop().setTimeScale(1);
         Player.instance().attachControllers();
         Player.instance().setFighting(false);
-        for (int i = 0; i < beastList.size(); i++) {
-            beastList.get(i).removeFromMap();
-            beastList.get(i).setCollision(false);
-        }
+       // for (int i = 0; i < beastList.size(); i++) {
+       //         beastList.get(i).setVisible(false);
+       //         beastList.get(i).setCollision(false);
+       // }
+
+        // beastList.clear();
         switch (state) {
             case MENU:
                 if (!firstStart) {
@@ -133,12 +134,12 @@ public class GameLogic implements IUpdateable {
             x = (int) Player.instance().getX() + 50;
         }
         //for dev purposes
-        Beast beast = new Beast(Beasts.FeuerFurz, x, (int) (Player.instance().getY() - (Player.instance().getHeight() / 2)));
+        Beast beast = new Beast(Beasts.FeuerFurz, x, (int) (Player.instance().getY() - (Player.instance().getHeight() / 2)), false);
         beast.setFacingDirection(Player.instance().getFacingDirection().getOpposite());
         beastList.add(beast);
 
         cePlayer = Player.instance().getCePlayer();
-        CeAi ai = new CeAi(cePlayer);
+        CeAi ai = new CeAi(cePlayer, beast.getLittleBeast());
         battle = new Battle(Player.instance().getCePlayer(), ai);
         Player.instance().setBattle(battle);
         Player.instance().setFighting(true);
@@ -148,6 +149,14 @@ public class GameLogic implements IUpdateable {
     public void update() {
         loadNewArea();
         startBattle();
+        if (getState() == GameState.INGAME) {
+            for (int i = 0; i < beastList.size(); i++) {
+                if (beastList.get(i).getBeastStats().isReadyToBeRemoved()) {
+                    beastList.get(i).die();
+                    Game.world().environment().remove(beastList.get(i));
+                }
+            }
+        }
     }
 
     public void loadNewArea() {
@@ -183,6 +192,10 @@ public class GameLogic implements IUpdateable {
                 setState(GameState.INGAME);
             }
         }
+    }
+
+    public static List<Beast> getBeastList() {
+        return beastList;
     }
 }
 

@@ -28,6 +28,7 @@ public class Hud extends GuiComponent {
     private BattleMenu bm;
     private BattleMenu attackMenu;
     private boolean drawAttackMenu = false;
+    private Graphics2D g;
 
     protected Hud() {
         super(0, 0, Game.window().getResolution().getWidth(), Game.window().getResolution().getHeight());
@@ -65,6 +66,7 @@ public class Hud extends GuiComponent {
             return;
         }
 
+        this.drawDamageRolls(g);
         //this.renderEnemyUI(g);
         this.renderPlayerUI(g);
         this.renderHP(g);
@@ -82,7 +84,17 @@ public class Hud extends GuiComponent {
         // if (GameLogic.getState() == GameState.BATTLE) {
 
         //  }
+    }
 
+    private void drawDamageRolls(Graphics2D g) {
+        this.g = g;
+        for (Beast beast : Player.instance().getLittleBeastTeam()) {
+            beast.getBeastStats().drawDamageRolls(g);
+        }
+        for (Beast beast : GameLogic.getBeastList()) {
+            if (beast.getBeastStats() != null)
+                beast.getBeastStats().drawDamageRolls(g);
+        }
     }
 
     private void drawBattleHud(Graphics2D g) throws IOException {
@@ -138,6 +150,13 @@ public class Hud extends GuiComponent {
     private void drawBeastPortraits(Graphics2D g) {
         for (Beast beast : Player.instance().getLittleBeastTeam()) {
             beast.getBeastStats().draw(g);
+        }
+        Player.instance().getGameLogic();
+        if (GameLogic.getBeastList() != null) {
+            for (Beast beast : GameLogic.getBeastList()) {
+                if (beast.getBeastStats() != null)
+                    beast.getBeastStats().draw(g);
+            }
         }
     }
 

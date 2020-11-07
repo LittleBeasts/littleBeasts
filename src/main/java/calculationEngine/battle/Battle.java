@@ -120,11 +120,10 @@ public class Battle extends Thread {
         int damage = Damage.calculateDamage(attacker, defender, attack);
         if (damage != -1) {
             System.out.println("Damage:" + damage);
-            int newHitPoints = defender.getHitPoints() - damage;
-            defender.setHitPoints(newHitPoints);
+            defender.dealDamage(damage);
             if (defender.getType() == BeastTypes.PlayerStandard) {
-                if (defender.getPlayerNumber() == 1) cePlayer1.getCeEntity().setHitPoints(newHitPoints);
-                else cePlayer2.getCeEntity().setHitPoints(newHitPoints);
+                if (defender.getPlayerNumber() == 1) cePlayer1.getCeEntity().dealDamage(damage);
+                else cePlayer2.getCeEntity().dealDamage(damage);
             }
             if (defender.getHitPoints() <= 0) {
                 defender.setHitPoints(0);

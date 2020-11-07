@@ -2,8 +2,6 @@ package calculationEngine.entities;
 
 import calculationEngine.battle.Battle;
 import config.AiConstants;
-import config.BattleConstants;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +26,7 @@ public class CeAi extends Thread {
     private Battle battle;
     private CePlayer aiPlayer;
 
-    public CeAi(CePlayer player){
+    public CeAi(CePlayer player) {
         this.team = new ArrayList<>();
         this.team.add(new CeEntity(Beasts.FeuerFurz));
         this.nature = pickNature();
@@ -45,7 +43,24 @@ public class CeAi extends Thread {
         this.aiPlayer.setAI();
     }
 
-    public CeAi(CePlayer player, List<CeEntity> team){
+    public CeAi(CePlayer player, CeEntity ceEntity) {
+        this.team = new ArrayList<>();
+        this.team.add(ceEntity);
+        this.nature = pickNature();
+        this.attacks = new Attack[]{new Attack(Attacks.Punch)};
+        this.hitPoints = 0;
+        this.maxHitPoints = 0;
+        this.level = player.getCeEntity().getLevel();
+        this.speed = CeEntity.scaleOnLvl(AiConstants.AI_BASE_SPEED, player.getCeEntity().getLevel(), AiConstants.AI_LEVEL_SCALING);
+        this.stamina = CeEntity.scaleOnLvl(AiConstants.AI_BASE_STAMINA, player.getCeEntity().getLevel(), AiConstants.AI_LEVEL_SCALING);
+        this.attack = CeEntity.scaleOnLvl(AiConstants.AI_BASE_ATTACK, player.getCeEntity().getLevel(), AiConstants.AI_LEVEL_SCALING);
+        this.defense = CeEntity.scaleOnLvl(AiConstants.AI_BASE_DEFENSE, player.getCeEntity().getLevel(), AiConstants.AI_LEVEL_SCALING);
+        this.friendshipPoints = 0;
+        this.aiPlayer = new CePlayer(this.nature, this.attacks, this.hitPoints, this.maxHitPoints, this.level, this.friendshipPoints, this.speed, this.stamina, this.attack, this.defense, this.developmentLvl, this.team);
+        this.aiPlayer.setAI();
+    }
+
+    public CeAi(CePlayer player, List<CeEntity> team) {
         this.team = team;
         this.nature = pickNature();
         this.attacks = new Attack[]{new Attack(Attacks.Punch)};
@@ -64,14 +79,13 @@ public class CeAi extends Thread {
     @Override
     public void run() {
         this.currentMonster = this.team.get(0);
-        while (true){
-            if(battle.getTurn() != null){
+        while (true) {
+            if (battle.getTurn() != null) {
                 if (battle.getTurn().getNumber() == this.aiPlayer.getNumber()) {
                     System.out.println("Turn of AI");
                     battle.useAttack(pickAttack());
                 }
-            }
-            else break;
+            } else break;
             try {
                 Thread.sleep(20);
             } catch (InterruptedException e) {
@@ -86,7 +100,7 @@ public class CeAi extends Thread {
         return attacks[random.nextInt(attacks.length)];
     }
 
-    public void setBattle(Battle battle){
+    public void setBattle(Battle battle) {
         this.battle = battle;
     }
 
@@ -103,11 +117,11 @@ public class CeAi extends Thread {
         return team;
     }
 
-    public int getActiveMonsterIndex(){
+    public int getActiveMonsterIndex() {
         return this.getAiPlayer().getActiveMonsterIndex();
     }
 
-    public void setActiveMonsterIndex(int index){
+    public void setActiveMonsterIndex(int index) {
         this.getAiPlayer().setActiveMonsterIndex(index);
     }
 }
