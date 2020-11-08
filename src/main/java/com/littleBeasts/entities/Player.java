@@ -31,6 +31,7 @@ public class Player extends Creature implements IUpdateable {
     private int maxHP, currentHP;
     private boolean isFighting;
 
+
     public Player() {
         super("test");
 

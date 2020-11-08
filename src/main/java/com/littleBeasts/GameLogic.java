@@ -184,6 +184,25 @@ public class GameLogic implements IUpdateable {
             }
         }
     }
+
+    public void buttonPressed(int i) {
+        try {
+            Robot robert = new Robot();
+            Thread.sleep(2000);
+            robert.keyPress(i);
+            Thread.sleep(100);
+            robert.keyRelease(i);
+            Thread.sleep(2000);
+        } catch (AWTException awtException) {
+            awtException.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Battle getBattle() {
+        return battle;
+    }
 }
 
 
