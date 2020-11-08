@@ -10,6 +10,7 @@ public class DamageAnimation {
     private final Point2D point2D;
     private final int damage, fadeoutSpeed;
     private final double speed;
+    private final double animationLimit;
     private int increment;
     private boolean soundPlayer = false;
 
@@ -19,6 +20,7 @@ public class DamageAnimation {
         this.damage = damage;
         this.speed = 0.5;
         this.fadeoutSpeed = 2;
+        this.animationLimit = point2D.getY() - 40;
     }
 
     public void draw(Graphics2D g) {
@@ -37,6 +39,6 @@ public class DamageAnimation {
     }
 
     public boolean outOfBounds() {
-        return !Game.screens().current().getBoundingBox().contains(point2D);
+        return point2D.getY() <= animationLimit;
     }
 }

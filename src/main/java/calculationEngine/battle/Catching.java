@@ -1,6 +1,6 @@
 package calculationEngine.battle;
 
-import calculationEngine.entities.Attack;
+import calculationEngine.entities.CeAttack;
 import calculationEngine.entities.BeastTypes;
 import calculationEngine.entities.CeEntity;
 import calculationEngine.entities.CePlayer;
@@ -19,7 +19,7 @@ public class Catching {
         //roll to d50 to get a quasi normal distribution
         int attackRoll = rnd.nextInt(51) + rnd.nextInt(51);
         debugInfo = "Roll: " + attackRoll + "\n";
-        Attack catchingSkill = player.getPlayerStandardAttacks()[0];
+        CeAttack catchingSkill = player.getPlayerStandardAttacks()[0];
 
         if (catchingMisses(player.getCeEntity(), beast, catchingSkill, attackRoll, cage)) {
             debugInfo += "Miss\n";
@@ -31,9 +31,9 @@ public class Catching {
         return true;
     }
 
-    private static boolean catchingMisses(CeEntity player, CeEntity beast, Attack attack, int attackRoll, Item cage) {
+    private static boolean catchingMisses(CeEntity player, CeEntity beast, CeAttack ceAttack, int attackRoll, Item cage) {
         // when it is a critical hit, it will never miss
-        if (attackRoll > (100 - attack.getCriticalChance())) {
+        if (attackRoll > (100 - ceAttack.getCriticalChance())) {
             debugInfo += "Critical Catch\n";
             return false;
         }
@@ -41,7 +41,7 @@ public class Catching {
         int baseDifficultly = (beast.getHitPoints() * 100) / (beast.getMaxHitPoints());
         double levelModifier = player.getLevel() / beast.getLevel();
         int speed = (int) (player.getSpeed() * levelModifier);
-        int difficulty = baseDifficultly + beast.getSpeed() - (speed + attack.getAccuracy() + cage.getBonus());
+        int difficulty = baseDifficultly + beast.getSpeed() - (speed + ceAttack.getAccuracy() + cage.getBonus());
         debugInfo += "Difficulty: " + difficulty + "\n";
         // if difficulty is higher than the roll the attack will miss.
         return difficulty > attackRoll;

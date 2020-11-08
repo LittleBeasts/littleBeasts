@@ -11,8 +11,7 @@ import de.gurkenlabs.litiengine.resources.Resources;
 
 import java.awt.*;
 
-@CollisionInfo(collisionBoxWidth = 14, collisionBoxHeight = 8, collision = true)
-
+@CollisionInfo(collisionBoxWidth = 14, collisionBoxHeight = 30, collision = true)
 public class Beast extends Creature implements IUpdateable {
     private CeEntity littleBeast;
     private String monsterName;

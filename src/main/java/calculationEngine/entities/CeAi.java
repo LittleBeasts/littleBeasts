@@ -10,7 +10,7 @@ import java.util.Random;
 public class CeAi extends Thread {
 
     private Nature nature;
-    private Attack[] attacks;
+    private CeAttack[] ceAttacks;
     private int hitPoints;
     private int maxHitPoints;
     private int level;
@@ -30,7 +30,7 @@ public class CeAi extends Thread {
         this.team = new ArrayList<>();
         this.team.add(new CeEntity(Beasts.FeuerFurz));
         this.nature = pickNature();
-        this.attacks = new Attack[]{new Attack(Attacks.Punch)};
+        this.ceAttacks = new CeAttack[]{new CeAttack(Attacks.Punch)};
         this.hitPoints = 0;
         this.maxHitPoints = 0;
         this.level = player.getCeEntity().getLevel();
@@ -39,7 +39,7 @@ public class CeAi extends Thread {
         this.attack = CeEntity.scaleOnLvl(AiConstants.AI_BASE_ATTACK, player.getCeEntity().getLevel(), AiConstants.AI_LEVEL_SCALING);
         this.defense = CeEntity.scaleOnLvl(AiConstants.AI_BASE_DEFENSE, player.getCeEntity().getLevel(), AiConstants.AI_LEVEL_SCALING);
         this.friendshipPoints = 0;
-        this.aiPlayer = new CePlayer(this.nature, this.attacks, this.hitPoints, this.maxHitPoints, this.level, this.friendshipPoints, this.speed, this.stamina, this.attack, this.defense, this.developmentLvl, this.team);
+        this.aiPlayer = new CePlayer(this.nature, this.ceAttacks, this.hitPoints, this.maxHitPoints, this.level, this.friendshipPoints, this.speed, this.stamina, this.attack, this.defense, this.developmentLvl, this.team);
         this.aiPlayer.setAI();
     }
 
@@ -47,7 +47,7 @@ public class CeAi extends Thread {
         this.team = new ArrayList<>();
         this.team.add(ceEntity);
         this.nature = pickNature();
-        this.attacks = new Attack[]{new Attack(Attacks.Punch)};
+        this.ceAttacks = new CeAttack[]{new CeAttack(Attacks.Punch)};
         this.hitPoints = 0;
         this.maxHitPoints = 0;
         this.level = player.getCeEntity().getLevel();
@@ -56,14 +56,14 @@ public class CeAi extends Thread {
         this.attack = CeEntity.scaleOnLvl(AiConstants.AI_BASE_ATTACK, player.getCeEntity().getLevel(), AiConstants.AI_LEVEL_SCALING);
         this.defense = CeEntity.scaleOnLvl(AiConstants.AI_BASE_DEFENSE, player.getCeEntity().getLevel(), AiConstants.AI_LEVEL_SCALING);
         this.friendshipPoints = 0;
-        this.aiPlayer = new CePlayer(this.nature, this.attacks, this.hitPoints, this.maxHitPoints, this.level, this.friendshipPoints, this.speed, this.stamina, this.attack, this.defense, this.developmentLvl, this.team);
+        this.aiPlayer = new CePlayer(this.nature, this.ceAttacks, this.hitPoints, this.maxHitPoints, this.level, this.friendshipPoints, this.speed, this.stamina, this.attack, this.defense, this.developmentLvl, this.team);
         this.aiPlayer.setAI();
     }
 
     public CeAi(CePlayer player, List<CeEntity> team) {
         this.team = team;
         this.nature = pickNature();
-        this.attacks = new Attack[]{new Attack(Attacks.Punch)};
+        this.ceAttacks = new CeAttack[]{new CeAttack(Attacks.Punch)};
         this.hitPoints = CeEntity.scaleOnLvl(AiConstants.AI_BASE_HP, player.getCeEntity().getLevel(), AiConstants.AI_LEVEL_SCALING);
         this.maxHitPoints = this.hitPoints;
         this.level = player.getCeEntity().getLevel();
@@ -72,7 +72,7 @@ public class CeAi extends Thread {
         this.attack = CeEntity.scaleOnLvl(AiConstants.AI_BASE_ATTACK, player.getCeEntity().getLevel(), AiConstants.AI_LEVEL_SCALING);
         this.defense = CeEntity.scaleOnLvl(AiConstants.AI_BASE_DEFENSE, player.getCeEntity().getLevel(), AiConstants.AI_LEVEL_SCALING);
         this.friendshipPoints = 0;
-        this.aiPlayer = new CePlayer(this.nature, this.attacks, this.hitPoints, this.maxHitPoints, this.level, this.friendshipPoints, this.speed, this.stamina, this.attack, this.defense, this.developmentLvl, this.team);
+        this.aiPlayer = new CePlayer(this.nature, this.ceAttacks, this.hitPoints, this.maxHitPoints, this.level, this.friendshipPoints, this.speed, this.stamina, this.attack, this.defense, this.developmentLvl, this.team);
         this.aiPlayer.setAI();
     }
 
@@ -94,10 +94,10 @@ public class CeAi extends Thread {
         }
     }
 
-    private Attack pickAttack() {
-        Attack[] attacks = this.currentMonster.getAttacks();
+    private CeAttack pickAttack() {
+        CeAttack[] ceAttacks = this.currentMonster.getAttacks();
         Random random = new Random();
-        return attacks[random.nextInt(attacks.length)];
+        return ceAttacks[random.nextInt(ceAttacks.length)];
     }
 
     public void setBattle(Battle battle) {

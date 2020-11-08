@@ -1,6 +1,6 @@
 package com.littleBeasts.screens;
 
-import calculationEngine.entities.Attack;
+import calculationEngine.entities.CeAttack;
 import com.littleBeasts.GameLogic;
 import com.littleBeasts.GameState;
 import com.littleBeasts.PlayerState;
@@ -20,6 +20,7 @@ import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class Hud extends GuiComponent {
 
@@ -44,8 +45,8 @@ public class Hud extends GuiComponent {
                     break;
             }
         });
-        Attack[] attacks = Player.instance().getPlayerAttacks();
-        attackMenu = new BattleMenu(350, attacks);
+        CeAttack[] ceAttacks = Player.instance().getPlayerAttacks();
+        attackMenu = new BattleMenu(350, ceAttacks);
         attackMenu.onConfirm(c -> {
             switch (c.intValue()) {
                 case 0:
@@ -165,6 +166,7 @@ public class Hud extends GuiComponent {
         }
         Player.instance().getGameLogic();
         if (GameLogic.getBeastList() != null) {
+            List<Beast> test = GameLogic.getBeastList();
             for (Beast beast : GameLogic.getBeastList()) {
                 if (beast.getBeastStats() != null)
                     beast.getBeastStats().draw(g);

@@ -105,19 +105,19 @@ public class Battle extends Thread {
         return caught;
     }
 
-    public void useAttack(Attack attack) {
+    public void useAttack(CeAttack ceAttack) {
         if (turnPlayer1) {
             turnPlayer1 = false;
-            applyAttack(selectedFightEntityPlayer1, selectedFightEntityPlayer2, attack);
+            applyAttack(selectedFightEntityPlayer1, selectedFightEntityPlayer2, ceAttack);
         } else if (turnPlayer2) {
             turnPlayer2 = false;
-            applyAttack(selectedFightEntityPlayer2, selectedFightEntityPlayer1, attack);
+            applyAttack(selectedFightEntityPlayer2, selectedFightEntityPlayer1, ceAttack);
 
         }
     }
 
-    private void applyAttack(CeEntity attacker, CeEntity defender, Attack attack) {
-        int damage = Damage.calculateDamage(attacker, defender, attack);
+    private void applyAttack(CeEntity attacker, CeEntity defender, CeAttack ceAttack) {
+        int damage = Damage.calculateDamage(attacker, defender, ceAttack);
         if (damage != -1) {
             System.out.println("Damage:" + damage);
             defender.dealDamage(damage);

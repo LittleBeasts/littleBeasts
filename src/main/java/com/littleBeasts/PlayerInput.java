@@ -38,10 +38,13 @@ public final class PlayerInput {
         });
 
         Input.keyboard().onKeyTyped(e -> {
-            if (e.getKeyCode() == KeyEvent.VK_B && GameLogic.getState() == GameState.INGAME) {
+            if (e.getKeyCode() == KeyEvent.VK_B && GameLogic.getState() == GameState.INGAME && GameLogic.isNextBattlePossible()) {
                 GameLogic.setState(GameState.BATTLE);
             } else if (e.getKeyCode() == KeyEvent.VK_B && GameLogic.getState() == GameState.BATTLE) {
                 GameLogic.setState(GameState.INGAME);
+            }
+            if (e.getKeyCode() == KeyEvent.VK_P) {
+                Player.instance().punch();
             }
         });
     }
