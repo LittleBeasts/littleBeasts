@@ -28,11 +28,20 @@ public class Hud extends GuiComponent {
     boolean debug = true;
     private BattleMenu bm;
     private BattleMenu attackMenu;
+
+    public BattleMenu getAttackMenu() {
+        return attackMenu;
+    }
+
+    public BattleMenu getBm() {
+        return bm;
+    }
+
     private boolean drawAttackMenu = false;
     private Graphics2D g;
     private int rollIn = 0;
 
-    protected Hud() {
+    public Hud() {
         super(0, 0, Game.window().getResolution().getWidth(), Game.window().getResolution().getHeight());
 
 
@@ -216,4 +225,6 @@ public class Hud extends GuiComponent {
     public void setBattleMenuFocus(boolean focus) {
         bm.setFocus(focus);
     }
+
+
 }

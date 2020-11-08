@@ -43,6 +43,10 @@ public class BattleMenu { // dev constructor
 
         this.confirmConsumer = new CopyOnWriteArrayList<>();
 
+        checkBattleMenuInput(items);
+    }
+
+    private void checkBattleMenuInput(String[] items) {
         Input.keyboard().onKeyTyped(e -> {
             if (!focus) return;
             switch (e.getKeyCode()) {
@@ -210,5 +214,18 @@ public class BattleMenu { // dev constructor
             items[0] = ceAttacks[i].getName();
         }
     }
+
+    public int getCurrentPosition() {
+        return currentPosition;
+    }
+
+    public String[] getItems() {
+        return items;
+    }
+
+    public boolean isFocused() {
+        return focus;
+    }
+
 
 }

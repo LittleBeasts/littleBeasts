@@ -13,6 +13,8 @@ import org.json.JSONObject;
 public class Program {
 
     private static GameLogic gameLogic;
+    private static IngameScreen ingameScreen;
+    private static MenuScreen menuScreen;
 
     public static void main(String[] args) {
 
@@ -34,8 +36,10 @@ public class Program {
 
 
         // add the screens
-        Game.screens().add(new IngameScreen());
-        Game.screens().add(new MenuScreen());
+        ingameScreen = new IngameScreen();
+        Game.screens().add(ingameScreen);
+        menuScreen = new MenuScreen();
+        Game.screens().add(menuScreen);
 
 
         // initialize modules
@@ -71,5 +75,17 @@ public class Program {
         }
         //-------------------------------------------------------------------------------------------------------------
         Game.start();
+    }
+
+    public static GameLogic getGameLogic() {
+        return gameLogic;
+    }
+
+    public static IngameScreen getIngameScreen() {
+        return ingameScreen;
+    }
+
+    public static MenuScreen getMenuScreen() {
+        return menuScreen;
     }
 }

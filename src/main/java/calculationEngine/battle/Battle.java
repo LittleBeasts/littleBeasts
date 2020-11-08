@@ -18,6 +18,10 @@ public class Battle extends Thread {
     private boolean threadSleep;
     private boolean onServer = false;
 
+    public boolean isFightOngoing() {
+        return fightOngoing;
+    }
+
     public Battle(CePlayer cePlayer1, CePlayer cePlayer2) {
         this.selectedFightEntityPlayer1 = cePlayer1.getTeam().get(cePlayer1.getActiveMonsterIndex());
         this.selectedFightEntityPlayer1.setPlayerNumber(1);

@@ -14,6 +14,10 @@ public class IngameScreen extends Screen implements IUpdateable {
     public static ChatWindow chatWindow;
     private Hud hud;
 
+    public Hud getHud() {
+        return hud;
+    }
+
     public IngameScreen() {
         super(NAME);
     }

@@ -11,7 +11,6 @@ Feature: Attack a character
     When the Player chooses an attack
     Then the Player uses the chosen attack
 
-
   Scenario: Player attacks and hits
     Given the Player chose an attack
     When the Player hits an enemy with an attack
