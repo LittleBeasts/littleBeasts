@@ -24,7 +24,8 @@ public class Beast extends Creature implements IUpdateable {
 
     public Beast(Beasts beasts, int x, int y, boolean playerBeast) {
         // super(beasts.name());
-        super("test");
+        super(beasts.name());
+        System.out.println("Name:" + beasts.name());
         this.portrait = Resources.images().get("sprites/icon.png");
         this.ceEntity = new CeEntity(beasts);
         this.monsterName = monsterName;
