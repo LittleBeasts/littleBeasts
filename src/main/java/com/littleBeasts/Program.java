@@ -3,6 +3,7 @@ package com.littleBeasts;
 import calculationEngine.battle.Damage;
 import calculationEngine.entities.*;
 import calculationEngine.environment.Loot;
+import com.littleBeasts.entities.Player;
 import com.littleBeasts.screens.IngameScreen;
 import com.littleBeasts.screens.MenuScreen;
 import de.gurkenlabs.litiengine.Game;
@@ -40,6 +41,7 @@ public class Program {
         // initialize modules
         PlayerInput.init();
         gameLogic = new GameLogic();
+        Player.instance().setGameLogic(gameLogic);
         gameLogic.init();
 
         // enter main menu
@@ -53,10 +55,10 @@ public class Program {
 
         //-----------------------------------------------------------------------------------------------------------
         // test "fight"
-        Attack[] attacks = new Attack[1];
-        attacks[0] = new Attack(Attacks.Punch);
-        CeEntity attacker = new CeEntity(BeastTypes.Earth, Nature.ANGRY, attacks, 10, 1, 10, 10, 10, 10, 10, 4, 1, true);
-        CeEntity defender = new CeEntity(BeastTypes.Water, Nature.ANGRY, attacks, 10, 1, 10, 10, 10, 10, 10, 4, 1, true);
+        CeAttack[] ceAttacks = new CeAttack[1];
+        ceAttacks[0] = new CeAttack(Attacks.Punch);
+        CeEntity attacker = new CeEntity(BeastTypes.Earth, Nature.ANGRY, ceAttacks, 10, 1, 10, 10, 10, 10, 10, 4, 1, true);
+        CeEntity defender = new CeEntity(BeastTypes.Water, Nature.ANGRY, ceAttacks, 10, 1, 10, 10, 10, 10, 10, 4, 1, true);
         int damage = Damage.calculateDamage(attacker, defender, attacker.getAttacks()[0]);
         System.out.println("Damage: " + damage);
         //-------------------------------------------------------------------------------------------------------------

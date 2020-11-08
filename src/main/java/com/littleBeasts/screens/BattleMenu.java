@@ -1,6 +1,6 @@
 package com.littleBeasts.screens;
 
-import calculationEngine.entities.Attack;
+import calculationEngine.entities.CeAttack;
 import com.littleBeasts.entities.Player;
 import config.HudConstants;
 import de.gurkenlabs.litiengine.Game;
@@ -70,7 +70,7 @@ public class BattleMenu { // dev constructor
                             break;
                         case "Catch":
                             System.out.println("Action_Catch");
-                            Player.instance().getBattle().catchBeast();
+                            System.out.println("Beast caught: " + Player.instance().getBattle().catchBeast());
                             break;
                     }
                     break;
@@ -78,14 +78,14 @@ public class BattleMenu { // dev constructor
         });
     }
 
-    public BattleMenu(int x, Attack[] attacks) {
+    public BattleMenu(int x, CeAttack[] ceAttacks) {
         this.x = x; //position left
         this.y = HudConstants.HEIGHT - HudConstants.BOTTOM_PAD;
-        this.amountOfItems = attacks.length;
+        this.amountOfItems = ceAttacks.length;
         this.amountOfDrawnItems = (Math.min(amountOfItems, HudConstants.ITEMLISTLENGTH));
         this.width = HudConstants.BATTLE_MENU_WIDTH;
         this.height = HudConstants.HUD_ROW_HEIGHT * amountOfDrawnItems / HudConstants.ITEMLISTLENGTH;
-        this.setItemsFromAttacks(attacks);
+        this.setItemsFromAttacks(ceAttacks);
         this.currentPosition = 0;
         this.firstDrawnItem = 0;
         this.lastDrawnItem = amountOfDrawnItems;
@@ -116,7 +116,8 @@ public class BattleMenu { // dev constructor
                     System.out.println(items[currentPosition]);
                     switch (PLAYER_ACTIONS[currentPosition]) {
                         case "Attack":
-                            Player.instance().getBattle().useAttack(attacks[currentPosition]);
+                            Player.instance().getBattle().useAttack(ceAttacks[currentPosition]);
+                            Player.instance().punch();
                             break;
                         case "Catch":
                             Player.instance().getBattle().catchBeast();
@@ -203,10 +204,10 @@ public class BattleMenu { // dev constructor
         return currentPosition;
     }
 
-    public void setItemsFromAttacks(Attack[] attacks) {
-        items = new String[attacks.length];
-        for (int i = 0; i < attacks.length; i++) {
-            items[0] = attacks[i].getName();
+    public void setItemsFromAttacks(CeAttack[] ceAttacks) {
+        items = new String[ceAttacks.length];
+        for (int i = 0; i < ceAttacks.length; i++) {
+            items[0] = ceAttacks[i].getName();
         }
     }
 

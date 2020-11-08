@@ -10,11 +10,11 @@ public class CePlayer {
     private boolean isAI = false;
     private int playerNumber;
     private int activeMonsterIndex = 0;
-    private Attack[] playerStandardAttacks = PlayerConfig.PLAYER_STANDARD_ATTACKS;
+    private CeAttack[] playerStandardCeAttacks = PlayerConfig.PLAYER_STANDARD_CE_ATTACKS;
     private CeEntity ceEntity;
 
-    public CePlayer(Nature nature, Attack[] attacks, int hitPoints, int maxHitPoints, int level, int friendshipPoints, int speed, int stamina, int attack, int defense, int developmentLvl, List<CeEntity> team) {
-        this.ceEntity = new CeEntity(BeastTypes.PlayerStandard, nature, attacks, hitPoints, maxHitPoints, level, friendshipPoints, speed, stamina, attack, defense, developmentLvl, false);
+    public CePlayer(Nature nature, CeAttack[] ceAttacks, int hitPoints, int maxHitPoints, int level, int friendshipPoints, int speed, int stamina, int attack, int defense, int developmentLvl, List<CeEntity> team) {
+        this.ceEntity = new CeEntity(BeastTypes.PlayerStandard, nature, ceAttacks, hitPoints, maxHitPoints, level, friendshipPoints, speed, stamina, attack, defense, developmentLvl, false);
         this.team = team;
     }
 
@@ -50,7 +50,7 @@ public class CePlayer {
         return activeMonsterIndex;
     }
 
-    public Attack[] getPlayerStandardAttacks() {
-        return playerStandardAttacks;
+    public CeAttack[] getPlayerStandardAttacks() {
+        return playerStandardCeAttacks;
     }
 }
