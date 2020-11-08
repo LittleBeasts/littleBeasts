@@ -36,7 +36,7 @@ public class Player extends Creature implements IUpdateable, IMobileEntity {
     private int maxHP, currentHP;
     private boolean isFighting;
 
-    private final Attack punch;
+    private final Attack punch; // TODO: create correct Attack structure
 
     public Player() {
         super("test");
