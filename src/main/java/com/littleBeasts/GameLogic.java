@@ -140,7 +140,7 @@ public class GameLogic implements IUpdateable {
             x = (int) Player.instance().getX() + 50;
         }
         Camera battleCam = new Camera();
-        battleCam.setClampToMap(true);
+        battleCam.setClampToMap(false);
         Point2D point2D = Game.world().camera().getViewportLocation(Player.instance());
         Game.world().setCamera(battleCam);
         Game.world().camera().setZoom(1.5f, 500);
@@ -229,6 +229,7 @@ public class GameLogic implements IUpdateable {
 
     public static Battle getBattle() {
         return battle;
+    }
 
     public static List<Beast> getBeastList() {
         return beastList;
