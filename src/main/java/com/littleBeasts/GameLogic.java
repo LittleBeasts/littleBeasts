@@ -31,7 +31,7 @@ public class GameLogic implements IUpdateable {
     public static final Font MENU_FONT = new Font("Serif", Font.BOLD, 13);
     public static String START_LEVEL = "Arkham";
 
-    private static final List<Beast> beastList = new ArrayList<>();
+    private static final List<Beast> beastList = new ArrayList<>(); // list to resolve all animation before removing entity TODO: find a way to finish animation w/o this list.
     private static Camera camera;
     private static Battle battle;
     private static CePlayer cePlayer;

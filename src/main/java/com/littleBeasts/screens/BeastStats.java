@@ -15,10 +15,10 @@ public class BeastStats {
     private boolean playerBeast;
     private List<DamageAnimation> damageAnimationList = new ArrayList<>();
 
-    public BeastStats(int x, int y, int width, int height, Beast littleBeast, boolean playerBeast) {
+    public BeastStats(int x, int y, int width, int height, Beast littleBeast, boolean isPlayerBeast) {
         this.maxHP = maxHP;
         this.currentHP = currentHP;
-        this.playerBeast = playerBeast;
+        this.playerBeast = isPlayerBeast;
         this.x = x;
         this.y = y;
         this.width = width;
