@@ -13,7 +13,7 @@ import java.awt.*;
 
 @CollisionInfo(collisionBoxWidth = 14, collisionBoxHeight = 30, collision = true)
 public class Beast extends Creature implements IUpdateable {
-    private CeEntity littleBeast;
+    private CeEntity ceEntity;
     private String monsterName;
     private Image portrait;
     private BeastStats beastStats;
@@ -26,7 +26,7 @@ public class Beast extends Creature implements IUpdateable {
         // super(beasts.name());
         super("test");
         this.portrait = Resources.images().get("sprites/icon.png");
-        this.littleBeast = new CeEntity(beasts);
+        this.ceEntity = new CeEntity(beasts);
         this.monsterName = monsterName;
         this.x = x;
         this.y = y;
@@ -52,8 +52,8 @@ public class Beast extends Creature implements IUpdateable {
     }
 
 
-    public CeEntity getLittleBeast() {
-        return littleBeast;
+    public CeEntity getCeEntity() {
+        return ceEntity;
     }
 
     public String getMonsterName() {

@@ -9,11 +9,8 @@ import config.HudConstants;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.*;
-import de.gurkenlabs.litiengine.graphics.animation.Animation;
 import de.gurkenlabs.litiengine.input.KeyboardEntityController;
 import de.gurkenlabs.litiengine.physics.Force;
-import de.gurkenlabs.litiengine.resources.Resource;
-import de.gurkenlabs.litiengine.resources.Resources;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -48,7 +45,7 @@ public class Player extends Creature implements IUpdateable, IMobileEntity {
         this.littleBeastTeam = new ArrayList<>();
         this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY(), true));
         this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY(), true));
-        this.cePlayer = new CePlayer(Nature.ANGRY, new CeAttack[]{new CeAttack(Attacks.Punch)}, 100, 100, 1, 1, 100, 1, 20, 100, 1, beastToCeEntity(littleBeastTeam));
+        this.cePlayer = new CePlayer(Nature.ANGRY, new CeAttack[]{new CeAttack(Attacks.Punch)}, 100, 100, 1, 1, 100, 1, 20, 100, 1, beastsToCeEntity(littleBeastTeam));
         this.playerCeAttacks = cePlayer.getCeEntity().getAttacks();
         this.maxHP = cePlayer.getCeEntity().getMaxHitPoints();
         this.currentHP = cePlayer.getCeEntity().getHitPoints();
@@ -105,10 +102,10 @@ public class Player extends Creature implements IUpdateable, IMobileEntity {
         littleBeastTeam.remove(littleBeastTeam.get(positionOfBeast));
     }
 
-    public List<CeEntity> beastToCeEntity(List<Beast> beasts) {
+    public List<CeEntity> beastsToCeEntity(List<Beast> beasts) {
         List<CeEntity> entityList = new ArrayList<>();
         for (Beast beast : beasts) {
-            entityList.add(beast.getLittleBeast());
+            entityList.add(beast.getCeEntity());
         }
         return entityList;
     }

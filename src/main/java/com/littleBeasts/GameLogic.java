@@ -132,10 +132,10 @@ public class GameLogic implements IUpdateable {
 
     private static void triggerBattle() {
         int x = 0;
-        boolean left = false;
+        boolean faceLeft = false;
         if (Player.instance().getFacingDirection() == Direction.LEFT) {
             x = (int) Player.instance().getX() - 50;
-            left = true;
+            faceLeft = true;
         } else {
             x = (int) Player.instance().getX() + 50;
         }
@@ -144,7 +144,7 @@ public class GameLogic implements IUpdateable {
         Point2D point2D = Game.world().camera().getViewportLocation(Player.instance());
         Game.world().setCamera(battleCam);
         Game.world().camera().setZoom(1.5f, 500);
-        Game.world().camera().setFocus(Player.instance().getX() + (left ? -25 : 25), Player.instance().getY());
+        Game.world().camera().setFocus(Player.instance().getX() + (faceLeft ? -25 : 25), Player.instance().getY());
 
         //for dev purposes
         Beast beast = new Beast(Beasts.FeuerFurz, x, (int) (Player.instance().getY() - (Player.instance().getHeight() / 2)), false);
@@ -152,7 +152,7 @@ public class GameLogic implements IUpdateable {
         beastList.add(beast);
 
         cePlayer = Player.instance().getCePlayer();
-        CeAi ai = new CeAi(cePlayer, beast.getLittleBeast());
+        CeAi ai = new CeAi(cePlayer, beast.getCeEntity());
         battle = new Battle(Player.instance().getCePlayer(), ai);
         Player.instance().setBattle(battle);
         Player.instance().setFighting(true);

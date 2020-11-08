@@ -26,7 +26,7 @@ public class CeAi extends Thread {
     private Battle battle;
     private CePlayer aiPlayer;
 
-    public CeAi(CePlayer player) {
+    public CeAi(CePlayer player) { //TODO: Change to new random Beast   
         this.team = new ArrayList<>();
         this.team.add(new CeEntity(Beasts.FeuerFurz));
         this.nature = pickNature();
