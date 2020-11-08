@@ -14,6 +14,8 @@ public class HudConstants {
     public static final int TEAM_START_POINT = 600; // Start of the littleBeastTiles
     public static final int HUD_START_POINT = 40; // Start of battle HUD
     public static final int HEIGHT = (int) Game.window().getResolution().getHeight();
+    public static final int WIDTH = (int) Game.window().getResolution().getWidth();
+    public static final int BATTLEBARHEIGHT = 180;
     public static final int ITEMLISTLENGTH = 4;
 
     public static final Color BACKGROUND = Color.WHITE;

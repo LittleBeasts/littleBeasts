@@ -6,6 +6,7 @@ import calculationEngine.entities.CeAi;
 import calculationEngine.entities.CePlayer;
 import com.littleBeasts.entities.Beast;
 import com.littleBeasts.entities.Player;
+import com.littleBeasts.screens.ChatWindow;
 import com.littleBeasts.screens.IngameScreen;
 import de.gurkenlabs.litiengine.Direction;
 import de.gurkenlabs.litiengine.Game;
@@ -30,10 +31,11 @@ public class GameLogic implements IUpdateable {
     public static final Font MENU_FONT = new Font("Serif", Font.BOLD, 13);
     public static String START_LEVEL = "Arkham";
 
-    private static List<Beast> beastList;
-    private Camera camera;
+    private static final List<Beast> beastList = new ArrayList<>(); // list to resolve all animation before removing entity TODO: find a way to finish animation w/o this list.
+    private static Camera camera;
     private static Battle battle;
     private static CePlayer cePlayer;
+    private static boolean nextBattlePossible = true;
 
     public GameLogic() {
 
@@ -44,7 +46,6 @@ public class GameLogic implements IUpdateable {
      */
     public void init() {
         Game.loop().attach(this);
-        beastList = new ArrayList<>();
         //  Environment.registerMapObjectLoader(new CustomMapObjectLoader());
 
         // we'll use a camera in our game that is locked to the location of the player
@@ -78,14 +79,19 @@ public class GameLogic implements IUpdateable {
 
     public static void setState(GameState state) {
         Game.audio().stopMusic();
+        Game.world().setCamera(camera);
+        Game.world().camera().setZoom(1, 500);
         GameLogic.state = state;
         Game.loop().setTimeScale(1);
         Player.instance().attachControllers();
+        Player.instance().movement().attach();
         Player.instance().setFighting(false);
-        for (int i = 0; i < beastList.size(); i++) {
-            beastList.get(i).removeFromMap();
-            beastList.get(i).setCollision(false);
-        }
+        // for (int i = 0; i < beastList.size(); i++) {
+        //         beastList.get(i).setVisible(false);
+        //         beastList.get(i).setCollision(false);
+        // }
+
+        // beastList.clear();
         switch (state) {
             case MENU:
                 if (!firstStart) {
@@ -95,6 +101,7 @@ public class GameLogic implements IUpdateable {
                 }
                 break;
             case BATTLE:
+                nextBattlePossible = false;
                 Player.instance().detachControllers();
                 Game.audio().playMusic("battle");
                 triggerBattle();
@@ -116,9 +123,7 @@ public class GameLogic implements IUpdateable {
                 Player.instance().detachControllers();
                 IngameScreen.chatWindow.setVisible(true);
                 IngameScreen.chatWindow.setFocus(true);
-                Input.keyboard().onKeyTyped(e -> {
-                    IngameScreen.chatWindow.add(e);
-                });
+                Input.keyboard().onKeyTyped(ChatWindow::add);
                 Game.audio().playMusic("ingameMenu");
                 break;
         }
@@ -127,18 +132,27 @@ public class GameLogic implements IUpdateable {
 
     private static void triggerBattle() {
         int x = 0;
+        boolean faceLeft = false;
         if (Player.instance().getFacingDirection() == Direction.LEFT) {
             x = (int) Player.instance().getX() - 50;
+            faceLeft = true;
         } else {
             x = (int) Player.instance().getX() + 50;
         }
+        Camera battleCam = new Camera();
+        battleCam.setClampToMap(true);
+        Point2D point2D = Game.world().camera().getViewportLocation(Player.instance());
+        Game.world().setCamera(battleCam);
+        Game.world().camera().setZoom(1.5f, 500);
+        Game.world().camera().setFocus(Player.instance().getX() + (faceLeft ? -25 : 25), Player.instance().getY());
+
         //for dev purposes
-        Beast beast = new Beast(Beasts.FeuerFurz, x, (int) (Player.instance().getY() - (Player.instance().getHeight() / 2)));
+        Beast beast = new Beast(Beasts.FeuerFurz, x, (int) (Player.instance().getY() - (Player.instance().getHeight() / 2)), false);
         beast.setFacingDirection(Player.instance().getFacingDirection().getOpposite());
         beastList.add(beast);
 
         cePlayer = Player.instance().getCePlayer();
-        CeAi ai = new CeAi(cePlayer);
+        CeAi ai = new CeAi(cePlayer, beast.getCeEntity());
         battle = new Battle(Player.instance().getCePlayer(), ai);
         Player.instance().setBattle(battle);
         Player.instance().setFighting(true);
@@ -148,6 +162,18 @@ public class GameLogic implements IUpdateable {
     public void update() {
         loadNewArea();
         startBattle();
+        if (getState() == GameState.INGAME) {
+            for (int i = 0; i < beastList.size(); i++) {
+                if (beastList.get(i).getBeastStats().isReadyToBeRemoved()) {
+                    beastList.get(i).die();
+                    Game.world().environment().remove(beastList.get(i));
+                    beastList.remove(i);
+                }
+                if (beastList.size() == 0) {
+                    nextBattlePossible = true;
+                }
+            }
+        }
     }
 
     public void loadNewArea() {
@@ -185,6 +211,7 @@ public class GameLogic implements IUpdateable {
         }
     }
 
+
     public void buttonPressed(int i) {
         try {
             Robot robert = new Robot();
@@ -202,6 +229,14 @@ public class GameLogic implements IUpdateable {
 
     public static Battle getBattle() {
         return battle;
+
+    public static List<Beast> getBeastList() {
+        return beastList;
+    }
+
+    public static boolean isNextBattlePossible() {
+        return nextBattlePossible;
+
     }
 }
 

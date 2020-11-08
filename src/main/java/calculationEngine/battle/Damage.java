@@ -1,6 +1,6 @@
 package calculationEngine.battle;
 
-import calculationEngine.entities.Attack;
+import calculationEngine.entities.CeAttack;
 import calculationEngine.entities.CeEntity;
 
 import java.util.Random;
@@ -10,19 +10,19 @@ public class Damage {
     private static String debugInfo;
     private static boolean bDebug = false; //show damage roll in console
 
-    public static int calculateDamage(CeEntity attacker, CeEntity defender, Attack attack) {
+    public static int calculateDamage(CeEntity attacker, CeEntity defender, CeAttack ceAttack) {
         //roll to d50 to get a quasi normal distribution
         int attackRoll = rnd.nextInt(51) + rnd.nextInt(51);
         debugInfo = "Roll: " + attackRoll + "\n";
         // if the attack misses -1 is returned
-        if (attackMisses(attacker, defender, attack, attackRoll)) {
+        if (attackMisses(attacker, defender, ceAttack, attackRoll)) {
             debugInfo += "Miss\n";
             return -1;
         }
         debugInfo += "Hit\n";
         // gets attack and defense power.
-        int attackPower = calculateAttack(attacker, attack, attackRoll);
-        int defensePower = calculateDefense(defender, attack);
+        int attackPower = calculateAttack(attacker, ceAttack, attackRoll);
+        int defensePower = calculateDefense(defender, ceAttack);
 
         debugInfo += "Attack: " + attackPower + "\n";
         debugInfo += "Defense: " + defensePower + "\n";
@@ -31,29 +31,29 @@ public class Damage {
         return Math.max((attackPower - defensePower), 0);
     }
 
-    private static boolean attackMisses(CeEntity attacker, CeEntity defender, Attack attack, int attackRoll) {
+    private static boolean attackMisses(CeEntity attacker, CeEntity defender, CeAttack ceAttack, int attackRoll) {
         // when it is a critical hit, it will never miss
-        if (attackRoll > (100 - attack.getCriticalChance())) {
+        if (attackRoll > (100 - ceAttack.getCriticalChance())) {
             debugInfo += "Critical Hit\n";
             return false;
         }
         // base difficulty is 50 then add the speed of the defender. After that the speed of the attacker and the accuracy of the attack are subtracted.
-        int difficulty = 50 + defender.getSpeed() - (attacker.getSpeed() + attack.getAccuracy());
+        int difficulty = 50 + defender.getSpeed() - (attacker.getSpeed() + ceAttack.getAccuracy());
         debugInfo += "Difficulty: " + difficulty + "\n";
         // if difficulty is higher than the roll the attack will miss.
         return difficulty > attackRoll;
     }
 
-    private static int calculateDefense(CeEntity defender, Attack attack) {
+    private static int calculateDefense(CeEntity defender, CeAttack ceAttack) {
         //the modifier is calculated in BeastTypes.
-        return (int) (defender.getDefense() * defender.getType().getModifier(attack.getType()));
+        return (int) (defender.getDefense() * defender.getType().getModifier(ceAttack.getType()));
     }
 
-    private static int calculateAttack(CeEntity attacker, Attack attack, int attackRoll) {
+    private static int calculateAttack(CeEntity attacker, CeAttack ceAttack, int attackRoll) {
         //if it is a critical hit, damage will be doubled.
-        int critModifier = attackRoll > (100 - attack.getCriticalChance()) ? 2 : 1;
+        int critModifier = attackRoll > (100 - ceAttack.getCriticalChance()) ? 2 : 1;
         // attack is calculated with rolls. Two rolls from the base stat of the attacker and two from the roll of the attack to get a pseudo normal distributed value.
-        int damageRoll = rnd.nextInt(attacker.getAttack() + 1) + rnd.nextInt(attacker.getAttack() + 1) + rnd.nextInt(attack.getDamage() + 1) + rnd.nextInt(attack.getDamage() + 1);
+        int damageRoll = rnd.nextInt(attacker.getAttack() + 1) + rnd.nextInt(attacker.getAttack() + 1) + rnd.nextInt(ceAttack.getDamage() + 1) + rnd.nextInt(ceAttack.getDamage() + 1);
         debugInfo += "Damage roll: " + damageRoll + "\n";
 
         return damageRoll * critModifier;
