@@ -5,6 +5,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import de.gurkenlabs.litiengine.Game;
 import org.junit.Assert;
 
 import java.awt.event.KeyEvent;
@@ -17,12 +18,15 @@ public class AttackStepDefinitions {
     @Given("^the Player is in a battle$")
     public void thePlayerIsInABattle() {
 
-        Program.main(new String[42]);
-        Program.getGameLogic().buttonPressed(KeyEvent.VK_UP);
-        Program.getGameLogic().buttonPressed(KeyEvent.VK_ENTER);
-
+        if(!Game.hasStarted()){
+            Program program = new Program();
+        }
+        if (Program.getGameLogic().getState() == GameState.MENU){
+            Program.getGameLogic().pressButton(KeyEvent.VK_UP);
+            Program.getGameLogic().pressButton(KeyEvent.VK_ENTER);
+        }
         Assert.assertEquals(Program.getGameLogic().getState(),GameState.INGAME);
-        Program.getGameLogic().buttonPressed(KeyEvent.VK_B);
+        Program.getGameLogic().pressButton(KeyEvent.VK_B);
         Assert.assertEquals(Program.getGameLogic().getState(),GameState.BATTLE);
 
     }
@@ -35,13 +39,16 @@ public class AttackStepDefinitions {
     @When("^the Player chooses to attack$")
     public void thePlayerChoosesToAttack() {
         Assert.assertTrue(Program.getIngameScreen().getHud().getBm().isFocused());
-        Program.getGameLogic().buttonPressed(KeyEvent.VK_E);
+        Program.getGameLogic().pressButton(KeyEvent.VK_E);
         Assert.assertFalse(Program.getIngameScreen().getHud().getBm().isFocused());
     }
 
     @Then("^a menu opens where the Player can choose an attack$")
     public void aMenuOpensWhereThePlayerCanChooseAnAttack() {
         Assert.assertTrue(Program.getIngameScreen().getHud().getAttackMenu().isFocused());
+        Program.getGameLogic().pressButton(KeyEvent.VK_B);
+        Program.getGameLogic().returnToMainMenu();
+        Assert.assertEquals(Program.getGameLogic().getState(), GameState.MENU);
     }
 
 
