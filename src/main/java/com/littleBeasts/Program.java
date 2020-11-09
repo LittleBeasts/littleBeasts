@@ -16,15 +16,18 @@ public class Program {
     private static IngameScreen ingameScreen;
     private static MenuScreen menuScreen;
 
-    public static void main(String[] args) {
+    Program(){
+        runGame();
+    }
 
+    private void runGame() {
         //set game meta information
         Game.info().setName("littleBeasts");
         Game.info().setSubTitle("");
         Game.info().setVersion("v.0");
 
         // initialize the game infrastructure
-        Game.init(args);
+        Game.init();
 
         //set icon for the game
         Game.window().setIcon(Resources.images().get("sprites/icon.png"));
@@ -75,6 +78,10 @@ public class Program {
         }
         //-------------------------------------------------------------------------------------------------------------
         Game.start();
+    }
+
+    public static void main(String[] args) {
+        Program program = new Program();
     }
 
     public static GameLogic getGameLogic() {

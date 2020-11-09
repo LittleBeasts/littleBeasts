@@ -1,5 +1,6 @@
 Feature: Attack a character
 
+  @AttackPickActivity
   Scenario: Player picks an activity
     Given the Player is in a battle
     And the Player is not dead
