@@ -10,13 +10,15 @@ import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.resources.Resources;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 public class Program {
 
     private static GameLogic gameLogic;
     private static IngameScreen ingameScreen;
     private static MenuScreen menuScreen;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         //set game meta information
         Game.info().setName("littleBeasts");

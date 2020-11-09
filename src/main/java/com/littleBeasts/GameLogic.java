@@ -4,6 +4,7 @@ import calculationEngine.battle.Battle;
 import calculationEngine.entities.Beasts;
 import calculationEngine.entities.CeAi;
 import calculationEngine.entities.CePlayer;
+import client.Client;
 import com.littleBeasts.entities.Beast;
 import com.littleBeasts.entities.Player;
 import com.littleBeasts.screens.ChatWindow;
@@ -20,6 +21,7 @@ import de.gurkenlabs.litiengine.input.Input;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -37,6 +39,9 @@ public class GameLogic implements IUpdateable {
     private static CePlayer cePlayer;
     private static boolean nextBattlePossible = true;
 
+    private static Client client;
+    private static List<String> bufferedMessages;
+
     public GameLogic() {
 
     }
@@ -44,10 +49,10 @@ public class GameLogic implements IUpdateable {
     /**
      * Initializes the game logic for the game.
      */
-    public void init() {
+    public void init() throws IOException {
         Game.loop().attach(this);
         //  Environment.registerMapObjectLoader(new CustomMapObjectLoader());
-
+        client = new Client();
         // we'll use a camera in our game that is locked to the location of the player
         camera = new PositionLockCamera(Player.instance());
         camera.setClampToMap(true); // Camara stop at edge of map.
@@ -174,6 +179,10 @@ public class GameLogic implements IUpdateable {
                 }
             }
         }
+        if (client.getClientListener().messagesBuffered()) {
+            System.out.println("buffered Messages");
+            bufferedMessages = client.getClientListener().getMessageBuffer();
+        }
     }
 
     public void loadNewArea() {
@@ -238,6 +247,16 @@ public class GameLogic implements IUpdateable {
     public static boolean isNextBattlePossible() {
         return nextBattlePossible;
 
+    }
+
+    public static void sendMessageToServer(String message) throws IOException {
+        client.sendMessage(message);
+    }
+
+    public static List<String> getBufferedMessages() {
+        List<String> tmp = new ArrayList<>(bufferedMessages);
+        bufferedMessages.clear();
+        return tmp;
     }
 }
 

@@ -6,10 +6,11 @@ import cucumber.api.java.en.When;
 import org.junit.Assert;
 
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 public class StartStepDefinitions {
     @Given("^the Player is in the main menu$")
-    public void thePlayerIsInTheMainMenu() {
+    public void thePlayerIsInTheMainMenu() throws IOException {
         Program.main(new String[42]);
         Assert.assertEquals(Program.getGameLogic().getState(), GameState.MENU);
         System.out.println("Möööp");

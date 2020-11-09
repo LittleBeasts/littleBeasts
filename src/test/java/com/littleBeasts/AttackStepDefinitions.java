@@ -8,6 +8,7 @@ import cucumber.api.java.en.When;
 import org.junit.Assert;
 
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 
 public class AttackStepDefinitions {
@@ -15,7 +16,7 @@ public class AttackStepDefinitions {
 
     //Scenario 1
     @Given("^the Player is in a battle$")
-    public void thePlayerIsInABattle() {
+    public void thePlayerIsInABattle() throws IOException {
 
         Program.main(new String[42]);
         Program.getGameLogic().buttonPressed(KeyEvent.VK_UP);

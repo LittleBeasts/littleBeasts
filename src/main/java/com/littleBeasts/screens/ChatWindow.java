@@ -1,14 +1,17 @@
 package com.littleBeasts.screens;
 
+import com.littleBeasts.GameLogic;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.gui.GuiComponent;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static client.Message.createMessage;
 import static config.HudConstants.ChatWindowFont;
 
 public class ChatWindow extends GuiComponent implements IUpdateable {
@@ -25,11 +28,9 @@ public class ChatWindow extends GuiComponent implements IUpdateable {
     private static final int amountOfDrawnElements = 6;
     /* Set attributes with constructor parameters */
     private final Font font = ChatWindowFont;
-    private float alpha;
 
     private Rectangle rectangle;
     private final Point textPoint;
-    ;
     private int padding;
 
     private int countDelay;
@@ -93,6 +94,11 @@ public class ChatWindow extends GuiComponent implements IUpdateable {
     public static synchronized void returnKey() {
         if (buffer.length() > 0) {
             String value = buffer.toString();
+            try {
+                GameLogic.sendMessageToServer(createMessage(value));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             chatHistory.add(value);
             if (chatHistory.size() > amountOfDrawnElements) {
                 if (bottomElement != chatHistory.size()) {
@@ -197,14 +203,21 @@ public class ChatWindow extends GuiComponent implements IUpdateable {
 
     @Override
     public synchronized void render(Graphics2D g) {
-
+        List<String> bufferedMessages = null;
+        bufferedMessages = GameLogic.getBufferedMessages();
+        if (bufferedMessages != null) {
+            chatHistory.addAll(bufferedMessages);
+        }
         int width = (int) Game.window().getResolution().getWidth();
         int height = (int) Game.window().getResolution().getHeight();
 
 
         tick++;
         if (tick % 60 == 0) {
-            System.out.println("width: " + Game.window().getResolution().getWidth() + " | height: " + (int) Game.window().getResolution().getHeight());
+            //System.out.println("width: " + Game.window().getResolution().getWidth() + " | height: " + (int) Game.window().getResolution().getHeight());
+            for (String s : chatHistory) {
+                System.out.println(s);
+            }
         }
 
         g.setColor(new Color(150, 150, 150, 150));
