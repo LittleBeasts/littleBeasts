@@ -5,6 +5,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import de.gurkenlabs.litiengine.Game;
 import org.junit.Assert;
 
 import java.awt.event.KeyEvent;
@@ -17,11 +18,13 @@ public class AttackStepDefinitions {
     @Given("^the Player is in a battle$")
     public void thePlayerIsInABattle() {
 
-        Program program = new Program();
-//        Program.main(new String[42]);
-        Program.getGameLogic().pressButton(KeyEvent.VK_UP);
-        Program.getGameLogic().pressButton(KeyEvent.VK_ENTER);
-
+        if(!Game.hasStarted()){
+            Program program = new Program();
+        }
+        if (Program.getGameLogic().getState() == GameState.MENU){
+            Program.getGameLogic().pressButton(KeyEvent.VK_UP);
+            Program.getGameLogic().pressButton(KeyEvent.VK_ENTER);
+        }
         Assert.assertEquals(Program.getGameLogic().getState(),GameState.INGAME);
         Program.getGameLogic().pressButton(KeyEvent.VK_B);
         Assert.assertEquals(Program.getGameLogic().getState(),GameState.BATTLE);

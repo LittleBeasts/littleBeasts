@@ -8,8 +8,7 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         features = "src/test/resources",
         glue = "com.littleBeasts",
-        tags = "@startMenu, @AttackPickActivity"
-
+        tags = "@All"
 )
-public class AutomatedTest {
+public class RunAllAutomatedTests {
 }
