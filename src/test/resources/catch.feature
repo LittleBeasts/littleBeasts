@@ -1,3 +1,4 @@
+@Catch @All
 Feature: Catch a littleBeast
 
   Scenario: Player picks an activity

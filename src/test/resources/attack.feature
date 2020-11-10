@@ -1,5 +1,7 @@
+@Attack @All
 Feature: Attack a character
 
+  @AttackPlayerPicksActivity @Done
   Scenario: Player picks an activity
     Given the Player is in a battle
     And the Player is not dead

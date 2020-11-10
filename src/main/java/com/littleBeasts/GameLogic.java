@@ -9,6 +9,7 @@ import com.littleBeasts.entities.Beast;
 import com.littleBeasts.entities.Player;
 import com.littleBeasts.screens.ChatWindow;
 import com.littleBeasts.screens.IngameScreen;
+import config.TestConfig;
 import de.gurkenlabs.litiengine.Direction;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
@@ -19,6 +20,7 @@ import de.gurkenlabs.litiengine.graphics.PositionLockCamera;
 import de.gurkenlabs.litiengine.input.Input;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
@@ -222,15 +224,14 @@ public class GameLogic implements IUpdateable {
         }
     }
 
-
     public void robotButtonPress(int i) {
         try {
             Robot robert = new Robot();
-            Thread.sleep(2000);
+            Thread.sleep(TestConfig.ROBOT_SLEEP);
             robert.keyPress(i);
             Thread.sleep(100);
             robert.keyRelease(i);
-            Thread.sleep(2000);
+            Thread.sleep(TestConfig.ROBOT_SLEEP);
         } catch (AWTException awtException) {
             awtException.printStackTrace();
         } catch (InterruptedException e) {
@@ -278,8 +279,12 @@ public class GameLogic implements IUpdateable {
     public static void setOnlineGame(boolean onlineGame) {
         GameLogic.onlineGame = onlineGame;
     }
-
-
+  
+    public void returnToMainMenu() {
+        pressButton(KeyEvent.VK_ESCAPE);
+        pressButton(KeyEvent.VK_DOWN);
+        pressButton(KeyEvent.VK_ENTER);
+    }
 }
 
 
