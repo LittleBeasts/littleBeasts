@@ -52,7 +52,7 @@ public class GameLogic implements IUpdateable {
     public void init() throws IOException {
         Game.loop().attach(this);
         //  Environment.registerMapObjectLoader(new CustomMapObjectLoader());
-        client = new Client();
+        client = new Client("TestUser");
         // we'll use a camera in our game that is locked to the location of the player
         camera = new PositionLockCamera(Player.instance());
         camera.setClampToMap(true); // Camara stop at edge of map.
@@ -91,12 +91,8 @@ public class GameLogic implements IUpdateable {
         Player.instance().attachControllers();
         Player.instance().movement().attach();
         Player.instance().setFighting(false);
-        // for (int i = 0; i < beastList.size(); i++) {
-        //         beastList.get(i).setVisible(false);
-        //         beastList.get(i).setCollision(false);
-        // }
+        Input.keyboard().onKeyTyped(ChatWindow::add);
 
-        // beastList.clear();
         switch (state) {
             case MENU:
                 if (!firstStart) {
@@ -124,11 +120,8 @@ public class GameLogic implements IUpdateable {
                 Game.audio().playMusic("ingameMenu");
                 break;
             case INGAME_CHAT:
-                Game.loop().setTimeScale(0);
                 Player.instance().detachControllers();
                 IngameScreen.chatWindow.setVisible(true);
-                IngameScreen.chatWindow.setFocus(true);
-                Input.keyboard().onKeyTyped(ChatWindow::add);
                 Game.audio().playMusic("ingameMenu");
                 break;
         }
@@ -254,9 +247,15 @@ public class GameLogic implements IUpdateable {
     }
 
     public static List<String> getBufferedMessages() {
+        if (bufferedMessages == null)
+            return null;
         List<String> tmp = new ArrayList<>(bufferedMessages);
         bufferedMessages.clear();
         return tmp;
+    }
+
+    public static Client getClient() {
+        return client;
     }
 }
 

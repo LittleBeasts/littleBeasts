@@ -1,8 +1,10 @@
 package client;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class Client {
 
@@ -10,6 +12,7 @@ public class Client {
     private PrintWriter out;
     private BufferedReader in;
     private ClientListener clientListener;
+    private String name;
 
     public void startConnection(String ip, int port) throws IOException {
         clientSocket = new Socket(ip, port);
@@ -27,26 +30,18 @@ public class Client {
         clientSocket.close();
     }
 
-    public Client() throws IOException {
+    public Client(String name) throws IOException {
         startConnection("127.0.0.1", 9999);
         clientListener = new ClientListener(this.clientSocket);
+        this.name = name;
     }
-
-  //  public static void main(String[] args) throws IOException {
-  //      // Client client = new Client();
-  //      //  client.startConnection("127.0.0.1", 9999);
-  //      //Scanner scanner = new Scanner(new BufferedInputStream(System.in));
-  //      //client.clientListener = new ClientListener(client.clientSocket);
-  //      //while (true) {
-  //      //    System.out.println("Waiting for input...");
-  //      //    client.sendMessage(scanner.nextLine());
-  //      //}
-//
-  //  }
-
 
     public ClientListener getClientListener() {
         return clientListener;
+    }
+
+    public String getName() {
+        return name;
     }
 }
 

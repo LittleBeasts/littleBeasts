@@ -7,6 +7,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import static client.Message.decodeMessage;
+
 public class ClientListener extends Thread {
 
     private BufferedReader in;
@@ -26,7 +28,7 @@ public class ClientListener extends Thread {
             try {
                 if (in.ready()) {
                     String resp = in.readLine();
-                    messageBuffer.add(resp);
+                    messageBuffer.add(decodeMessage(resp));
                     System.out.println(resp);
                 }
             } catch (IOException e) {
