@@ -281,9 +281,9 @@ public class GameLogic implements IUpdateable {
     }
   
     public void returnToMainMenu() {
-        pressButton(KeyEvent.VK_ESCAPE);
-        pressButton(KeyEvent.VK_DOWN);
-        pressButton(KeyEvent.VK_ENTER);
+        robotButtonPress(KeyEvent.VK_ESCAPE);
+        robotButtonPress(KeyEvent.VK_DOWN);
+        robotButtonPress(KeyEvent.VK_ENTER);
     }
 }
 

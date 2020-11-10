@@ -13,7 +13,11 @@ public class StartStepDefinitions {
     @Given("^the Player is in the main menu$")
     public void thePlayerIsInTheMainMenu() {
         if(!Game.hasStarted()) {
-            Program program = new Program();
+            try {
+                Program program = new Program();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         Assert.assertEquals(Program.getGameLogic().getState(), GameState.MENU);
         System.out.println("Möööp");
@@ -21,8 +25,8 @@ public class StartStepDefinitions {
 
     @When("^the Player presses the button to start the game$")
     public void thePlayerPressesTheButtonToStartTheGame() {
-        Program.getGameLogic().pressButton(KeyEvent.VK_UP);
-        Program.getGameLogic().pressButton(KeyEvent.VK_ENTER);
+        Program.getGameLogic().robotButtonPress(KeyEvent.VK_UP);
+        Program.getGameLogic().robotButtonPress(KeyEvent.VK_ENTER);
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -33,7 +37,7 @@ public class StartStepDefinitions {
 
     @Then("^the game starts$")
     public void theGameStarts() {
-        Program.getGameLogic().pressButton(KeyEvent.VK_ESCAPE);
+        Program.getGameLogic().robotButtonPress(KeyEvent.VK_ESCAPE);
         Assert.assertEquals(Program.getGameLogic().getState(), GameState.INGAME);
     }
 }

@@ -18,14 +18,12 @@ public class Program {
     private static IngameScreen ingameScreen;
     private static MenuScreen menuScreen;
 
-
-    public static void main(String[] args) throws IOException {
-    Program(){
+    Program() throws IOException {
         runGame();
     }
 
 
-    private void runGame() {
+    private void runGame() throws IOException {
         //set game meta information
         Game.info().setName("littleBeasts");
         Game.info().setSubTitle("");
@@ -85,7 +83,7 @@ public class Program {
         Game.start();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Program program = new Program();
     }
 
