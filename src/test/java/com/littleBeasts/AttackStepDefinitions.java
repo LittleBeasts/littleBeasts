@@ -1,5 +1,6 @@
 package com.littleBeasts;
 
+
 import com.littleBeasts.entities.Player;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -9,6 +10,7 @@ import de.gurkenlabs.litiengine.Game;
 import org.junit.Assert;
 
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 
 public class AttackStepDefinitions {
@@ -19,14 +21,18 @@ public class AttackStepDefinitions {
     public void thePlayerIsInABattle() {
 
         if(!Game.hasStarted()){
-            Program program = new Program();
+            try {
+                Program program = new Program();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         if (Program.getGameLogic().getState() == GameState.MENU){
-            Program.getGameLogic().pressButton(KeyEvent.VK_UP);
-            Program.getGameLogic().pressButton(KeyEvent.VK_ENTER);
+            Program.getGameLogic().robotButtonPress(KeyEvent.VK_UP);
+            Program.getGameLogic().robotButtonPress(KeyEvent.VK_ENTER);
         }
         Assert.assertEquals(Program.getGameLogic().getState(),GameState.INGAME);
-        Program.getGameLogic().pressButton(KeyEvent.VK_B);
+        Program.getGameLogic().robotButtonPress(KeyEvent.VK_B);
         Assert.assertEquals(Program.getGameLogic().getState(),GameState.BATTLE);
 
     }
@@ -39,14 +45,14 @@ public class AttackStepDefinitions {
     @When("^the Player chooses to attack$")
     public void thePlayerChoosesToAttack() {
         Assert.assertTrue(Program.getIngameScreen().getHud().getBm().isFocused());
-        Program.getGameLogic().pressButton(KeyEvent.VK_E);
+        Program.getGameLogic().robotButtonPress(KeyEvent.VK_E);
         Assert.assertFalse(Program.getIngameScreen().getHud().getBm().isFocused());
     }
 
     @Then("^a menu opens where the Player can choose an attack$")
     public void aMenuOpensWhereThePlayerCanChooseAnAttack() {
         Assert.assertTrue(Program.getIngameScreen().getHud().getAttackMenu().isFocused());
-        Program.getGameLogic().pressButton(KeyEvent.VK_B);
+        Program.getGameLogic().robotButtonPress(KeyEvent.VK_B);
         Program.getGameLogic().returnToMainMenu();
         Assert.assertEquals(Program.getGameLogic().getState(), GameState.MENU);
     }

@@ -4,6 +4,7 @@ import calculationEngine.battle.Battle;
 import calculationEngine.entities.Beasts;
 import calculationEngine.entities.CeAi;
 import calculationEngine.entities.CePlayer;
+import client.Client;
 import com.littleBeasts.entities.Beast;
 import com.littleBeasts.entities.Player;
 import com.littleBeasts.screens.ChatWindow;
@@ -22,6 +23,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -39,6 +41,11 @@ public class GameLogic implements IUpdateable {
     private static CePlayer cePlayer;
     private static boolean nextBattlePossible = true;
 
+    private static Client client;
+    private static List<String> bufferedMessages;
+
+    private static boolean onlineGame;
+
     public GameLogic() {
 
     }
@@ -46,7 +53,7 @@ public class GameLogic implements IUpdateable {
     /**
      * Initializes the game logic for the game.
      */
-    public void init() {
+    public void init() throws IOException {
         Game.loop().attach(this);
         //  Environment.registerMapObjectLoader(new CustomMapObjectLoader());
 
@@ -87,13 +94,9 @@ public class GameLogic implements IUpdateable {
         Game.loop().setTimeScale(1);
         Player.instance().attachControllers();
         Player.instance().movement().attach();
-        Player.instance().setFighting(false);
-        // for (int i = 0; i < beastList.size(); i++) {
-        //         beastList.get(i).setVisible(false);
-        //         beastList.get(i).setCollision(false);
-        // }
+        Player.instance().setIsFighting(false);
+        Input.keyboard().onKeyTyped(ChatWindow::add);
 
-        // beastList.clear();
         switch (state) {
             case MENU:
                 if (!firstStart) {
@@ -121,11 +124,8 @@ public class GameLogic implements IUpdateable {
                 Game.audio().playMusic("ingameMenu");
                 break;
             case INGAME_CHAT:
-                Game.loop().setTimeScale(0);
                 Player.instance().detachControllers();
                 IngameScreen.chatWindow.setVisible(true);
-                IngameScreen.chatWindow.setFocus(true);
-                Input.keyboard().onKeyTyped(ChatWindow::add);
                 Game.audio().playMusic("ingameMenu");
                 break;
         }
@@ -157,7 +157,7 @@ public class GameLogic implements IUpdateable {
         CeAi ai = new CeAi(cePlayer, beast.getCeEntity());
         battle = new Battle(Player.instance().getCePlayer(), ai);
         Player.instance().setBattle(battle);
-        Player.instance().setFighting(true);
+        Player.instance().setIsFighting(true);
     }
 
     @Override
@@ -175,6 +175,17 @@ public class GameLogic implements IUpdateable {
                     nextBattlePossible = true;
                 }
             }
+        }
+        if (isOnlineGame()) {
+            readBufferedMessages();
+        }
+
+    }
+
+    public void readBufferedMessages() {
+        if (client.getClientListener().messagesBuffered()) {
+            System.out.println("buffered Messages");
+            bufferedMessages = client.getClientListener().getMessageBuffer();
         }
     }
 
@@ -213,8 +224,7 @@ public class GameLogic implements IUpdateable {
         }
     }
 
-
-    public void pressButton(int i) {
+    public void robotButtonPress(int i) {
         try {
             Robot robert = new Robot();
             Thread.sleep(TestConfig.ROBOT_SLEEP);
@@ -242,10 +252,38 @@ public class GameLogic implements IUpdateable {
 
     }
 
+    public static void sendMessageToServer(String message) throws IOException {
+        client.sendMessage(message);
+    }
+
+    public static List<String> getBufferedMessages() {
+        if (bufferedMessages == null)
+            return null;
+        List<String> tmp = new ArrayList<>(bufferedMessages);
+        bufferedMessages.clear();
+        return tmp;
+    }
+
+    public static Client getClient() {
+        return client;
+    }
+
+    public static void setClient(Client client) {
+        GameLogic.client = client;
+    }
+
+    public static boolean isOnlineGame() {
+        return onlineGame;
+    }
+
+    public static void setOnlineGame(boolean onlineGame) {
+        GameLogic.onlineGame = onlineGame;
+    }
+  
     public void returnToMainMenu() {
-        pressButton(KeyEvent.VK_ESCAPE);
-        pressButton(KeyEvent.VK_DOWN);
-        pressButton(KeyEvent.VK_ENTER);
+        robotButtonPress(KeyEvent.VK_ESCAPE);
+        robotButtonPress(KeyEvent.VK_DOWN);
+        robotButtonPress(KeyEvent.VK_ENTER);
     }
 }
 

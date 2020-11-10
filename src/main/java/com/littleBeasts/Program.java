@@ -10,17 +10,20 @@ import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.resources.Resources;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 public class Program {
 
     private static GameLogic gameLogic;
     private static IngameScreen ingameScreen;
     private static MenuScreen menuScreen;
 
-    Program(){
+    Program() throws IOException {
         runGame();
     }
 
-    private void runGame() {
+
+    private void runGame() throws IOException {
         //set game meta information
         Game.info().setName("littleBeasts");
         Game.info().setSubTitle("");
@@ -80,7 +83,7 @@ public class Program {
         Game.start();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Program program = new Program();
     }
 

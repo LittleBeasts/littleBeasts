@@ -137,7 +137,7 @@ public class Player extends Creature implements IUpdateable, IMobileEntity {
         this.battle = battle;
     }
 
-    public void setFighting(boolean fighting) {
+    public void setIsFighting(boolean fighting) {
         isFighting = fighting;
     }
 

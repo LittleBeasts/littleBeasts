@@ -1,14 +1,18 @@
 package com.littleBeasts.screens;
 
+import com.littleBeasts.GameLogic;
+import com.littleBeasts.GameState;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.gui.GuiComponent;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static client.Message.encodeOutgoingMessageForClient;
 import static config.HudConstants.ChatWindowFont;
 
 public class ChatWindow extends GuiComponent implements IUpdateable {
@@ -23,13 +27,8 @@ public class ChatWindow extends GuiComponent implements IUpdateable {
     private static int scrollbarHeight, scrollPointHeight;
     private static int scrollPointPosition;
     private static final int amountOfDrawnElements = 6;
-    /* Set attributes with constructor parameters */
     private final Font font = ChatWindowFont;
-    private float alpha;
-
-    private Rectangle rectangle;
     private final Point textPoint;
-    ;
     private int padding;
 
     private int countDelay;
@@ -37,7 +36,6 @@ public class ChatWindow extends GuiComponent implements IUpdateable {
     private final int x = 0;
     private final int y = 0;
 
-    private static boolean focus;
 
 
     public static void init() {
@@ -67,12 +65,9 @@ public class ChatWindow extends GuiComponent implements IUpdateable {
         this.topElement = 0;
         this.bottomElement = amountOfDrawnElements;
 
-        /* Starts without focus */
-        focus = false;
     }
 
     private static void clearTextField() {
-        focus = false;
         buffer = new StringBuffer();
         showableText = "";
         clearIndex();
@@ -83,9 +78,6 @@ public class ChatWindow extends GuiComponent implements IUpdateable {
         chatHistory.clear();
     }
 
-    public synchronized void onFocus() {
-        focus = true;
-    }
 
     /**
      * ENTER
@@ -93,6 +85,11 @@ public class ChatWindow extends GuiComponent implements IUpdateable {
     public static synchronized void returnKey() {
         if (buffer.length() > 0) {
             String value = buffer.toString();
+            try {
+                GameLogic.sendMessageToServer(encodeOutgoingMessageForClient(GameLogic.getClient(), value));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             chatHistory.add(value);
             if (chatHistory.size() > amountOfDrawnElements) {
                 if (bottomElement != chatHistory.size()) {
@@ -114,7 +111,7 @@ public class ChatWindow extends GuiComponent implements IUpdateable {
      */
     public static synchronized void escapeKey() {
         clearTextField();
-        clearHistory();
+        // clearHistory();
     }
 
     private static void clearIndex() {
@@ -138,6 +135,7 @@ public class ChatWindow extends GuiComponent implements IUpdateable {
     }
 
     public static void add(KeyEvent e) {
+        if (GameLogic.getState() != GameState.INGAME_CHAT) return;
         switch (e.getKeyCode()) {
             case KeyEvent.VK_BACK_SPACE:
                 delete();
@@ -197,14 +195,21 @@ public class ChatWindow extends GuiComponent implements IUpdateable {
 
     @Override
     public synchronized void render(Graphics2D g) {
-
+        List<String> bufferedMessages = null;
+        bufferedMessages = GameLogic.getBufferedMessages();
+        if (bufferedMessages != null) {
+            chatHistory.addAll(bufferedMessages);
+        }
         int width = (int) Game.window().getResolution().getWidth();
         int height = (int) Game.window().getResolution().getHeight();
 
 
         tick++;
         if (tick % 60 == 0) {
-            System.out.println("width: " + Game.window().getResolution().getWidth() + " | height: " + (int) Game.window().getResolution().getHeight());
+            //System.out.println("width: " + Game.window().getResolution().getWidth() + " | height: " + (int) Game.window().getResolution().getHeight());
+            // for (String s : chatHistory) {
+            //     System.out.println(s);
+            // }
         }
 
         g.setColor(new Color(150, 150, 150, 150));
@@ -248,9 +253,6 @@ public class ChatWindow extends GuiComponent implements IUpdateable {
         g.fillRect(this.x + hPadding + (width - 2 * hPadding), height - vPadding + scrollPointPosition, 30, scrollPointHeight);
     }
 
-    public void setFocus(boolean focus) {
-        ChatWindow.focus = focus;
-    }
 
     @Override
     public void update() {
@@ -259,7 +261,7 @@ public class ChatWindow extends GuiComponent implements IUpdateable {
 
     private static void drawString(Graphics g, List<String> text, int x, int y) {
         for (int i = topElement; i < bottomElement; i++) {
-            if (i < text.size())
+            if (i < text.size() && text.get(i) != null)
                 g.drawString(text.get(i), x, y += g.getFontMetrics().getHeight());
         }
     }

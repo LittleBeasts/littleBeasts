@@ -28,6 +28,8 @@ public final class PlayerInput {
             }
         });
         Input.keyboard().onKeyTyped(KeyEvent.VK_ENTER, e -> {
+            if (!GameLogic.isOnlineGame())
+                return;
             if (GameLogic.getState() == GameState.MENU) {
                 return;
             }
