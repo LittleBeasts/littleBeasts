@@ -18,8 +18,8 @@ public class StartStepDefinitions {
 
     @When("^the Player presses the button to start the game$")
     public void thePlayerPressesTheButtonToStartTheGame() {
-        Program.getGameLogic().buttonPressed(KeyEvent.VK_UP);
-        Program.getGameLogic().buttonPressed(KeyEvent.VK_ENTER);
+        Program.getGameLogic().robotButtonPress(KeyEvent.VK_UP);
+        Program.getGameLogic().robotButtonPress(KeyEvent.VK_ENTER);
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {

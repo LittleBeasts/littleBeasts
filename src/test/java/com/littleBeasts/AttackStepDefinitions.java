@@ -19,11 +19,11 @@ public class AttackStepDefinitions {
     public void thePlayerIsInABattle() throws IOException {
 
         Program.main(new String[42]);
-        Program.getGameLogic().buttonPressed(KeyEvent.VK_UP);
-        Program.getGameLogic().buttonPressed(KeyEvent.VK_ENTER);
+        Program.getGameLogic().robotButtonPress(KeyEvent.VK_UP);
+        Program.getGameLogic().robotButtonPress(KeyEvent.VK_ENTER);
 
         Assert.assertEquals(Program.getGameLogic().getState(),GameState.INGAME);
-        Program.getGameLogic().buttonPressed(KeyEvent.VK_B);
+        Program.getGameLogic().robotButtonPress(KeyEvent.VK_B);
         Assert.assertEquals(Program.getGameLogic().getState(),GameState.BATTLE);
 
     }
@@ -36,7 +36,7 @@ public class AttackStepDefinitions {
     @When("^the Player chooses to attack$")
     public void thePlayerChoosesToAttack() {
         Assert.assertTrue(Program.getIngameScreen().getHud().getBm().isFocused());
-        Program.getGameLogic().buttonPressed(KeyEvent.VK_E);
+        Program.getGameLogic().robotButtonPress(KeyEvent.VK_E);
         Assert.assertFalse(Program.getIngameScreen().getHud().getBm().isFocused());
     }
 

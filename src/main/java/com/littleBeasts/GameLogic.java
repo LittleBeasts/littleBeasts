@@ -42,6 +42,8 @@ public class GameLogic implements IUpdateable {
     private static Client client;
     private static List<String> bufferedMessages;
 
+    private static boolean onlineGame;
+
     public GameLogic() {
 
     }
@@ -52,7 +54,7 @@ public class GameLogic implements IUpdateable {
     public void init() throws IOException {
         Game.loop().attach(this);
         //  Environment.registerMapObjectLoader(new CustomMapObjectLoader());
-        client = new Client("TestUser");
+
         // we'll use a camera in our game that is locked to the location of the player
         camera = new PositionLockCamera(Player.instance());
         camera.setClampToMap(true); // Camara stop at edge of map.
@@ -90,7 +92,7 @@ public class GameLogic implements IUpdateable {
         Game.loop().setTimeScale(1);
         Player.instance().attachControllers();
         Player.instance().movement().attach();
-        Player.instance().setFighting(false);
+        Player.instance().setIsFighting(false);
         Input.keyboard().onKeyTyped(ChatWindow::add);
 
         switch (state) {
@@ -153,7 +155,7 @@ public class GameLogic implements IUpdateable {
         CeAi ai = new CeAi(cePlayer, beast.getCeEntity());
         battle = new Battle(Player.instance().getCePlayer(), ai);
         Player.instance().setBattle(battle);
-        Player.instance().setFighting(true);
+        Player.instance().setIsFighting(true);
     }
 
     @Override
@@ -172,6 +174,13 @@ public class GameLogic implements IUpdateable {
                 }
             }
         }
+        if (isOnlineGame()) {
+            readBufferedMessages();
+        }
+
+    }
+
+    public void readBufferedMessages() {
         if (client.getClientListener().messagesBuffered()) {
             System.out.println("buffered Messages");
             bufferedMessages = client.getClientListener().getMessageBuffer();
@@ -214,7 +223,7 @@ public class GameLogic implements IUpdateable {
     }
 
 
-    public void buttonPressed(int i) {
+    public void robotButtonPress(int i) {
         try {
             Robot robert = new Robot();
             Thread.sleep(2000);
@@ -257,6 +266,20 @@ public class GameLogic implements IUpdateable {
     public static Client getClient() {
         return client;
     }
+
+    public static void setClient(Client client) {
+        GameLogic.client = client;
+    }
+
+    public static boolean isOnlineGame() {
+        return onlineGame;
+    }
+
+    public static void setOnlineGame(boolean onlineGame) {
+        GameLogic.onlineGame = onlineGame;
+    }
+
+
 }
 
 

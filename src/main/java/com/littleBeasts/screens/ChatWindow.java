@@ -27,9 +27,7 @@ public class ChatWindow extends GuiComponent implements IUpdateable {
     private static int scrollbarHeight, scrollPointHeight;
     private static int scrollPointPosition;
     private static final int amountOfDrawnElements = 6;
-    /* Set attributes with constructor parameters */
     private final Font font = ChatWindowFont;
-    private Rectangle rectangle;
     private final Point textPoint;
     private int padding;
 
