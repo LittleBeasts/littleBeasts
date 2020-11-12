@@ -1,7 +1,7 @@
 package com.littleBeasts;
 
-import calculationEngine.battle.Battle;
-import calculationEngine.entities.Beasts;
+import calculationEngine.battle.CeBattle;
+import calculationEngine.entities.CeBeasts;
 import calculationEngine.entities.CeAi;
 import calculationEngine.entities.CePlayer;
 import client.Client;
@@ -38,7 +38,7 @@ public class GameLogic implements IUpdateable {
 
     private static final List<Beast> beastList = new ArrayList<>(); // list to resolve all animation before removing entity TODO: find a way to finish animation w/o this list.
     private static Camera camera;
-    private static Battle battle;
+    private static CeBattle battle;
     private static CePlayer cePlayer;
     private static boolean nextBattlePossible = true;
 
@@ -150,13 +150,13 @@ public class GameLogic implements IUpdateable {
         Game.world().camera().setFocus(Player.instance().getX() + (faceLeft ? -25 : 25), Player.instance().getY());
 
         //for dev purposes
-        Beast beast = new Beast(Beasts.FeuerFurz, x, (int) (Player.instance().getY() - (Player.instance().getHeight() / 2)), false);
+        Beast beast = new Beast(CeBeasts.FeuerFurz, x, (int) (Player.instance().getY() - (Player.instance().getHeight() / 2)), false);
         beast.setFacingDirection(Player.instance().getFacingDirection().getOpposite());
         beastList.add(beast);
 
         cePlayer = Player.instance().getCePlayer();
-        CeAi ai = new CeAi(cePlayer, beast.getCeEntity());
-        battle = new Battle(Player.instance().getCePlayer(), ai);
+        CeAi ai = new CeAi(beast.getCeEntity());
+        battle = new CeBattle(Player.instance().getCePlayer(), ai);
         Player.instance().setBattle(battle);
         Player.instance().setIsFighting(true);
     }
@@ -240,7 +240,7 @@ public class GameLogic implements IUpdateable {
         }
     }
 
-    public static Battle getBattle() {
+    public static CeBattle getBattle() {
         return battle;
     }
 

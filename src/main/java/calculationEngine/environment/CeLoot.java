@@ -3,6 +3,7 @@ package calculationEngine.environment;
 
 import static utilities.JsonReader.*;
 
+import config.LootConfig;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -11,13 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-public class Loot {
-
-
-    // ToDo: Extract to LootConfig
-    private static final int dropCommon = 60;
-    private static final int dropRare = 35;
-    private static final int dropLegendary = 5;
+public class CeLoot {
 
     private static final JSONObject jsonObject = readJson("JSON/loottable.JSON");
     private static final JSONObject jsonContainerTable = new JSONObject(jsonObject.get("containerTable").toString());
@@ -56,9 +51,9 @@ public class Loot {
                 continue;
             }
             roll = random.nextInt(101);
-            if (roll < dropCommon) {
+            if (roll < LootConfig.dropCommon) {
                 items[i] = getDrop("common");
-            } else if (roll < dropCommon + dropRare) {
+            } else if (roll < LootConfig.dropCommon + LootConfig.dropRare) {
                 items[i] = getDrop("rare");
             } else {
                 items[i] = getDrop("legendary");

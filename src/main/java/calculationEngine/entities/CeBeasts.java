@@ -1,14 +1,14 @@
 package calculationEngine.entities;
 
-import calculationEngine.environment.Regions;
+import calculationEngine.environment.CeRegions;
 
-public enum Beasts {
+public enum CeBeasts {
 
-    FeuerFurz(BeastTypes.Fire, 100, 25, 25, 25, 25, 25, 25, 25, 25, 25, 15, "StinkenderFeuerFurz", Regions.MiscatonicMountains),
-    StinkenderFeuerFurz(BeastTypes.Fire, 100, 25, 25, 25, 25, 25, 25, 25, 25, 25, Integer.MAX_VALUE, "", Regions.MiscatonicMountains);
+    FeuerFurz(CeBeastTypes.Fire, 100, 25, 25, 25, 25, 25, 25, 25, 25, 25, 15, "StinkenderFeuerFurz", CeRegions.ArkhamCity),
+    StinkenderFeuerFurz(CeBeastTypes.Fire, 100, 25, 25, 25, 25, 25, 25, 25, 25, 25, Integer.MAX_VALUE, "", CeRegions.ArkhamCity);
 
 
-    private final BeastTypes type;
+    private final CeBeastTypes type;
     private final int baseHp;
     private final int baseAttack;
     private final int baseDefense;
@@ -21,9 +21,9 @@ public enum Beasts {
     private final int staminaLvlScaling;
     private final int evolutionlvl; // Level at which development will take place
     private final String evolutionId; // ID of development of beast
-    private final Regions region;
+    private final CeRegions region;
 
-    Beasts(BeastTypes type, int baseHp, int baseAttack, int baseDefense, int baseSpeed, int baseStamina, int hpLvlScaling, int attackLvlScaling, int defenseLvlScaling, int speedLvlScaling, int staminaLvlScaling, int developmentlvl, String developmentId, Regions region) {
+    CeBeasts(CeBeastTypes type, int baseHp, int baseAttack, int baseDefense, int baseSpeed, int baseStamina, int hpLvlScaling, int attackLvlScaling, int defenseLvlScaling, int speedLvlScaling, int staminaLvlScaling, int developmentlvl, String developmentId, CeRegions region) {
         this.type = type;
         this.baseHp = baseHp;
         this.baseAttack = baseAttack;
@@ -40,15 +40,15 @@ public enum Beasts {
         this.region = region;
     }
 
-    public static Beasts getBeast(String name) {
-        return Beasts.valueOf(name);
+    public static CeBeasts getBeast(String name) {
+        return CeBeasts.valueOf(name);
     }
 
-    public Regions getRegion() {
+    public CeRegions getRegion() {
         return region;
     }
 
-    public BeastTypes getType() {
+    public CeBeastTypes getType() {
         return type;
     }
 

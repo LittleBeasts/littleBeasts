@@ -1,5 +1,5 @@
 package calculationEngine.environment;
 
-public enum Regions {
+public enum CeRegions {
     IvoryForest, ArkhamCity, Dunwich, Marshlands, MiscatonicMountains;
 }

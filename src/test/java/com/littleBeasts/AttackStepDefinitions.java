@@ -39,7 +39,7 @@ public class AttackStepDefinitions {
 
     @And("^the Player is not dead$")
     public void thePlayerIsNotDead() {
-        Assert.assertTrue(Player.instance().getCePlayer().getCeEntity().getHitPoints() > 0);
+        Assert.assertTrue(Player.instance().getCePlayer().getCeStats().getCurrentHitPoints() > 0);
     }
 
     @When("^the Player chooses to attack$")

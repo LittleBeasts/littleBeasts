@@ -1,6 +1,6 @@
 package com.littleBeasts.entities;
 
-import calculationEngine.entities.Beasts;
+import calculationEngine.entities.CeBeasts;
 import calculationEngine.entities.CeEntity;
 import com.littleBeasts.screens.BeastStats;
 import de.gurkenlabs.litiengine.IUpdateable;
@@ -22,7 +22,7 @@ public class Beast extends Creature implements IUpdateable {
     private final boolean playerBeast;
     private Spawnpoint e;
 
-    public Beast(Beasts beasts, int x, int y, boolean playerBeast) {
+    public Beast(CeBeasts beasts, int x, int y, boolean playerBeast) {
         super(beasts.name());
         System.out.println("Name:" + beasts.name());
         this.portrait = Resources.images().get("sprites/icon.png"); // ToDo: Add to Enum of Beasts

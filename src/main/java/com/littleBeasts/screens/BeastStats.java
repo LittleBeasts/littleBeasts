@@ -44,14 +44,14 @@ public class BeastStats {
             g.fillRect(x, y, width, height);
             g.drawImage(littleBeast.getPortrait(), x, y, portraitWidth, portraitHeight, null);
             g.setColor(HudConstants.HPBARCOLOR);
-            hpRatio = littleBeast.getCeEntity().getHitPoints() * 100 / littleBeast.getCeEntity().getMaxHitPoints();
+            hpRatio = littleBeast.getCeEntity().getCeStats().getCurrentHitPoints() * 100 / littleBeast.getCeEntity().getCeStats().getCurrentHitPoints();
             g.fillRect(x, y + height, portraitWidth, -(portraitHeight * hpRatio) / 100);
 
             g.setColor(HudConstants.TEXTCOLOR);
             g.setFont(new Font("Serif", Font.PLAIN, 12));
             String beastInfo = "";
             beastInfo += littleBeast.getMonsterName() + "\n";
-            beastInfo += littleBeast.getCeEntity().getHitPoints() + "/" + littleBeast.getCeEntity().getMaxHitPoints() + "\n";
+            beastInfo += littleBeast.getCeEntity().getCeStats().getCurrentHitPoints() + "/" + littleBeast.getCeEntity().getCeStats().getCurrentHitPoints() + "\n";
 
             drawString(g, beastInfo, x + portraitWidth, y);
 

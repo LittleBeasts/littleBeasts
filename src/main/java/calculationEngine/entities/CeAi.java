@@ -1,88 +1,42 @@
 package calculationEngine.entities;
 
-import calculationEngine.battle.Battle;
-import config.AiConstants;
+import calculationEngine.battle.CeBattle;
+import calculationEngine.environment.CeRegions;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-// ToDo: evaluate if "extend thread" to be replaced into executorService with runnable --> Leon
-// ToDo: call general constructor in other "special" constructors
-public class CeAi extends Thread {
-
-    private Nature nature;
-    private CeAttack[] ceAttacks;
-    private int hitPoints;
-    private int maxHitPoints;
-    private int level;
-    private int friendshipPoints;
-    private int speed;
-    private int stamina;
-    private int attack;
-    private int defense;
-    private int developmentLvl = 0;
-    private List<CeEntity> team;
-
+public class CeAi extends CePlayer implements Runnable {
     private CeEntity currentMonster;
-    private Battle battle;
-    private CePlayer aiPlayer;
+    private CeBattle battle;
 
-    public CeAi(CePlayer player) { //TODO: Change to new random Beast   
-        this.team = new ArrayList<>();
-        this.team.add(new CeEntity(Beasts.FeuerFurz));
-        this.nature = pickNature();
-        this.ceAttacks = new CeAttack[]{new CeAttack(Attacks.Punch)};
-        this.hitPoints = 0;
-        this.maxHitPoints = 0;
-        this.level = player.getCeEntity().getLevel();
-        this.speed = CeEntity.scaleOnLvl(AiConstants.AI_BASE_SPEED, player.getCeEntity().getLevel(), AiConstants.AI_LEVEL_SCALING);
-        this.stamina = CeEntity.scaleOnLvl(AiConstants.AI_BASE_STAMINA, player.getCeEntity().getLevel(), AiConstants.AI_LEVEL_SCALING);
-        this.attack = CeEntity.scaleOnLvl(AiConstants.AI_BASE_ATTACK, player.getCeEntity().getLevel(), AiConstants.AI_LEVEL_SCALING);
-        this.defense = CeEntity.scaleOnLvl(AiConstants.AI_BASE_DEFENSE, player.getCeEntity().getLevel(), AiConstants.AI_LEVEL_SCALING);
-        this.friendshipPoints = 0;
-        this.aiPlayer = new CePlayer(this.nature, this.ceAttacks, this.hitPoints, this.maxHitPoints, this.level, this.friendshipPoints, this.speed, this.stamina, this.attack, this.defense, this.developmentLvl, this.team);
-        this.aiPlayer.setAI();
+    // Constructor for new Random Beast AI
+    public CeAi(CePlayer player, CeRegions region) {
+        super();
+        CeEntity ceBeast = new CeEntity(region, player);
+        finishAIConstruction(ceBeast);
     }
 
-    public CeAi(CePlayer player, CeEntity ceEntity) {
-        this.team = new ArrayList<>();
-        this.team.add(ceEntity);
-        this.nature = pickNature();
-        this.ceAttacks = new CeAttack[]{new CeAttack(Attacks.Punch)};
-        this.hitPoints = 0;
-        this.maxHitPoints = 0;
-        this.level = player.getCeEntity().getLevel();
-        this.speed = CeEntity.scaleOnLvl(AiConstants.AI_BASE_SPEED, player.getCeEntity().getLevel(), AiConstants.AI_LEVEL_SCALING);
-        this.stamina = CeEntity.scaleOnLvl(AiConstants.AI_BASE_STAMINA, player.getCeEntity().getLevel(), AiConstants.AI_LEVEL_SCALING);
-        this.attack = CeEntity.scaleOnLvl(AiConstants.AI_BASE_ATTACK, player.getCeEntity().getLevel(), AiConstants.AI_LEVEL_SCALING);
-        this.defense = CeEntity.scaleOnLvl(AiConstants.AI_BASE_DEFENSE, player.getCeEntity().getLevel(), AiConstants.AI_LEVEL_SCALING);
-        this.friendshipPoints = 0;
-        this.aiPlayer = new CePlayer(this.nature, this.ceAttacks, this.hitPoints, this.maxHitPoints, this.level, this.friendshipPoints, this.speed, this.stamina, this.attack, this.defense, this.developmentLvl, this.team);
-        this.aiPlayer.setAI();
+    // Constructor for Special defined Beast AI
+    public CeAi(CeEntity ceEntity) {
+        super();
+        finishAIConstruction(ceEntity);
     }
-    public CeAi(CePlayer player, List<CeEntity> team) {
-        this.team = team;
-        this.nature = pickNature();
-        this.ceAttacks = new CeAttack[]{new CeAttack(Attacks.Punch)};
-        this.hitPoints = CeEntity.scaleOnLvl(AiConstants.AI_BASE_HP, player.getCeEntity().getLevel(), AiConstants.AI_LEVEL_SCALING);
-        this.maxHitPoints = this.hitPoints;
-        this.level = player.getCeEntity().getLevel();
-        this.speed = CeEntity.scaleOnLvl(AiConstants.AI_BASE_SPEED, player.getCeEntity().getLevel(), AiConstants.AI_LEVEL_SCALING);
-        this.stamina = CeEntity.scaleOnLvl(AiConstants.AI_BASE_STAMINA, player.getCeEntity().getLevel(), AiConstants.AI_LEVEL_SCALING);
-        this.attack = CeEntity.scaleOnLvl(AiConstants.AI_BASE_ATTACK, player.getCeEntity().getLevel(), AiConstants.AI_LEVEL_SCALING);
-        this.defense = CeEntity.scaleOnLvl(AiConstants.AI_BASE_DEFENSE, player.getCeEntity().getLevel(), AiConstants.AI_LEVEL_SCALING);
-        this.friendshipPoints = 0;
-        this.aiPlayer = new CePlayer(this.nature, this.ceAttacks, this.hitPoints, this.maxHitPoints, this.level, this.friendshipPoints, this.speed, this.stamina, this.attack, this.defense, this.developmentLvl, this.team);
-        this.aiPlayer.setAI();
+
+    // Constructor for NPC with Team
+    public CeAi(CePlayer player, CeBeastTypes type, List<CeEntity> team) {
+        super();
+        this.setTeam(team);
+        this.setCeStats(new CeStats(player.getCeStats().getLevel(), type));
     }
 
     @Override
     public void run() {
-        this.currentMonster = this.team.get(0);
+        this.currentMonster = this.getTeam().get(0);
         while (true) {
             if (battle.getTurn() != null) {
-                if (battle.getTurn().getNumber() == this.aiPlayer.getNumber()) {
+                if (battle.getTurn().getNumber() == this.getNumber()) {
                     System.out.println("Turn of AI");
                     battle.useAttack(pickAttack());
                 }
@@ -95,34 +49,24 @@ public class CeAi extends Thread {
         }
     }
 
+    private void finishAIConstruction(CeEntity ceBeast){
+        List<CeEntity> team = new ArrayList<>();
+        team.add(
+                ceBeast
+        );
+        this.setTeam(team);
+        this.setCeStats(ceBeast.getCeStats());
+        this.getCeStats().setMaxHitPoints(0);
+        this.getCeStats().setCurrentHitPoints(0);
+    }
+
     private CeAttack pickAttack() {
         CeAttack[] ceAttacks = this.currentMonster.getAttacks();
         Random random = new Random();
         return ceAttacks[random.nextInt(ceAttacks.length)];
     }
 
-    public void setBattle(Battle battle) {
+    public void setBattle(CeBattle battle) {
         this.battle = battle;
-    }
-
-    private Nature pickNature() {
-        Random random = new Random();
-        return Nature.values()[random.nextInt(Nature.values().length)];
-    }
-
-    public CePlayer getAiPlayer() {
-        return aiPlayer;
-    }
-
-    public List<CeEntity> getTeam() {
-        return team;
-    }
-
-    public int getActiveMonsterIndex() {
-        return this.getAiPlayer().getActiveMonsterIndex();
-    }
-
-    public void setActiveMonsterIndex(int index) {
-        this.getAiPlayer().setActiveMonsterIndex(index);
     }
 }

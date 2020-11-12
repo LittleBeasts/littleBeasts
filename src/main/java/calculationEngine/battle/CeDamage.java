@@ -6,7 +6,7 @@ import config.GlobalConfig;
 
 import java.util.Random;
 
-public class Damage {
+public class CeDamage {
     private static Random random = new Random();
     private static String debugInfo;
     private final static boolean bDebug = GlobalConfig.DEBUG_CONSOLE_OUT;
@@ -39,7 +39,7 @@ public class Damage {
             return false;
         }
         // base difficulty is 50 then add the speed of the defender. After that the speed of the attacker and the accuracy of the attack are subtracted.
-        int difficulty = 50 + defender.getSpeed() - (attacker.getSpeed() + ceAttack.getAccuracy());
+        int difficulty = 50 + defender.getCeStats().getSpeed() - (attacker.getCeStats().getSpeed() + ceAttack.getAccuracy());
         debugInfo += "Difficulty: " + difficulty + "\n";
         // if difficulty is higher than the roll the attack will miss.
         return difficulty > attackRoll;
@@ -47,14 +47,14 @@ public class Damage {
 
     private static int calculateDefense(CeEntity defender, CeAttack ceAttack) {
         //the modifier is calculated in BeastTypes.
-        return (int) (defender.getDefense() * defender.getType().getModifier(ceAttack.getType()));
+        return (int) (defender.getCeStats().getDefense() * defender.getCeStats().getType().getModifier(ceAttack.getType()));
     }
 
     private static int calculateAttack(CeEntity attacker, CeAttack ceAttack, int attackRoll) {
         //if it is a critical hit, damage will be doubled.
         int critModifier = attackRoll > (100 - ceAttack.getCriticalChance()) ? 2 : 1;
         // attack is calculated with rolls. Two rolls from the base stat of the attacker and two from the roll of the attack to get a pseudo normal distributed value.
-        int damageRoll = random.nextInt(attacker.getAttack() + 1) + random.nextInt(attacker.getAttack() + 1) + random.nextInt(ceAttack.getDamage() + 1) + random.nextInt(ceAttack.getDamage() + 1);
+        int damageRoll = random.nextInt(attacker.getCeStats().getAttack() + 1) + random.nextInt(attacker.getCeStats().getAttack() + 1) + random.nextInt(ceAttack.getDamage() + 1) + random.nextInt(ceAttack.getDamage() + 1);
         debugInfo += "Damage roll: " + damageRoll + "\n";
 
         return damageRoll * critModifier;

@@ -1,6 +1,6 @@
 package com.littleBeasts.entities;
 
-import calculationEngine.battle.Battle;
+import calculationEngine.battle.CeBattle;
 import calculationEngine.entities.*;
 import com.littleBeasts.GameLogic;
 import com.littleBeasts.PlayerState;
@@ -24,7 +24,7 @@ public class Player extends Creature implements IUpdateable, IMobileEntity {
     private static PlayerState state = PlayerState.CONTROLLABLE;
     private List<Beast> littleBeastTeam;
     private boolean spawned;
-    private Battle battle;
+    private CeBattle battle;
     private GameLogic gameLogic;
 
 
@@ -43,13 +43,13 @@ public class Player extends Creature implements IUpdateable, IMobileEntity {
 
         // Calculation Engine
         this.littleBeastTeam = new ArrayList<>();
-        this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY(), true)); // ToDo: Change with Teamlogic
-        this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY(), true));
+        this.addToLittleBeastTeam(new Beast(CeBeasts.FeuerFurz, (int) this.getX(), (int) this.getY(), true)); // ToDo: Change with Teamlogic
+        this.addToLittleBeastTeam(new Beast(CeBeasts.FeuerFurz, (int) this.getX(), (int) this.getY(), true));
         // ToDo: Change with new saveGame logic and initialize a new Player correctly
-        this.cePlayer = new CePlayer(Nature.ANGRY, new CeAttack[]{new CeAttack(Attacks.Punch)}, 100, 100, 1, 1, 100, 1, 20, 100, 1, beastsToCeEntities(littleBeastTeam));
-        this.playerCeAttacks = cePlayer.getCeEntity().getAttacks();
-        this.maxHP = cePlayer.getCeEntity().getMaxHitPoints();
-        this.currentHP = cePlayer.getCeEntity().getHitPoints();
+        this.cePlayer = new CePlayer(new CeStats(CeBeastTypes.PlayerStandard, CeNature.ANGRY, 1,100,100,20,1,20,10,1), new CeAttack[]{new CeAttack(CeAttacks.Punch)},beastsToCeEntities(littleBeastTeam), false);
+        this.playerCeAttacks = cePlayer.getAttacks();
+        this.maxHP = cePlayer.getCeStats().getMaxHitPoints();
+        this.currentHP = cePlayer.getCeStats().getCurrentHitPoints();
 
         // LITIengine
         this.addController(new KeyboardEntityController<>(this));
@@ -129,11 +129,11 @@ public class Player extends Creature implements IUpdateable, IMobileEntity {
         return cePlayer;
     }
 
-    public Battle getBattle() {
+    public CeBattle getBattle() {
         return battle;
     }
 
-    public void setBattle(Battle battle) {
+    public void setBattle(CeBattle battle) {
         this.battle = battle;
     }
 

@@ -149,7 +149,7 @@ public class Hud extends GuiComponent {
         // ToDo: extract Font in new Constants
         g.setFont(new Font("Serif", Font.PLAIN, 15));
         String playerStats = Player.instance().getPlayerName() + "\n";
-        playerStats += Player.instance().getCePlayer().getCeEntity().getHitPoints() + "/" + Player.instance().getMaxHP() + "\n";
+        playerStats += Player.instance().getCePlayer().getCeStats().getCurrentHitPoints() + "/" + Player.instance().getMaxHP() + "\n";
         playerStats += "Player Whatever\n";
         drawString(g, playerStats, padding + 100, height - padding - elementHeight);
     }

@@ -8,14 +8,13 @@ public class CeAttack {
     private final String name;
     private int damage;
     private int accuracy;
-    private final BeastTypes type;
+    private final CeBeastTypes type;
     private int criticalChance;
     private int level;
     private int executions;
     private static final int maxLevel = EntityConstants.ATTACK_MAX_LVL;
-    // probability distribution of random levels: level1:60% ; level2:30% ; level3: 10%;
 
-    public CeAttack(Attacks attack) {
+    public CeAttack(CeAttacks attack) {
         this.name = attack.getName();
         this.damage = attack.getBaseDamage();
         this.accuracy = attack.getBaseAccuracy();
@@ -27,7 +26,7 @@ public class CeAttack {
     }
 
     //ToDo: to be decided if needed
-    public CeAttack(String name, int damage, int accuracy, int criticalChance, BeastTypes type, int executions, int level) {
+    public CeAttack(String name, int damage, int accuracy, int criticalChance, CeBeastTypes type, int executions, int level) {
         this.name = name;
         this.damage = damage;
         this.accuracy = accuracy;
@@ -87,7 +86,7 @@ public class CeAttack {
         return this.accuracy;
     }
 
-    public BeastTypes getType() {
+    public CeBeastTypes getType() {
         return this.type;
     }
 

@@ -4,19 +4,24 @@ import config.PlayerConfig;
 
 import java.util.List;
 
-// ToDo: maybe Add inheritance form CeEntity; will be tested with battle refactoring
-public class CePlayer {
+public class CePlayer extends CeEntity {
 
     private List<CeEntity> team;
-    private boolean isAI = false; // ToDo add to constructor
+    private boolean isAI;
     private int playerNumber;
     private int activeMonsterIndex = 0;
-    private CeAttack[] playerStandardCeAttacks = PlayerConfig.PLAYER_STANDARD_CE_ATTACKS;
-    private CeEntity ceEntity;
+    private final CeAttack[] playerStandardCeAttacks = PlayerConfig.PLAYER_STANDARD_CE_ATTACKS;
 
-    public CePlayer(Nature nature, CeAttack[] ceAttacks, int hitPoints, int maxHitPoints, int level, int friendshipPoints, int speed, int stamina, int attack, int defense, int developmentLvl, List<CeEntity> team) {
-        this.ceEntity = new CeEntity(BeastTypes.PlayerStandard, nature, ceAttacks, hitPoints, maxHitPoints, level, friendshipPoints, speed, stamina, attack, defense, developmentLvl, false);
+    public CePlayer(CeStats ceStats, CeAttack[] ceAttacks, List<CeEntity> team, boolean isAI) {
+        super(ceStats, ceAttacks, Integer.MAX_VALUE, false);
         this.team = team;
+        this.isAI = isAI;
+    }
+
+    // Constructor for AI
+    public CePlayer(){
+        super();
+        this.isAI = true;
     }
 
     public List<CeEntity> getTeam() {
@@ -27,16 +32,16 @@ public class CePlayer {
         return isAI;
     }
 
-    public CeEntity getCeEntity() {
-        return ceEntity;
-    }
-
     public void setAI() {
         this.isAI = true;
     }
 
     public void setNumber(int number) {
         this.playerNumber = number;
+    }
+
+    public void setTeam(List<CeEntity> team) {
+        this.team = team;
     }
 
     public int getNumber() {

@@ -2,7 +2,7 @@ package calculationEngine.entities;
 
 import java.util.Random;
 
-public enum Nature {
+public enum CeNature {
     PLAYFUL,
     LAZY,
     GLUTTONOUS,
@@ -10,9 +10,9 @@ public enum Nature {
     FEISTY,
     TIMID;
 
-    public static Nature getRandomNature(){
+    public static CeNature getRandomNature(){
         Random random = new Random();
-        Nature[] natures = Nature.values();
+        CeNature[] natures = CeNature.values();
         return natures[random.nextInt(natures.length)];
     }
 

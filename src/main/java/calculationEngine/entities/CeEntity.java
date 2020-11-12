@@ -1,14 +1,12 @@
 package calculationEngine.entities;
 
-import calculationEngine.environment.Regions;
-import config.EntityConstants;
+import calculationEngine.environment.CeRegions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-// ToDo: Add Stats class to cleanup big constructors
 public class CeEntity {
 // |--------------------------------------------------------------------------|
 // |    This class is the parent class for every littleBeast.                 |
@@ -17,99 +15,53 @@ public class CeEntity {
 // |--------------------------------------------------------------------------|
 
     // properties
-    private BeastTypes type;
-    private final Nature nature;
     private CeAttack[] ceAttacks;
 
     // development logic isn't implemented yet -> has to be decided if we want to use this.
-    private Beasts evolution; // Development beast
+    private CeBeasts evolution; // Development beast
     private final int evolutionLvl; // level at which development will take place
 
     // stats
-    private int maxHitPoints;
-    private int hitPoints;
-    private int level;
-    private int friendshipPoints;
-    private int speed;
-    private int stamina;
-    private int attack;
-    private int defense;
+    private CeStats ceStats;
+
     private final boolean wild;
     private final Random random = new Random();
     private List<Integer> damages = new ArrayList<>();
 
     private int playerNumber;
 
-    public CeEntity(BeastTypes type, Nature nature, CeAttack[] ceAttacks, int hitPoints, int maxHitPoints, int level, int friendshipPoints, int speed, int stamina, int attack, int defense, int developmentLvl, boolean wild) {
-        this.type = type;
-        this.nature = nature;
+    public CeEntity(CeStats ceStats, CeAttack[] ceAttacks, int developmentLvl, boolean wild) {
         this.ceAttacks = ceAttacks;
-        this.hitPoints = hitPoints;
-        this.maxHitPoints = maxHitPoints;
-        this.level = level;
-        this.friendshipPoints = friendshipPoints;
-        this.speed = speed;
-        this.stamina = stamina;
-        this.attack = attack;
-        this.defense = defense;
+        this.ceStats = ceStats;
         this.evolutionLvl = developmentLvl;
-        this.wild = false;
+        this.wild = wild;
     }
 
-    public CeEntity(Regions region, CeEntity player) { // Constructor for new Encounter Beast
-
-        Beasts beast = pickBeast(region);
-
-        // calculate Level
-        int tmpLvl = calcLvl(player);
-        boolean lvlInRange = EntityConstants.MAX_LVL >= tmpLvl && EntityConstants.START_LVL <= tmpLvl;
-        this.level = lvlInRange ? tmpLvl : (tmpLvl <= EntityConstants.MAX_LVL ? EntityConstants.START_LVL : EntityConstants.MAX_LVL); // Sets Level to constant if level isn't in specified range
-
-        this.nature = Nature.getRandomNature();
-
+    public CeEntity(CeRegions region, CeEntity player) { // Constructor for new Encounter Beast
+        CeBeasts beast = pickBeast(region);
+        this.ceStats = new CeStats(beast, player.getCeStats().getLevel());
         this.evolutionLvl = beast.getEvolutionlvl();
-        this.hitPoints = scaleOnLvl(beast.getBaseHp(), this.level, beast.getHpLvlScaling());
-        this.maxHitPoints = this.hitPoints;
-        this.type = beast.getType();
-        this.speed = scaleOnLvl(beast.getBaseSpeed(), this.level, beast.getSpeedLvlScaling());
-        this.attack = scaleOnLvl(beast.getBaseAttack(), this.level, beast.getAttackLvlScaling()) + (random.nextInt(EntityConstants.ATTACK_RANGE * 2) - EntityConstants.ATTACK_RANGE);
-        this.stamina = scaleOnLvl(beast.getBaseAttack(), this.level, beast.getStaminaLvlScaling());
-        this.defense = scaleOnLvl(beast.getBaseDefense(), this.level, beast.getDefenseLvlScaling()) + (random.nextInt(EntityConstants.DEFENSE_RANGE * 2) - EntityConstants.DEFENSE_RANGE);
         this.ceAttacks = pickAttacks();
         this.wild = true;
     }
 
-
-    public CeEntity(Beasts beast) { // dev constructor
-        this.type = beast.getType();
-        this.nature = Nature.getRandomNature();
-        this.ceAttacks = new CeAttack[]{new CeAttack(Attacks.Punch)};
-        this.hitPoints = beast.getBaseHp();
-        this.maxHitPoints = beast.getBaseHp();
-        this.level = 1;
-        this.friendshipPoints = 0;
-        this.speed = beast.getBaseSpeed();
-        this.stamina = beast.getBaseStamina();
-        this.attack = beast.getBaseAttack();
-        this.defense = beast.getBaseDefense();
+    public CeEntity(CeBeasts beast) { // dev constructor
+        this.ceStats = new CeStats(beast);
+        this.ceAttacks = new CeAttack[]{new CeAttack(CeAttacks.Punch)};
         this.evolutionLvl = beast.getEvolutionlvl();
         this.wild = true;
     }
 
-
-    public static int scaleOnLvl(int base, int lvl, int lvlScaling) {
-        return base + lvl * lvlScaling;
+    // Constructor needed for AI-Creation because of inheritance structure
+    public CeEntity() {
+        this.evolutionLvl = Integer.MAX_VALUE;
+        this.wild = false;
     }
 
-    private int calcLvl(CeEntity player) {
-        return player.getLevel() + (random.nextInt(EntityConstants.LVL_RANGE * 2) - EntityConstants.LVL_RANGE);
-
-    }
-
-    private Beasts pickBeast(Regions region) {
-        Beasts[] allBeasts = Beasts.values();
-        List<Beasts> availableBeasts = new ArrayList<>();
-        for (Beasts beast : allBeasts) {
+    private CeBeasts pickBeast(CeRegions region) {
+        CeBeasts[] allBeasts = CeBeasts.values();
+        List<CeBeasts> availableBeasts = new ArrayList<>();
+        for (CeBeasts beast : allBeasts) {
             if (beast.getRegion() == region) availableBeasts.add(beast);
         }
         return availableBeasts.get(random.nextInt(availableBeasts.size()));
@@ -117,15 +69,20 @@ public class CeEntity {
 
     private CeAttack[] pickAttacks() {
         CeAttack[] pickedCeAttacks = new CeAttack[4];
-        List<Attacks> typedAttacks = new ArrayList<>();
-        for (Attacks attack : Attacks.values()) {
-            if (attack.getType() == type) {
+        List<CeAttacks> typedAttacks = new ArrayList<>();
+        for (CeAttacks attack : CeAttacks.values()) {
+            if (attack.getType() == this.ceStats.getType()) {
+                System.out.println("True");
                 typedAttacks.add(attack);
             }
         }
         for (int i = 0; i < pickedCeAttacks.length; i++) {
-            int index = random.nextInt(typedAttacks.size());
-            pickedCeAttacks[i] = new CeAttack(typedAttacks.remove(index));
+            if (typedAttacks.size() == 0) {
+                break;
+            } else {
+                int index = random.nextInt(typedAttacks.size());
+                pickedCeAttacks[i] = new CeAttack(typedAttacks.remove(index));
+            }
         }
 
         return pickedCeAttacks;
@@ -135,15 +92,11 @@ public class CeEntity {
         return evolutionLvl;
     }
 
-    public BeastTypes getType() {
-        return type;
+    public CeStats getCeStats() {
+        return ceStats;
     }
 
-    public Nature getNature() {
-        return nature;
-    }
-
-    public Beasts getEvolution() {
+    public CeBeasts getEvolution() {
         return evolution;
     }
 
@@ -151,58 +104,28 @@ public class CeEntity {
         return ceAttacks;
     }
 
-    public int getHitPoints() {
-        return hitPoints;
-    }
-
-    public int getMaxHitPoints() {
-        return maxHitPoints;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public int getFriendshipPoints() {
-        return friendshipPoints;
-    }
-
-    public int getSpeed() {
-        return speed;
-    }
-
-    public int getStamina() {
-        return stamina;
-    }
-
-    public int getAttack() {
-        return attack;
-    }
-
     public boolean isWild() {
         return wild;
     }
 
-    public int getDefense() {
-        return defense;
-    }
-
     public void setHitPoints(int hitPoints) {
-        this.hitPoints = hitPoints;
+        this.ceStats.setCurrentHitPoints(hitPoints);
     }
 
     public void dealDamage(int damage) {
-        this.hitPoints -= damage;
+        int newHitPoints = this.ceStats.getCurrentHitPoints() - damage;
+        this.ceStats.setCurrentHitPoints(newHitPoints);
         this.damages.add(damage);
     }
+
     public List<Integer> getDamages() {
         List<Integer> tmp = new ArrayList<>(damages);
         damages.clear();
         return tmp;
     }
 
-    public void setMaxHitPoints(int maxHitPoints) {
-        this.maxHitPoints = maxHitPoints;
+    public void setCeStats(CeStats ceStats) {
+        this.ceStats = ceStats;
     }
 
     public int getPlayerNumber() {
@@ -216,19 +139,19 @@ public class CeEntity {
     @Override
     public String toString() {
         return "CeEntity{" +
-                "type=" + type +
-                ", nature=" + nature +
+                "type=" + this.ceStats.getType() +
+                ", nature=" + this.ceStats.getNature() +
                 ", attacks=" + Arrays.toString(ceAttacks) +
                 ", development=" + evolution +
                 ", developmentLvl=" + evolutionLvl +
-                ", maxHitPoints=" + maxHitPoints +
-                ", hitPoints=" + hitPoints +
-                ", level=" + level +
-                ", friendshipPoints=" + friendshipPoints +
-                ", speed=" + speed +
-                ", stamina=" + stamina +
-                ", attack=" + attack +
-                ", defense=" + defense +
+                ", maxHitPoints=" + this.ceStats.getMaxHitPoints() +
+                ", hitPoints=" + this.ceStats.getCurrentHitPoints() +
+                ", level=" + this.ceStats.getLevel() +
+                ", friendshipPoints=" + this.ceStats.getFriendshipPoints() +
+                ", speed=" + this.ceStats.getSpeed() +
+                ", stamina=" + this.ceStats.getStamina() +
+                ", attack=" + this.ceStats.getAttack() +
+                ", defense=" + this.ceStats.getDefense() +
                 ", wild=" + wild +
                 ", random=" + random +
                 '}';
