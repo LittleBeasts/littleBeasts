@@ -7,23 +7,20 @@ import java.io.*;
 public class JsonReader {
 
     public static JSONObject readJson(String fileName) {
-        String sJson = "";
+        StringBuilder sJson = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new FileReader(new File(fileName)))) {
             String str;
             while ((str = br.readLine()) != null) {
-                sJson += str + "\n";
+                sJson.append(str).append("\n");
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return string2json(sJson);
+        return string2json(sJson.toString());
     }
 
     public static JSONObject string2json(String str) {
-        JSONObject jsonObject = new JSONObject(str);
-        return jsonObject;
+        return new JSONObject(str);
     }
 }
 

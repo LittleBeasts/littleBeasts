@@ -8,6 +8,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+// ToDo: rename Class
 public class BeastStats {
     private int maxHP, currentHP, hpRatio, x, y, width, height, portraitWidth, portraitHeight;
     private String name;
@@ -19,6 +20,7 @@ public class BeastStats {
         this.maxHP = maxHP;
         this.currentHP = currentHP;
         this.playerBeast = isPlayerBeast;
+        // ToDo: Get from globals, constructor should only contain positions in grid
         this.x = x;
         this.y = y;
         this.width = width;
@@ -37,6 +39,7 @@ public class BeastStats {
     public void draw(Graphics2D g) {
         if (this.littleBeast == null) return;
         if (playerBeast) {
+            // ToDo: extract to own method, only for will remain
             g.setColor(HudConstants.BACKGROUND);
             g.fillRect(x, y, width, height);
             g.drawImage(littleBeast.getPortrait(), x, y, portraitWidth, portraitHeight, null);
@@ -52,12 +55,10 @@ public class BeastStats {
 
             drawString(g, beastInfo, x + portraitWidth, y);
 
-
+            // ToDo: Add vertical wiggle in draw damage Animation
             for (Integer dmg : this.littleBeast.getCeEntity().getDamages()) {
                 damageAnimationList.add(new DamageAnimation((Player.instance().getCenter()), dmg));
             }
-
-            damageAnimationOutOfBounds(g);
 
         } else {
 
@@ -65,21 +66,22 @@ public class BeastStats {
                 damageAnimationList.add(new DamageAnimation(this.littleBeast.getCenter(), dmg));
             }
 
-            damageAnimationOutOfBounds(g);
         }
+        damageAnimationOutOfBounds(g);
     }
 
     private void damageAnimationOutOfBounds(Graphics2D g) {
         for (int i = 0; i < damageAnimationList.size(); i++) {
             damageAnimationList.get(i).draw(g);
             if (damageAnimationList.get(i).outOfBounds()) {
-                damageAnimationList.get(i).equals(null);
+                damageAnimationList.set(i, null); // ToDo: maybe null is unnecessary
                 damageAnimationList.remove(i);
                 System.out.println("Removed");
             }
         }
     }
 
+    // Todo: Remove and call equivalent from HUD-Class
     private static void drawString(Graphics g, String text, int x, int y) {
         for (String line : text.split("\n"))
             g.drawString(line, x, y += g.getFontMetrics().getHeight());

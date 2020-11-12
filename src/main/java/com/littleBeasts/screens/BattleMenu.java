@@ -22,6 +22,7 @@ Height, width and bottom pad should be adjusted in HudConstants
 20201105 D.B. Created Class
 --------------------------------------------*/
 
+// ToDo: Extract submenus into new classes
 public class BattleMenu { // dev constructor
     private final int x, y, width, height, amountOfItems, amountOfDrawnItems;
     private int firstDrawnItem, lastDrawnItem, currentPosition;
@@ -46,6 +47,7 @@ public class BattleMenu { // dev constructor
         checkBattleMenuInput(items);
     }
 
+    // ToDo: Check if we can make this as generic as possible, so we don't need code duplicates in Constructors
     private void checkBattleMenuInput(String[] items) {
         Input.keyboard().onKeyTyped(e -> {
             if (!focus) return;

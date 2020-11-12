@@ -13,10 +13,9 @@ import java.util.function.Consumer;
 
 public class KeyboardMenu extends Menu {
 
-    //public static final Color ROMAN_RED = new Color(140, 16, 16);
+    // ToDo: Set Colors in global Constants
     public static final Color BUTTON_RED = new Color(140, 16, 16, 200);
     public static final Color BUTTON_BLACK = new Color(0, 0, 0, 200);
-    //public static final Sound SETTING_CHANGE_SOUND = Resources.sounds().get("swing1.ogg");
     public static final int MENU_DELAY = 180;
 
     private final List<Consumer<Integer>> confirmConsumer;
@@ -24,6 +23,7 @@ public class KeyboardMenu extends Menu {
 
     public static long lastMenuInput;
 
+    // TODO: Get params from constants
     public KeyboardMenu(double x, double y, double width, double height, String... items) {
         super(x, y, width, height, items);
         this.confirmConsumer = new CopyOnWriteArrayList<>();
@@ -88,8 +88,6 @@ public class KeyboardMenu extends Menu {
             comp.getAppearanceHovered().setBackgroundColor1(BUTTON_RED);
             comp.getAppearance().setTransparentBackground(false);
             comp.getAppearanceHovered().setTransparentBackground(false);
-            //comp.getAppearance().setTextAntialiasing(RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-            //comp.getAppearanceHovered().setTextAntialiasing(RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         });
     }
 
@@ -120,9 +118,5 @@ public class KeyboardMenu extends Menu {
         }
 
         lastMenuInput = Game.time().now();
-
-        if (this.isVisible()) {
-            //Game.audio().playSound(SETTING_CHANGE_SOUND);
-        }
     }
 }

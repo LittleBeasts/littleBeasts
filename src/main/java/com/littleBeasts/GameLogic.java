@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+// ToDo: try to make class Static
 public class GameLogic implements IUpdateable {
     private static GameState state = GameState.INGAME;
     private static boolean firstStart = true;

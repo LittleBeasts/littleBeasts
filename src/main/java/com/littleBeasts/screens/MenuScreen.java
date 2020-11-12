@@ -34,12 +34,13 @@ public class MenuScreen extends Screen implements IUpdateable {
         final double centerY = Game.window().getResolution().getHeight() * 1 / 2;
         final double buttonWidth = 450;
 
+        // ToDo: Get Items from Constants
         this.mainMenu = new KeyboardMenu(centerX - buttonWidth / 2, centerY * 1.3, buttonWidth, centerY / 2, "Single Player Game", "Play Online", "Instructions", "Exit");
 
         this.getComponents().add(this.mainMenu);
 
         this.mainMenu.onConfirm(c -> {
-            switch (c.intValue()) {
+            switch (c) {
                 case 0:
                     this.startGame();
                     break;

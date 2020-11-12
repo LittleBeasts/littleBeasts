@@ -19,8 +19,8 @@ public enum Beasts {
     private final int defenseLvlScaling;
     private final int speedLvlScaling;
     private final int staminaLvlScaling;
-    private final int developmentlvl; // Level at which development will take place
-    private final String developmentId; // ID of development of beast
+    private final int evolutionlvl; // Level at which development will take place
+    private final String evolutionId; // ID of development of beast
     private final Regions region;
 
     Beasts(BeastTypes type, int baseHp, int baseAttack, int baseDefense, int baseSpeed, int baseStamina, int hpLvlScaling, int attackLvlScaling, int defenseLvlScaling, int speedLvlScaling, int staminaLvlScaling, int developmentlvl, String developmentId, Regions region) {
@@ -35,8 +35,8 @@ public enum Beasts {
         this.defenseLvlScaling = defenseLvlScaling;
         this.speedLvlScaling = speedLvlScaling;
         this.staminaLvlScaling = staminaLvlScaling;
-        this.developmentId = developmentId;
-        this.developmentlvl = developmentlvl;
+        this.evolutionId = developmentId;
+        this.evolutionlvl = developmentlvl;
         this.region = region;
     }
 
@@ -92,11 +92,11 @@ public enum Beasts {
         return staminaLvlScaling;
     }
 
-    public int getDevelopmentlvl() {
-        return developmentlvl;
+    public int getEvolutionlvl() {
+        return evolutionlvl;
     }
 
-    public String getDevelopmentId() {
-        return developmentId;
+    public String getEvolutionId() {
+        return evolutionId;
     }
 }

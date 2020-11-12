@@ -9,9 +9,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public final class PlayerInput {
 
-    private PlayerInput() {
-    }
-
+    // ToDo: Complete Restructure -> One Keyboard input and a switch Case
     public static void init() {
         // make the game exit upon pressing ESCAPE (by default there is no such key binding and the window needs to be shutdown otherwise, e.g. ALT-F4 on Windows)
         AtomicBoolean menu = new AtomicBoolean(false);

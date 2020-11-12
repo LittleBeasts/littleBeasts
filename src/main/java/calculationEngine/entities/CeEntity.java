@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+// ToDo: Add Stats class to cleanup big constructors
 public class CeEntity {
 // |--------------------------------------------------------------------------|
 // |    This class is the parent class for every littleBeast.                 |
@@ -17,12 +18,12 @@ public class CeEntity {
 
     // properties
     private BeastTypes type;
-    private Nature nature;
+    private final Nature nature;
     private CeAttack[] ceAttacks;
 
     // development logic isn't implemented yet -> has to be decided if we want to use this.
-    private Beasts development; // Development beast
-    private int developmentLvl; // level at which development will take place
+    private Beasts evolution; // Development beast
+    private final int evolutionLvl; // level at which development will take place
 
     // stats
     private int maxHitPoints;
@@ -33,8 +34,8 @@ public class CeEntity {
     private int stamina;
     private int attack;
     private int defense;
-    private boolean wild;
-    private Random random = new Random();
+    private final boolean wild;
+    private final Random random = new Random();
     private List<Integer> damages = new ArrayList<>();
 
     private int playerNumber;
@@ -51,7 +52,7 @@ public class CeEntity {
         this.stamina = stamina;
         this.attack = attack;
         this.defense = defense;
-        this.developmentLvl = developmentLvl;
+        this.evolutionLvl = developmentLvl;
         this.wild = false;
     }
 
@@ -66,7 +67,7 @@ public class CeEntity {
 
         this.nature = Nature.getRandomNature();
 
-        this.developmentLvl = beast.getDevelopmentlvl();
+        this.evolutionLvl = beast.getEvolutionlvl();
         this.hitPoints = scaleOnLvl(beast.getBaseHp(), this.level, beast.getHpLvlScaling());
         this.maxHitPoints = this.hitPoints;
         this.type = beast.getType();
@@ -91,7 +92,7 @@ public class CeEntity {
         this.stamina = beast.getBaseStamina();
         this.attack = beast.getBaseAttack();
         this.defense = beast.getBaseDefense();
-        this.developmentLvl = beast.getDevelopmentlvl();
+        this.evolutionLvl = beast.getEvolutionlvl();
         this.wild = true;
     }
 
@@ -101,7 +102,6 @@ public class CeEntity {
     }
 
     private int calcLvl(CeEntity player) {
-        Random random = new Random();
         return player.getLevel() + (random.nextInt(EntityConstants.LVL_RANGE * 2) - EntityConstants.LVL_RANGE);
 
     }
@@ -109,7 +109,6 @@ public class CeEntity {
     private Beasts pickBeast(Regions region) {
         Beasts[] allBeasts = Beasts.values();
         List<Beasts> availableBeasts = new ArrayList<>();
-        Random random = new Random();
         for (Beasts beast : allBeasts) {
             if (beast.getRegion() == region) availableBeasts.add(beast);
         }
@@ -117,7 +116,6 @@ public class CeEntity {
     }
 
     private CeAttack[] pickAttacks() {
-        Random random = new Random();
         CeAttack[] pickedCeAttacks = new CeAttack[4];
         List<Attacks> typedAttacks = new ArrayList<>();
         for (Attacks attack : Attacks.values()) {
@@ -133,8 +131,8 @@ public class CeEntity {
         return pickedCeAttacks;
     }
 
-    public int getDevelopmentLvl() {
-        return developmentLvl;
+    public int getEvolutionLvl() {
+        return evolutionLvl;
     }
 
     public BeastTypes getType() {
@@ -145,8 +143,8 @@ public class CeEntity {
         return nature;
     }
 
-    public Beasts getDevelopment() {
-        return development;
+    public Beasts getEvolution() {
+        return evolution;
     }
 
     public CeAttack[] getAttacks() {
@@ -189,14 +187,6 @@ public class CeEntity {
         return defense;
     }
 
-    public void setType(BeastTypes type) {
-        this.type = type;
-    }
-
-    public void setDevelopment(Beasts development) {
-        this.development = development;
-    }
-
     public void setHitPoints(int hitPoints) {
         this.hitPoints = hitPoints;
     }
@@ -229,8 +219,8 @@ public class CeEntity {
                 "type=" + type +
                 ", nature=" + nature +
                 ", attacks=" + Arrays.toString(ceAttacks) +
-                ", development=" + development +
-                ", developmentLvl=" + developmentLvl +
+                ", development=" + evolution +
+                ", developmentLvl=" + evolutionLvl +
                 ", maxHitPoints=" + maxHitPoints +
                 ", hitPoints=" + hitPoints +
                 ", level=" + level +
