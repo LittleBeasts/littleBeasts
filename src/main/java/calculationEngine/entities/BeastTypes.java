@@ -7,8 +7,8 @@ public enum BeastTypes {
     Earth("Water", "Fire"),
     PlayerStandard("NONE", "NONE");
 
-    private String resistanceId;
-    private String weaknessId;
+    private final String resistanceId;
+    private final String weaknessId;
 
     BeastTypes(String resistanceId, String weaknessId) {
         this.resistanceId = resistanceId;

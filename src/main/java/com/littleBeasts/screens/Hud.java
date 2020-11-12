@@ -6,6 +6,7 @@ import com.littleBeasts.GameState;
 import com.littleBeasts.PlayerState;
 import com.littleBeasts.entities.Beast;
 import com.littleBeasts.entities.Player;
+import config.GlobalConfig;
 import config.HudConstants;
 import config.PlayerConfig;
 import de.gurkenlabs.litiengine.Game;
@@ -25,28 +26,20 @@ import java.util.List;
 public class Hud extends GuiComponent {
 
     private static final int PADDING = 40;
-    boolean debug = true;
-    private BattleMenu bm;
-    private BattleMenu attackMenu;
-
-    public BattleMenu getAttackMenu() {
-        return attackMenu;
-    }
-
-    public BattleMenu getBm() {
-        return bm;
-    }
+    boolean debug = GlobalConfig.DEBUG_CONSOLE_OUT;
+    private final BattleMenu battleMenu;
+    private final BattleMenu attackMenu;
 
     private boolean drawAttackMenu = false;
-    private Graphics2D g;
     private int rollIn = 0;
 
     public Hud() {
         super(0, 0, Game.window().getResolution().getWidth(), Game.window().getResolution().getHeight());
 
-
-        bm = new BattleMenu(300, PlayerConfig.PLAYER_ACTIONS);
-        bm.onConfirm(c -> {
+        // ToDo: Will be refactored with BattleMenu and AttackMenu
+        battleMenu = new BattleMenu(300, PlayerConfig.PLAYER_ACTIONS);
+        // ToDo: test if we can remove this
+        battleMenu.onConfirm(c -> {
             switch (c.intValue()) {
                 case 0:
                 case 1:
@@ -54,6 +47,7 @@ public class Hud extends GuiComponent {
                     break;
             }
         });
+        // ToDo: Similar to above ToDoS
         CeAttack[] ceAttacks = Player.instance().getPlayerAttacks();
         attackMenu = new BattleMenu(350, ceAttacks);
         attackMenu.onConfirm(c -> {
@@ -71,14 +65,12 @@ public class Hud extends GuiComponent {
     public void render(Graphics2D g) {
         super.render(g);
 
-        g.setColor(Color.RED);
+//        g.setColor(Color.RED);
 
         if (Game.world().environment() == null || Player.instance().isDead() || Player.instance().getState() != PlayerState.CONTROLLABLE) {
             return;
         }
 
-
-        //this.renderEnemyUI(g);
         this.drawDamageRolls(g);
         this.renderPlayerUI(g);
         this.renderHP(g);
@@ -93,11 +85,8 @@ public class Hud extends GuiComponent {
         } else {
             this.drawIngameHud(g);
             rollIn = 0;
-            bm.setFocus(false);
+            battleMenu.setFocus(false);
         }
-        // if (GameLogic.getState() == GameState.BATTLE) {
-
-        //  }
     }
 
     private void rollInBars(Graphics2D g) {
@@ -109,7 +98,6 @@ public class Hud extends GuiComponent {
     }
 
     private void drawDamageRolls(Graphics2D g) {
-        this.g = g;
         for (Beast beast : Player.instance().getLittleBeastTeam()) {
             beast.getBeastStats().drawDamageRolls(g);
         }
@@ -123,13 +111,15 @@ public class Hud extends GuiComponent {
         int height = (int) Game.window().getResolution().getHeight();
         int width = (int) Game.window().getResolution().getWidth();
         g.setColor(Color.WHITE);
+
         //Player portrait and stats.
-        drawPlayPortrait(g, width, height);
+        drawPlayerPortrait(g, width, height);
+
         //Action menu
         drawActionMenu(g);
 
-        bm.setFocus(!drawAttackMenu);
-        bm.draw(g);
+        battleMenu.setFocus(!drawAttackMenu);
+        battleMenu.draw(g);
 
         if (drawAttackMenu) {
             attackMenu.draw(g);
@@ -143,13 +133,11 @@ public class Hud extends GuiComponent {
 
     }
 
-    int cint = 0;
-
-    private void drawPlayPortrait(Graphics2D g, int width, int height) throws IOException {
-        // if (cint % 60 == 0)
-        //     System.out.println("Width: " + width + " | Height: " + height);
-        // cint++;
+    // ToDo: refactor width and height to global Hud constants, e.g.: width, height, color
+    private void drawPlayerPortrait(Graphics2D g, int width, int height) throws IOException {
         g.setColor(Color.WHITE);
+
+        // ToDo: get from Character
         Image originalImage = ImageIO.read(new File("sprites/char.png"));
         int padding = HudConstants.HUD_START_POINT;
         int elementHeight = HudConstants.HUD_ROW_HEIGHT;
@@ -157,6 +145,8 @@ public class Hud extends GuiComponent {
         g.fillRect(padding, HudConstants.HEIGHT - HudConstants.BOTTOM_PAD, elementWidth, elementHeight);
         g.drawImage(originalImage, padding, HudConstants.HEIGHT - HudConstants.BOTTOM_PAD, 80, 100, null);
         g.setColor(Color.BLACK);
+
+        // ToDo: extract Font in new Constants
         g.setFont(new Font("Serif", Font.PLAIN, 15));
         String playerStats = Player.instance().getPlayerName() + "\n";
         playerStats += Player.instance().getCePlayer().getCeEntity().getHitPoints() + "/" + Player.instance().getMaxHP() + "\n";
@@ -173,9 +163,7 @@ public class Hud extends GuiComponent {
         for (Beast beast : Player.instance().getLittleBeastTeam()) {
             beast.getBeastStats().draw(g);
         }
-        Player.instance().getGameLogic();
         if (GameLogic.getBeastList() != null) {
-            List<Beast> test = GameLogic.getBeastList();
             for (Beast beast : GameLogic.getBeastList()) {
                 if (beast.getBeastStats() != null)
                     beast.getBeastStats().draw(g);
@@ -183,6 +171,7 @@ public class Hud extends GuiComponent {
         }
     }
 
+    // Methods tbd
     private void drawActionMenu(Graphics2D g) {
 
     }
@@ -205,10 +194,6 @@ public class Hud extends GuiComponent {
     private void drawIngameHud(Graphics2D g) {
         double y = Game.window().getResolution().getHeight() - PADDING * 2;
         double x = Game.window().getResolution().getWidth() / 2.0;
-        if (debug) {
-            System.out.println(x + " | " + y + " || " + Game.window().getResolution().getWidth() + " | " + Game.window().getResolution().getHeight());
-            debug = false;
-        }
         double currentWidth = 50.0;
         double height = 10.0;
         RoundRectangle2D actualRect = new RoundRectangle2D.Double(x, y, currentWidth, height, 1.5, 1.5);
@@ -223,8 +208,15 @@ public class Hud extends GuiComponent {
     }
 
     public void setBattleMenuFocus(boolean focus) {
-        bm.setFocus(focus);
+        battleMenu.setFocus(focus);
     }
 
+    public BattleMenu getAttackMenu() {
+        return attackMenu;
+    }
+
+    public BattleMenu getBattleMenu() {
+        return battleMenu;
+    }
 
 }

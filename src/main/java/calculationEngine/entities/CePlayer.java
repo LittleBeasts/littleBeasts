@@ -4,10 +4,11 @@ import config.PlayerConfig;
 
 import java.util.List;
 
+// ToDo: maybe Add inheritance form CeEntity; will be tested with battle refactoring
 public class CePlayer {
 
     private List<CeEntity> team;
-    private boolean isAI = false;
+    private boolean isAI = false; // ToDo add to constructor
     private int playerNumber;
     private int activeMonsterIndex = 0;
     private CeAttack[] playerStandardCeAttacks = PlayerConfig.PLAYER_STANDARD_CE_ATTACKS;

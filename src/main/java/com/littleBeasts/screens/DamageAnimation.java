@@ -30,7 +30,8 @@ public class DamageAnimation {
             soundPlayer = true;
         }
         g.setFont(HudConstants.ChatWindowFont);
-        g.setColor(new Color(255, 0, 0, (Math.max((int) (255 - (fadeoutSpeed * increment++)), 0))));
+        // ToDo: Extract to HudConstants
+        g.setColor(new Color(255, 0, 0, (Math.max(255 - (fadeoutSpeed * increment++), 0))));
 
         point2D.setLocation(point2D.getX(), point2D.getY() - speed);
         Point2D drawPoint = Game.world().camera().getViewportLocation(point2D);

@@ -19,9 +19,8 @@ import java.util.List;
 @EntityInfo(width = 16, height = 16)
 @MovementInfo(velocity = 70)
 @CollisionInfo(collisionBoxWidth = 14, collisionBoxHeight = 14, collision = true)
-@CombatInfo(hitpoints = 100, team = 1)
 public class Player extends Creature implements IUpdateable, IMobileEntity {
-    private static Player instance;
+    private static Player playerInstance;
     private static PlayerState state = PlayerState.CONTROLLABLE;
     private List<Beast> littleBeastTeam;
     private boolean spawned;
@@ -29,26 +28,25 @@ public class Player extends Creature implements IUpdateable, IMobileEntity {
     private GameLogic gameLogic;
 
 
-    private CePlayer cePlayer;
-    private CeEntity ceEntity;
+    private final CePlayer cePlayer;
     private CeAttack[] playerCeAttacks;
     private String playerName = "Horst";
     private int maxHP, currentHP;
     private boolean isFighting;
 
 
+    private final Attack punch; // TODO: create correct Attack structure similar to CE
 
-    private final Attack punch; // TODO: create correct Attack structure
-
-
+    // TODO: Change add draw prefix to every drawing class
     public Player() {
         super("test");
 
         // Calculation Engine
         this.littleBeastTeam = new ArrayList<>();
+        this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY(), true)); // ToDo: Change with Teamlogic
         this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY(), true));
-        this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY(), true));
-        this.cePlayer = new CePlayer(Nature.ANGRY, new CeAttack[]{new CeAttack(Attacks.Punch)}, 100, 100, 1, 1, 100, 1, 20, 100, 1, beastsToCeEntity(littleBeastTeam));
+        // ToDo: Change with new saveGame logic and initialize a new Player correctly
+        this.cePlayer = new CePlayer(Nature.ANGRY, new CeAttack[]{new CeAttack(Attacks.Punch)}, 100, 100, 1, 1, 100, 1, 20, 100, 1, beastsToCeEntities(littleBeastTeam));
         this.playerCeAttacks = cePlayer.getCeEntity().getAttacks();
         this.maxHP = cePlayer.getCeEntity().getMaxHitPoints();
         this.currentHP = cePlayer.getCeEntity().getHitPoints();
@@ -59,10 +57,10 @@ public class Player extends Creature implements IUpdateable, IMobileEntity {
     }
 
     public static Player instance() {
-        if (instance == null) {
-            instance = new Player();
+        if (playerInstance == null) {
+            playerInstance = new Player();
         }
-        return instance;
+        return playerInstance;
     }
 
     @Override
@@ -70,6 +68,7 @@ public class Player extends Creature implements IUpdateable, IMobileEntity {
         spawnPlayer();
     }
 
+    // ToDo: Change against "real" spawn logic
     public void spawnPlayer() {
         if (!spawned) {
             Spawnpoint spawnpoint = Game.world().environment().getSpawnpoint("west");
@@ -94,6 +93,7 @@ public class Player extends Creature implements IUpdateable, IMobileEntity {
     public void addToLittleBeastTeam(Beast beast) {
         littleBeastTeam.add(beast);
         int position = littleBeastTeam.indexOf(beast);
+        // ToDo: cleanUp Constructor and change Class Name (BeastStats)
         littleBeastTeam.get(position).createBeastStats(HudConstants.TEAM_START_POINT + position * (HudConstants.TILE_GAP + HudConstants.HUD_TILE_WIDTH), HudConstants.HEIGHT - HudConstants.BOTTOM_PAD, HudConstants.HUD_TILE_WIDTH, HudConstants.HUD_ROW_HEIGHT);
     }
 
@@ -105,7 +105,7 @@ public class Player extends Creature implements IUpdateable, IMobileEntity {
         littleBeastTeam.remove(littleBeastTeam.get(positionOfBeast));
     }
 
-    public List<CeEntity> beastsToCeEntity(List<Beast> beasts) {
+    public List<CeEntity> beastsToCeEntities(List<Beast> beasts) {
         List<CeEntity> entityList = new ArrayList<>();
         for (Beast beast : beasts) {
             entityList.add(beast.getCeEntity());
@@ -145,6 +145,7 @@ public class Player extends Creature implements IUpdateable, IMobileEntity {
         return isFighting;
     }
 
+     // ToDo: remove pointer with static class
     public GameLogic getGameLogic() {
         return gameLogic;
     }
@@ -153,6 +154,7 @@ public class Player extends Creature implements IUpdateable, IMobileEntity {
         this.gameLogic = gameLogic;
     }
 
+    // ToDo: extract to Attack Animation class or similar
     @Action(description = "This is a punch, it hurts.")
     public void punch() {
         this.attachControllers();

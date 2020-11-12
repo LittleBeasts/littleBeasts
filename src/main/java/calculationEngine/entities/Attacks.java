@@ -6,12 +6,12 @@ public enum Attacks {
     Flee(BeastTypes.PlayerStandard, 0, 0, 0, 0, "Flee"),
     Catch(BeastTypes.PlayerStandard, 10, 10, 2, 3, "Catch");
 
-    private String name;
-    private int baseDamage;
-    private int baseAccuracy;
-    private BeastTypes type;
-    private int baseCriticalChance;
-    private int executions;
+    private final String name;
+    private final int baseDamage;
+    private final int baseAccuracy;
+    private final BeastTypes type;
+    private final int baseCriticalChance;
+    private final int executions;
 
 
     Attacks(BeastTypes type, int baseDamage, int baseAccuracy, int baseCriticalChance, int executions, String name) {

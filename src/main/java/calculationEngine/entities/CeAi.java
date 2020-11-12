@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+// ToDo: evaluate if "extend thread" to be replaced into executorService with runnable --> Leon
+// ToDo: call general constructor in other "special" constructors
 public class CeAi extends Thread {
 
     private Nature nature;
@@ -59,7 +61,6 @@ public class CeAi extends Thread {
         this.aiPlayer = new CePlayer(this.nature, this.ceAttacks, this.hitPoints, this.maxHitPoints, this.level, this.friendshipPoints, this.speed, this.stamina, this.attack, this.defense, this.developmentLvl, this.team);
         this.aiPlayer.setAI();
     }
-
     public CeAi(CePlayer player, List<CeEntity> team) {
         this.team = team;
         this.nature = pickNature();
@@ -105,8 +106,8 @@ public class CeAi extends Thread {
     }
 
     private Nature pickNature() {
-        Random rndm = new Random();
-        return Nature.values()[rndm.nextInt(Nature.values().length)];
+        Random random = new Random();
+        return Nature.values()[random.nextInt(Nature.values().length)];
     }
 
     public CePlayer getAiPlayer() {

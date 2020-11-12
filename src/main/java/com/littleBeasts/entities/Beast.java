@@ -13,22 +13,21 @@ import java.awt.*;
 
 @CollisionInfo(collisionBoxWidth = 14, collisionBoxHeight = 30, collision = true)
 public class Beast extends Creature implements IUpdateable {
-    private CeEntity ceEntity;
+    private final CeEntity ceEntity;
     private String monsterName;
-    private Image portrait;
+    private final Image portrait;
     private BeastStats beastStats;
     private int x, y;
     private boolean spwaned;
-    private boolean playerBeast;
+    private final boolean playerBeast;
     private Spawnpoint e;
 
     public Beast(Beasts beasts, int x, int y, boolean playerBeast) {
-        // super(beasts.name());
         super(beasts.name());
         System.out.println("Name:" + beasts.name());
-        this.portrait = Resources.images().get("sprites/icon.png");
+        this.portrait = Resources.images().get("sprites/icon.png"); // ToDo: Add to Enum of Beasts
         this.ceEntity = new CeEntity(beasts);
-        this.monsterName = monsterName;
+        this.monsterName = monsterName; //tbd
         this.x = x;
         this.y = y;
         this.playerBeast = playerBeast;
