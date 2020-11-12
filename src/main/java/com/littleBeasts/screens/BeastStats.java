@@ -1,7 +1,7 @@
 package com.littleBeasts.screens;
 
-import com.littleBeasts.entities.Beast;
-import com.littleBeasts.entities.Player;
+import com.littleBeasts.entities.LitiBeast;
+import com.littleBeasts.entities.LitiPlayer;
 import config.HudConstants;
 
 import java.awt.*;
@@ -12,11 +12,11 @@ import java.util.List;
 public class BeastStats {
     private int maxHP, currentHP, hpRatio, x, y, width, height, portraitWidth, portraitHeight;
     private String name;
-    private Beast littleBeast;
+    private LitiBeast littleBeast;
     private boolean playerBeast;
     private List<DamageAnimation> damageAnimationList = new ArrayList<>();
 
-    public BeastStats(int x, int y, int width, int height, Beast littleBeast, boolean isPlayerBeast) {
+    public BeastStats(int x, int y, int width, int height, LitiBeast littleBeast, boolean isPlayerBeast) {
         this.maxHP = maxHP;
         this.currentHP = currentHP;
         this.playerBeast = isPlayerBeast;
@@ -32,7 +32,7 @@ public class BeastStats {
         this.littleBeast = littleBeast;
     }
 
-    public BeastStats(Beast littleBeast, boolean playerBeast) {
+    public BeastStats(LitiBeast littleBeast, boolean playerBeast) {
         this.littleBeast = littleBeast;
     }
 
@@ -57,7 +57,7 @@ public class BeastStats {
 
             // ToDo: Add vertical wiggle in draw damage Animation
             for (Integer dmg : this.littleBeast.getCeEntity().getDamages()) {
-                damageAnimationList.add(new DamageAnimation((Player.instance().getCenter()), dmg));
+                damageAnimationList.add(new DamageAnimation((LitiPlayer.instance().getCenter()), dmg));
             }
 
         } else {

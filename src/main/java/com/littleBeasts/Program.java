@@ -1,6 +1,6 @@
 package com.littleBeasts;
 
-import com.littleBeasts.entities.Player;
+import com.littleBeasts.entities.LitiPlayer;
 import com.littleBeasts.screens.IngameScreen;
 import com.littleBeasts.screens.MenuScreen;
 import de.gurkenlabs.litiengine.Game;
@@ -48,7 +48,7 @@ public class Program {
         // initialize modules
         PlayerInput.init();
         gameLogic = new GameLogic();
-        Player.instance().setGameLogic(gameLogic);
+        LitiPlayer.instance().setGameLogic(gameLogic);
         gameLogic.init();
 
         // enter main menu

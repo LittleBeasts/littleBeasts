@@ -1,7 +1,7 @@
 package com.littleBeasts;
 
 
-import com.littleBeasts.entities.Player;
+import com.littleBeasts.entities.LitiPlayer;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -39,7 +39,7 @@ public class AttackStepDefinitions {
 
     @And("^the Player is not dead$")
     public void thePlayerIsNotDead() {
-        Assert.assertTrue(Player.instance().getCePlayer().getCeEntity().getHitPoints() > 0);
+        Assert.assertTrue(LitiPlayer.instance().getCePlayer().getCeEntity().getHitPoints() > 0);
     }
 
     @When("^the Player chooses to attack$")

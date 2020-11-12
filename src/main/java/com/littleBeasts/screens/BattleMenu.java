@@ -1,7 +1,7 @@
 package com.littleBeasts.screens;
 
 import calculationEngine.entities.CeAttack;
-import com.littleBeasts.entities.Player;
+import com.littleBeasts.entities.LitiPlayer;
 import config.HudConstants;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.input.Input;
@@ -76,7 +76,7 @@ public class BattleMenu { // dev constructor
                             break;
                         case "Catch":
                             System.out.println("Action_Catch");
-                            System.out.println("Beast caught: " + Player.instance().getBattle().catchBeast());
+                            System.out.println("Beast caught: " + LitiPlayer.instance().getBattle().catchBeast());
                             break;
                     }
                     break;
@@ -100,7 +100,7 @@ public class BattleMenu { // dev constructor
 
         Input.keyboard().onKeyTyped(e -> {
             if (!focus) return;
-            if (!Player.instance().isFighting()) return;
+            if (!LitiPlayer.instance().isFighting()) return;
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_UP:
                 case KeyEvent.VK_W:
@@ -122,11 +122,11 @@ public class BattleMenu { // dev constructor
                     System.out.println(items[currentPosition]);
                     switch (PLAYER_ACTIONS[currentPosition]) {
                         case "Attack":
-                            Player.instance().getBattle().useAttack(ceAttacks[currentPosition]);
-                            Player.instance().punch();
+                            LitiPlayer.instance().getBattle().useAttack(ceAttacks[currentPosition]);
+                            LitiPlayer.instance().punch();
                             break;
                         case "Catch":
-                            Player.instance().getBattle().catchBeast();
+                            LitiPlayer.instance().getBattle().catchBeast();
                             break;
                         default:
                             break;

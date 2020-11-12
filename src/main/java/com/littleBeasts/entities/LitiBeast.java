@@ -12,7 +12,7 @@ import de.gurkenlabs.litiengine.resources.Resources;
 import java.awt.*;
 
 @CollisionInfo(collisionBoxWidth = 14, collisionBoxHeight = 30, collision = true)
-public class Beast extends Creature implements IUpdateable {
+public class LitiBeast extends Creature implements IUpdateable {
     private final CeEntity ceEntity;
     private String monsterName;
     private final Image portrait;
@@ -22,7 +22,7 @@ public class Beast extends Creature implements IUpdateable {
     private final boolean playerBeast;
     private Spawnpoint e;
 
-    public Beast(Beasts beasts, int x, int y, boolean playerBeast) {
+    public LitiBeast(Beasts beasts, int x, int y, boolean playerBeast) {
         super(beasts.name());
         System.out.println("Name:" + beasts.name());
         this.portrait = Resources.images().get("sprites/icon.png"); // ToDo: Add to Enum of Beasts

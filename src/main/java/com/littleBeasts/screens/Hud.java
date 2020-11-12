@@ -4,8 +4,8 @@ import calculationEngine.entities.CeAttack;
 import com.littleBeasts.GameLogic;
 import com.littleBeasts.GameState;
 import com.littleBeasts.PlayerState;
-import com.littleBeasts.entities.Beast;
-import com.littleBeasts.entities.Player;
+import com.littleBeasts.entities.LitiBeast;
+import com.littleBeasts.entities.LitiPlayer;
 import config.GlobalConfig;
 import config.HudConstants;
 import config.PlayerConfig;
@@ -21,7 +21,6 @@ import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 public class Hud extends GuiComponent {
 
@@ -48,7 +47,7 @@ public class Hud extends GuiComponent {
             }
         });
         // ToDo: Similar to above ToDoS
-        CeAttack[] ceAttacks = Player.instance().getPlayerAttacks();
+        CeAttack[] ceAttacks = LitiPlayer.instance().getPlayerAttacks();
         attackMenu = new BattleMenu(350, ceAttacks);
         attackMenu.onConfirm(c -> {
             switch (c.intValue()) {
@@ -67,7 +66,7 @@ public class Hud extends GuiComponent {
 
 //        g.setColor(Color.RED);
 
-        if (Game.world().environment() == null || Player.instance().isDead() || Player.instance().getState() != PlayerState.CONTROLLABLE) {
+        if (Game.world().environment() == null || LitiPlayer.instance().isDead() || LitiPlayer.instance().getState() != PlayerState.CONTROLLABLE) {
             return;
         }
 
@@ -98,12 +97,12 @@ public class Hud extends GuiComponent {
     }
 
     private void drawDamageRolls(Graphics2D g) {
-        for (Beast beast : Player.instance().getLittleBeastTeam()) {
-            beast.getBeastStats().drawDamageRolls(g);
+        for (LitiBeast litiBeast : LitiPlayer.instance().getLittleBeastTeam()) {
+            litiBeast.getBeastStats().drawDamageRolls(g);
         }
-        for (Beast beast : GameLogic.getBeastList()) {
-            if (beast.getBeastStats() != null)
-                beast.getBeastStats().drawDamageRolls(g);
+        for (LitiBeast litiBeast : GameLogic.getBeastList()) {
+            if (litiBeast.getBeastStats() != null)
+                litiBeast.getBeastStats().drawDamageRolls(g);
         }
     }
 
@@ -148,8 +147,8 @@ public class Hud extends GuiComponent {
 
         // ToDo: extract Font in new Constants
         g.setFont(new Font("Serif", Font.PLAIN, 15));
-        String playerStats = Player.instance().getPlayerName() + "\n";
-        playerStats += Player.instance().getCePlayer().getCeEntity().getHitPoints() + "/" + Player.instance().getMaxHP() + "\n";
+        String playerStats = LitiPlayer.instance().getPlayerName() + "\n";
+        playerStats += LitiPlayer.instance().getCePlayer().getCeEntity().getHitPoints() + "/" + LitiPlayer.instance().getMaxHP() + "\n";
         playerStats += "Player Whatever\n";
         drawString(g, playerStats, padding + 100, height - padding - elementHeight);
     }
@@ -160,13 +159,13 @@ public class Hud extends GuiComponent {
     }
 
     private void drawBeastPortraits(Graphics2D g) {
-        for (Beast beast : Player.instance().getLittleBeastTeam()) {
-            beast.getBeastStats().draw(g);
+        for (LitiBeast litiBeast : LitiPlayer.instance().getLittleBeastTeam()) {
+            litiBeast.getBeastStats().draw(g);
         }
         if (GameLogic.getBeastList() != null) {
-            for (Beast beast : GameLogic.getBeastList()) {
-                if (beast.getBeastStats() != null)
-                    beast.getBeastStats().draw(g);
+            for (LitiBeast litiBeast : GameLogic.getBeastList()) {
+                if (litiBeast.getBeastStats() != null)
+                    litiBeast.getBeastStats().draw(g);
             }
         }
     }
