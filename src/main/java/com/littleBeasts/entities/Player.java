@@ -29,7 +29,7 @@ public class Player extends Creature implements IUpdateable, IMobileEntity {
 
 
     private final CePlayer cePlayer;
-    private CeAttack[] playerCeAttacks;
+    private List<CeAttack> playerCeAttacks;
     private String playerName = "Horst";
     private int maxHP, currentHP;
     private boolean isFighting;
@@ -46,7 +46,9 @@ public class Player extends Creature implements IUpdateable, IMobileEntity {
         this.addToLittleBeastTeam(new Beast(CeBeasts.FeuerFurz, (int) this.getX(), (int) this.getY(), true)); // ToDo: Change with Teamlogic
         this.addToLittleBeastTeam(new Beast(CeBeasts.FeuerFurz, (int) this.getX(), (int) this.getY(), true));
         // ToDo: Change with new saveGame logic and initialize a new Player correctly
-        this.cePlayer = new CePlayer(new CeStats(CeBeastTypes.PlayerStandard, CeNature.ANGRY, 1,100,100,20,1,20,10,1), new CeAttack[]{new CeAttack(CeAttacks.Punch)},beastsToCeEntities(littleBeastTeam), false);
+        List<CeAttack> attacks = new ArrayList<>();
+        attacks.add(new CeAttack(CeAttacks.Punch));
+        this.cePlayer = new CePlayer(new CeStats(CeBeastTypes.PlayerStandard, CeNature.ANGRY, 1,100,100,20,1,20,10,1), attacks,beastsToCeEntities(littleBeastTeam), false);
         this.playerCeAttacks = cePlayer.getAttacks();
         this.maxHP = cePlayer.getCeStats().getMaxHitPoints();
         this.currentHP = cePlayer.getCeStats().getCurrentHitPoints();
@@ -82,7 +84,7 @@ public class Player extends Creature implements IUpdateable, IMobileEntity {
         return state;
     }
 
-    public CeAttack[] getPlayerAttacks() {
+    public List<CeAttack> getPlayerAttacks() {
         return playerCeAttacks;
     }
 

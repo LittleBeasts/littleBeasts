@@ -34,7 +34,9 @@ public class CeAi extends CePlayer implements Runnable {
     @Override
     public void run() {
         this.currentMonster = this.getTeam().get(0);
-        while (true) {
+        while (battle.isFightOngoing()) {
+            System.out.println(battle.isFightOngoing());
+            System.out.println("running");
             if (battle.getTurn() != null) {
                 if (battle.getTurn().getNumber() == this.getNumber()) {
                     System.out.println("Turn of AI");
@@ -55,15 +57,18 @@ public class CeAi extends CePlayer implements Runnable {
                 ceBeast
         );
         this.setTeam(team);
-        this.setCeStats(ceBeast.getCeStats());
+        System.out.println("AI CREATION: " + ceBeast.toString());
+        this.setCeStats(new CeStats(ceBeast.getCeStats()));
         this.getCeStats().setMaxHitPoints(0);
         this.getCeStats().setCurrentHitPoints(0);
     }
 
     private CeAttack pickAttack() {
-        CeAttack[] ceAttacks = this.currentMonster.getAttacks();
+        List<CeAttack> ceAttacks = this.currentMonster.getAttacks();
         Random random = new Random();
-        return ceAttacks[random.nextInt(ceAttacks.length)];
+        int ind = random.nextInt(ceAttacks.size());
+        System.out.println(ind);
+        return ceAttacks.get(ind);
     }
 
     public void setBattle(CeBattle battle) {

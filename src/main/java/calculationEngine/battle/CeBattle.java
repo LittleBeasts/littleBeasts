@@ -21,6 +21,7 @@ public class CeBattle implements Runnable {
 
 
     public CeBattle(CePlayer cePlayer1, CePlayer cePlayer2) {
+        System.out.println("Running main constructor");
         this.selectedFightEntityPlayer1 = cePlayer1.getTeam().get(cePlayer1.getActiveMonsterIndex());
         this.selectedFightEntityPlayer1.setPlayerNumber(1);
         this.selectedFightEntityPlayer2 = cePlayer2.getTeam().get(cePlayer2.getActiveMonsterIndex());
@@ -34,6 +35,7 @@ public class CeBattle implements Runnable {
 
     public CeBattle(CePlayer cePlayer1, CeAi cePlayer2) {
         this(cePlayer1, (CePlayer) cePlayer2);
+        System.out.println("Constructor2");
         cePlayer2.setBattle(this);
         CeExecuterService.addThreadToExecutor(cePlayer2);
     }
@@ -48,18 +50,23 @@ public class CeBattle implements Runnable {
         int tickAmountPlayer1 = maxTickAmount;
         int tickAmountPlayer2 = maxTickAmount;
         System.out.println("Battle Thread Started!");
-        while (fightOngoing) {
+        while (this.fightOngoing) {
+            System.out.println("[THREAD] " + this.fightOngoing);
             tickAmountPlayer1 -= selectedFightEntityPlayer1.getCeStats().getSpeed();
             tickAmountPlayer2 -= selectedFightEntityPlayer2.getCeStats().getSpeed();
             if (tickAmountPlayer1 <= 0) {
+                System.out.println("HP of EP1: " + selectedFightEntityPlayer1.getCeStats().getCurrentHitPoints());
                 System.out.println("[THREAD]: PLAYER 1 TURN");
                 turnPlayer1 = true;
+                System.out.println("HP of EP2: " + selectedFightEntityPlayer2.getCeStats().getCurrentHitPoints());
                 tickAmountPlayer1 = maxTickAmount + tickAmountPlayer1;
                 threadSleep();
             }
             if (tickAmountPlayer2 <= 0) {
+                System.out.println("HP of EP2: " + selectedFightEntityPlayer2.getCeStats().getCurrentHitPoints());
                 System.out.println("[THREAD]: PLAYER 2 TURN");
                 turnPlayer2 = true;
+                System.out.println("HP of EP1: " + selectedFightEntityPlayer1.getCeStats().getCurrentHitPoints());
                 tickAmountPlayer2 = maxTickAmount + tickAmountPlayer2;
                 threadSleep();
             }
@@ -79,6 +86,7 @@ public class CeBattle implements Runnable {
 
     private void setBattleEnd() {
         this.fightOngoing = false;
+        System.out.println(fightOngoing);
     }
 
     public void flee() { //ToDo: in Progress
@@ -120,6 +128,7 @@ public class CeBattle implements Runnable {
             System.out.println("Damage: " + damage);
             defender.dealDamage(damage);
             if (defender.getCeStats().getType() == CeBeastTypes.PlayerStandard) {
+                System.out.println("Dealing Damage to player");
                 if (defender.getPlayerNumber() == 1) cePlayer1.dealDamage(damage);
                 else cePlayer2.dealDamage(damage);
             }
@@ -131,7 +140,7 @@ public class CeBattle implements Runnable {
                     } else {
                         cePlayer2.setHitPoints(0);
                     }
-                    this.fightOngoing = false;
+                    setBattleEnd();
                 } else {
                     if (defender.getPlayerNumber() == 1) {
                         setSelectedFightEntityPlayer1(cePlayer1);
@@ -142,6 +151,7 @@ public class CeBattle implements Runnable {
                         this.selectedFightEntityPlayer2.setPlayerNumber(2);
                         defender = selectedFightEntityPlayer2;
                         if (selectedFightEntityPlayer2.getCeStats().getCurrentHitPoints() == 0) {
+                            System.out.println("IM DOIN SOMETHING WITH MY USELESS LIFE");
                             setBattleEnd();
                         }
                     }

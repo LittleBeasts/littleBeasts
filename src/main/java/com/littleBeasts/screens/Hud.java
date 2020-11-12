@@ -48,7 +48,7 @@ public class Hud extends GuiComponent {
             }
         });
         // ToDo: Similar to above ToDoS
-        CeAttack[] ceAttacks = Player.instance().getPlayerAttacks();
+        List<CeAttack> ceAttacks = Player.instance().getPlayerAttacks();
         attackMenu = new BattleMenu(350, ceAttacks);
         attackMenu.onConfirm(c -> {
             switch (c.intValue()) {

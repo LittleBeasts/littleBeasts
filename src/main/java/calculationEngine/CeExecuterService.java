@@ -8,7 +8,7 @@ public class CeExecuterService {
     private static final ExecutorService executorService = Executors.newFixedThreadPool(4);
 
     public static void addThreadToExecutor(Runnable runnable){
-        executorService.submit(runnable);
+        executorService.execute(runnable);
     }
 
     public static void shutdownExecutor(){

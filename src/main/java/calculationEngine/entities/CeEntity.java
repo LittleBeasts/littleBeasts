@@ -15,7 +15,7 @@ public class CeEntity {
 // |--------------------------------------------------------------------------|
 
     // properties
-    private CeAttack[] ceAttacks;
+    private List<CeAttack> ceAttacks;
 
     // development logic isn't implemented yet -> has to be decided if we want to use this.
     private CeBeasts evolution; // Development beast
@@ -30,7 +30,7 @@ public class CeEntity {
 
     private int playerNumber;
 
-    public CeEntity(CeStats ceStats, CeAttack[] ceAttacks, int developmentLvl, boolean wild) {
+    public CeEntity(CeStats ceStats, List<CeAttack> ceAttacks, int developmentLvl, boolean wild) {
         this.ceAttacks = ceAttacks;
         this.ceStats = ceStats;
         this.evolutionLvl = developmentLvl;
@@ -47,7 +47,8 @@ public class CeEntity {
 
     public CeEntity(CeBeasts beast) { // dev constructor
         this.ceStats = new CeStats(beast);
-        this.ceAttacks = new CeAttack[]{new CeAttack(CeAttacks.Punch)};
+        this.ceAttacks = new ArrayList<>();
+        this.ceAttacks.add(new CeAttack(CeAttacks.Punch));
         this.evolutionLvl = beast.getEvolutionlvl();
         this.wild = true;
     }
@@ -67,21 +68,20 @@ public class CeEntity {
         return availableBeasts.get(random.nextInt(availableBeasts.size()));
     }
 
-    private CeAttack[] pickAttacks() {
-        CeAttack[] pickedCeAttacks = new CeAttack[4];
+    private List<CeAttack> pickAttacks() {
+        List<CeAttack> pickedCeAttacks = new ArrayList<>();
         List<CeAttacks> typedAttacks = new ArrayList<>();
         for (CeAttacks attack : CeAttacks.values()) {
             if (attack.getType() == this.ceStats.getType()) {
-                System.out.println("True");
                 typedAttacks.add(attack);
             }
         }
-        for (int i = 0; i < pickedCeAttacks.length; i++) {
+        for (int i = 0; i < 4; i++) {
             if (typedAttacks.size() == 0) {
                 break;
             } else {
                 int index = random.nextInt(typedAttacks.size());
-                pickedCeAttacks[i] = new CeAttack(typedAttacks.remove(index));
+                pickedCeAttacks.add(new CeAttack(typedAttacks.remove(index)));
             }
         }
 
@@ -100,7 +100,7 @@ public class CeEntity {
         return evolution;
     }
 
-    public CeAttack[] getAttacks() {
+    public List<CeAttack> getAttacks() {
         return ceAttacks;
     }
 
@@ -141,7 +141,7 @@ public class CeEntity {
         return "CeEntity{" +
                 "type=" + this.ceStats.getType() +
                 ", nature=" + this.ceStats.getNature() +
-                ", attacks=" + Arrays.toString(ceAttacks) +
+                ", attacks=" + Arrays.toString(ceAttacks.toArray()) +
                 ", development=" + evolution +
                 ", developmentLvl=" + evolutionLvl +
                 ", maxHitPoints=" + this.ceStats.getMaxHitPoints() +

@@ -12,7 +12,7 @@ public class CePlayer extends CeEntity {
     private int activeMonsterIndex = 0;
     private final CeAttack[] playerStandardCeAttacks = PlayerConfig.PLAYER_STANDARD_CE_ATTACKS;
 
-    public CePlayer(CeStats ceStats, CeAttack[] ceAttacks, List<CeEntity> team, boolean isAI) {
+    public CePlayer(CeStats ceStats, List<CeAttack> ceAttacks, List<CeEntity> team, boolean isAI) {
         super(ceStats, ceAttacks, Integer.MAX_VALUE, false);
         this.team = team;
         this.isAI = isAI;

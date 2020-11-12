@@ -78,6 +78,19 @@ public class CeStats {
         this.friendshipPoints = 0;
     }
 
+    public CeStats(CeStats ceStats){
+        this.level = ceStats.getLevel();
+        this.currentHitPoints = ceStats.getCurrentHitPoints();
+        this.maxHitPoints = ceStats.getMaxHitPoints();
+        this.speed = ceStats.getSpeed();
+        this.stamina = ceStats.getStamina();
+        this.attack = ceStats.getAttack();
+        this.defense = ceStats.getDefense();
+        this.friendshipPoints = ceStats.getFriendshipPoints();
+        this.type = ceStats.getType();
+        this.nature = ceStats.getNature();
+    }
+
     private int calcLvl(int playerLvl) {
         int tmpLevel = playerLvl + (random.nextInt(EntityConstants.LVL_RANGE * 2) - EntityConstants.LVL_RANGE);
         boolean lvlInRange = EntityConstants.MAX_LVL >= tmpLevel && EntityConstants.START_LVL <= tmpLevel;

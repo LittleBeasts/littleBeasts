@@ -84,10 +84,10 @@ public class BattleMenu { // dev constructor
         });
     }
 
-    public BattleMenu(int x, CeAttack[] ceAttacks) {
+    public BattleMenu(int x, List<CeAttack> ceAttacks) {
         this.x = x; //position left
         this.y = HudConstants.HEIGHT - HudConstants.BOTTOM_PAD;
-        this.amountOfItems = ceAttacks.length;
+        this.amountOfItems = ceAttacks.size();
         this.amountOfDrawnItems = (Math.min(amountOfItems, HudConstants.ITEMLISTLENGTH));
         this.width = HudConstants.BATTLE_MENU_WIDTH;
         this.height = HudConstants.HUD_ROW_HEIGHT * amountOfDrawnItems / HudConstants.ITEMLISTLENGTH;
@@ -122,7 +122,7 @@ public class BattleMenu { // dev constructor
                     System.out.println(items[currentPosition]);
                     switch (PLAYER_ACTIONS[currentPosition]) {
                         case "Attack":
-                            Player.instance().getBattle().useAttack(ceAttacks[currentPosition]);
+                            Player.instance().getBattle().useAttack(ceAttacks.get(currentPosition));
                             Player.instance().punch();
                             break;
                         case "Catch":
@@ -210,10 +210,10 @@ public class BattleMenu { // dev constructor
         return currentPosition;
     }
 
-    public void setItemsFromAttacks(CeAttack[] ceAttacks) {
-        items = new String[ceAttacks.length];
-        for (int i = 0; i < ceAttacks.length; i++) {
-            items[0] = ceAttacks[i].getName();
+    public void setItemsFromAttacks(List<CeAttack> ceAttacks) {
+        items = new String[ceAttacks.size()];
+        for (int i = 0; i < ceAttacks.size(); i++) {
+            items[0] = ceAttacks.get(i).getName();
         }
     }
 
