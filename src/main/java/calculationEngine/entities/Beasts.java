@@ -8,20 +8,20 @@ public enum Beasts {
     StinkenderFeuerFurz(BeastTypes.Fire, 100, 25, 25, 25, 25, 25, 25, 25, 25, 25, Integer.MAX_VALUE, "", Regions.MiscatonicMountains);
 
 
-    private BeastTypes type;
-    private int baseHp;
-    private int baseAttack;
-    private int baseDefense;
-    private int baseSpeed;
-    private int baseStamina;
-    private int hpLvlScaling;
-    private int attackLvlScaling;
-    private int defenseLvlScaling;
-    private int speedLvlScaling;
-    private int staminaLvlScaling;
-    private int developmentlvl; // Level at which development will take place
-    private String developmentId; // ID of development of beast
-    private Regions region;
+    private final BeastTypes type;
+    private final int baseHp;
+    private final int baseAttack;
+    private final int baseDefense;
+    private final int baseSpeed;
+    private final int baseStamina;
+    private final int hpLvlScaling;
+    private final int attackLvlScaling;
+    private final int defenseLvlScaling;
+    private final int speedLvlScaling;
+    private final int staminaLvlScaling;
+    private final int developmentlvl; // Level at which development will take place
+    private final String developmentId; // ID of development of beast
+    private final Regions region;
 
     Beasts(BeastTypes type, int baseHp, int baseAttack, int baseDefense, int baseSpeed, int baseStamina, int hpLvlScaling, int attackLvlScaling, int defenseLvlScaling, int speedLvlScaling, int staminaLvlScaling, int developmentlvl, String developmentId, Regions region) {
         this.type = type;

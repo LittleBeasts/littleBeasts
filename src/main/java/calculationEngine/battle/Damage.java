@@ -2,17 +2,18 @@ package calculationEngine.battle;
 
 import calculationEngine.entities.CeAttack;
 import calculationEngine.entities.CeEntity;
+import config.GlobalConfig;
 
 import java.util.Random;
 
 public class Damage {
-    private static Random rnd = new Random();
+    private static Random random = new Random();
     private static String debugInfo;
-    private static boolean bDebug = false; //show damage roll in console
+    private final static boolean bDebug = GlobalConfig.DEBUG_CONSOLE_OUT;
 
     public static int calculateDamage(CeEntity attacker, CeEntity defender, CeAttack ceAttack) {
         //roll to d50 to get a quasi normal distribution
-        int attackRoll = rnd.nextInt(51) + rnd.nextInt(51);
+        int attackRoll = random.nextInt(51) + random.nextInt(51);
         debugInfo = "Roll: " + attackRoll + "\n";
         // if the attack misses -1 is returned
         if (attackMisses(attacker, defender, ceAttack, attackRoll)) {
@@ -53,7 +54,7 @@ public class Damage {
         //if it is a critical hit, damage will be doubled.
         int critModifier = attackRoll > (100 - ceAttack.getCriticalChance()) ? 2 : 1;
         // attack is calculated with rolls. Two rolls from the base stat of the attacker and two from the roll of the attack to get a pseudo normal distributed value.
-        int damageRoll = rnd.nextInt(attacker.getAttack() + 1) + rnd.nextInt(attacker.getAttack() + 1) + rnd.nextInt(ceAttack.getDamage() + 1) + rnd.nextInt(ceAttack.getDamage() + 1);
+        int damageRoll = random.nextInt(attacker.getAttack() + 1) + random.nextInt(attacker.getAttack() + 1) + random.nextInt(ceAttack.getDamage() + 1) + random.nextInt(ceAttack.getDamage() + 1);
         debugInfo += "Damage roll: " + damageRoll + "\n";
 
         return damageRoll * critModifier;
