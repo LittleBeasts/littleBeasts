@@ -223,7 +223,7 @@ public class GameLogic implements IUpdateable {
         }
     }
 
-    public void robotButtonPress(int i) {
+    public static void robotButtonPress(int i) {
         try {
             Robot robert = new Robot();
             Thread.sleep(TestConfig.ROBOT_SLEEP);
