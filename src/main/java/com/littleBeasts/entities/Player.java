@@ -5,16 +5,19 @@ import calculationEngine.entities.*;
 import com.littleBeasts.GameLogic;
 import com.littleBeasts.PlayerState;
 import com.littleBeasts.abilities.Attack;
-import config.HudConstants;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.*;
 import de.gurkenlabs.litiengine.input.KeyboardEntityController;
 import de.gurkenlabs.litiengine.physics.Force;
+import de.gurkenlabs.litiengine.resources.Resources;
 
+import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
+
+import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 
 @EntityInfo(width = 16, height = 16)
 @MovementInfo(velocity = 70)
@@ -33,6 +36,7 @@ public class Player extends Creature implements IUpdateable, IMobileEntity {
     private String playerName = "Horst";
     private int maxHP, currentHP;
     private boolean isFighting;
+    private final Image playerPortrait;
 
 
     private final Attack punch; // TODO: create correct Attack structure similar to CE
@@ -40,7 +44,7 @@ public class Player extends Creature implements IUpdateable, IMobileEntity {
     // TODO: Change add draw prefix to every drawing class
     public Player() {
         super("test");
-
+        this.playerPortrait = Resources.images().get("sprites/char.png");
         // Calculation Engine
         this.littleBeastTeam = new ArrayList<>();
         this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY(), true)); // ToDo: Change with Teamlogic
@@ -94,7 +98,7 @@ public class Player extends Creature implements IUpdateable, IMobileEntity {
         littleBeastTeam.add(beast);
         int position = littleBeastTeam.indexOf(beast);
         // ToDo: cleanUp Constructor and change Class Name (BeastStats)
-        littleBeastTeam.get(position).createBeastStats(HudConstants.TEAM_START_POINT + position * (HudConstants.TILE_GAP + HudConstants.HUD_TILE_WIDTH), HudConstants.HEIGHT - HudConstants.BOTTOM_PAD, HudConstants.HUD_TILE_WIDTH, HudConstants.HUD_ROW_HEIGHT);
+        littleBeastTeam.get(position).createBeastStats();
     }
 
     public void removeFromLittleBeastTeam(Beast beast) {
@@ -145,7 +149,7 @@ public class Player extends Creature implements IUpdateable, IMobileEntity {
         return isFighting;
     }
 
-     // ToDo: remove pointer with static class
+    // ToDo: remove pointer with static class
     public GameLogic getGameLogic() {
         return gameLogic;
     }
@@ -170,8 +174,8 @@ public class Player extends Creature implements IUpdateable, IMobileEntity {
         this.movement().apply(force);
         //this.animations().get("test-walk-right").setLooping(true);
         //this.animations().get("test-walk-right").restart();
-        System.out.println(origin.toString());
-        System.out.println(target.toString());
+        if (DEBUG_CONSOLE_OUT) System.out.println(origin.toString());
+        if (DEBUG_CONSOLE_OUT) System.out.println(target.toString());
         //this.punch.cast();
 
 
@@ -220,5 +224,7 @@ public class Player extends Creature implements IUpdateable, IMobileEntity {
 
     }
 
-
+    public Image getPlayerPortrait() {
+        return playerPortrait;
+    }
 }
