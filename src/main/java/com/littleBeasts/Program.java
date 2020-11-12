@@ -14,13 +14,7 @@ public class Program {
     private static IngameScreen ingameScreen;
     private static MenuScreen menuScreen;
 
-    // ToDo: Make Class Static again
-    Program() throws IOException {
-        runGame();
-    }
-
-    // ToDo: Remove unnecessary Constructor
-    private void runGame() throws IOException {
+    public static void main(String[] args) {
         //set game meta information
         Game.info().setName("littleBeasts");
         Game.info().setSubTitle("");
@@ -33,17 +27,14 @@ public class Program {
         Game.window().setIcon(Resources.images().get("sprites/icon.png"));
         Game.graphics().setBaseRenderScale(4.001f);
 
-
         // Load data from the utiLiti game file
         Resources.load("game.litidata");
-
 
         // add the screens
         ingameScreen = new IngameScreen();
         Game.screens().add(ingameScreen);
         menuScreen = new MenuScreen();
         Game.screens().add(menuScreen);
-
 
         // initialize modules
         PlayerInput.init();
@@ -65,11 +56,7 @@ public class Program {
 //        //-------------------------------------------------------------------------------------------------------------
         Game.start();
     }
-
-    public static void main(String[] args) throws IOException {
-        Program program = new Program();
-    }
-
+    
     public static GameLogic getGameLogic() {
         return gameLogic;
     }

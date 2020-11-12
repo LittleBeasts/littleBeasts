@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-// ToDo: try to make class Static
 public class GameLogic implements IUpdateable {
     private static GameState state = GameState.INGAME;
     private static boolean firstStart = true;
@@ -54,7 +53,7 @@ public class GameLogic implements IUpdateable {
     /**
      * Initializes the game logic for the game.
      */
-    public void init() throws IOException {
+    public void init() {
         Game.loop().attach(this);
         //  Environment.registerMapObjectLoader(new CustomMapObjectLoader());
 
@@ -225,7 +224,7 @@ public class GameLogic implements IUpdateable {
         }
     }
 
-    public void robotButtonPress(int i) {
+    public static void robotButtonPress(int i) {
         try {
             Robot robert = new Robot();
             Thread.sleep(TestConfig.ROBOT_SLEEP);
