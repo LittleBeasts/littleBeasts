@@ -39,7 +39,7 @@ public class HudConstants {
 
     // Menu and InGameMenu
 
-    public static final Color MENU_BACKGROUND = new Color(140, 16, 16, 200);
+    public static final Color MENU_BACKGROUND = new Color(100, 100, 100, 150);
     public static final Color BUTTON_RED = new Color(140, 16, 16, 200);
     public static final Color BUTTON_BLACK = new Color(0, 0, 0, 200);
     public static final Font MENU_FONT = new Font("Serif", Font.BOLD, 13);
