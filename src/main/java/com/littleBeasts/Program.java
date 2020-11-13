@@ -1,14 +1,12 @@
 package com.littleBeasts;
 
-import calculationEngine.battle.Damage;
-import calculationEngine.entities.*;
-import calculationEngine.environment.Loot;
 import com.littleBeasts.entities.Player;
 import com.littleBeasts.screens.IngameScreen;
 import com.littleBeasts.screens.MenuScreen;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.resources.Resources;
-import org.json.JSONObject;
+
+import java.io.IOException;
 
 public class Program {
 
@@ -16,11 +14,13 @@ public class Program {
     private static IngameScreen ingameScreen;
     private static MenuScreen menuScreen;
 
-    Program(){
+    // ToDo: Make Class Static again
+    Program() throws IOException {
         runGame();
     }
 
-    private void runGame() {
+    // ToDo: Remove unnecessary Constructor
+    private void runGame() throws IOException {
         //set game meta information
         Game.info().setName("littleBeasts");
         Game.info().setSubTitle("");
@@ -55,32 +55,18 @@ public class Program {
         GameLogic.setState(GameState.MENU);
         Game.screens().display("MAINMENU");
         Game.audio().playMusic("titlemenu");
-        //Game.audio().playMusic("mainMenu");
-        // GameLogic.setState(GameState.INGAME);
-        // Game.screens().display("INGAME-SCREEN");
-        // Game.world().loadEnvironment("Arkham");
 
-        //-----------------------------------------------------------------------------------------------------------
-        // test "fight"
-        CeAttack[] ceAttacks = new CeAttack[1];
-        ceAttacks[0] = new CeAttack(Attacks.Punch);
-        CeEntity attacker = new CeEntity(BeastTypes.Earth, Nature.ANGRY, ceAttacks, 10, 1, 10, 10, 10, 10, 10, 4, 1, true);
-        CeEntity defender = new CeEntity(BeastTypes.Water, Nature.ANGRY, ceAttacks, 10, 1, 10, 10, 10, 10, 10, 4, 1, true);
-        int damage = Damage.calculateDamage(attacker, defender, attacker.getAttacks()[0]);
-        System.out.println("Damage: " + damage);
-        //-------------------------------------------------------------------------------------------------------------
-
-        //-------------------------------------------------------------------------------------------------------------
-        // test "loot"
-        JSONObject[] jsonObject = Loot.getLootBySource("monster");
-        for (JSONObject jo : jsonObject) {
-            System.out.println(jo);
-        }
-        //-------------------------------------------------------------------------------------------------------------
+//        //-------------------------------------------------------------------------------------------------------------
+//        // test "loot"
+//        JSONObject[] jsonObject = Loot.getLootBySource("monster");
+//        for (JSONObject jo : jsonObject) {
+//            System.out.println(jo);
+//        }
+//        //-------------------------------------------------------------------------------------------------------------
         Game.start();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Program program = new Program();
     }
 

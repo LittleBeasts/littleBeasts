@@ -10,17 +10,14 @@ public class Battle extends Thread {
 
     private CeEntity selectedFightEntityPlayer1;
     private CeEntity selectedFightEntityPlayer2;
-    private CePlayer cePlayer1;
-    private CePlayer cePlayer2;
+    private final CePlayer cePlayer1;
+    private final CePlayer cePlayer2;
     private boolean turnPlayer1;
     private boolean turnPlayer2;
     private boolean fightOngoing = true;
     private boolean threadSleep;
-    private boolean onServer = false;
+//    private boolean onServer = false;
 
-    public boolean isFightOngoing() {
-        return fightOngoing;
-    }
 
     public Battle(CePlayer cePlayer1, CePlayer cePlayer2) {
         this.selectedFightEntityPlayer1 = cePlayer1.getTeam().get(cePlayer1.getActiveMonsterIndex());
@@ -33,7 +30,7 @@ public class Battle extends Thread {
         this.cePlayer2.setNumber(2);
         this.start();
     }
-
+// ToDo: if gets to extend ceAi, remove this constructor --> Leon
     public Battle(CePlayer cePlayer1, CeAi cePlayer2) {
         this.selectedFightEntityPlayer1 = cePlayer1.getTeam().get(cePlayer1.getActiveMonsterIndex());
         this.selectedFightEntityPlayer1.setPlayerNumber(1);
@@ -48,9 +45,13 @@ public class Battle extends Thread {
         this.start();
     }
 
+    public boolean isFightOngoing() {
+        return fightOngoing;
+    }
+
     @Override
     public void run() {
-        int maxTickAmount = BattleConstants.tickAmount;
+        final int maxTickAmount = BattleConstants.tickAmount;
         int tickAmountPlayer1 = maxTickAmount;
         int tickAmountPlayer2 = maxTickAmount;
         System.out.println("Battle Thread Started!");
@@ -87,7 +88,7 @@ public class Battle extends Thread {
         this.fightOngoing = false;
     }
 
-    public void flee() {
+    public void flee() { //ToDo: in Progress
         if ((turnPlayer1 && cePlayer2.isAI()) || (turnPlayer2 && cePlayer1.isAI())) {
             Random random = new Random();
             if (random.nextInt(2) == 1) {
@@ -121,9 +122,9 @@ public class Battle extends Thread {
     }
 
     private void applyAttack(CeEntity attacker, CeEntity defender, CeAttack ceAttack) {
-        int damage = Damage.calculateDamage(attacker, defender, ceAttack);
+        final int damage = Damage.calculateDamage(attacker, defender, ceAttack);
         if (damage != -1) {
-            System.out.println("Damage:" + damage);
+            System.out.println("Damage: " + damage);
             defender.dealDamage(damage);
             if (defender.getType() == BeastTypes.PlayerStandard) {
                 if (defender.getPlayerNumber() == 1) cePlayer1.getCeEntity().dealDamage(damage);
@@ -154,10 +155,8 @@ public class Battle extends Thread {
 
                 }
             }
-        } else System.out.println("Missed!");
+        } else{ System.out.println("Missed!");}
         setActionDone();
-//        return new CeEntity[]{attacker, defender};
-
     }
 
     private void threadSleep() {
@@ -183,5 +182,4 @@ public class Battle extends Thread {
         else if (fightOngoing) return BattleConstants.noneTurnCePlayer;
         else return null;
     }
-
 }

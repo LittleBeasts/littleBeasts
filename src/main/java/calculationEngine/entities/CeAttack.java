@@ -1,18 +1,19 @@
 package calculationEngine.entities;
 
+import config.EntityConstants;
+
 import java.util.Random;
 
 public class CeAttack {
-    private String name;
+    private final String name;
     private int damage;
     private int accuracy;
-    private BeastTypes type;
+    private final BeastTypes type;
     private int criticalChance;
     private int level;
     private int executions;
-    private static final int maxLevel = 10;
+    private static final int maxLevel = EntityConstants.ATTACK_MAX_LVL;
     // probability distribution of random levels: level1:60% ; level2:30% ; level3: 10%;
-    private static final int[] probabilityDistribution = {1, 1, 1, 1, 1, 1, 2, 2, 2, 3};
 
     public CeAttack(Attacks attack) {
         this.name = attack.getName();
@@ -25,6 +26,7 @@ public class CeAttack {
         scaleStats();
     }
 
+    //ToDo: to be decided if needed
     public CeAttack(String name, int damage, int accuracy, int criticalChance, BeastTypes type, int executions, int level) {
         this.name = name;
         this.damage = damage;
@@ -36,6 +38,7 @@ public class CeAttack {
     }
 
     private int calculateRandomLevel() {
+        final int[] probabilityDistribution = EntityConstants.ATTACK_PROB_DISTRIBUTION;
         Random random = new Random();
         return probabilityDistribution[random.nextInt(probabilityDistribution.length)];
     }
