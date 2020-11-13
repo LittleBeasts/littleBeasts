@@ -36,9 +36,54 @@ public class DrawInventory extends GuiComponent {
     public void render(Graphics2D g){
         System.out.println("draw Inventory");
         if(GameLogic.getState().equals(GameState.INVENTORY)) {
-            g.setColor(Color.lightGray);
+            g.setColor(Color.gray);
             g.fillRect(0, 0, WIDTH, HEIGHT);
+            //line in the middle
+            g.setColor(Color.black);
+            g.setStroke(new BasicStroke(5));
+            g.drawLine((WIDTH/2),0,(WIDTH/2), HEIGHT );
+
+            //Item slots
+            fillItemSlotRectangles(g);
+            drawItemSlotBorders(g);
+
+            //Player sprite
+            g.drawRect((WIDTH/4)-75, HEIGHT-610, 150, 330);
+
         }
+    }
+
+    private void drawItemSlotBorders(Graphics2D g) {
+        g.setColor(Color.black);
+        g.setStroke(new BasicStroke(3));
+        //Head
+        g.drawRect((WIDTH/4)-75, HEIGHT-790, 150, 150);
+        //Neck
+        g.drawRect((WIDTH/4)-300, HEIGHT-610, 150, 150);
+        //Hands
+        g.drawRect((WIDTH/4)-300, HEIGHT-430, 150, 150);
+        //Body
+        g.drawRect((WIDTH/4)+150, HEIGHT-610, 150, 150);
+        //Weapon
+        g.drawRect((WIDTH/4)+150, HEIGHT-430, 150, 150);
+        //Feet
+        g.drawRect((WIDTH/4)-75, HEIGHT-250, 150, 150);
+    }
+
+    private void fillItemSlotRectangles(Graphics2D g) {
+        g.setColor(Color.lightGray);
+        //Head
+        g.fillRect((WIDTH/4)-75, HEIGHT-790, 150, 150);
+        //Neck
+        g.fillRect((WIDTH/4)-300, HEIGHT-610, 150, 150);
+        //Hands
+        g.fillRect((WIDTH/4)-300, HEIGHT-430, 150, 150);
+        //Body
+        g.fillRect((WIDTH/4)+150, HEIGHT-610, 150, 150);
+        //Weapon
+        g.fillRect((WIDTH/4)+150, HEIGHT-430, 150, 150);
+        //Feet
+        g.fillRect((WIDTH/4)-75, HEIGHT-250, 150, 150);
     }
 
 }
