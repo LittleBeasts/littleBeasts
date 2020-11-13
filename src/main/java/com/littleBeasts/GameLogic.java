@@ -7,7 +7,7 @@ import calculationEngine.entities.CePlayer;
 import client.Client;
 import com.littleBeasts.entities.Beast;
 import com.littleBeasts.entities.Player;
-import com.littleBeasts.screens.ChatWindow;
+import com.littleBeasts.screens.DrawChatWindow;
 import com.littleBeasts.screens.IngameScreen;
 import config.TestConfig;
 import de.gurkenlabs.litiengine.Direction;
@@ -32,8 +32,6 @@ import java.util.List;
 public class GameLogic implements IUpdateable {
     private static GameState state = GameState.INGAME;
     private static boolean firstStart = true;
-
-    public static final Font MENU_FONT = new Font("Serif", Font.BOLD, 13);
     public static String START_LEVEL = "Arkham";
 
     private static final List<Beast> beastList = new ArrayList<>(); // list to resolve all animation before removing entity TODO: find a way to finish animation w/o this list.
@@ -96,7 +94,7 @@ public class GameLogic implements IUpdateable {
         Player.instance().attachControllers();
         Player.instance().movement().attach();
         Player.instance().setIsFighting(false);
-        Input.keyboard().onKeyTyped(ChatWindow::add);
+        Input.keyboard().onKeyTyped(DrawChatWindow::add);
 
         switch (state) {
             case MENU:
@@ -114,7 +112,7 @@ public class GameLogic implements IUpdateable {
                 break;
             case INGAME:
                 firstStart = false;
-                IngameScreen.chatWindow.setVisible(false);
+                IngameScreen.drawChatWindow.setVisible(false);
                 IngameScreen.ingameMenu.setVisible(false);
                 Game.audio().playMusic("arkham");
                 break;
@@ -126,7 +124,7 @@ public class GameLogic implements IUpdateable {
                 break;
             case INGAME_CHAT:
                 Player.instance().detachControllers();
-                IngameScreen.chatWindow.setVisible(true);
+                IngameScreen.drawChatWindow.setVisible(true);
                 Game.audio().playMusic("ingameMenu");
                 break;
         }
@@ -225,7 +223,7 @@ public class GameLogic implements IUpdateable {
         }
     }
 
-    public void robotButtonPress(int i) {
+    public static void robotButtonPress(int i) {
         try {
             Robot robert = new Robot();
             Thread.sleep(TestConfig.ROBOT_SLEEP);
