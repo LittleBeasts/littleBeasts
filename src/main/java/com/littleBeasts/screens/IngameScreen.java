@@ -12,6 +12,7 @@ public class IngameScreen extends Screen implements IUpdateable {
     public static final String NAME = "INGAME-SCREEN";
     public static KeyboardMenu ingameMenu;
     public static ChatWindow chatWindow;
+    public static DrawInventory inventory;
     private Hud hud;
 
     public Hud getHud() {
@@ -39,7 +40,8 @@ public class IngameScreen extends Screen implements IUpdateable {
 
     protected void initializeComponents() {
         this.hud = new Hud();
-        this.chatWindow = new ChatWindow();
+        chatWindow = new ChatWindow();
+        inventory = new DrawInventory();
 
         final double centerX = Game.window().getResolution().getWidth() / 2.0;
         final double centerY = Game.window().getResolution().getHeight() * 1 / 2;
@@ -65,6 +67,7 @@ public class IngameScreen extends Screen implements IUpdateable {
         this.getComponents().add(this.hud);
         this.getComponents().add(ingameMenu);
         this.getComponents().add(chatWindow);
+        this.getComponents().add(inventory);
     }
 
     @Override

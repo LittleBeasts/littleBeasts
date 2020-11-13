@@ -128,6 +128,12 @@ public class GameLogic implements IUpdateable {
                 Input.keyboard().onKeyTyped(ChatWindow::add);
                 Game.audio().playMusic("ingameMenu");
                 break;
+            case INVENTORY:
+                Game.loop().setTimeScale(0);
+                Player.instance().detachControllers();
+                IngameScreen.inventory.setVisible(true);
+                Game.audio().playMusic("ingameMenu");
+                break;
         }
         System.out.println(GameLogic.state.name());
     }
