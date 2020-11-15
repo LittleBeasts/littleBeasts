@@ -2,6 +2,7 @@ package com.littleBeasts;
 
 
 import com.littleBeasts.entities.Player;
+import com.littleBeasts.screens.DrawInventory;
 import de.gurkenlabs.litiengine.input.Input;
 
 import java.awt.event.KeyEvent;
@@ -56,6 +57,24 @@ public final class PlayerInput {
                 GameLogic.setState(GameState.INVENTORY);
             } else if (GameLogic.getState() == GameState.INVENTORY){
                 GameLogic.setState(GameState.INGAME);
+            }
+        });
+
+        Input.keyboard().onKeyTyped(KeyEvent.VK_E, e -> {
+            if (GameLogic.getState() == GameState.MENU) {
+                return;
+            }
+            if (GameLogic.getState() == GameState.INVENTORY) {
+                DrawInventory.nextState();
+            }
+        });
+
+        Input.keyboard().onKeyTyped(KeyEvent.VK_Q, e -> {
+            if (GameLogic.getState() == GameState.MENU) {
+                return;
+            }
+            if (GameLogic.getState() == GameState.INVENTORY) {
+                DrawInventory.previousState();
             }
         });
 

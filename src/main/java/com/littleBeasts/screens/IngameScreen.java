@@ -47,7 +47,7 @@ public class IngameScreen extends Screen {
     }
 
     private void buildIngameMenu() {
-        ingameMenu = new KeyboardMenu( HudConstants.INGAME_MENU_ITEMS);
+        ingameMenu = new KeyboardMenu(HudConstants.INGAME_MENU_ITEMS);
         ingameMenu.onConfirm(c -> {
             switch (c) {
                 case 0:

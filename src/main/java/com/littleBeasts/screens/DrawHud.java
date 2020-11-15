@@ -169,19 +169,21 @@ public class DrawHud extends GuiComponent {
     }
 
     private void drawIngameHud(Graphics2D g) {
-        double y = Game.window().getResolution().getHeight() - TILE_GAP * 2;
-        double x = Game.window().getResolution().getWidth() / 2.0;
-        double currentWidth = 50.0;
-        double height = 10.0;
-        RoundRectangle2D actualRect = new RoundRectangle2D.Double(x, y, currentWidth, height, 1.5, 1.5);
+        if (GameLogic.getState().equals(GameState.INGAME)) {
+            double y = Game.window().getResolution().getHeight() - TILE_GAP * 2;
+            double x = Game.window().getResolution().getWidth() / 2.0;
+            double currentWidth = 50.0;
+            double height = 10.0;
+            RoundRectangle2D actualRect = new RoundRectangle2D.Double(x, y, currentWidth, height, 1.5, 1.5);
 
-        // RenderEngine.renderShape(g,actualRect);
-        ShapeRenderer.render(g, actualRect);
-        Font font = new Font(g.getFont().getName(), 0, 30);
-        g.setFont(font);
-        TextRenderer.render(g, "50/50", x - 100.0, y, true);
+            // RenderEngine.renderShape(g,actualRect);
+            ShapeRenderer.render(g, actualRect);
+            Font font = new Font(g.getFont().getName(), 0, 30);
+            g.setFont(font);
+            TextRenderer.render(g, "50/50", x - 100.0, y, true);
 
-        ImageRenderer.render(g, Resources.images().get("sprites/icon.png"), x, y);
+            ImageRenderer.render(g, Resources.images().get("sprites/icon.png"), x, y);
+        }
     }
 
     public void setBattleMenuFocus(boolean focus) {
