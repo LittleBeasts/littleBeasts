@@ -25,7 +25,6 @@ public class IngameScreen extends Screen {
     @Override
     public void prepare() {
         super.prepare();
-
     }
 
     @Override
@@ -38,11 +37,12 @@ public class IngameScreen extends Screen {
     protected void initializeComponents() {
         this.drawHud = new DrawHud();
         drawChatWindow = new DrawChatWindow();
+        inventory = new DrawInventory();
         DrawChatWindow.init();
         buildIngameMenu();
         this.getComponents().add(ingameMenu);
         this.getComponents().add(drawChatWindow);
-//        this.getComponents().add(inventory);
+        this.getComponents().add(inventory);
         this.getComponents().add(this.drawHud);
     }
 
