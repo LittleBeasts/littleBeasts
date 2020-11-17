@@ -8,9 +8,11 @@ import de.gurkenlabs.litiengine.Valign;
 import de.gurkenlabs.litiengine.graphics.ImageRenderer;
 import de.gurkenlabs.litiengine.graphics.TextRenderer;
 import de.gurkenlabs.litiengine.gui.GuiComponent;
+import de.gurkenlabs.litiengine.input.Input;
 import de.gurkenlabs.litiengine.resources.Resources;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import static config.HudConstants.*;
@@ -37,6 +39,24 @@ public class DrawInventory extends GuiComponent {
         this.maxHealth = Player.instance().getCePlayer().getCeEntity().getMaxHitPoints();
         this.currentHealth = Player.instance().getCePlayer().getCeEntity().getHitPoints();
         this.level = Player.instance().getCePlayer().getCeEntity().getLevel();
+
+        Input.keyboard().onKeyTyped(KeyEvent.VK_E, e -> {
+            if (GameLogic.getState() == GameState.MENU) {
+                return;
+            }
+            if (GameLogic.getState() == GameState.INVENTORY) {
+                DrawInventory.nextState();
+            }
+        });
+
+        Input.keyboard().onKeyTyped(KeyEvent.VK_Q, e -> {
+            if (GameLogic.getState() == GameState.MENU) {
+                return;
+            }
+            if (GameLogic.getState() == GameState.INVENTORY) {
+                DrawInventory.previousState();
+            }
+        });
     }
 
     @Override
@@ -70,6 +90,7 @@ public class DrawInventory extends GuiComponent {
 
             //Categories
             drawCategories(g);
+
 
 
         }

@@ -60,23 +60,5 @@ public final class PlayerInput {
             }
         });
 
-        Input.keyboard().onKeyTyped(KeyEvent.VK_E, e -> {
-            if (GameLogic.getState() == GameState.MENU) {
-                return;
-            }
-            if (GameLogic.getState() == GameState.INVENTORY) {
-                DrawInventory.nextState();
-            }
-        });
-
-        Input.keyboard().onKeyTyped(KeyEvent.VK_Q, e -> {
-            if (GameLogic.getState() == GameState.MENU) {
-                return;
-            }
-            if (GameLogic.getState() == GameState.INVENTORY) {
-                DrawInventory.previousState();
-            }
-        });
-
     }
 }
