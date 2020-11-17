@@ -94,7 +94,12 @@ public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
         littleBeastTeam.add(litiBeast);
         int position = littleBeastTeam.indexOf(litiBeast);
         // ToDo: cleanUp Constructor and change Class Name (BeastStats)
-        littleBeastTeam.get(position).createBeastStats(HudConstants.TEAM_START_POINT + position * (HudConstants.TILE_GAP + HudConstants.HUD_TILE_WIDTH), HudConstants.HEIGHT - HudConstants.BOTTOM_PAD, HudConstants.HUD_TILE_WIDTH, HudConstants.HUD_ROW_HEIGHT);
+        int x = HudConstants.TEAM_START_POINT + position * (HudConstants.TILE_GAP + HudConstants.HUD_TILE_WIDTH);
+        int y = HudConstants.HEIGHT - HudConstants.BOTTOM_PAD;
+        int width = HudConstants.HUD_TILE_WIDTH;
+        int height = HudConstants.HUD_ROW_HEIGHT;
+
+        littleBeastTeam.get(position).createBeastStats(x, y, width, height);
     }
 
     public void removeFromLittleBeastTeam(LitiBeast litiBeast) {
@@ -145,7 +150,7 @@ public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
         return isFighting;
     }
 
-     // ToDo: remove pointer with static class
+    // ToDo: remove pointer with static class
     public GameLogic getGameLogic() {
         return gameLogic;
     }

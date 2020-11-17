@@ -25,7 +25,7 @@ public class LitiBeast extends Creature implements IUpdateable {
     public LitiBeast(Beasts beasts, int x, int y, boolean playerBeast) {
         super(beasts.name());
         System.out.println("Name:" + beasts.name());
-        this.portrait = Resources.images().get("sprites/icon.png"); // ToDo: Add to Enum of Beasts
+        this.portrait = Resources.images().get(beasts.getPortrait());
         this.ceEntity = new CeEntity(beasts);
         this.monsterName = monsterName; //tbd
         this.x = x;
