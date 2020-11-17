@@ -2,7 +2,7 @@ package com.littleBeasts.entities;
 
 import calculationEngine.entities.Beasts;
 import calculationEngine.entities.CeEntity;
-import com.littleBeasts.screens.BeastStats;
+import com.littleBeasts.screens.DrawBeastStats;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.CollisionInfo;
 import de.gurkenlabs.litiengine.entities.Creature;
@@ -11,12 +11,14 @@ import de.gurkenlabs.litiengine.resources.Resources;
 
 import java.awt.*;
 
+import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
+
 @CollisionInfo(collisionBoxWidth = 14, collisionBoxHeight = 30, collision = true)
 public class LitiBeast extends Creature implements IUpdateable {
     private final CeEntity ceEntity;
     private String monsterName;
     private final Image portrait;
-    private BeastStats beastStats;
+    private DrawBeastStats drawBeastStats;
     private int x, y;
     private boolean spwaned;
     private final boolean playerBeast;
@@ -24,7 +26,7 @@ public class LitiBeast extends Creature implements IUpdateable {
 
     public LitiBeast(Beasts beasts, int x, int y, boolean playerBeast) {
         super(beasts.name());
-        System.out.println("Name:" + beasts.name());
+        if (DEBUG_CONSOLE_OUT) System.out.println("Name:" + beasts.name());
         this.portrait = Resources.images().get(beasts.getPortrait());
         this.ceEntity = new CeEntity(beasts);
         this.monsterName = monsterName; //tbd
@@ -34,12 +36,12 @@ public class LitiBeast extends Creature implements IUpdateable {
         e = new Spawnpoint(x, y);
         e.spawn(this);
         if (!playerBeast) {
-            this.beastStats = new BeastStats(this, false);
+            this.drawBeastStats = new DrawBeastStats(this, false);
         }
     }
 
-    public void createBeastStats(int x, int y, int width, int height) {
-        this.beastStats = new BeastStats(x, y, width, height, this, playerBeast);
+    public void createBeastStats() {
+        this.drawBeastStats = new DrawBeastStats(this, playerBeast);
     }
 
     @Override
@@ -64,8 +66,8 @@ public class LitiBeast extends Creature implements IUpdateable {
         return portrait;
     }
 
-    public BeastStats getBeastStats() {
-        return beastStats;
+    public DrawBeastStats getBeastStats() {
+        return drawBeastStats;
     }
 
     public Spawnpoint getE() {

@@ -14,7 +14,7 @@ public class BeastStats {
     private String name;
     private LitiBeast littleBeast;
     private boolean playerBeast;
-    private List<DamageAnimation> damageAnimationList = new ArrayList<>();
+    private List<DrawDamageAnimation> damageAnimationList = new ArrayList<>();
 
     public BeastStats(int x, int y, int width, int height, LitiBeast littleBeast, boolean isPlayerBeast) {
         this.maxHP = maxHP;
@@ -57,13 +57,13 @@ public class BeastStats {
 
             // ToDo: Add vertical wiggle in draw damage Animation
             for (Integer dmg : this.littleBeast.getCeEntity().getDamages()) {
-                damageAnimationList.add(new DamageAnimation((LitiPlayer.instance().getCenter()), dmg));
+                damageAnimationList.add(new DrawDamageAnimation((LitiPlayer.instance().getCenter()), dmg));
             }
 
         } else {
 
             for (Integer dmg : this.littleBeast.getCeEntity().getDamages()) {
-                damageAnimationList.add(new DamageAnimation(this.littleBeast.getCenter(), dmg));
+                damageAnimationList.add(new DrawDamageAnimation(this.littleBeast.getCenter(), dmg));
             }
 
         }

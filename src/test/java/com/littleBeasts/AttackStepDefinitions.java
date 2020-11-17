@@ -12,6 +12,8 @@ import org.junit.Assert;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 
+import static com.littleBeasts.GameLogic.robotButtonPress;
+
 
 public class AttackStepDefinitions {
 
@@ -25,7 +27,7 @@ public class AttackStepDefinitions {
             GameLogic.robotButtonPress(KeyEvent.VK_ENTER);
         }
         Assert.assertEquals(GameLogic.getState(),GameState.INGAME);
-        GameLogic.robotButtonPress(KeyEvent.VK_B);
+        robotButtonPress(KeyEvent.VK_B);
         Assert.assertEquals(GameLogic.getState(),GameState.BATTLE);
 
     }
@@ -38,16 +40,24 @@ public class AttackStepDefinitions {
     @When("^the Player chooses to attack$")
     public void thePlayerChoosesToAttack() {
         Assert.assertTrue(Program.getIngameScreen().getHud().getBattleMenu().isFocused());
-        GameLogic.robotButtonPress(KeyEvent.VK_E);
+        GameLogic.robotButtonPress(KeyEvent.VK_D);
         Assert.assertFalse(Program.getIngameScreen().getHud().getBattleMenu().isFocused());
     }
 
     @Then("^a menu opens where the Player can choose an attack$")
     public void aMenuOpensWhereThePlayerCanChooseAnAttack() {
         Assert.assertTrue(Program.getIngameScreen().getHud().getAttackMenu().isFocused());
-        GameLogic.robotButtonPress(KeyEvent.VK_B);
-        Program.getGameLogic().returnToMainMenu();
+        robotButtonPress(KeyEvent.VK_E);
+        robotButtonPress(KeyEvent.VK_B);
+        Assert.assertEquals(GameLogic.getState(), GameState.INGAME);
+        returnToMainMenu();
         Assert.assertEquals(GameLogic.getState(), GameState.MENU);
+    }
+
+    private void returnToMainMenu() {
+        robotButtonPress(KeyEvent.VK_ESCAPE);
+        robotButtonPress(KeyEvent.VK_DOWN);
+        robotButtonPress(KeyEvent.VK_ENTER);
     }
 
 
