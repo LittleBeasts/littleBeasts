@@ -1,6 +1,6 @@
 package com.littleBeasts.screens;
 
-import com.littleBeasts.entities.Player;
+import com.littleBeasts.entities.LitiPlayer;
 import config.HudConstants;
 import config.PlayerConfig;
 import de.gurkenlabs.litiengine.Game;
@@ -74,7 +74,7 @@ public class DrawBattleMenu { // dev constructor
                         case "Catch":
                             if (DEBUG_CONSOLE_OUT) System.out.println("Action_Catch");
                             if (DEBUG_CONSOLE_OUT)
-                                System.out.println("Beast caught: " + Player.instance().getBattle().catchBeast());
+                                System.out.println("Beast caught: " + LitiPlayer.instance().getBattle().catchBeast());
                             break;
                     }
                     break;

@@ -1,7 +1,7 @@
 package com.littleBeasts.screens;
 
 import calculationEngine.entities.CeAttack;
-import com.littleBeasts.entities.Player;
+import com.littleBeasts.entities.LitiPlayer;
 import config.HudConstants;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.input.Input;
@@ -31,7 +31,7 @@ public class DrawAttackMenu extends DrawBattleMenu {
     private void setUpAttackMenuInput(CeAttack[] ceAttacks) {
         Input.keyboard().onKeyTyped(e -> {
             if (!this.isFocused()) return;
-            if (!Player.instance().isFighting()) return;
+            if (!LitiPlayer.instance().isFighting()) return;
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_UP:
                 case KeyEvent.VK_W:
@@ -55,11 +55,11 @@ public class DrawAttackMenu extends DrawBattleMenu {
                     if (DEBUG_CONSOLE_OUT) System.out.println(this.items[this.getCurrentPosition()]);
                     switch (PLAYER_ACTIONS[this.getCurrentPosition()]) {
                         case "Attack":
-                            Player.instance().getBattle().useAttack(ceAttacks[this.getCurrentPosition()]);
-                            Player.instance().punch();
+                            LitiPlayer.instance().getBattle().useAttack(ceAttacks[this.getCurrentPosition()]);
+                            LitiPlayer.instance().punch();
                             break;
                         case "Catch":
-                            Player.instance().getBattle().catchBeast();
+                            LitiPlayer.instance().getBattle().catchBeast();
                             break;
                         default:
                             break;

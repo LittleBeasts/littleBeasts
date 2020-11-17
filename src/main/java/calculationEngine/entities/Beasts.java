@@ -4,8 +4,8 @@ import calculationEngine.environment.Regions;
 
 public enum Beasts {
 
-    FeuerFurz(BeastTypes.Fire, 100, 25, 25, 25, 25, 25, 25, 25, 25, 25, 15, "StinkenderFeuerFurz", Regions.MiscatonicMountains),
-    StinkenderFeuerFurz(BeastTypes.Fire, 100, 25, 25, 25, 25, 25, 25, 25, 25, 25, Integer.MAX_VALUE, "", Regions.MiscatonicMountains);
+    FeuerFurz(BeastTypes.Fire, 100, 25, 25, 25, 25, 25, 25, 25, 25, 25, 15, "StinkenderFeuerFurz", Regions.MiscatonicMountains, "sprites/icon.png"),
+    StinkenderFeuerFurz(BeastTypes.Fire, 100, 25, 25, 25, 25, 25, 25, 25, 25, 25, Integer.MAX_VALUE, "", Regions.MiscatonicMountains, "sprites/icon.png");
 
 
     private final BeastTypes type;
@@ -22,8 +22,9 @@ public enum Beasts {
     private final int evolutionlvl; // Level at which development will take place
     private final String evolutionId; // ID of development of beast
     private final Regions region;
+    private final String portrait;
 
-    Beasts(BeastTypes type, int baseHp, int baseAttack, int baseDefense, int baseSpeed, int baseStamina, int hpLvlScaling, int attackLvlScaling, int defenseLvlScaling, int speedLvlScaling, int staminaLvlScaling, int developmentlvl, String developmentId, Regions region) {
+    Beasts(BeastTypes type, int baseHp, int baseAttack, int baseDefense, int baseSpeed, int baseStamina, int hpLvlScaling, int attackLvlScaling, int defenseLvlScaling, int speedLvlScaling, int staminaLvlScaling, int developmentlvl, String developmentId, Regions region, String portrait) {
         this.type = type;
         this.baseHp = baseHp;
         this.baseAttack = baseAttack;
@@ -38,6 +39,7 @@ public enum Beasts {
         this.evolutionId = developmentId;
         this.evolutionlvl = developmentlvl;
         this.region = region;
+        this.portrait = portrait;
     }
 
     public static Beasts getBeast(String name) {
@@ -98,5 +100,8 @@ public enum Beasts {
 
     public String getEvolutionId() {
         return evolutionId;
+    }
+    public String getPortrait() {
+        return portrait;
     }
 }

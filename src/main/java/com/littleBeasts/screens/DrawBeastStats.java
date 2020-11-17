@@ -1,7 +1,7 @@
 package com.littleBeasts.screens;
 
-import com.littleBeasts.entities.Beast;
-import com.littleBeasts.entities.Player;
+import com.littleBeasts.entities.LitiBeast;
+import com.littleBeasts.entities.LitiPlayer;
 import config.HudConstants;
 
 import java.awt.*;
@@ -19,11 +19,11 @@ import static config.HudConstants.*;
 
 public class DrawBeastStats {
 
-    private final Beast beast;
+    private final LitiBeast beast;
     private final boolean playerBeast;
     private final List<DrawDamageAnimation> drawDamageAnimationList = new ArrayList<>();
 
-    public DrawBeastStats(Beast beast, boolean isPlayerBeast) {
+    public DrawBeastStats(LitiBeast beast, boolean isPlayerBeast) {
         this.playerBeast = isPlayerBeast;
         this.beast = beast;
     }
@@ -33,7 +33,7 @@ public class DrawBeastStats {
         if (playerBeast) {
             drawPlayerBeastStats(g, teamPosition);
             for (Integer dmg : this.beast.getCeEntity().getDamages()) {
-                drawDamageAnimationList.add(new DrawDamageAnimation((Player.instance().getCenter()), dmg));
+                drawDamageAnimationList.add(new DrawDamageAnimation((LitiPlayer.instance().getCenter()), dmg));
             }
         } else {
             for (Integer dmg : this.beast.getCeEntity().getDamages()) {

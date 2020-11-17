@@ -22,10 +22,10 @@ import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 @EntityInfo(width = 16, height = 16)
 @MovementInfo(velocity = 70)
 @CollisionInfo(collisionBoxWidth = 14, collisionBoxHeight = 14, collision = true)
-public class Player extends Creature implements IUpdateable, IMobileEntity {
-    private static Player playerInstance;
+public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
+    private static LitiPlayer litiPlayerInstance;
     private static PlayerState state = PlayerState.CONTROLLABLE;
-    private List<Beast> littleBeastTeam;
+    private List<LitiBeast> littleBeastTeam;
     private boolean spawned;
     private Battle battle;
     private GameLogic gameLogic;
@@ -42,13 +42,13 @@ public class Player extends Creature implements IUpdateable, IMobileEntity {
     private final Attack punch; // TODO: create correct Attack structure similar to CE
 
     // TODO: Change add draw prefix to every drawing class
-    public Player() {
+    public LitiPlayer() {
         super("test");
         this.playerPortrait = Resources.images().get("sprites/char.png");
         // Calculation Engine
         this.littleBeastTeam = new ArrayList<>();
-        this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY(), true)); // ToDo: Change with Teamlogic
-        this.addToLittleBeastTeam(new Beast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY(), true));
+        this.addToLittleBeastTeam(new LitiBeast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY(), true)); // ToDo: Change with Teamlogic
+        this.addToLittleBeastTeam(new LitiBeast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY(), true));
         // ToDo: Change with new saveGame logic and initialize a new Player correctly
         this.cePlayer = new CePlayer(Nature.ANGRY, new CeAttack[]{new CeAttack(Attacks.Punch)}, 100, 100, 1, 1, 100, 1, 20, 100, 1, beastsToCeEntities(littleBeastTeam));
         this.playerCeAttacks = cePlayer.getCeEntity().getAttacks();
@@ -60,11 +60,11 @@ public class Player extends Creature implements IUpdateable, IMobileEntity {
         this.punch = new Attack(this);
     }
 
-    public static Player instance() {
-        if (playerInstance == null) {
-            playerInstance = new Player();
+    public static LitiPlayer instance() {
+        if (litiPlayerInstance == null) {
+            litiPlayerInstance = new LitiPlayer();
         }
-        return playerInstance;
+        return litiPlayerInstance;
     }
 
     @Override
@@ -90,29 +90,29 @@ public class Player extends Creature implements IUpdateable, IMobileEntity {
         return playerCeAttacks;
     }
 
-    public List<Beast> getLittleBeastTeam() {
+    public List<LitiBeast> getLittleBeastTeam() {
         return littleBeastTeam;
     }
 
-    public void addToLittleBeastTeam(Beast beast) {
-        littleBeastTeam.add(beast);
-        int position = littleBeastTeam.indexOf(beast);
+    public void addToLittleBeastTeam(LitiBeast litiBeast) {
+        littleBeastTeam.add(litiBeast);
+        int position = littleBeastTeam.indexOf(litiBeast);
         // ToDo: cleanUp Constructor and change Class Name (BeastStats)
         littleBeastTeam.get(position).createBeastStats();
     }
 
-    public void removeFromLittleBeastTeam(Beast beast) {
-        littleBeastTeam.remove(beast);
+    public void removeFromLittleBeastTeam(LitiBeast litiBeast) {
+        littleBeastTeam.remove(litiBeast);
     }
 
     public void removeFromLittleBeastTeam(int positionOfBeast) {
         littleBeastTeam.remove(littleBeastTeam.get(positionOfBeast));
     }
 
-    public List<CeEntity> beastsToCeEntities(List<Beast> beasts) {
+    public List<CeEntity> beastsToCeEntities(List<LitiBeast> litiBeasts) {
         List<CeEntity> entityList = new ArrayList<>();
-        for (Beast beast : beasts) {
-            entityList.add(beast.getCeEntity());
+        for (LitiBeast litiBeast : litiBeasts) {
+            entityList.add(litiBeast.getCeEntity());
         }
         return entityList;
     }
@@ -208,16 +208,16 @@ public class Player extends Creature implements IUpdateable, IMobileEntity {
             }
             if (isFighting) {
 
-                while (!Player.instance().animations().get("test-idle-right").isPlaying()) {
-                    Player.instance().animations().get("test-idle-right").start();
+                while (!LitiPlayer.instance().animations().get("test-idle-right").isPlaying()) {
+                    LitiPlayer.instance().animations().get("test-idle-right").start();
                 }
                 try {
                     Thread.sleep(150);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                Player.instance().movement().detach();
-                Player.instance().detachControllers();
+                LitiPlayer.instance().movement().detach();
+                LitiPlayer.instance().detachControllers();
             }
         };
         applyForce.run();
