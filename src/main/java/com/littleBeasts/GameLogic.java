@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
+
 public class GameLogic implements IUpdateable {
     private static GameState state = GameState.INGAME;
     private static boolean firstStart = true;
@@ -128,12 +130,12 @@ public class GameLogic implements IUpdateable {
                 break;
             case INVENTORY:
                 Game.loop().setTimeScale(0);
-                Player.instance().detachControllers();
+                LitiPlayer.instance().detachControllers();
                 IngameScreen.inventory.setVisible(true);
                 Game.audio().playMusic("ingameMenu");
                 break;
         }
-        System.out.println(GameLogic.state.name());
+        if (DEBUG_CONSOLE_OUT) System.out.println(GameLogic.state.name());
     }
 
     private static void triggerBattle() {
@@ -188,7 +190,7 @@ public class GameLogic implements IUpdateable {
 
     public void readBufferedMessages() {
         if (client.getClientListener().messagesBuffered()) {
-            System.out.println("buffered Messages");
+            if (DEBUG_CONSOLE_OUT)  System.out.println("buffered Messages");
             bufferedMessages = client.getClientListener().getMessageBuffer();
         }
     }
@@ -203,7 +205,7 @@ public class GameLogic implements IUpdateable {
             playerPosition.setLocation(playerPosition.getX(), playerPosition.getY() + 12);
             if (mapArea.contains(playerPosition)) {
                 String originName = Game.world().environment().getMap().getName();
-                System.out.println(area.getName());
+                if (DEBUG_CONSOLE_OUT)    System.out.println(area.getName());
                 Game.world().loadEnvironment(area.getName());
                 Spawnpoint spawnpoint = Game.world().environment().getSpawnpoint(originName);
                 if (spawnpoint != null) {
@@ -222,7 +224,7 @@ public class GameLogic implements IUpdateable {
 
                 }
             } else {
-                System.out.println("End of fight");
+                if (DEBUG_CONSOLE_OUT)  System.out.println("End of fight");
                 setState(GameState.INGAME);
             }
         }
@@ -283,7 +285,7 @@ public class GameLogic implements IUpdateable {
     public static void setOnlineGame(boolean onlineGame) {
         GameLogic.onlineGame = onlineGame;
     }
-  
+
     public void returnToMainMenu() {
         robotButtonPress(KeyEvent.VK_ESCAPE);
         robotButtonPress(KeyEvent.VK_DOWN);
