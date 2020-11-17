@@ -4,6 +4,7 @@ import com.littleBeasts.GameLogic;
 import com.littleBeasts.GameState;
 import config.HudConstants;
 import de.gurkenlabs.litiengine.Game;
+import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.gui.screens.Screen;
 
 import java.awt.*;
@@ -14,6 +15,7 @@ public class IngameScreen extends Screen {
     public static final String NAME = "INGAME-SCREEN";
     public static KeyboardMenu ingameMenu;
     public static DrawChatWindow drawChatWindow;
+    public static DrawInventory inventory;
     private DrawHud drawHud;
 
     public IngameScreen() {
@@ -35,15 +37,17 @@ public class IngameScreen extends Screen {
     protected void initializeComponents() {
         this.drawHud = new DrawHud();
         drawChatWindow = new DrawChatWindow();
+        inventory = new DrawInventory();
         DrawChatWindow.init();
         buildIngameMenu();
         this.getComponents().add(ingameMenu);
         this.getComponents().add(drawChatWindow);
+        this.getComponents().add(inventory);
         this.getComponents().add(this.drawHud);
     }
 
     private void buildIngameMenu() {
-        ingameMenu = new KeyboardMenu( HudConstants.INGAME_MENU_ITEMS);
+        ingameMenu = new KeyboardMenu(HudConstants.INGAME_MENU_ITEMS);
         ingameMenu.onConfirm(c -> {
             switch (c) {
                 case 0:

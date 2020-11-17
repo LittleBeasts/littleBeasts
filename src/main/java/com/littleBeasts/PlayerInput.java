@@ -1,6 +1,5 @@
 package com.littleBeasts;
 
-
 import com.littleBeasts.entities.LitiPlayer;
 import de.gurkenlabs.litiengine.input.Input;
 
@@ -11,7 +10,6 @@ public final class PlayerInput {
 
     public static void init() {
         AtomicBoolean menu = new AtomicBoolean(false);
-
         Input.keyboard().onKeyTyped(e -> {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_ESCAPE:
@@ -22,6 +20,7 @@ public final class PlayerInput {
                     onOtherKey(e);
             }
         });
+
     }
 
     private static void onEscape(AtomicBoolean menu) {
@@ -57,6 +56,16 @@ public final class PlayerInput {
         }
         if (e.getKeyCode() == KeyEvent.VK_P) {
             LitiPlayer.instance().punch();
+        }
+        if (e.getKeyCode() == KeyEvent.VK_I) {
+            if (GameLogic.getState() == GameState.MENU) {
+                return;
+            }
+            if (GameLogic.getState() == GameState.INGAME) {
+                GameLogic.setState(GameState.INVENTORY);
+            } else if (GameLogic.getState() == GameState.INVENTORY) {
+                GameLogic.setState(GameState.INGAME);
+            }
         }
     }
 }

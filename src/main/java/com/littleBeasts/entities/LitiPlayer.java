@@ -33,7 +33,7 @@ public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
 
     private final CePlayer cePlayer;
     private CeAttack[] playerCeAttacks;
-    private String playerName = "Horst";
+    private String playerName = "xXx_BeastSlayer_xXx";
     private int maxHP, currentHP;
     private boolean isFighting;
     private final Image playerPortrait;
