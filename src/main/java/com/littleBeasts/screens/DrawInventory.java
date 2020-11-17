@@ -45,7 +45,7 @@ public class DrawInventory extends GuiComponent {
                 return;
             }
             if (GameLogic.getState() == GameState.INVENTORY) {
-                DrawInventory.nextState();
+                InventoryState.nextState();
             }
         });
 
@@ -54,7 +54,7 @@ public class DrawInventory extends GuiComponent {
                 return;
             }
             if (GameLogic.getState() == GameState.INVENTORY) {
-                DrawInventory.previousState();
+                InventoryState.previousState();
             }
         });
     }
@@ -170,56 +170,11 @@ public class DrawInventory extends GuiComponent {
     }
 
 
-    public static void nextState(){
-        switch (inventoryState){
-            case HEAD:
-                inventoryState = InventoryState.NECK;
-                break;
-            case NECK:
-                inventoryState = InventoryState.BODY;
-                break;
-            case BODY:
-                inventoryState = InventoryState.HANDS;
-                break;
-            case HANDS:
-                inventoryState = InventoryState.FEET;
-                break;
-            case FEET:
-                inventoryState = InventoryState.WEAPON;
-                break;
-            case WEAPON:
-                inventoryState = InventoryState.CONSUMABLES;
-                break;
-            case CONSUMABLES:
-                inventoryState = InventoryState.HEAD;
-                break;
-        }
+    public static void setInventoryState(InventoryState inventoryState) {
+        DrawInventory.inventoryState = inventoryState;
     }
 
-    public static void previousState(){
-        switch (inventoryState){
-            case HEAD:
-                inventoryState = InventoryState.CONSUMABLES;
-                break;
-            case NECK:
-                inventoryState = InventoryState.HEAD;
-                break;
-            case BODY:
-                inventoryState = InventoryState.NECK;
-                break;
-            case HANDS:
-                inventoryState = InventoryState.BODY;
-                break;
-            case FEET:
-                inventoryState = InventoryState.HANDS;
-                break;
-            case WEAPON:
-                inventoryState = InventoryState.FEET;
-                break;
-            case CONSUMABLES:
-                inventoryState = InventoryState.WEAPON;
-                break;
-        }
+    public static InventoryState getInventoryState() {
+        return inventoryState;
     }
-
 }
