@@ -12,7 +12,9 @@ import java.io.IOException;
 public class StartStepDefinitions {
     @Given("^the Player is in the main menu$")
     public void thePlayerIsInTheMainMenu() {
-        Program.main(new String[]{});
+        if(!Game.hasStarted()) {
+            Program.main(new String[]{});
+        }
         Assert.assertEquals(GameLogic.getState(), GameState.MENU);
         System.out.println("Möööp");
     }
@@ -31,7 +33,7 @@ public class StartStepDefinitions {
 
     @Then("^the game starts$")
     public void theGameStarts() {
-        GameLogic.robotButtonPress(KeyEvent.VK_ESCAPE);
+//        GameLogic.robotButtonPress(KeyEvent.VK_ESCAPE);
         Assert.assertEquals(GameLogic.getState(), GameState.INGAME);
     }
 }
