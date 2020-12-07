@@ -181,5 +181,6 @@ public class Battle extends Thread {
         else if (turnPlayer2) return cePlayer2;
         else if (fightOngoing) return BattleConstants.noneTurnCePlayer;
         else return null;
+
     }
 }
