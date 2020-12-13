@@ -86,7 +86,7 @@ public class DrawChatWindow extends GuiComponent implements IUpdateable {
         if (buffer.length() > 0) {
             String value = buffer.toString();
             try {
-                GameLogic.sendMessageToServer(encodeOutgoingMessageForClient(GameLogic.getClient(), value));
+                GameLogic.sendMessageToServer(encodeOutgoingMessageForClient(GameLogic.getClient().getName(), value));
             } catch (IOException e) {
                 e.printStackTrace();
             }
