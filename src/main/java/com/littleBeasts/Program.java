@@ -15,6 +15,7 @@ public class Program {
     private static MenuScreen menuScreen;
 
     public static void main(String[] args) {
+
         //set game meta information
         Game.info().setName("littleBeasts");
         Game.info().setSubTitle("");
