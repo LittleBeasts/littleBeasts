@@ -14,8 +14,10 @@ public final class PlayerInput {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_ESCAPE:
                     onEscape(menu);
+                    break;
                 case KeyEvent.VK_ENTER:
                     onEnter(menu);
+                    break;
                 default:
                     onOtherKey(e);
             }
@@ -42,10 +44,10 @@ public final class PlayerInput {
         if (GameLogic.getState() == GameState.MENU) {
             return;
         }
-        if (GameLogic.getState() == GameState.INGAME && menu.get() == false) {
+        if (GameLogic.getState() == GameState.INGAME && !menu.get()) {
             GameLogic.setState(GameState.INGAME_CHAT);
         }
-        menu.set(false);
+        menu.set(true);
     }
 
     private static void onOtherKey(KeyEvent e) {
