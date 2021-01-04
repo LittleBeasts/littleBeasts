@@ -49,6 +49,7 @@ public class CeAi extends CePlayer implements Runnable {
                 e.printStackTrace();
             }
         }
+        System.out.println("End of AI Thread");
     }
 
     private void finishAIConstruction(CeEntity ceBeast){

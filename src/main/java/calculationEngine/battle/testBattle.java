@@ -1,5 +1,6 @@
 package calculationEngine.battle;
 
+import calculationEngine.CeExecuterService;
 import calculationEngine.entities.*;
 import calculationEngine.environment.CeRegions;
 import config.BattleConstants;
@@ -29,7 +30,7 @@ public class testBattle {
         CeBattle battle = new CeBattle(cePlayer1, cePlayer2);
         System.out.println("Battle started");
 
-        while (true){
+        while (battle.isFightOngoing()){
             if(battle.getTurn() != null){
                 if (battle.getTurn().getNumber() == cePlayer1.getNumber()) {
                     System.out.println("Turn of: Player 1");
@@ -38,7 +39,8 @@ public class testBattle {
                     else System.out.println("Beast doesn't like you");
                 }
             }
-            else {System.out.println("End of fight"); break;}
+            else {
+                System.out.println("End of fight");}
             Thread.sleep(10);
         }
     }
@@ -56,16 +58,18 @@ public class testBattle {
         CeBattle battle = new CeBattle(cePlayer1, cePlayer2);
         System.out.println("Battle started");
 
-        while (true){
+        while (battle.isFightOngoing()){
             if(battle.getTurn() != null){
                 if (battle.getTurn().getNumber() == cePlayer1.getNumber()) {
                     System.out.println("Turn of: Player 1");
                     battle.useAttack(new CeAttack(CeAttacks.Punch));
                 }
             }
-            else {System.out.println("End of fight"); break;}
+            // else {System.out.println("End of fight");}
             Thread.sleep(10);
         }
+        System.out.println("End of fight");
+        CeExecuterService.shutdownExecutor();
 
     }
 }

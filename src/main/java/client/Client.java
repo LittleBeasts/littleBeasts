@@ -31,7 +31,7 @@ public class Client {
     }
 
     public Client(String name) throws IOException {
-        startConnection("127.0.0.1", 9999);
+        startConnection("37.49.19.129", 8080);
         clientListener = new ClientListener(this.clientSocket);
         this.name = name;
     }

@@ -50,7 +50,7 @@ public class CeBattle implements Runnable {
         int tickAmountPlayer1 = maxTickAmount;
         int tickAmountPlayer2 = maxTickAmount;
         System.out.println("Battle Thread Started!");
-        while (this.fightOngoing) {
+        while (isFightOngoing()) {
             System.out.println("[THREAD] " + this.fightOngoing);
             tickAmountPlayer1 -= selectedFightEntityPlayer1.getCeStats().getSpeed();
             tickAmountPlayer2 -= selectedFightEntityPlayer2.getCeStats().getSpeed();
@@ -62,7 +62,7 @@ public class CeBattle implements Runnable {
                 tickAmountPlayer1 = maxTickAmount + tickAmountPlayer1;
                 threadSleep();
             }
-            if (tickAmountPlayer2 <= 0) {
+            if (isFightOngoing() && tickAmountPlayer2 <= 0) {
                 System.out.println("HP of EP2: " + selectedFightEntityPlayer2.getCeStats().getCurrentHitPoints());
                 System.out.println("[THREAD]: PLAYER 2 TURN");
                 turnPlayer2 = true;
@@ -71,6 +71,7 @@ public class CeBattle implements Runnable {
                 threadSleep();
             }
         }
+        System.out.println("Battle Thread Ended");
         turnPlayer1 = false;
         turnPlayer2 = false;
     }
