@@ -1,10 +1,7 @@
-package calculationEngine.battle;
-
 import calculationEngine.CeExecuterService;
+import calculationEngine.battle.CeBattle;
 import calculationEngine.entities.*;
 import calculationEngine.environment.CeRegions;
-import config.BattleConstants;
-import gherkin.lexer.Ar;
 
 import java.util.ArrayList;
 import java.util.List;
