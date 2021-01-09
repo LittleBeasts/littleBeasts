@@ -5,9 +5,9 @@ import calculationEngine.entities.CeBeasts;
 import calculationEngine.entities.CeAi;
 import calculationEngine.entities.CePlayer;
 import client.Client;
-import com.littleBeasts.entities.Beast;
-import com.littleBeasts.entities.Player;
-import com.littleBeasts.screens.ChatWindow;
+import com.littleBeasts.entities.LitiBeast;
+import com.littleBeasts.entities.LitiPlayer;
+import com.littleBeasts.screens.DrawChatWindow;
 import com.littleBeasts.screens.IngameScreen;
 import config.TestConfig;
 import de.gurkenlabs.litiengine.Direction;
@@ -28,15 +28,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-// ToDo: try to make class Static
+import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
+
 public class GameLogic implements IUpdateable {
     private static GameState state = GameState.INGAME;
     private static boolean firstStart = true;
-
-    public static final Font MENU_FONT = new Font("Serif", Font.BOLD, 13);
     public static String START_LEVEL = "Arkham";
 
-    private static final List<Beast> beastList = new ArrayList<>(); // list to resolve all animation before removing entity TODO: find a way to finish animation w/o this list.
+    private static final List<LitiBeast> LITI_BEAST_LIST = new ArrayList<>(); // list to resolve all animation before removing entity TODO: find a way to finish animation w/o this list.
     private static Camera camera;
     private static CeBattle battle;
     private static CePlayer cePlayer;
@@ -54,12 +53,12 @@ public class GameLogic implements IUpdateable {
     /**
      * Initializes the game logic for the game.
      */
-    public void init() throws IOException {
+    public void init() {
         Game.loop().attach(this);
         //  Environment.registerMapObjectLoader(new CustomMapObjectLoader());
 
         // we'll use a camera in our game that is locked to the location of the player
-        camera = new PositionLockCamera(Player.instance());
+        camera = new PositionLockCamera(LitiPlayer.instance());
         camera.setClampToMap(true); // Camara stop at edge of map.
         camera.setZoom(1.0f, 0);
         Game.world().setCamera(camera);
@@ -71,13 +70,13 @@ public class GameLogic implements IUpdateable {
 
             Game.loop().perform(500, () -> Game.window().getRenderComponent().fadeIn(0));
 
-            Player.instance().setIndestructible(false);
-            Player.instance().setCollision(true);
+            LitiPlayer.instance().setIndestructible(false);
+            LitiPlayer.instance().setCollision(true);
 
             // spawn the player instance on the spawn point with the name "west"
             Spawnpoint enter = e.getSpawnpoint("west");
             if (enter != null) {
-                enter.spawn(Player.instance());
+                enter.spawn(LitiPlayer.instance());
             }
         });
 
@@ -93,10 +92,10 @@ public class GameLogic implements IUpdateable {
         Game.world().camera().setZoom(1, 500);
         GameLogic.state = state;
         Game.loop().setTimeScale(1);
-        Player.instance().attachControllers();
-        Player.instance().movement().attach();
-        Player.instance().setIsFighting(false);
-        Input.keyboard().onKeyTyped(ChatWindow::add);
+        LitiPlayer.instance().attachControllers();
+        LitiPlayer.instance().movement().attach();
+        LitiPlayer.instance().setIsFighting(false);
+        Input.keyboard().onKeyTyped(DrawChatWindow::add);
 
         switch (state) {
             case MENU:
@@ -108,57 +107,63 @@ public class GameLogic implements IUpdateable {
                 break;
             case BATTLE:
                 nextBattlePossible = false;
-                Player.instance().detachControllers();
+                LitiPlayer.instance().detachControllers();
                 Game.audio().playMusic("battle");
                 triggerBattle();
                 break;
             case INGAME:
                 firstStart = false;
-                IngameScreen.chatWindow.setVisible(false);
+                IngameScreen.drawChatWindow.setVisible(false);
                 IngameScreen.ingameMenu.setVisible(false);
                 Game.audio().playMusic("arkham");
                 break;
             case INGAME_MENU:
                 Game.loop().setTimeScale(0);
-                Player.instance().detachControllers();
+                LitiPlayer.instance().detachControllers();
                 IngameScreen.ingameMenu.setVisible(true);
                 Game.audio().playMusic("ingameMenu");
                 break;
             case INGAME_CHAT:
-                Player.instance().detachControllers();
-                IngameScreen.chatWindow.setVisible(true);
+                LitiPlayer.instance().detachControllers();
+                IngameScreen.drawChatWindow.setVisible(true);
+                Game.audio().playMusic("ingameMenu");
+                break;
+            case INVENTORY:
+                Game.loop().setTimeScale(0);
+                LitiPlayer.instance().detachControllers();
+                IngameScreen.inventory.setVisible(true);
                 Game.audio().playMusic("ingameMenu");
                 break;
         }
-        System.out.println(GameLogic.state.name());
+        if (DEBUG_CONSOLE_OUT) System.out.println(GameLogic.state.name());
     }
 
     private static void triggerBattle() {
         int x = 0;
         boolean faceLeft = false;
-        if (Player.instance().getFacingDirection() == Direction.LEFT) {
-            x = (int) Player.instance().getX() - 50;
+        if (LitiPlayer.instance().getFacingDirection() == Direction.LEFT) {
+            x = (int) LitiPlayer.instance().getX() - 50;
             faceLeft = true;
         } else {
-            x = (int) Player.instance().getX() + 50;
+            x = (int) LitiPlayer.instance().getX() + 50;
         }
         Camera battleCam = new Camera();
         battleCam.setClampToMap(false);
-        Point2D point2D = Game.world().camera().getViewportLocation(Player.instance());
+        Point2D point2D = Game.world().camera().getViewportLocation(LitiPlayer.instance());
         Game.world().setCamera(battleCam);
         Game.world().camera().setZoom(1.5f, 500);
-        Game.world().camera().setFocus(Player.instance().getX() + (faceLeft ? -25 : 25), Player.instance().getY());
+        Game.world().camera().setFocus(LitiPlayer.instance().getX() + (faceLeft ? -25 : 25), LitiPlayer.instance().getY());
 
         //for dev purposes
-        Beast beast = new Beast(CeBeasts.FeuerFurz, x, (int) (Player.instance().getY() - (Player.instance().getHeight() / 2)), false);
-        beast.setFacingDirection(Player.instance().getFacingDirection().getOpposite());
-        beastList.add(beast);
+        LitiBeast litiBeast = new LitiBeast(CeBeasts.FeuerFurz, x, (int) (LitiPlayer.instance().getY() - (LitiPlayer.instance().getHeight() / 2)), false);
+        litiBeast.setFacingDirection(LitiPlayer.instance().getFacingDirection().getOpposite());
+        LITI_BEAST_LIST.add(litiBeast);
 
-        cePlayer = Player.instance().getCePlayer();
-        CeAi ai = new CeAi(beast.getCeEntity());
-        battle = new CeBattle(Player.instance().getCePlayer(), ai);
-        Player.instance().setBattle(battle);
-        Player.instance().setIsFighting(true);
+        cePlayer = LitiPlayer.instance().getCePlayer();
+        CeAi ai = new CeAi(litiBeast.getCeEntity());
+        battle = new CeBattle(LitiPlayer.instance().getCePlayer(), ai);
+        LitiPlayer.instance().setBattle(battle);
+        LitiPlayer.instance().setIsFighting(true);
     }
 
     @Override
@@ -166,13 +171,13 @@ public class GameLogic implements IUpdateable {
         loadNewArea();
         startBattle();
         if (getState() == GameState.INGAME) {
-            for (int i = 0; i < beastList.size(); i++) {
-                if (beastList.get(i).getBeastStats().isReadyToBeRemoved()) {
-                    beastList.get(i).die();
-                    Game.world().environment().remove(beastList.get(i));
-                    beastList.remove(i);
+            for (int i = 0; i < LITI_BEAST_LIST.size(); i++) {
+                if (LITI_BEAST_LIST.get(i).getBeastStats().isReadyToBeRemoved()) {
+                    LITI_BEAST_LIST.get(i).die();
+                    Game.world().environment().remove(LITI_BEAST_LIST.get(i));
+                    LITI_BEAST_LIST.remove(i);
                 }
-                if (beastList.size() == 0) {
+                if (LITI_BEAST_LIST.size() == 0) {
                     nextBattlePossible = true;
                 }
             }
@@ -185,7 +190,7 @@ public class GameLogic implements IUpdateable {
 
     public void readBufferedMessages() {
         if (client.getClientListener().messagesBuffered()) {
-            System.out.println("buffered Messages");
+            if (DEBUG_CONSOLE_OUT)  System.out.println("buffered Messages");
             bufferedMessages = client.getClientListener().getMessageBuffer();
         }
     }
@@ -196,36 +201,36 @@ public class GameLogic implements IUpdateable {
         Rectangle2D mapArea;
         for (MapArea area : areas) {
             mapArea = area.getBoundingBox();
-            playerPosition = Player.instance().getCenter();
+            playerPosition = LitiPlayer.instance().getCenter();
             playerPosition.setLocation(playerPosition.getX(), playerPosition.getY() + 12);
             if (mapArea.contains(playerPosition)) {
                 String originName = Game.world().environment().getMap().getName();
-                System.out.println(area.getName());
+                if (DEBUG_CONSOLE_OUT)    System.out.println(area.getName());
                 Game.world().loadEnvironment(area.getName());
                 Spawnpoint spawnpoint = Game.world().environment().getSpawnpoint(originName);
                 if (spawnpoint != null) {
-                    spawnpoint.spawn(Player.instance());
+                    spawnpoint.spawn(LitiPlayer.instance());
                 }
-                Player.instance().setFacingDirection(Direction.DOWN);
-                Player.instance().setRenderWithLayer(true);
+                LitiPlayer.instance().setFacingDirection(Direction.DOWN);
+                LitiPlayer.instance().setRenderWithLayer(true);
             }
         }
     }
 
     public void startBattle() {
-        if (Player.instance().isFighting()) {
+        if (LitiPlayer.instance().isFighting()) {
             if (battle.getTurn() != null) {
                 if (battle.getTurn().getNumber() == cePlayer.getNumber()) {
 
                 }
             } else {
-                System.out.println("End of fight");
+                if (DEBUG_CONSOLE_OUT)  System.out.println("End of fight");
                 setState(GameState.INGAME);
             }
         }
     }
 
-    public void robotButtonPress(int i) {
+    public static void robotButtonPress(int i) {
         try {
             Robot robert = new Robot();
             Thread.sleep(TestConfig.ROBOT_SLEEP);
@@ -244,8 +249,8 @@ public class GameLogic implements IUpdateable {
         return battle;
     }
 
-    public static List<Beast> getBeastList() {
-        return beastList;
+    public static List<LitiBeast> getBeastList() {
+        return LITI_BEAST_LIST;
     }
 
     public static boolean isNextBattlePossible() {
@@ -280,7 +285,7 @@ public class GameLogic implements IUpdateable {
     public static void setOnlineGame(boolean onlineGame) {
         GameLogic.onlineGame = onlineGame;
     }
-  
+
     public void returnToMainMenu() {
         robotButtonPress(KeyEvent.VK_ESCAPE);
         robotButtonPress(KeyEvent.VK_DOWN);

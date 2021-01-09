@@ -13,6 +13,16 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.Collection;
 
+import static config.HudConstants.MAIN_MENU_ITEMS;
+
+/*--------------------------------------------
+This class creates a menu for use in battle.
+It is called in the HUD class.
+Height, width and bottom pad should be adjusted in HudConstants
+
+20201105 D.B. Created Class
+--------------------------------------------*/
+
 public class MenuScreen extends Screen implements IUpdateable {
 
     private KeyboardMenu mainMenu;
@@ -30,15 +40,8 @@ public class MenuScreen extends Screen implements IUpdateable {
 
     @Override
     protected void initializeComponents() {
-        final double centerX = Game.window().getResolution().getWidth() / 2.0;
-        final double centerY = Game.window().getResolution().getHeight() * 1 / 2;
-        final double buttonWidth = 450;
-
-        // ToDo: Get Items from Constants
-        this.mainMenu = new KeyboardMenu(centerX - buttonWidth / 2, centerY * 1.3, buttonWidth, centerY / 2, "Single Player Game", "Play Online", "Instructions", "Exit");
-
+        this.mainMenu = new KeyboardMenu(MAIN_MENU_ITEMS);
         this.getComponents().add(this.mainMenu);
-
         this.mainMenu.onConfirm(c -> {
             switch (c) {
                 case 0:
@@ -59,7 +62,6 @@ public class MenuScreen extends Screen implements IUpdateable {
             }
         });
     }
-
 
 
     @Override
@@ -122,7 +124,5 @@ public class MenuScreen extends Screen implements IUpdateable {
         if (this.lastPlayed == 0) {
             this.lastPlayed = Game.loop().getTicks();
         }
-
     }
-
 }

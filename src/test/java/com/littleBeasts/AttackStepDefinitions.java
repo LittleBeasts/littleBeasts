@@ -19,42 +19,43 @@ public class AttackStepDefinitions {
     //Scenario 1
     @Given("^the Player is in a battle$")
     public void thePlayerIsInABattle() {
-
-        if(!Game.hasStarted()){
-            try {
-                Program program = new Program();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        Program.main(new String[]{});
+        if (GameLogic.getState() == GameState.MENU){
+            GameLogic.robotButtonPress(KeyEvent.VK_UP);
+            GameLogic.robotButtonPress(KeyEvent.VK_ENTER);
         }
-        if (Program.getGameLogic().getState() == GameState.MENU){
-            Program.getGameLogic().robotButtonPress(KeyEvent.VK_UP);
-            Program.getGameLogic().robotButtonPress(KeyEvent.VK_ENTER);
-        }
-        Assert.assertEquals(Program.getGameLogic().getState(),GameState.INGAME);
-        Program.getGameLogic().robotButtonPress(KeyEvent.VK_B);
-        Assert.assertEquals(Program.getGameLogic().getState(),GameState.BATTLE);
+        Assert.assertEquals(GameLogic.getState(),GameState.INGAME);
+        robotButtonPress(KeyEvent.VK_B);
+        Assert.assertEquals(GameLogic.getState(),GameState.BATTLE);
 
     }
 
     @And("^the Player is not dead$")
     public void thePlayerIsNotDead() {
-        Assert.assertTrue(Player.instance().getCePlayer().getCeStats().getCurrentHitPoints() > 0);
+        Assert.assertTrue(LitiPlayer.instance().getCePlayer().getCeStats().getCurrentHitPoints() > 0);
     }
 
     @When("^the Player chooses to attack$")
     public void thePlayerChoosesToAttack() {
         Assert.assertTrue(Program.getIngameScreen().getHud().getBattleMenu().isFocused());
-        Program.getGameLogic().robotButtonPress(KeyEvent.VK_E);
+        GameLogic.robotButtonPress(KeyEvent.VK_D);
         Assert.assertFalse(Program.getIngameScreen().getHud().getBattleMenu().isFocused());
     }
 
     @Then("^a menu opens where the Player can choose an attack$")
     public void aMenuOpensWhereThePlayerCanChooseAnAttack() {
         Assert.assertTrue(Program.getIngameScreen().getHud().getAttackMenu().isFocused());
-        Program.getGameLogic().robotButtonPress(KeyEvent.VK_B);
-        Program.getGameLogic().returnToMainMenu();
-        Assert.assertEquals(Program.getGameLogic().getState(), GameState.MENU);
+        robotButtonPress(KeyEvent.VK_E);
+        robotButtonPress(KeyEvent.VK_B);
+        Assert.assertEquals(GameLogic.getState(), GameState.INGAME);
+        returnToMainMenu();
+        Assert.assertEquals(GameLogic.getState(), GameState.MENU);
+    }
+
+    private void returnToMainMenu() {
+        robotButtonPress(KeyEvent.VK_ESCAPE);
+        robotButtonPress(KeyEvent.VK_DOWN);
+        robotButtonPress(KeyEvent.VK_ENTER);
     }
 
 
