@@ -55,13 +55,13 @@ public class DrawBeastStats {
 
         // draw health bar overlay
         g.setColor(HudConstants.HPBARCOLOR);
-        int hpRatio = beast.getCeEntity().getHitPoints() * 100 / beast.getCeEntity().getMaxHitPoints();
+        int hpRatio = beast.getCeEntity().getCeStats().getCurrentHitPoints() * 100 / beast.getCeEntity().getCeStats().getMaxHitPoints();
         g.fillRect(TEAM_START_POINT + offset, HUD_BOTTOM_START + HUD_ROW_HEIGHT, BEAST_PORTRAIT_WIDTH, -(BEAST_PORTRAIT_HEIGHT * hpRatio) / 100);
 
         // get Beast info
         String beastInfo = "";
         beastInfo += beast.getMonsterName() + "\n";
-        beastInfo += beast.getCeEntity().getHitPoints() + "/" + beast.getCeEntity().getMaxHitPoints() + "\n";
+        beastInfo += beast.getCeEntity().getCeStats().getCurrentHitPoints() + "/" + beast.getCeEntity().getCeStats().getMaxHitPoints() + "\n";
 
         // draw beast info
         g.setFont(HudConstants.HUD_FONT);

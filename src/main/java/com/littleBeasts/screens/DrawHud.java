@@ -125,7 +125,7 @@ public class DrawHud extends GuiComponent {
         g.setColor(Color.BLACK);
         g.setFont(HUD_FONT);
         String playerStats = LitiPlayer.instance().getPlayerName() + "\n";
-        playerStats += LitiPlayer.instance().getCePlayer().getCeEntity().getHitPoints() + "/" + LitiPlayer.instance().getMaxHP() + "\n";
+        playerStats += LitiPlayer.instance().getCePlayer().getCeStats().getCurrentHitPoints() + "/" + LitiPlayer.instance().getMaxHP() + "\n";
         playerStats += "Player Whatever\n";
         drawString(g, playerStats, padding + 100, HEIGHT - padding - elementHeight);
     }

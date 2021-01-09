@@ -1,6 +1,6 @@
 package com.littleBeasts.entities;
 
-import calculationEngine.battle.Battle;
+import calculationEngine.battle.CeBattle;
 import calculationEngine.entities.*;
 import com.littleBeasts.GameLogic;
 import com.littleBeasts.PlayerState;
@@ -27,12 +27,12 @@ public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
     private static PlayerState state = PlayerState.CONTROLLABLE;
     private List<LitiBeast> littleBeastTeam;
     private boolean spawned;
-    private Battle battle;
+    private CeBattle battle;
     private GameLogic gameLogic;
 
 
     private final CePlayer cePlayer;
-    private CeAttack[] playerCeAttacks;
+    private List<CeAttack> playerCeAttacks;
     private String playerName = "xXx_BeastSlayer_xXx";
     private int maxHP, currentHP;
     private boolean isFighting;
@@ -47,13 +47,15 @@ public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
         this.playerPortrait = Resources.images().get("sprites/char.png");
         // Calculation Engine
         this.littleBeastTeam = new ArrayList<>();
-        this.addToLittleBeastTeam(new LitiBeast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY(), true)); // ToDo: Change with Teamlogic
-        this.addToLittleBeastTeam(new LitiBeast(Beasts.FeuerFurz, (int) this.getX(), (int) this.getY(), true));
+        this.addToLittleBeastTeam(new LitiBeast(CeBeasts.FeuerFurz, (int) this.getX(), (int) this.getY(), true)); // ToDo: Change with Teamlogic
+        this.addToLittleBeastTeam(new LitiBeast(CeBeasts.FeuerFurz, (int) this.getX(), (int) this.getY(), true));
         // ToDo: Change with new saveGame logic and initialize a new Player correctly
-        this.cePlayer = new CePlayer(Nature.ANGRY, new CeAttack[]{new CeAttack(Attacks.Punch)}, 100, 100, 1, 1, 100, 1, 20, 100, 1, beastsToCeEntities(littleBeastTeam));
-        this.playerCeAttacks = cePlayer.getCeEntity().getAttacks();
-        this.maxHP = cePlayer.getCeEntity().getMaxHitPoints();
-        this.currentHP = cePlayer.getCeEntity().getHitPoints();
+        List<CeAttack> attacks = new ArrayList<>();
+        attacks.add(new CeAttack(CeAttacks.Punch));
+        this.cePlayer = new CePlayer(new CeStats(CeBeastTypes.PlayerStandard, CeNature.ANGRY, 1,100,100,20,1,20,10,1), attacks,beastsToCeEntities(littleBeastTeam), false);
+        this.playerCeAttacks = cePlayer.getAttacks();
+        this.maxHP = cePlayer.getCeStats().getMaxHitPoints();
+        this.currentHP = cePlayer.getCeStats().getCurrentHitPoints();
 
         // LITIengine
         this.addController(new KeyboardEntityController<>(this));
@@ -86,7 +88,7 @@ public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
         return state;
     }
 
-    public CeAttack[] getPlayerAttacks() {
+    public List<CeAttack> getPlayerAttacks() {
         return playerCeAttacks;
     }
 
@@ -133,11 +135,11 @@ public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
         return cePlayer;
     }
 
-    public Battle getBattle() {
+    public CeBattle getBattle() {
         return battle;
     }
 
-    public void setBattle(Battle battle) {
+    public void setBattle(CeBattle battle) {
         this.battle = battle;
     }
 

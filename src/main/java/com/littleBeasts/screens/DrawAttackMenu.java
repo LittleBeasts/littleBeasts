@@ -7,6 +7,7 @@ import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.input.Input;
 
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 import static config.GlobalConfig.*;
 import static config.HudConstants.*;
@@ -16,19 +17,19 @@ public class DrawAttackMenu extends DrawBattleMenu {
 
     private String[] items;
 
-    public DrawAttackMenu(CeAttack[] ceAttacks) {
+    public DrawAttackMenu(List<CeAttack> ceAttacks) {
         super();
         this.setX(BATTLE_MENU_START + BATTLE_MENU_OFFSET);
-        this.setAmountOfItems(ceAttacks.length);
-        this.setAmountOfDrawnItems(Math.min(ceAttacks.length, ITEMLISTLENGTH));
+        this.setAmountOfItems(ceAttacks.size());
+        this.setAmountOfDrawnItems(Math.min(ceAttacks.size(), ITEMLISTLENGTH));
         this.setHeight(HudConstants.HUD_ROW_HEIGHT * this.getAmountOfDrawnItems() / ITEMLISTLENGTH);
         this.setItemsFromAttacks(ceAttacks);
-        this.setLastDrawnItem(Math.min(ceAttacks.length, ITEMLISTLENGTH));
+        this.setLastDrawnItem(Math.min(ceAttacks.size(), ITEMLISTLENGTH));
 
         setUpAttackMenuInput(ceAttacks);
     }
 
-    private void setUpAttackMenuInput(CeAttack[] ceAttacks) {
+    private void setUpAttackMenuInput(List<CeAttack> ceAttacks) {
         Input.keyboard().onKeyTyped(e -> {
             if (!this.isFocused()) return;
             if (!LitiPlayer.instance().isFighting()) return;
@@ -55,7 +56,7 @@ public class DrawAttackMenu extends DrawBattleMenu {
                     if (DEBUG_CONSOLE_OUT) System.out.println(this.items[this.getCurrentPosition()]);
                     switch (PLAYER_ACTIONS[this.getCurrentPosition()]) {
                         case "Attack":
-                            LitiPlayer.instance().getBattle().useAttack(ceAttacks[this.getCurrentPosition()]);
+                            LitiPlayer.instance().getBattle().useAttack(ceAttacks.get(this.getCurrentPosition()));
                             LitiPlayer.instance().punch();
                             break;
                         case "Catch":
@@ -70,10 +71,10 @@ public class DrawAttackMenu extends DrawBattleMenu {
         });
     }
 
-    public void setItemsFromAttacks(CeAttack[] ceAttacks) {
-        this.items = new String[ceAttacks.length];
-        for (int i = 0; i < ceAttacks.length; i++) {
-            this.items[0] = ceAttacks[i].getName();
+    public void setItemsFromAttacks(List<CeAttack> ceAttacks) {
+        this.items = new String[ceAttacks.size()];
+        for (CeAttack ceAttack : ceAttacks) {
+            this.items[0] = ceAttack.getName();
         }
         this.setItems(this.items);
     }

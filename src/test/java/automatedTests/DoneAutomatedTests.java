@@ -10,5 +10,5 @@ import org.junit.runner.RunWith;
         glue = "com.littleBeasts",
         tags = "@Done"
 )
-public class DoneAutomatedTest {
+public class DoneAutomatedTests {
 }

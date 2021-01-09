@@ -1,7 +1,7 @@
 package com.littleBeasts;
 
-import calculationEngine.battle.Battle;
-import calculationEngine.entities.Beasts;
+import calculationEngine.battle.CeBattle;
+import calculationEngine.entities.CeBeasts;
 import calculationEngine.entities.CeAi;
 import calculationEngine.entities.CePlayer;
 import client.Client;
@@ -37,7 +37,7 @@ public class GameLogic implements IUpdateable {
 
     private static final List<LitiBeast> LITI_BEAST_LIST = new ArrayList<>(); // list to resolve all animation before removing entity TODO: find a way to finish animation w/o this list.
     private static Camera camera;
-    private static Battle battle;
+    private static CeBattle battle;
     private static CePlayer cePlayer;
     private static boolean nextBattlePossible = true;
 
@@ -155,13 +155,13 @@ public class GameLogic implements IUpdateable {
         Game.world().camera().setFocus(LitiPlayer.instance().getX() + (faceLeft ? -25 : 25), LitiPlayer.instance().getY());
 
         //for dev purposes
-        LitiBeast litiBeast = new LitiBeast(Beasts.FeuerFurz, x, (int) (LitiPlayer.instance().getY() - (LitiPlayer.instance().getHeight() / 2)), false);
+        LitiBeast litiBeast = new LitiBeast(CeBeasts.FeuerFurz, x, (int) (LitiPlayer.instance().getY() - (LitiPlayer.instance().getHeight() / 2)), false);
         litiBeast.setFacingDirection(LitiPlayer.instance().getFacingDirection().getOpposite());
         LITI_BEAST_LIST.add(litiBeast);
 
         cePlayer = LitiPlayer.instance().getCePlayer();
-        CeAi ai = new CeAi(cePlayer, litiBeast.getCeEntity());
-        battle = new Battle(LitiPlayer.instance().getCePlayer(), ai);
+        CeAi ai = new CeAi(litiBeast.getCeEntity());
+        battle = new CeBattle(LitiPlayer.instance().getCePlayer(), ai);
         LitiPlayer.instance().setBattle(battle);
         LitiPlayer.instance().setIsFighting(true);
     }
@@ -245,7 +245,7 @@ public class GameLogic implements IUpdateable {
         }
     }
 
-    public static Battle getBattle() {
+    public static CeBattle getBattle() {
         return battle;
     }
 

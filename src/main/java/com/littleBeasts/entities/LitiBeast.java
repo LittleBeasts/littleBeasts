@@ -1,6 +1,6 @@
 package com.littleBeasts.entities;
 
-import calculationEngine.entities.Beasts;
+import calculationEngine.entities.CeBeasts;
 import calculationEngine.entities.CeEntity;
 import com.littleBeasts.screens.DrawBeastStats;
 import de.gurkenlabs.litiengine.IUpdateable;
@@ -24,7 +24,7 @@ public class LitiBeast extends Creature implements IUpdateable {
     private final boolean playerBeast;
     private Spawnpoint e;
 
-    public LitiBeast(Beasts beasts, int x, int y, boolean playerBeast) {
+    public LitiBeast(CeBeasts beasts, int x, int y, boolean playerBeast) {
         super(beasts.name());
         if (DEBUG_CONSOLE_OUT) System.out.println("Name:" + beasts.name());
         this.portrait = Resources.images().get(beasts.getPortrait());

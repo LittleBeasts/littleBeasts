@@ -6,11 +6,9 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import de.gurkenlabs.litiengine.Game;
 import org.junit.Assert;
-
 import java.awt.event.KeyEvent;
-import java.io.IOException;
+
 
 import static com.littleBeasts.GameLogic.robotButtonPress;
 
@@ -23,8 +21,8 @@ public class AttackStepDefinitions {
     public void thePlayerIsInABattle() {
         Program.main(new String[]{});
         if (GameLogic.getState() == GameState.MENU){
-            GameLogic.robotButtonPress(KeyEvent.VK_UP);
-            GameLogic.robotButtonPress(KeyEvent.VK_ENTER);
+            robotButtonPress(KeyEvent.VK_UP);
+            robotButtonPress(KeyEvent.VK_ENTER);
         }
         Assert.assertEquals(GameLogic.getState(),GameState.INGAME);
         robotButtonPress(KeyEvent.VK_B);
@@ -34,13 +32,13 @@ public class AttackStepDefinitions {
 
     @And("^the Player is not dead$")
     public void thePlayerIsNotDead() {
-        Assert.assertTrue(LitiPlayer.instance().getCePlayer().getCeEntity().getHitPoints() > 0);
+        Assert.assertTrue(LitiPlayer.instance().getCePlayer().getCeStats().getCurrentHitPoints() > 0);
     }
 
     @When("^the Player chooses to attack$")
     public void thePlayerChoosesToAttack() {
         Assert.assertTrue(Program.getIngameScreen().getHud().getBattleMenu().isFocused());
-        GameLogic.robotButtonPress(KeyEvent.VK_D);
+        robotButtonPress(KeyEvent.VK_D);
         Assert.assertFalse(Program.getIngameScreen().getHud().getBattleMenu().isFocused());
     }
 
