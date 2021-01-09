@@ -10,7 +10,7 @@ public class testBattle {
 
     public static void main(String[] args) throws InterruptedException {
         simulateAiBattle();
-        // simulateCatch();
+        // simulateCatch();a
     }
 
     private static void simulateCatch() throws InterruptedException {

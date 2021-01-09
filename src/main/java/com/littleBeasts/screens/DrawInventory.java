@@ -32,13 +32,13 @@ public class DrawInventory extends GuiComponent {
 
     public DrawInventory() {
         super(0, 0, WIDTH, HEIGHT);
-        this.attackStat = LitiPlayer.instance().getCePlayer().getCeEntity().getAttack();
-        this.defenceStat = LitiPlayer.instance().getCePlayer().getCeEntity().getDefense();
-        this.speedStat = LitiPlayer.instance().getCePlayer().getCeEntity().getSpeed();
-        this.staminaStat = LitiPlayer.instance().getCePlayer().getCeEntity().getStamina();
-        this.maxHealth = LitiPlayer.instance().getCePlayer().getCeEntity().getMaxHitPoints();
-        this.currentHealth = LitiPlayer.instance().getCePlayer().getCeEntity().getHitPoints();
-        this.level = LitiPlayer.instance().getCePlayer().getCeEntity().getLevel();
+        this.attackStat = LitiPlayer.instance().getCePlayer().getCeStats().getAttack();
+        this.defenceStat = LitiPlayer.instance().getCePlayer().getCeStats().getDefense();
+        this.speedStat = LitiPlayer.instance().getCePlayer().getCeStats().getSpeed();
+        this.staminaStat = LitiPlayer.instance().getCePlayer().getCeStats().getStamina();
+        this.maxHealth = LitiPlayer.instance().getCePlayer().getCeStats().getMaxHitPoints();
+        this.currentHealth = LitiPlayer.instance().getCePlayer().getCeStats().getCurrentHitPoints();
+        this.level = LitiPlayer.instance().getCePlayer().getCeStats().getLevel();
 
         Input.keyboard().onKeyTyped(KeyEvent.VK_E, e -> {
             if (GameLogic.getState() == GameState.MENU) {
@@ -126,7 +126,7 @@ public class DrawInventory extends GuiComponent {
         Font font = new Font(g.getFont().getName(), Font.BOLD, 30);
         g.setFont(font);
         TextRenderer.render(g, LitiPlayer.instance().getPlayerName(), Align.CENTER_LEFT, Valign.TOP, 0, 0);
-        TextRenderer.render(g, "Level: " + Integer.toString(LitiPlayer.instance().getCePlayer().getCeEntity().getLevel()), Align.CENTER_LEFT, Valign.TOP, 0, 50);
+        TextRenderer.render(g, "Level: " + Integer.toString(LitiPlayer.instance().getCePlayer().getCeStats().getLevel()), Align.CENTER_LEFT, Valign.TOP, 0, 50);
         font = new Font(g.getFont().getName(), Font.BOLD, 22);
         g.setFont(font);
         TextRenderer.render(g, "Hitpoints: " + this.currentHealth + " / " + this.maxHealth, (WIDTH / 4) + WIDTH / 16 + 5, HEIGHT - 875, true);
