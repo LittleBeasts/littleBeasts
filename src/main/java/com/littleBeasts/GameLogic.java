@@ -6,6 +6,7 @@ import calculationEngine.entities.CeAi;
 import calculationEngine.entities.CePlayer;
 import client.Client;
 import com.littleBeasts.entities.LitiBeast;
+import com.littleBeasts.entities.LitiPet;
 import com.littleBeasts.entities.LitiPlayer;
 import com.littleBeasts.screens.DrawChatWindow;
 import com.littleBeasts.screens.IngameScreen;
@@ -73,10 +74,14 @@ public class GameLogic implements IUpdateable {
             LitiPlayer.instance().setIndestructible(false);
             LitiPlayer.instance().setCollision(true);
 
+            LitiPet.instance().setIndestructible(false);
+            LitiPet.instance().setCollision(false);
+
             // spawn the player instance on the spawn point with the name "west"
             Spawnpoint enter = e.getSpawnpoint("west");
             if (enter != null) {
                 enter.spawn(LitiPlayer.instance());
+                enter.spawn(LitiPet.instance());
             }
         });
 
