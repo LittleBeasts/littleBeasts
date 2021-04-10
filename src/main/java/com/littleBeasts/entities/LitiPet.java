@@ -5,9 +5,9 @@ import calculationEngine.entities.CeAttacks;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.*;
-import de.gurkenlabs.litiengine.input.KeyboardEntityController;
 import de.gurkenlabs.litiengine.physics.MovementController;
 
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +20,7 @@ public class LitiPet extends Creature implements IUpdateable, IMobileEntity {
 
     private List<CeAttack> petCeAttacks;
     private String petName = "xXx_Beast_xXx";
+    private MovementController movementController;
     private int maxHP, currentHP;
     //private final Image playerPortrait;
 
@@ -36,8 +37,8 @@ public class LitiPet extends Creature implements IUpdateable, IMobileEntity {
         attacks.add(new CeAttack(CeAttacks.Punch));
         // LITIengine
         //this.addController(new KeyboardEntityController<>(this));
-
-        this.addController(new MovementController<>(this));
+        movementController = new MovementController<>(this);
+        this.addController(movementController);
     }
 
     public static LitiPet instance() {
@@ -50,7 +51,29 @@ public class LitiPet extends Creature implements IUpdateable, IMobileEntity {
     @Override
     public void update() {
         spawnPet();
+        Float threshold;
+        Point2D playerPosition = LitiPlayer.instance().getCenter();
+        //Path petPath;
+        //List<Point2D> pathPoints = null;
+        //if (pathPoints == null || pathPoints.isEmpty()) {
+        //    pathPoints = LitiPathfindingController.getPath(this, playerPosition).getPoints();
+        //}
+        threshold = this.isIdle() ? 35f : 15f;
+        //Point2D pathPoint = pathPoints.remove(0);
+        //double x1 = this.getCenter().getX();
+        //double x2 = pathPoint.getX();
+        //double y1 = this.getCenter().getY();
+        //double y2 = pathPoint.getY();
+        double differenceX = playerPosition.getX() - this.getCenter().getX();
+        double differenceY = playerPosition.getY() - this.getCenter().getY();
+        double euclideanDistance = Math.sqrt(Math.abs(differenceX * differenceX) + Math.abs(differenceY * differenceY));
+        if (euclideanDistance > threshold ) {
+            this.movementController.setDx((float) differenceX);
+            this.movementController.setDy((float) differenceY);
+        }
     }
+    //this.movementController.update();
+
 
     public void spawnPet() {
         if (!spawned) {
@@ -77,4 +100,6 @@ public class LitiPet extends Creature implements IUpdateable, IMobileEntity {
     public int getCurrentHP() {
         return currentHP;
     }
+
 }
+

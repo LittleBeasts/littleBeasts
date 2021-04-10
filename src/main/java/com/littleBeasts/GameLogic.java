@@ -16,6 +16,9 @@ import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.MapArea;
 import de.gurkenlabs.litiengine.entities.Spawnpoint;
+import de.gurkenlabs.litiengine.entities.behavior.AStarGrid;
+import de.gurkenlabs.litiengine.entities.behavior.AStarPathFinder;
+import de.gurkenlabs.litiengine.environment.Environment;
 import de.gurkenlabs.litiengine.graphics.Camera;
 import de.gurkenlabs.litiengine.graphics.PositionLockCamera;
 import de.gurkenlabs.litiengine.input.Input;
@@ -46,6 +49,8 @@ public class GameLogic implements IUpdateable {
     private static List<String> bufferedMessages;
 
     private static boolean onlineGame;
+    private static AStarPathFinder currentPathFinder;
+    private static AStarGrid currentGrid;
 
     public GameLogic() {
 
@@ -295,6 +300,14 @@ public class GameLogic implements IUpdateable {
         robotButtonPress(KeyEvent.VK_ESCAPE);
         robotButtonPress(KeyEvent.VK_DOWN);
         robotButtonPress(KeyEvent.VK_ENTER);
+    }
+
+    public static AStarPathFinder getCurrentPathFinder() {
+        return currentPathFinder;
+    }
+
+    public static AStarGrid getCurrentGrid() {
+        return currentGrid;
     }
 }
 
