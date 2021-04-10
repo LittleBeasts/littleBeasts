@@ -6,6 +6,7 @@ import calculationEngine.entities.CeAi;
 import calculationEngine.entities.CePlayer;
 import client.Client;
 import com.littleBeasts.entities.LitiBeast;
+import com.littleBeasts.entities.LitiPet;
 import com.littleBeasts.entities.LitiPlayer;
 import com.littleBeasts.screens.DrawChatWindow;
 import com.littleBeasts.screens.IngameScreen;
@@ -15,6 +16,9 @@ import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.MapArea;
 import de.gurkenlabs.litiengine.entities.Spawnpoint;
+import de.gurkenlabs.litiengine.entities.behavior.AStarGrid;
+import de.gurkenlabs.litiengine.entities.behavior.AStarPathFinder;
+import de.gurkenlabs.litiengine.environment.Environment;
 import de.gurkenlabs.litiengine.graphics.Camera;
 import de.gurkenlabs.litiengine.graphics.PositionLockCamera;
 import de.gurkenlabs.litiengine.input.Input;
@@ -45,6 +49,8 @@ public class GameLogic implements IUpdateable {
     private static List<String> bufferedMessages;
 
     private static boolean onlineGame;
+    private static AStarPathFinder currentPathFinder;
+    private static AStarGrid currentGrid;
 
     public GameLogic() {
 
@@ -73,10 +79,14 @@ public class GameLogic implements IUpdateable {
             LitiPlayer.instance().setIndestructible(false);
             LitiPlayer.instance().setCollision(true);
 
+            LitiPet.instance().setIndestructible(false);
+            LitiPet.instance().setCollision(false);
+
             // spawn the player instance on the spawn point with the name "west"
             Spawnpoint enter = e.getSpawnpoint("west");
             if (enter != null) {
                 enter.spawn(LitiPlayer.instance());
+                enter.spawn(LitiPet.instance());
             }
         });
 
@@ -290,6 +300,14 @@ public class GameLogic implements IUpdateable {
         robotButtonPress(KeyEvent.VK_ESCAPE);
         robotButtonPress(KeyEvent.VK_DOWN);
         robotButtonPress(KeyEvent.VK_ENTER);
+    }
+
+    public static AStarPathFinder getCurrentPathFinder() {
+        return currentPathFinder;
+    }
+
+    public static AStarGrid getCurrentGrid() {
+        return currentGrid;
     }
 }
 
