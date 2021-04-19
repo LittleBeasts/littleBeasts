@@ -57,7 +57,7 @@ public final class PlayerInput {
             GameLogic.setState(GameState.INGAME);
         }
         if (e.getKeyCode() == KeyEvent.VK_P) {
-            LitiPlayer.instance().punch();
+            LitiPlayer.instance().interact();
         }
         if (e.getKeyCode() == KeyEvent.VK_I) {
             if (GameLogic.getState() == GameState.MENU) {

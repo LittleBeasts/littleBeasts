@@ -7,13 +7,12 @@ import de.gurkenlabs.litiengine.Game;
 import org.junit.Assert;
 
 import java.awt.event.KeyEvent;
-import java.io.IOException;
 
 public class StartStepDefinitions {
     @Given("^the Player is in the main menu$")
     public void thePlayerIsInTheMainMenu() {
         if(!Game.hasStarted()) {
-            Program.main(new String[]{});
+            Program2.main(new String[]{});
         }
         Assert.assertEquals(GameLogic.getState(), GameState.MENU);
         System.out.println("Möööp");

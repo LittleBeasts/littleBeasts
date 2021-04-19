@@ -1,19 +1,18 @@
 package com.littleBeasts;
 
 import calculationEngine.battle.CeBattle;
-import calculationEngine.entities.CeBeasts;
 import calculationEngine.entities.CeAi;
+import calculationEngine.entities.CeBeasts;
 import calculationEngine.entities.CePlayer;
 import client.Client;
-import com.littleBeasts.entities.LitiBeast;
-import com.littleBeasts.entities.LitiPet;
-import com.littleBeasts.entities.LitiPlayer;
+import com.littleBeasts.entities.*;
 import com.littleBeasts.screens.DrawChatWindow;
 import com.littleBeasts.screens.IngameScreen;
 import config.TestConfig;
 import de.gurkenlabs.litiengine.Direction;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
+import de.gurkenlabs.litiengine.entities.IEntity;
 import de.gurkenlabs.litiengine.entities.MapArea;
 import de.gurkenlabs.litiengine.entities.Spawnpoint;
 import de.gurkenlabs.litiengine.entities.behavior.AStarGrid;
@@ -51,6 +50,7 @@ public class GameLogic implements IUpdateable {
     private static boolean onlineGame;
     private static AStarPathFinder currentPathFinder;
     private static AStarGrid currentGrid;
+    private static ArrayList<LitiInteractable> litiInteractables;
 
     public GameLogic() {
 
@@ -81,6 +81,8 @@ public class GameLogic implements IUpdateable {
 
             LitiPet.instance().setIndestructible(false);
             LitiPet.instance().setCollision(false);
+
+            createInteractableList();
 
             // spawn the player instance on the spawn point with the name "west"
             Spawnpoint enter = e.getSpawnpoint("west");
@@ -196,11 +198,16 @@ public class GameLogic implements IUpdateable {
             readBufferedMessages();
         }
 
+        // for (LitiNPC litiNPC : litiNpcs) {
+        //     System.out.println("Proximity: " + litiNPC.isInProximity(LitiPlayer.instance()));
+        //     System.out.println("Facing: " + LitiPlayer.instance().isFacingPoint(litiNPC.getiEntity().getCenter()));
+        // }
+
     }
 
     public void readBufferedMessages() {
         if (client.getClientListener().messagesBuffered()) {
-            if (DEBUG_CONSOLE_OUT)  System.out.println("buffered Messages");
+            if (DEBUG_CONSOLE_OUT) System.out.println("buffered Messages");
             bufferedMessages = client.getClientListener().getMessageBuffer();
         }
     }
@@ -214,15 +221,18 @@ public class GameLogic implements IUpdateable {
             playerPosition = LitiPlayer.instance().getCenter();
             playerPosition.setLocation(playerPosition.getX(), playerPosition.getY() + 12);
             if (mapArea.contains(playerPosition)) {
-                String originName = Game.world().environment().getMap().getName();
-                if (DEBUG_CONSOLE_OUT)    System.out.println(area.getName());
-                Game.world().loadEnvironment(area.getName());
-                Spawnpoint spawnpoint = Game.world().environment().getSpawnpoint(originName);
-                if (spawnpoint != null) {
-                    spawnpoint.spawn(LitiPlayer.instance());
+                if (area.getName().contains("AREA-")) {
+                    String originName = Game.world().environment().getMap().getName();
+                    if (DEBUG_CONSOLE_OUT) System.out.println(area.getName().replace("AREA-", ""));
+                    Game.world().loadEnvironment(area.getName().replace("AREA-", ""));
+                    Spawnpoint spawnpoint = Game.world().environment().getSpawnpoint(originName);
+                    if (spawnpoint != null) {
+                        spawnpoint.spawn(LitiPlayer.instance());
+                    }
+                    LitiPlayer.instance().setFacingDirection(Direction.DOWN);
+                    LitiPlayer.instance().setRenderWithLayer(true);
+                    createInteractableList();
                 }
-                LitiPlayer.instance().setFacingDirection(Direction.DOWN);
-                LitiPlayer.instance().setRenderWithLayer(true);
             }
         }
     }
@@ -234,7 +244,7 @@ public class GameLogic implements IUpdateable {
 
                 }
             } else {
-                if (DEBUG_CONSOLE_OUT)  System.out.println("End of fight");
+                if (DEBUG_CONSOLE_OUT) System.out.println("End of fight");
                 setState(GameState.INGAME);
             }
         }
@@ -308,6 +318,29 @@ public class GameLogic implements IUpdateable {
 
     public static AStarGrid getCurrentGrid() {
         return currentGrid;
+    }
+
+    public void createInteractableList() {
+        litiInteractables = new ArrayList<>();
+        Collection<IEntity> collectionNpc = Game.world().environment().getEntities();
+        for (IEntity entity : collectionNpc) {
+            if (entity.getName() != null) {
+                if (entity.getName().contains("NPC-")) {
+                    LitiNPC litiNPC = new LitiNPC(entity.getName());
+                    litiInteractables.add(new LitiInteractable(entity, litiNPC));
+                    System.out.println(litiNPC);
+                } else if (entity.getName().contains("CHEST-")) {
+                    LitiProp litiProp = new LitiProp(entity.getName());
+                    litiInteractables.add(new LitiInteractable(entity, litiProp));
+                    System.out.println(litiProp);
+                }
+            }
+        }
+        int test = 2;
+    }
+
+    public static ArrayList<LitiInteractable> getInteractables() {
+        return litiInteractables;
     }
 }
 

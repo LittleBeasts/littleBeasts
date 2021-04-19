@@ -19,7 +19,7 @@ public class AttackStepDefinitions {
     //Scenario 1
     @Given("^the Player is in a battle$")
     public void thePlayerIsInABattle() {
-        Program.main(new String[]{});
+        Program2.main(new String[]{});
         if (GameLogic.getState() == GameState.MENU){
             robotButtonPress(KeyEvent.VK_UP);
             robotButtonPress(KeyEvent.VK_ENTER);
@@ -37,14 +37,14 @@ public class AttackStepDefinitions {
 
     @When("^the Player chooses to attack$")
     public void thePlayerChoosesToAttack() {
-        Assert.assertTrue(Program.getIngameScreen().getHud().getBattleMenu().isFocused());
+        Assert.assertTrue(Program2.getIngameScreen().getHud().getBattleMenu().isFocused());
         robotButtonPress(KeyEvent.VK_D);
-        Assert.assertFalse(Program.getIngameScreen().getHud().getBattleMenu().isFocused());
+        Assert.assertFalse(Program2.getIngameScreen().getHud().getBattleMenu().isFocused());
     }
 
     @Then("^a menu opens where the Player can choose an attack$")
     public void aMenuOpensWhereThePlayerCanChooseAnAttack() {
-        Assert.assertTrue(Program.getIngameScreen().getHud().getAttackMenu().isFocused());
+        Assert.assertTrue(Program2.getIngameScreen().getHud().getAttackMenu().isFocused());
         robotButtonPress(KeyEvent.VK_E);
         robotButtonPress(KeyEvent.VK_B);
         Assert.assertEquals(GameLogic.getState(), GameState.INGAME);

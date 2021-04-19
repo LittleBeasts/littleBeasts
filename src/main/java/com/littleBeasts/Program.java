@@ -6,8 +6,6 @@ import com.littleBeasts.screens.MenuScreen;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.resources.Resources;
 
-import java.io.IOException;
-
 public class Program {
 
     private static GameLogic gameLogic;
