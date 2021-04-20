@@ -6,11 +6,13 @@ import cucumber.api.java.en.When;
 import de.gurkenlabs.litiengine.Game;
 import org.junit.Assert;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 public class StartStepDefinitions {
     @Given("^the Player is in the main menu$")
-    public void thePlayerIsInTheMainMenu() {
+    public void thePlayerIsInTheMainMenu() throws IOException, FontFormatException {
         if(!Game.hasStarted()) {
             Program2.main(new String[]{});
         }

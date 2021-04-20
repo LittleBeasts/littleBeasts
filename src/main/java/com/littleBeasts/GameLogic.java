@@ -17,7 +17,6 @@ import de.gurkenlabs.litiengine.entities.MapArea;
 import de.gurkenlabs.litiengine.entities.Spawnpoint;
 import de.gurkenlabs.litiengine.entities.behavior.AStarGrid;
 import de.gurkenlabs.litiengine.entities.behavior.AStarPathFinder;
-import de.gurkenlabs.litiengine.environment.Environment;
 import de.gurkenlabs.litiengine.graphics.Camera;
 import de.gurkenlabs.litiengine.graphics.PositionLockCamera;
 import de.gurkenlabs.litiengine.input.Input;
@@ -26,6 +25,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -51,6 +51,7 @@ public class GameLogic implements IUpdateable {
     private static AStarPathFinder currentPathFinder;
     private static AStarGrid currentGrid;
     private static ArrayList<LitiInteractable> litiInteractables;
+    private static ArrayList<Font> gameFonts = new ArrayList<>();
 
     public GameLogic() {
 
@@ -59,8 +60,9 @@ public class GameLogic implements IUpdateable {
     /**
      * Initializes the game logic for the game.
      */
-    public void init() {
+    public void init() throws IOException, FontFormatException {
         Game.loop().attach(this);
+        loadFonts();
         //  Environment.registerMapObjectLoader(new CustomMapObjectLoader());
 
         // we'll use a camera in our game that is locked to the location of the player
@@ -334,6 +336,22 @@ public class GameLogic implements IUpdateable {
 
     public static ArrayList<LitiInteractable> getInteractables() {
         return litiInteractables;
+    }
+
+    public static void loadFonts() throws IOException, FontFormatException {
+        String pathName = "./Fonts";
+        File path = new File(pathName);
+        String[] fontFilesNames = path.list();
+        for (String fontFileName : fontFilesNames) {
+            File fontFile = new File(pathName + "/" + fontFileName);
+            Font gameFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+            gameFont = gameFont.deriveFont(10.f);
+            gameFonts.add(gameFont);
+        }
+    }
+
+    public static ArrayList<Font> getGameFonts() {
+        return gameFonts;
     }
 }
 
