@@ -5,7 +5,10 @@ import calculationEngine.entities.CeAi;
 import calculationEngine.entities.CeBeasts;
 import calculationEngine.entities.CePlayer;
 import client.Client;
-import com.littleBeasts.entities.*;
+import com.littleBeasts.entities.LitiBeast;
+import com.littleBeasts.entities.LitiInteractable;
+import com.littleBeasts.entities.LitiPet;
+import com.littleBeasts.entities.LitiPlayer;
 import com.littleBeasts.screens.DrawChatWindow;
 import com.littleBeasts.screens.IngameScreen;
 import config.TestConfig;
@@ -323,11 +326,9 @@ public class GameLogic implements IUpdateable {
         for (IEntity entity : collectionNpc) {
             if (entity.getName() != null) {
                 if (entity.getName().contains("NPC-")) {
-                    litiInteractables.add(new LitiInteractable(entity));
+                    litiInteractables.add(new LitiInteractable(entity, true));
                 } else if (entity.getName().contains("CHEST-")) {
-                    LitiProp litiProp = new LitiProp(entity.getName());
-                    litiInteractables.add(new LitiInteractable(entity, litiProp));
-                    System.out.println(litiProp);
+                    litiInteractables.add(new LitiInteractable(entity, false));
                 }
             }
         }

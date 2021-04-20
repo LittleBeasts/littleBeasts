@@ -201,73 +201,17 @@ public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
 
     @Action(description = "Interaction with environment")
     public void interact() {
-        System.out.println("Interaction");
+        if (DEBUG_CONSOLE_OUT) System.out.println("Interaction");
         ArrayList<LitiInteractable> interactables = GameLogic.getInteractables();
         for (LitiInteractable litiInteractable : interactables) {
-            if (litiInteractable.isInProximity(LitiPlayer.instance()) && this.isFacingPoint(litiInteractable.getiEntity().getCenter()))
-                //System.out.println("Interaction with " + (litiInteractable.isNpc() ? litiInteractable.getLitiNPC().toString() : litiInteractable.getLitiProps().toString()) + " possible.");
-            {
-                if (litiInteractable.isNpc()){
+            if (litiInteractable.isInProximity(LitiPlayer.instance()) && this.isFacingPoint(litiInteractable.getiEntity().getCenter())) {
+                if (litiInteractable.isNpc()) {
                     litiInteractable.getLitiNPC().getGreeting();
-                }
-            }
-         //TODO:weiter gehts.
-        }
-        /*
-        Collection<MapArea> areas = Game.world().environment().getAreas();
-        Point2D playerPosition;
-        Rectangle2D mapArea;
-        for (MapArea area : areas) {
-            mapArea = area.getBoundingBox();
-            playerPosition = LitiPlayer.instance().getCenter();
-            playerPosition.setLocation(playerPosition.getX(), playerPosition.getY() + 12);
-            if (mapArea.contains(playerPosition)) {
-                if (area.getName().contains("Chest-")) {
-                    Prop prop = Game.world().environment().getProp(area.getName().replace("Chest-", ""));
-                    if (this.isFacingPoint(prop.getCenter())) {
-                        if (!prop.isDead()) {
-                            prop.hit(50);
-                            Map<String, ICustomProperty> propertyMap = prop.getProperties().getProperties();
-                            StringBuilder stringBuilder = new StringBuilder();
-                            for (Map.Entry<String, ICustomProperty> entry : propertyMap.entrySet()) {
-                                stringBuilder.append(entry.getKey() + ": " + entry.getValue().toString());
-                            }
-                            Collection<Animation> animations = prop.animations().getAll();
-                            for (Animation animation : animations) {
-                                animation.setLooping(false);
-                            }
-                            IEntityAnimationController<?> animationController = prop.animations();
-                            animationController.addListener(new AnimationListener() {
-                                @Override
-                                public void played(Animation animation) {
-                                    AnimationListener.super.played(animation);
-                                    System.out.println("played: " + animation.getName());
-                                }
-
-                                @Override
-                                public void finished(Animation animation) {
-                                    AnimationListener.super.finished(animation);
-                                    System.out.println("finished: " + animation.getName());
-                                    if (animation.getName().equals("damaged")) {
-                                        prop.die();
-                                        System.out.println(prop.getName() + " I died.");
-                                        System.out.println("I contained: " + stringBuilder.toString());
-                                        if (!prop.hasCollision())
-                                            prop.setCollision(true);
-                                        animationController.detach();
-                                    }
-                                }
-                            });
-
-                            System.out.println(area.getName());
-                            System.out.println(prop.getState().name());
-                        }
-                    }
+                } else if (!litiInteractable.isNpc()) {
+                    litiInteractable.getLitiProp().interact();
                 }
             }
         }
-
-         */
     }
 
     private void getBack(Point2D origin) {
