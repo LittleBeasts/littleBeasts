@@ -32,8 +32,7 @@
       "tutorial":{
         "...":"..."
       }
-    }
-  },
+    },
   "default": {
     "K": {
       "greetings": ["Der Klimawandel ist eine Lüge!.. ähhh Ich meine MEOW?"],
@@ -50,6 +49,14 @@
           "scene1": "Go to Prof W"
         }
       }
-    } 
+    } ,
+    "Helena":{
+      "greetings": ["Hey sweety, want a good time??", "Just tree fiddy.", "What do you think about Scottland?", "I got a monster deal for you."],
+      "tips": {
+        "day1": {
+          "scene1": "You won't get anything out of me hon."
+        }
+      }
+    }
   }
 }

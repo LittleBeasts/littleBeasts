@@ -205,7 +205,12 @@ public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
         ArrayList<LitiInteractable> interactables = GameLogic.getInteractables();
         for (LitiInteractable litiInteractable : interactables) {
             if (litiInteractable.isInProximity(LitiPlayer.instance()) && this.isFacingPoint(litiInteractable.getiEntity().getCenter()))
-                System.out.println("Interaction with " + (litiInteractable.isNpc() ? litiInteractable.getLitiNPC().toString() : litiInteractable.getLitiProps().toString()) + " possible.");
+                //System.out.println("Interaction with " + (litiInteractable.isNpc() ? litiInteractable.getLitiNPC().toString() : litiInteractable.getLitiProps().toString()) + " possible.");
+            {
+                if (litiInteractable.isNpc()){
+                    litiInteractable.getLitiNPC().getGreeting();
+                }
+            }
          //TODO:weiter gehts.
         }
         /*

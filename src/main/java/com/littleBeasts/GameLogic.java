@@ -197,12 +197,6 @@ public class GameLogic implements IUpdateable {
         if (isOnlineGame()) {
             readBufferedMessages();
         }
-
-        // for (LitiNPC litiNPC : litiNpcs) {
-        //     System.out.println("Proximity: " + litiNPC.isInProximity(LitiPlayer.instance()));
-        //     System.out.println("Facing: " + LitiPlayer.instance().isFacingPoint(litiNPC.getiEntity().getCenter()));
-        // }
-
     }
 
     public void readBufferedMessages() {
@@ -213,6 +207,7 @@ public class GameLogic implements IUpdateable {
     }
 
     public void loadNewArea() {
+
         Collection<MapArea> areas = Game.world().environment().getAreas();
         Point2D playerPosition;
         Rectangle2D mapArea;
@@ -326,9 +321,7 @@ public class GameLogic implements IUpdateable {
         for (IEntity entity : collectionNpc) {
             if (entity.getName() != null) {
                 if (entity.getName().contains("NPC-")) {
-                    LitiNPC litiNPC = new LitiNPC(entity.getName());
-                    litiInteractables.add(new LitiInteractable(entity, litiNPC));
-                    System.out.println(litiNPC);
+                    litiInteractables.add(new LitiInteractable(entity));
                 } else if (entity.getName().contains("CHEST-")) {
                     LitiProp litiProp = new LitiProp(entity.getName());
                     litiInteractables.add(new LitiInteractable(entity, litiProp));

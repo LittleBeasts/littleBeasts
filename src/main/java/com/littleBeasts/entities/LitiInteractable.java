@@ -8,9 +8,9 @@ public class LitiInteractable {
     private final boolean isNpc;
     private final IEntity iEntity;
 
-    public LitiInteractable(IEntity iEntity, LitiNPC litiNPC) {
+    public LitiInteractable(IEntity iEntity) {
         this.iEntity = iEntity;
-        this.litiNPC = litiNPC;
+        this.litiNPC = new LitiNPC(iEntity);
         this.isNpc = true;
     }
 
