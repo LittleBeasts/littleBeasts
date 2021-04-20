@@ -7,7 +7,6 @@ import de.gurkenlabs.litiengine.graphics.animation.Animation;
 import de.gurkenlabs.litiengine.graphics.animation.AnimationListener;
 import de.gurkenlabs.litiengine.graphics.animation.IEntityAnimationController;
 import de.gurkenlabs.litiengine.gui.SpeechBubble;
-import de.gurkenlabs.litiengine.gui.SpeechBubbleAppearance;
 
 import java.util.Collection;
 
@@ -16,15 +15,20 @@ import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 public class LitiProp {
 
     PropState propState;
-    private String name;
-    private IEntity iEntity;
-    private Prop prop;
+    private final String name;
+    private final IEntity iEntity;
+    private final Prop prop;
+    private boolean isStatic;
 
     public LitiProp(IEntity iEntity) {
         this.name = iEntity.getName();
         this.iEntity = iEntity;
         this.prop = Game.world().environment().getProp(this.name);
         this.propState = PropState.CLOSED;
+        this.isStatic = true;
+        if (prop.getProperties().getProperty("static") != null)
+            this.isStatic = prop.getProperties().getProperty("static").getAsBool();
+
     }
 
     public void interact() {
@@ -53,6 +57,8 @@ public class LitiProp {
                         if (!prop.hasCollision())
                             prop.setCollision(true);
                         animationController.detach();
+                        if (!isStatic)
+                            Game.world().environment().remove(iEntity);
                     }
                 }
             });

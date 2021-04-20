@@ -260,7 +260,6 @@ public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
         return false;
     }
 
-
     public Image getPlayerPortrait() {
         return playerPortrait;
     }
