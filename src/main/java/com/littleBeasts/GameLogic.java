@@ -17,7 +17,7 @@ import de.gurkenlabs.litiengine.entities.MapArea;
 import de.gurkenlabs.litiengine.entities.Spawnpoint;
 import de.gurkenlabs.litiengine.entities.behavior.AStarGrid;
 import de.gurkenlabs.litiengine.entities.behavior.AStarPathFinder;
-import de.gurkenlabs.litiengine.environment.Environment;
+import de.gurkenlabs.litiengine.environment.tilemap.ITileLayer;
 import de.gurkenlabs.litiengine.graphics.Camera;
 import de.gurkenlabs.litiengine.graphics.PositionLockCamera;
 import de.gurkenlabs.litiengine.input.Input;
@@ -51,10 +51,8 @@ public class GameLogic implements IUpdateable {
     private static AStarPathFinder currentPathFinder;
     private static AStarGrid currentGrid;
     private static ArrayList<LitiInteractable> litiInteractables;
-
-    public GameLogic() {
-
-    }
+    List<ITileLayer> tileMapLayers;
+    Collection<MapArea> mapAreas;
 
     /**
      * Initializes the game logic for the game.
@@ -82,7 +80,7 @@ public class GameLogic implements IUpdateable {
             LitiPet.instance().setIndestructible(false);
             LitiPet.instance().setCollision(false);
 
-            createInteractableList();
+            newMapLoadUp();
 
             // spawn the player instance on the spawn point with the name "west"
             Spawnpoint enter = e.getSpawnpoint("west");
@@ -182,6 +180,7 @@ public class GameLogic implements IUpdateable {
     public void update() {
         loadNewArea();
         startBattle();
+        checkOpacity();
         if (getState() == GameState.INGAME) {
             for (int i = 0; i < LITI_BEAST_LIST.size(); i++) {
                 if (LITI_BEAST_LIST.get(i).getBeastStats().isReadyToBeRemoved()) {
@@ -207,16 +206,15 @@ public class GameLogic implements IUpdateable {
     }
 
     public void loadNewArea() {
-
-        Collection<MapArea> areas = Game.world().environment().getAreas();
+        mapAreas = Game.world().environment().getAreas();
         Point2D playerPosition;
         Rectangle2D mapArea;
-        for (MapArea area : areas) {
+        for (MapArea area : mapAreas) {
             mapArea = area.getBoundingBox();
             playerPosition = LitiPlayer.instance().getCenter();
             playerPosition.setLocation(playerPosition.getX(), playerPosition.getY() + 12);
             if (mapArea.contains(playerPosition)) {
-                if (area.getName().contains("AREA-")) {
+                if (area.getName() != null && area.getName().contains("AREA-")) {
                     String originName = Game.world().environment().getMap().getName();
                     if (DEBUG_CONSOLE_OUT) System.out.println(area.getName().replace("AREA-", ""));
                     Game.world().loadEnvironment(area.getName().replace("AREA-", ""));
@@ -226,7 +224,7 @@ public class GameLogic implements IUpdateable {
                     }
                     LitiPlayer.instance().setFacingDirection(Direction.DOWN);
                     LitiPlayer.instance().setRenderWithLayer(true);
-                    createInteractableList();
+                    newMapLoadUp();
                 }
             }
         }
@@ -329,15 +327,37 @@ public class GameLogic implements IUpdateable {
                 }
             }
         }
-        int test = 2;
+    }
+
+    private void createTileMapLayerList() {
+        this.tileMapLayers = Game.world().environment().getMap().getTileLayers();
+    }
+
+    public void newMapLoadUp(){
+        createInteractableList();
+        createTileMapLayerList();
     }
 
     public static ArrayList<LitiInteractable> getInteractables() {
         return litiInteractables;
     }
+
+    private void checkOpacity() {
+
+        String layerName = "";
+        for (MapArea area : mapAreas) {
+            if (area.getName().contains("OVERLAY-") && area.getBoundingBox().contains(LitiPlayer.instance().getCenter())) {
+                layerName = area.getName().replace("OVERLAY-", "");
+            }
+        }
+
+        for (ITileLayer layer : tileMapLayers) {
+            if (layer.getName().equals(layerName)) {
+                if (layer.getMap().getBounds().contains(LitiPlayer.instance().getCenter()))
+                    layer.setOpacity(0.5f);
+
+            } else
+                layer.setOpacity(1.f);
+        }
+    }
 }
-
-
-
-
-
