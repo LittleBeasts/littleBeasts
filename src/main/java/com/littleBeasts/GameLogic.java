@@ -332,7 +332,6 @@ public class GameLogic implements IUpdateable {
                 }
             }
         }
-        int test = 2;
     }
 
     public static ArrayList<LitiInteractable> getInteractables() {

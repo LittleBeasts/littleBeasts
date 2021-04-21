@@ -38,9 +38,6 @@ public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
     private int maxHP, currentHP;
     private boolean isFighting;
     private final Image playerPortrait;
-    private ICollisionEntity collisionEntity;
-
-
     private final Attack punch; // TODO: create correct Attack structure similar to CE
 
     // TODO: Change add draw prefix to every drawing class
