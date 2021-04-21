@@ -12,7 +12,7 @@ public class StartStepDefinitions {
     @Given("^the Player is in the main menu$")
     public void thePlayerIsInTheMainMenu() {
         if(!Game.hasStarted()) {
-            Program2.main(new String[]{});
+            Program.main(new String[]{});
         }
         Assert.assertEquals(GameLogic.getState(), GameState.MENU);
         System.out.println("Möööp");
