@@ -278,7 +278,6 @@ public class GameLogic implements IUpdateable {
 
     public static boolean isNextBattlePossible() {
         return nextBattlePossible;
-
     }
 
     public static void sendMessageToServer(String message) throws IOException {
@@ -365,9 +364,6 @@ public class GameLogic implements IUpdateable {
     public static ArrayList<Font> getGameFonts() {
         return gameFonts;
     }
-}
-
-
 
     private void checkOpacity() {
 
