@@ -7,6 +7,7 @@ import com.littleBeasts.PlayerState;
 import com.littleBeasts.abilities.Attack;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
+import de.gurkenlabs.litiengine.Valign;
 import de.gurkenlabs.litiengine.entities.*;
 import de.gurkenlabs.litiengine.input.KeyboardEntityController;
 import de.gurkenlabs.litiengine.physics.Force;
@@ -21,7 +22,7 @@ import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 
 @EntityInfo(width = 16, height = 16)
 @MovementInfo(velocity = 70)
-@CollisionInfo(collisionBoxWidth = 14, collisionBoxHeight = 14, collision = true)
+@CollisionInfo(collisionBoxWidth = 14, collisionBoxHeight = 2, collision = true, valign = Valign.DOWN)
 public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
     private static LitiPlayer litiPlayerInstance;
     private static PlayerState state = PlayerState.CONTROLLABLE;
@@ -37,8 +38,6 @@ public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
     private int maxHP, currentHP;
     private boolean isFighting;
     private final Image playerPortrait;
-
-
     private final Attack punch; // TODO: create correct Attack structure similar to CE
 
     // TODO: Change add draw prefix to every drawing class
@@ -52,10 +51,11 @@ public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
         // ToDo: Change with new saveGame logic and initialize a new Player correctly
         List<CeAttack> attacks = new ArrayList<>();
         attacks.add(new CeAttack(CeAttacks.Punch));
-        this.cePlayer = new CePlayer(new CeStats(CeBeastTypes.PlayerStandard, CeNature.ANGRY, 1,100,100,20,1,20,10,1), attacks,beastsToCeEntities(littleBeastTeam), false);
+        this.cePlayer = new CePlayer(new CeStats(CeBeastTypes.PlayerStandard, CeNature.ANGRY, 1, 100, 100, 20, 1, 20, 10, 1), attacks, beastsToCeEntities(littleBeastTeam), false);
         this.playerCeAttacks = cePlayer.getAttacks();
         this.maxHP = cePlayer.getCeStats().getMaxHitPoints();
         this.currentHP = cePlayer.getCeStats().getCurrentHitPoints();
+
 
         // LITIengine
         this.addController(new KeyboardEntityController<>(this));
@@ -195,6 +195,22 @@ public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
 
     }
 
+
+    @Action(description = "Interaction with environment")
+    public void interact() {
+        if (DEBUG_CONSOLE_OUT) System.out.println("Interaction");
+        ArrayList<LitiInteractable> interactables = GameLogic.getInteractables();
+        for (LitiInteractable litiInteractable : interactables) {
+            if (litiInteractable.isInProximity(LitiPlayer.instance()) && this.isFacingPoint(litiInteractable.getiEntity().getCenter())) {
+                if (litiInteractable.isNpc()) {
+                    litiInteractable.getLitiNPC().getGreeting();
+                } else if (!litiInteractable.isNpc()) {
+                    litiInteractable.getLitiProp().interact();
+                }
+            }
+        }
+    }
+
     private void getBack(Point2D origin) {
         origin = new Point2D.Double(origin.getX() - 7, origin.getY());
         Force force1 = new Force(origin, 100, 1);
@@ -224,6 +240,21 @@ public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
         };
         applyForce.run();
 
+    }
+
+    public boolean isFacingPoint(Point2D point) {
+        int tolerance = 8;
+        switch (this.getFacingDirection()) {
+            case UP:
+                return (this.getCenter().getY() - point.getY()) > 0 && this.getCenter().getX() >= point.getX() - tolerance && this.getCenter().getX() <= point.getX() + tolerance;
+            case DOWN:
+                return (this.getCenter().getY() - point.getY()) < 0 && this.getCenter().getX() >= point.getX() - tolerance && this.getCenter().getX() <= point.getX() + tolerance;
+            case LEFT:
+                return (this.getCenter().getX() - point.getX()) > 0 && this.getCenter().getY() >= point.getY() - tolerance && this.getCenter().getY() <= point.getY() + tolerance;
+            case RIGHT:
+                return (this.getCenter().getX() - point.getX()) < 0 && this.getCenter().getY() >= point.getY() - tolerance && this.getCenter().getY() <= point.getY() + tolerance;
+        }
+        return false;
     }
 
     public Image getPlayerPortrait() {

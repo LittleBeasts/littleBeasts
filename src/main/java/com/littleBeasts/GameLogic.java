@@ -1,11 +1,12 @@
 package com.littleBeasts;
 
 import calculationEngine.battle.CeBattle;
-import calculationEngine.entities.CeBeasts;
 import calculationEngine.entities.CeAi;
+import calculationEngine.entities.CeBeasts;
 import calculationEngine.entities.CePlayer;
 import client.Client;
 import com.littleBeasts.entities.LitiBeast;
+import com.littleBeasts.entities.LitiInteractable;
 import com.littleBeasts.entities.LitiPet;
 import com.littleBeasts.entities.LitiPlayer;
 import com.littleBeasts.screens.DrawChatWindow;
@@ -14,11 +15,11 @@ import config.TestConfig;
 import de.gurkenlabs.litiengine.Direction;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
+import de.gurkenlabs.litiengine.entities.IEntity;
 import de.gurkenlabs.litiengine.entities.MapArea;
 import de.gurkenlabs.litiengine.entities.Spawnpoint;
 import de.gurkenlabs.litiengine.entities.behavior.AStarGrid;
 import de.gurkenlabs.litiengine.entities.behavior.AStarPathFinder;
-import de.gurkenlabs.litiengine.environment.Environment;
 import de.gurkenlabs.litiengine.graphics.Camera;
 import de.gurkenlabs.litiengine.graphics.PositionLockCamera;
 import de.gurkenlabs.litiengine.input.Input;
@@ -27,6 +28,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -51,6 +53,8 @@ public class GameLogic implements IUpdateable {
     private static boolean onlineGame;
     private static AStarPathFinder currentPathFinder;
     private static AStarGrid currentGrid;
+    private static ArrayList<LitiInteractable> litiInteractables;
+    private static ArrayList<Font> gameFonts = new ArrayList<>();
 
     public GameLogic() {
 
@@ -59,8 +63,9 @@ public class GameLogic implements IUpdateable {
     /**
      * Initializes the game logic for the game.
      */
-    public void init() {
+    public void init() throws IOException, FontFormatException {
         Game.loop().attach(this);
+        loadFonts();
         //  Environment.registerMapObjectLoader(new CustomMapObjectLoader());
 
         // we'll use a camera in our game that is locked to the location of the player
@@ -81,6 +86,8 @@ public class GameLogic implements IUpdateable {
 
             LitiPet.instance().setIndestructible(false);
             LitiPet.instance().setCollision(false);
+
+            createInteractableList();
 
             // spawn the player instance on the spawn point with the name "west"
             Spawnpoint enter = e.getSpawnpoint("west");
@@ -195,17 +202,17 @@ public class GameLogic implements IUpdateable {
         if (isOnlineGame()) {
             readBufferedMessages();
         }
-
     }
 
     public void readBufferedMessages() {
         if (client.getClientListener().messagesBuffered()) {
-            if (DEBUG_CONSOLE_OUT)  System.out.println("buffered Messages");
+            if (DEBUG_CONSOLE_OUT) System.out.println("buffered Messages");
             bufferedMessages = client.getClientListener().getMessageBuffer();
         }
     }
 
     public void loadNewArea() {
+
         Collection<MapArea> areas = Game.world().environment().getAreas();
         Point2D playerPosition;
         Rectangle2D mapArea;
@@ -214,15 +221,18 @@ public class GameLogic implements IUpdateable {
             playerPosition = LitiPlayer.instance().getCenter();
             playerPosition.setLocation(playerPosition.getX(), playerPosition.getY() + 12);
             if (mapArea.contains(playerPosition)) {
-                String originName = Game.world().environment().getMap().getName();
-                if (DEBUG_CONSOLE_OUT)    System.out.println(area.getName());
-                Game.world().loadEnvironment(area.getName());
-                Spawnpoint spawnpoint = Game.world().environment().getSpawnpoint(originName);
-                if (spawnpoint != null) {
-                    spawnpoint.spawn(LitiPlayer.instance());
+                if (area.getName().contains("AREA-")) {
+                    String originName = Game.world().environment().getMap().getName();
+                    if (DEBUG_CONSOLE_OUT) System.out.println(area.getName().replace("AREA-", ""));
+                    Game.world().loadEnvironment(area.getName().replace("AREA-", ""));
+                    Spawnpoint spawnpoint = Game.world().environment().getSpawnpoint(originName);
+                    if (spawnpoint != null) {
+                        spawnpoint.spawn(LitiPlayer.instance());
+                    }
+                    LitiPlayer.instance().setFacingDirection(Direction.DOWN);
+                    LitiPlayer.instance().setRenderWithLayer(true);
+                    createInteractableList();
                 }
-                LitiPlayer.instance().setFacingDirection(Direction.DOWN);
-                LitiPlayer.instance().setRenderWithLayer(true);
             }
         }
     }
@@ -234,7 +244,7 @@ public class GameLogic implements IUpdateable {
 
                 }
             } else {
-                if (DEBUG_CONSOLE_OUT)  System.out.println("End of fight");
+                if (DEBUG_CONSOLE_OUT) System.out.println("End of fight");
                 setState(GameState.INGAME);
             }
         }
@@ -308,6 +318,40 @@ public class GameLogic implements IUpdateable {
 
     public static AStarGrid getCurrentGrid() {
         return currentGrid;
+    }
+
+    public void createInteractableList() {
+        litiInteractables = new ArrayList<>();
+        Collection<IEntity> collectionNpc = Game.world().environment().getEntities();
+        for (IEntity entity : collectionNpc) {
+            if (entity.getName() != null) {
+                if (entity.getName().contains("NPC-")) {
+                    litiInteractables.add(new LitiInteractable(entity, true));
+                } else if (entity.getName().contains("CHEST-")) {
+                    litiInteractables.add(new LitiInteractable(entity, false));
+                }
+            }
+        }
+    }
+
+    public static ArrayList<LitiInteractable> getInteractables() {
+        return litiInteractables;
+    }
+
+    public static void loadFonts() throws IOException, FontFormatException {
+        String pathName = "./Fonts";
+        File path = new File(pathName);
+        String[] fontFilesNames = path.list();
+        for (String fontFileName : fontFilesNames) {
+            File fontFile = new File(pathName + "/" + fontFileName);
+            Font gameFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+            gameFont = gameFont.deriveFont(10.f);
+            gameFonts.add(gameFont);
+        }
+    }
+
+    public static ArrayList<Font> getGameFonts() {
+        return gameFonts;
     }
 }
 

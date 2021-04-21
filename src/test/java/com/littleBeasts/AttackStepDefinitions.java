@@ -7,7 +7,10 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
+
+import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 
 import static com.littleBeasts.GameLogic.robotButtonPress;
@@ -18,7 +21,7 @@ public class AttackStepDefinitions {
 
     //Scenario 1
     @Given("^the Player is in a battle$")
-    public void thePlayerIsInABattle() {
+    public void thePlayerIsInABattle() throws IOException, FontFormatException {
         Program.main(new String[]{});
         if (GameLogic.getState() == GameState.MENU){
             robotButtonPress(KeyEvent.VK_UP);
