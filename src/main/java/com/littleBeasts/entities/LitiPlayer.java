@@ -9,6 +9,7 @@ import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.Valign;
 import de.gurkenlabs.litiengine.entities.*;
+import de.gurkenlabs.litiengine.environment.tilemap.ITileLayer;
 import de.gurkenlabs.litiengine.input.KeyboardEntityController;
 import de.gurkenlabs.litiengine.physics.Force;
 import de.gurkenlabs.litiengine.resources.Resources;
@@ -16,6 +17,7 @@ import de.gurkenlabs.litiengine.resources.Resources;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
@@ -202,6 +204,7 @@ public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
         ArrayList<LitiInteractable> interactables = GameLogic.getInteractables();
         for (LitiInteractable litiInteractable : interactables) {
             if (litiInteractable.isInProximity(LitiPlayer.instance()) && this.isFacingPoint(litiInteractable.getiEntity().getCenter())) {
+
                 if (litiInteractable.isNpc()) {
                     litiInteractable.getLitiNPC().getGreeting();
                 } else if (!litiInteractable.isNpc()) {
