@@ -8,23 +8,21 @@ public class LitiInteractable {
     private final boolean isNpc;
     private final IEntity iEntity;
 
-    public LitiInteractable(IEntity iEntity) {
+    public LitiInteractable(IEntity iEntity, boolean isNpc) {
+        this.isNpc = isNpc;
         this.iEntity = iEntity;
-        this.litiNPC = new LitiNPC(iEntity);
-        this.isNpc = true;
+        if (isNpc)
+            this.litiNPC = new LitiNPC(iEntity);
+        else
+            this.litiProp = new LitiProp(iEntity);
     }
 
-    public LitiInteractable(IEntity iEntity, LitiProp litiProp) {
-        this.iEntity = iEntity;
-        this.litiProp = litiProp;
-        this.isNpc = false;
-    }
 
     public LitiNPC getLitiNPC() {
         return litiNPC;
     }
 
-    public LitiProp getLitiProps() {
+    public LitiProp getLitiProp() {
         return litiProp;
     }
 

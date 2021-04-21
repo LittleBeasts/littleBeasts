@@ -6,13 +6,16 @@ import com.littleBeasts.screens.MenuScreen;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.resources.Resources;
 
+import java.awt.*;
+import java.io.IOException;
+
 public class Program {
 
     private static GameLogic gameLogic;
     private static IngameScreen ingameScreen;
     private static MenuScreen menuScreen;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, FontFormatException {
         //set game meta information
         Game.info().setName("littleBeasts");
         Game.info().setSubTitle("");
