@@ -1,7 +1,5 @@
 package client;
 
-import com.littleBeasts.GameLogic;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 

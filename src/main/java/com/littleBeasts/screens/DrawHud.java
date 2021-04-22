@@ -1,9 +1,9 @@
 package com.littleBeasts.screens;
 
-import com.littleBeasts.GameLogic;
-import com.littleBeasts.GameState;
-import com.littleBeasts.LitiBattle;
-import com.littleBeasts.PlayerState;
+import com.littleBeasts.gameLogic.GameLogic;
+import com.littleBeasts.gameLogic.GameState;
+import com.littleBeasts.gameLogic.LitiBattle;
+import com.littleBeasts.gameLogic.PlayerState;
 import com.littleBeasts.entities.LitiBeast;
 import com.littleBeasts.entities.LitiPlayer;
 import config.HudConstants;

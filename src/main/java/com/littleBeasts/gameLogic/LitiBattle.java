@@ -1,4 +1,4 @@
-package com.littleBeasts;
+package com.littleBeasts.gameLogic;
 
 import calculationEngine.battle.CeBattle;
 import calculationEngine.entities.CeAi;

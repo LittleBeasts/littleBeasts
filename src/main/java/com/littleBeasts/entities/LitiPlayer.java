@@ -2,15 +2,14 @@ package com.littleBeasts.entities;
 
 import calculationEngine.battle.CeBattle;
 import calculationEngine.entities.*;
-import com.littleBeasts.GameLogic;
-import com.littleBeasts.LitiMap;
-import com.littleBeasts.PlayerState;
+import com.littleBeasts.gameLogic.GameLogic;
+import com.littleBeasts.gameLogic.LitiMap;
+import com.littleBeasts.gameLogic.PlayerState;
 import com.littleBeasts.abilities.Attack;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.Valign;
 import de.gurkenlabs.litiengine.entities.*;
-import de.gurkenlabs.litiengine.environment.tilemap.ITileLayer;
 import de.gurkenlabs.litiengine.input.KeyboardEntityController;
 import de.gurkenlabs.litiengine.physics.Force;
 import de.gurkenlabs.litiengine.resources.Resources;
@@ -18,7 +17,6 @@ import de.gurkenlabs.litiengine.resources.Resources;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import static config.GlobalConfig.DEBUG_CONSOLE_OUT;

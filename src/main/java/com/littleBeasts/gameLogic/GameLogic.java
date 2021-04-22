@@ -1,39 +1,18 @@
-package com.littleBeasts;
+package com.littleBeasts.gameLogic;
 
-import calculationEngine.battle.CeBattle;
-import calculationEngine.entities.CeAi;
-import calculationEngine.entities.CeBeasts;
-import calculationEngine.entities.CePlayer;
-import client.Client;
-import com.littleBeasts.entities.LitiBeast;
-import com.littleBeasts.entities.LitiInteractable;
 import com.littleBeasts.entities.LitiPet;
 import com.littleBeasts.entities.LitiPlayer;
 import com.littleBeasts.screens.DrawChatWindow;
 import com.littleBeasts.screens.IngameScreen;
-import config.TestConfig;
-import de.gurkenlabs.litiengine.Direction;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
-import de.gurkenlabs.litiengine.entities.IEntity;
-import de.gurkenlabs.litiengine.entities.MapArea;
 import de.gurkenlabs.litiengine.entities.Spawnpoint;
-import de.gurkenlabs.litiengine.entities.behavior.AStarGrid;
-import de.gurkenlabs.litiengine.entities.behavior.AStarPathFinder;
-import de.gurkenlabs.litiengine.environment.tilemap.ITileLayer;
 import de.gurkenlabs.litiengine.graphics.Camera;
 import de.gurkenlabs.litiengine.graphics.PositionLockCamera;
 import de.gurkenlabs.litiengine.input.Input;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 
