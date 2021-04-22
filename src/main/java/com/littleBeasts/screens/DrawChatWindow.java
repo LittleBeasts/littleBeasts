@@ -2,6 +2,7 @@ package com.littleBeasts.screens;
 
 import com.littleBeasts.GameLogic;
 import com.littleBeasts.GameState;
+import com.littleBeasts.LitiClient;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.gui.GuiComponent;
@@ -86,7 +87,7 @@ public class DrawChatWindow extends GuiComponent implements IUpdateable {
         if (buffer.length() > 0) {
             String value = buffer.toString();
             try {
-                GameLogic.sendMessageToServer(encodeOutgoingMessageForClient(GameLogic.getClient().getName(), value));
+                LitiClient.sendMessageToServer(encodeOutgoingMessageForClient(LitiClient.getClient().getName(), value));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -196,7 +197,7 @@ public class DrawChatWindow extends GuiComponent implements IUpdateable {
     @Override
     public synchronized void render(Graphics2D g) {
         List<String> bufferedMessages = null;
-        bufferedMessages = GameLogic.getBufferedMessages();
+        bufferedMessages = LitiClient.getBufferedMessages();
         if (bufferedMessages != null) {
             chatHistory.addAll(bufferedMessages);
         }

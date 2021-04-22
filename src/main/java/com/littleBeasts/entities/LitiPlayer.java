@@ -3,6 +3,7 @@ package com.littleBeasts.entities;
 import calculationEngine.battle.CeBattle;
 import calculationEngine.entities.*;
 import com.littleBeasts.GameLogic;
+import com.littleBeasts.LitiMap;
 import com.littleBeasts.PlayerState;
 import com.littleBeasts.abilities.Attack;
 import de.gurkenlabs.litiengine.Game;
@@ -201,7 +202,7 @@ public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
     @Action(description = "Interaction with environment")
     public void interact() {
         if (DEBUG_CONSOLE_OUT) System.out.println("Interaction");
-        ArrayList<LitiInteractable> interactables = GameLogic.getInteractables();
+        ArrayList<LitiInteractable> interactables = LitiMap.getInteractables();
         for (LitiInteractable litiInteractable : interactables) {
             if (litiInteractable.isInProximity(LitiPlayer.instance()) && this.isFacingPoint(litiInteractable.getiEntity().getCenter())) {
 
