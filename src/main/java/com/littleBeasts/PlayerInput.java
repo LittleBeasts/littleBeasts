@@ -39,7 +39,7 @@ public final class PlayerInput {
     }
 
     private static void onEnter(AtomicBoolean menu) {
-        if (!GameLogic.isOnlineGame())
+        if (!LitiClient.isOnlineGame())
             return;
         if (GameLogic.getState() == GameState.MENU) {
             return;
@@ -51,7 +51,7 @@ public final class PlayerInput {
     }
 
     private static void onOtherKey(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_B && GameLogic.getState() == GameState.INGAME && GameLogic.isNextBattlePossible()) {
+        if (e.getKeyCode() == KeyEvent.VK_B && GameLogic.getState() == GameState.INGAME && LitiBattle.isNextBattlePossible()) {
             GameLogic.setState(GameState.BATTLE);
         } else if (e.getKeyCode() == KeyEvent.VK_B && GameLogic.getState() == GameState.BATTLE) {
             GameLogic.setState(GameState.INGAME);

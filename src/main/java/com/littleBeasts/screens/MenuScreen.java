@@ -3,6 +3,7 @@ package com.littleBeasts.screens;
 import client.Client;
 import com.littleBeasts.GameLogic;
 import com.littleBeasts.GameState;
+import com.littleBeasts.LitiClient;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.MapArea;
@@ -90,7 +91,7 @@ public class MenuScreen extends Screen implements IUpdateable {
 
     private void startGame() {
         this.mainMenu.setEnabled(false);
-        GameLogic.setOnlineGame(false);
+        LitiClient.setOnlineGame(false);
         Game.window().getRenderComponent().fadeOut(500);
 
         Game.loop().perform(100, () -> {
@@ -102,8 +103,8 @@ public class MenuScreen extends Screen implements IUpdateable {
 
     private void startOnlineGame() throws IOException {
         this.mainMenu.setEnabled(false);
-        GameLogic.setOnlineGame(true);
-        GameLogic.setClient(new Client("TestUser"));
+        LitiClient.setOnlineGame(true);
+        LitiClient.setClient(new Client("TestUser"));
         Game.window().getRenderComponent().fadeOut(500);
 
         Game.loop().perform(100, () -> {

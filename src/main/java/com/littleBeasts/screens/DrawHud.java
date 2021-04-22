@@ -2,6 +2,7 @@ package com.littleBeasts.screens;
 
 import com.littleBeasts.GameLogic;
 import com.littleBeasts.GameState;
+import com.littleBeasts.LitiBattle;
 import com.littleBeasts.PlayerState;
 import com.littleBeasts.entities.LitiBeast;
 import com.littleBeasts.entities.LitiPlayer;
@@ -85,7 +86,7 @@ public class DrawHud extends GuiComponent {
         for (LitiBeast litiBeast : LitiPlayer.instance().getLittleBeastTeam()) {
             litiBeast.getBeastStats().drawDamageRolls(g);
         }
-        for (LitiBeast litiBeast : GameLogic.getBeastList()) {
+        for (LitiBeast litiBeast : LitiBattle.getBeastList()) {
             if (litiBeast.getBeastStats() != null)
                 litiBeast.getBeastStats().drawDamageRolls(g);
         }
@@ -139,8 +140,8 @@ public class DrawHud extends GuiComponent {
         for (LitiBeast beast : LitiPlayer.instance().getLittleBeastTeam()) {
             beast.getBeastStats().draw(g, LitiPlayer.instance().getLittleBeastTeam().indexOf(beast));
         }
-        if (GameLogic.getBeastList() != null) {
-            for (LitiBeast beast : GameLogic.getBeastList()) {
+        if (LitiBattle.getBeastList() != null) {
+            for (LitiBeast beast : LitiBattle.getBeastList()) {
                 if (beast.getBeastStats() != null)
                     beast.getBeastStats().draw(g, 0);
             }
