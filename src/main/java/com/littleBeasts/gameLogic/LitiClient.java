@@ -1,4 +1,4 @@
-package com.littleBeasts;
+package com.littleBeasts.gameLogic;
 
 import client.Client;
 

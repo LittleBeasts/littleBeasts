@@ -1,7 +1,7 @@
 package com.littleBeasts.screens;
 
-import com.littleBeasts.GameLogic;
-import com.littleBeasts.GameState;
+import com.littleBeasts.gameLogic.GameLogic;
+import com.littleBeasts.gameLogic.GameState;
 import com.littleBeasts.entities.LitiPlayer;
 import de.gurkenlabs.litiengine.Align;
 import de.gurkenlabs.litiengine.Valign;

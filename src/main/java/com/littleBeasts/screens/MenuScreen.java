@@ -1,13 +1,12 @@
 package com.littleBeasts.screens;
 
 import client.Client;
-import com.littleBeasts.GameLogic;
-import com.littleBeasts.GameState;
-import com.littleBeasts.LitiClient;
+import com.littleBeasts.gameLogic.GameLogic;
+import com.littleBeasts.gameLogic.GameState;
+import com.littleBeasts.gameLogic.LitiClient;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.MapArea;
-import de.gurkenlabs.litiengine.entities.behavior.AStarPathFinder;
 import de.gurkenlabs.litiengine.graphics.TextRenderer;
 import de.gurkenlabs.litiengine.gui.screens.Screen;
 

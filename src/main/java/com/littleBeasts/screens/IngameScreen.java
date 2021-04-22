@@ -1,15 +1,12 @@
 package com.littleBeasts.screens;
 
-import com.littleBeasts.GameLogic;
-import com.littleBeasts.GameState;
+import com.littleBeasts.gameLogic.GameLogic;
+import com.littleBeasts.gameLogic.GameState;
 import config.HudConstants;
 import de.gurkenlabs.litiengine.Game;
-import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.gui.screens.Screen;
 
 import java.awt.*;
-
-import static config.HudConstants.*;
 
 public class IngameScreen extends Screen {
     public static final String NAME = "INGAME-SCREEN";

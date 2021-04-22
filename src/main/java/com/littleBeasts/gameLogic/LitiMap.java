@@ -1,4 +1,4 @@
-package com.littleBeasts;
+package com.littleBeasts.gameLogic;
 
 import com.littleBeasts.entities.LitiInteractable;
 import com.littleBeasts.entities.LitiPlayer;
@@ -8,7 +8,6 @@ import de.gurkenlabs.litiengine.entities.IEntity;
 import de.gurkenlabs.litiengine.entities.MapArea;
 import de.gurkenlabs.litiengine.entities.Spawnpoint;
 import de.gurkenlabs.litiengine.environment.tilemap.ITileLayer;
-
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -28,7 +27,8 @@ public class LitiMap {
     private static final ArrayList<Font> gameFonts = new ArrayList<>();
 
     public void loadNewArea() {
-        mapAreas = Game.world().environment().getAreas();
+        if (mapAreas == null)
+            loadCurrentMapAreas();
         Point2D playerPosition;
         Rectangle2D mapArea;
         for (MapArea area : mapAreas) {
@@ -52,9 +52,14 @@ public class LitiMap {
         }
     }
 
-    public void newMapLoadUp(){
+    public void newMapLoadUp() {
         createInteractableList();
         createTileMapLayerList();
+        loadCurrentMapAreas();
+    }
+
+    private void loadCurrentMapAreas() {
+        mapAreas = Game.world().environment().getAreas();
     }
 
     public void createInteractableList() {
@@ -80,7 +85,6 @@ public class LitiMap {
     }
 
     public void checkOpacity() {
-
         String layerName = "";
         for (MapArea area : mapAreas) {
             if (area.getName().contains("OVERLAY-") && area.getBoundingBox().contains(LitiPlayer.instance().getCenter())) {
@@ -90,9 +94,7 @@ public class LitiMap {
 
         for (ITileLayer layer : tileMapLayers) {
             if (layer.getName().equals(layerName)) {
-                if (layer.getMap().getBounds().contains(LitiPlayer.instance().getCenter()))
-                    layer.setOpacity(0.5f);
-
+                layer.setOpacity(0.5f);
             } else
                 layer.setOpacity(1.f);
         }
@@ -102,6 +104,7 @@ public class LitiMap {
         String pathName = "./Fonts";
         File path = new File(pathName);
         String[] fontFilesNames = path.list();
+        assert fontFilesNames != null;
         for (String fontFileName : fontFilesNames) {
             File fontFile = new File(pathName + "/" + fontFileName);
             Font gameFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);

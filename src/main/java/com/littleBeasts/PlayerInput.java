@@ -1,6 +1,7 @@
 package com.littleBeasts;
 
 import com.littleBeasts.entities.LitiPlayer;
+import com.littleBeasts.gameLogic.*;
 import de.gurkenlabs.litiengine.input.Input;
 
 import java.awt.event.KeyEvent;

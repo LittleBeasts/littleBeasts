@@ -2,6 +2,8 @@ package com.littleBeasts;
 
 
 import com.littleBeasts.entities.LitiPlayer;
+import com.littleBeasts.gameLogic.GameLogic;
+import com.littleBeasts.gameLogic.GameState;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;

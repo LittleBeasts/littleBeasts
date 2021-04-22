@@ -1,7 +1,6 @@
 package com.littleBeasts.entities;
 
-import com.littleBeasts.GameLogic;
-import com.littleBeasts.LitiMap;
+import com.littleBeasts.gameLogic.LitiMap;
 import config.FontConstants;
 import de.gurkenlabs.litiengine.entities.Creature;
 import de.gurkenlabs.litiengine.entities.IEntity;

@@ -1,8 +1,8 @@
 package com.littleBeasts.screens;
 
-import com.littleBeasts.GameLogic;
-import com.littleBeasts.GameState;
-import com.littleBeasts.LitiClient;
+import com.littleBeasts.gameLogic.GameLogic;
+import com.littleBeasts.gameLogic.GameState;
+import com.littleBeasts.gameLogic.LitiClient;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.gui.GuiComponent;
