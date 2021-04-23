@@ -126,6 +126,7 @@ public class LitiMap {
             }
         }
 
+
         for (ITileLayer layer : tileMapLayers) {
             if (layer.getName().equals(layerName)) {
                 layer.setOpacity(0.5f);
