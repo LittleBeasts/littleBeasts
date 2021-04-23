@@ -24,7 +24,7 @@ import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 
 @EntityInfo(width = 16, height = 16)
 @MovementInfo(velocity = 100)
-@CollisionInfo(collisionBoxWidth = 14, collisionBoxHeight = 2, collision = true, valign = Valign.DOWN)
+@CollisionInfo(collisionBoxWidth = 14, collisionBoxHeight = 6, collision = true, valign = Valign.DOWN)
 public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
     private static LitiPlayer litiPlayerInstance;
     private static PlayerState state = PlayerState.CONTROLLABLE;
