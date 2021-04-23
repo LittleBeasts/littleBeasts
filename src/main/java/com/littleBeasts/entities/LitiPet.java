@@ -78,7 +78,7 @@ public class LitiPet extends Creature implements IUpdateable, IMobileEntity {
     public void spawnPet() {
         if (!spawned) {
             // ToDo: Should be at the player
-            Spawnpoint spawnpoint = Game.world().environment().getSpawnpoint("west");
+            Spawnpoint spawnpoint = Game.world().environment().getSpawnpoint("Bed");
             spawnpoint.spawn(this);
             spawned = true;
             this.detachControllers();

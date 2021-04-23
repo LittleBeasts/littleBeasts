@@ -22,7 +22,7 @@ import java.util.List;
 import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 
 @EntityInfo(width = 16, height = 16)
-@MovementInfo(velocity = 70)
+@MovementInfo(velocity = 100)
 @CollisionInfo(collisionBoxWidth = 14, collisionBoxHeight = 2, collision = true, valign = Valign.DOWN)
 public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
     private static LitiPlayer litiPlayerInstance;
@@ -78,10 +78,10 @@ public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
     // ToDo: Change against "real" spawn logic
     public void spawnPlayer() {
         if (!spawned) {
-            Spawnpoint spawnpoint = Game.world().environment().getSpawnpoint("west");
+            Spawnpoint spawnpoint = Game.world().environment().getSpawnpoint("Bed");
             spawnpoint.spawn(this);
             spawned = true;
-            this.detachControllers();
+            //this.detachControllers();
         }
     }
 

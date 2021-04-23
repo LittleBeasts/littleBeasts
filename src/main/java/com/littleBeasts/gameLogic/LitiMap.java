@@ -8,6 +8,7 @@ import de.gurkenlabs.litiengine.entities.IEntity;
 import de.gurkenlabs.litiengine.entities.MapArea;
 import de.gurkenlabs.litiengine.entities.Spawnpoint;
 import de.gurkenlabs.litiengine.environment.tilemap.ITileLayer;
+
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -23,23 +24,30 @@ public class LitiMap {
 
     List<ITileLayer> tileMapLayers;
     Collection<MapArea> mapAreas;
+    Collection<Spawnpoint> spawnpoints;
     private static ArrayList<LitiInteractable> litiInteractables;
     private static final ArrayList<Font> gameFonts = new ArrayList<>();
+    private boolean freshlySpawned = true;
+    private long start = System.currentTimeMillis();
+    private int spawnDelay = 1000; //delay in milliseconds
 
     public void loadNewArea() {
-        if (mapAreas == null)
-            loadCurrentMapAreas();
+        if (freshlySpawned || (start + spawnDelay) >= System.currentTimeMillis())
+            return;
+        if (spawnpoints == null)
+            loadCurrentSpawnPoints();
         Point2D playerPosition;
         Rectangle2D mapArea;
-        for (MapArea area : mapAreas) {
+        for (Spawnpoint area : spawnpoints) {
             mapArea = area.getBoundingBox();
             playerPosition = LitiPlayer.instance().getCenter();
             playerPosition.setLocation(playerPosition.getX(), playerPosition.getY() + 12);
             if (mapArea.contains(playerPosition)) {
-                if (area.getName() != null && area.getName().contains("AREA-")) {
+                if (area.getName() != null) {
+                    this.freshlySpawned = true;
                     String originName = Game.world().environment().getMap().getName();
-                    if (DEBUG_CONSOLE_OUT) System.out.println(area.getName().replace("AREA-", ""));
-                    Game.world().loadEnvironment(area.getName().replace("AREA-", ""));
+                    if (DEBUG_CONSOLE_OUT) System.out.println(area.getName());
+                    Game.world().loadEnvironment(area.getName());
                     Spawnpoint spawnpoint = Game.world().environment().getSpawnpoint(originName);
                     if (spawnpoint != null) {
                         spawnpoint.spawn(LitiPlayer.instance());
@@ -56,6 +64,13 @@ public class LitiMap {
         createInteractableList();
         createTileMapLayerList();
         loadCurrentMapAreas();
+        loadCurrentSpawnPoints();
+        this.freshlySpawned = true;
+        this.start = System.currentTimeMillis();
+    }
+
+    private void loadCurrentSpawnPoints() {
+        spawnpoints = Game.world().environment().getSpawnPoints();
     }
 
     private void loadCurrentMapAreas() {
@@ -82,6 +97,25 @@ public class LitiMap {
 
     public static ArrayList<LitiInteractable> getInteractables() {
         return litiInteractables;
+    }
+
+
+    public void checkFreshlySpawned() {
+        Point2D playerPosition;
+        Rectangle2D mapArea;
+
+        if (this.freshlySpawned) {
+            this.freshlySpawned = false;
+            for (Spawnpoint spawnpoint : spawnpoints) {
+                mapArea = spawnpoint.getBoundingBox();
+                playerPosition = LitiPlayer.instance().getCenter();
+                playerPosition.setLocation(playerPosition.getX(), playerPosition.getY());
+                if (mapArea.contains(playerPosition.getX(), playerPosition.getY())) {
+                    this.freshlySpawned = true;
+                    break;
+                }
+            }
+        }
     }
 
     public void checkOpacity() {
