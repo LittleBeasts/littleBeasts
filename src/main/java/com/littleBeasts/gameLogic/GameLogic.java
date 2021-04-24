@@ -120,6 +120,7 @@ public class GameLogic implements IUpdateable {
         currentLitiMap.checkFreshlySpawned();
         LitiBattle.startBattle();
         currentLitiMap.checkOpacity();
+        currentLitiMap.checkOverlays();
         LitiBattle.removeBeast();
         if (LitiClient.isOnlineGame()) {
             LitiClient.readBufferedMessages();

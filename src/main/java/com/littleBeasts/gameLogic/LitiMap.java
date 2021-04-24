@@ -8,6 +8,7 @@ import de.gurkenlabs.litiengine.entities.IEntity;
 import de.gurkenlabs.litiengine.entities.MapArea;
 import de.gurkenlabs.litiengine.entities.Spawnpoint;
 import de.gurkenlabs.litiengine.environment.tilemap.ITileLayer;
+import de.gurkenlabs.litiengine.graphics.RenderType;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -22,14 +23,17 @@ import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 
 public class LitiMap {
 
-    List<ITileLayer> tileMapLayers;
-    Collection<MapArea> mapAreas;
-    Collection<Spawnpoint> spawnpoints;
+    private List<ITileLayer> tileMapLayers;
+    private Collection<MapArea> mapAreas;
+    private Collection<Spawnpoint> spawnpoints;
     private static ArrayList<LitiInteractable> litiInteractables;
     private static final ArrayList<Font> gameFonts = new ArrayList<>();
     private boolean freshlySpawned = true;
     private long start = System.currentTimeMillis();
     private int spawnDelay = 1000; //delay in milliseconds
+    private List<Integer> changedTileLayers = new ArrayList<>();
+    private boolean deactivateOverlays = false;
+    private boolean isInOverlayArea = false;
 
     public void loadNewArea() {
         if (freshlySpawned || (start + spawnDelay) >= System.currentTimeMillis())
@@ -121,17 +125,48 @@ public class LitiMap {
     public void checkOpacity() {
         String layerName = "";
         for (MapArea area : mapAreas) {
-            if (area.getName().contains("OVERLAY-") && area.getBoundingBox().contains(LitiPlayer.instance().getCenter())) {
-                layerName = area.getName().replace("OVERLAY-", "");
+            if (area.getName().contains("OPACITY-") && area.getBoundingBox().contains(LitiPlayer.instance().getCenter())) {
+                layerName = area.getName().replace("OPACITY-", "");
             }
         }
-
 
         for (ITileLayer layer : tileMapLayers) {
             if (layer.getName().equals(layerName)) {
                 layer.setOpacity(0.5f);
             } else
                 layer.setOpacity(1.f);
+        }
+    }
+
+    public void checkOverlays() {
+        Point2D playerPosition = LitiPlayer.instance().getCenter();
+        playerPosition.setLocation(playerPosition.getX(), playerPosition.getY() + 12);
+        isInOverlayArea = false;
+        for (MapArea area : mapAreas) {
+            if (area.getName().contains("OVERLAY-") && area.getBoundingBox().contains(playerPosition)) {
+                isInOverlayArea = true;
+                for (int i = 0; i < tileMapLayers.size(); i++) {
+                    ITileLayer layer = tileMapLayers.get(i);
+                    if (layer.getRenderType().equals(RenderType.OVERLAY)) {
+                        changedTileLayers.add(i);
+                        layer.setRenderType(RenderType.NORMAL);
+                        if (layer.getName().equals(area.getName().replace("OVERLAY-", "")))
+                            deactivateOverlays = true;
+                    }
+                    if (deactivateOverlays)
+                        break;
+                }
+                if (deactivateOverlays)
+                    break;
+            }
+        }
+
+        if (!isInOverlayArea && changedTileLayers != null && changedTileLayers.size() > 0) {
+            for (int position : changedTileLayers) {
+                tileMapLayers.get(position).setRenderType(RenderType.OVERLAY);
+            }
+            changedTileLayers = new ArrayList<>();
+            deactivateOverlays = false;
         }
     }
 
