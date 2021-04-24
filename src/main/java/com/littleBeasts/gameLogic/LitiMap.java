@@ -2,7 +2,6 @@ package com.littleBeasts.gameLogic;
 
 import com.littleBeasts.entities.LitiInteractable;
 import com.littleBeasts.entities.LitiPlayer;
-import de.gurkenlabs.litiengine.Direction;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.entities.IEntity;
 import de.gurkenlabs.litiengine.entities.MapArea;
@@ -47,6 +46,8 @@ public class LitiMap {
             playerPosition = LitiPlayer.instance().getCenter();
             playerPosition.setLocation(playerPosition.getX(), playerPosition.getY() + 12);
             if (mapArea.contains(playerPosition)) {
+                if (area.getSpawnInfo() != null && area.getSpawnInfo().equals("culdesac"))
+                    return;
                 if (area.getName() != null) {
                     this.freshlySpawned = true;
                     String originName = Game.world().environment().getMap().getName();
@@ -56,7 +57,7 @@ public class LitiMap {
                     if (spawnpoint != null) {
                         spawnpoint.spawn(LitiPlayer.instance());
                     }
-                    LitiPlayer.instance().setFacingDirection(Direction.DOWN);
+                    LitiPlayer.instance().setFacingDirection(spawnpoint.getDirection());
                     LitiPlayer.instance().setRenderWithLayer(true);
                     newMapLoadUp();
                 }
@@ -113,7 +114,7 @@ public class LitiMap {
             for (Spawnpoint spawnpoint : spawnpoints) {
                 mapArea = spawnpoint.getBoundingBox();
                 playerPosition = LitiPlayer.instance().getCenter();
-                playerPosition.setLocation(playerPosition.getX(), playerPosition.getY());
+                playerPosition.setLocation(playerPosition.getX(), playerPosition.getY() + 6);
                 if (mapArea.contains(playerPosition.getX(), playerPosition.getY())) {
                     this.freshlySpawned = true;
                     break;
