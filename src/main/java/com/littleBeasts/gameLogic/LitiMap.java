@@ -50,10 +50,20 @@ public class LitiMap {
                     return;
                 if (area.getName() != null) {
                     this.freshlySpawned = true;
-                    String originName = Game.world().environment().getMap().getName();
-                    if (DEBUG_CONSOLE_OUT) System.out.println(area.getName());
-                    Game.world().loadEnvironment(area.getName());
-                    Spawnpoint spawnpoint = Game.world().environment().getSpawnpoint(originName);
+                    String spawnpointName = Game.world().environment().getMap().getName();
+                    String targetMapName = area.getName();
+
+                    if (targetMapName.contains("#")) {
+                        spawnpointName += targetMapName.substring(targetMapName.indexOf("#"));
+                        targetMapName = targetMapName.substring(0, targetMapName.indexOf("#"));
+                    }
+                    if (DEBUG_CONSOLE_OUT) {
+                        System.out.println(spawnpointName);
+                        System.out.println(targetMapName);
+                    }
+
+                    Game.world().loadEnvironment(targetMapName);
+                    Spawnpoint spawnpoint = Game.world().environment().getSpawnpoint(spawnpointName);
                     if (spawnpoint != null) {
                         spawnpoint.spawn(LitiPlayer.instance());
                     }
