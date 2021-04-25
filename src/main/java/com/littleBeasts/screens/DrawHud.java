@@ -69,7 +69,7 @@ public class DrawHud extends GuiComponent {
                 e.printStackTrace();
             }
         } else {
-            this.drawIngameHud(g);
+            //this.drawIngameHud(g);
             rollIn = 0;
             battleMenu.setFocus(false);
         }
