@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @EntityInfo(width = 16, height = 16)
-@MovementInfo(velocity = 70)
+@MovementInfo(velocity = 110)
 @CollisionInfo(collisionBoxWidth = 14, collisionBoxHeight = 14, collision = true)
 public class LitiPet extends Creature implements IUpdateable, IMobileEntity {
     private static LitiPet litiPetInstance;
@@ -81,7 +81,7 @@ public class LitiPet extends Creature implements IUpdateable, IMobileEntity {
             Spawnpoint spawnpoint = Game.world().environment().getSpawnpoint("Bed");
             spawnpoint.spawn(this);
             spawned = true;
-            this.detachControllers();
+            //this.detachControllers();
         }
     }
 
