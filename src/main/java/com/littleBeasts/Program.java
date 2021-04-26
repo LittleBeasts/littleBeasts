@@ -16,12 +16,15 @@ public class Program {
     private static GameLogic gameLogic;
     private static IngameScreen ingameScreen;
     private static MenuScreen menuScreen;
+    private static String startingMap = null;
 
     public static void main(String[] args) throws IOException, FontFormatException {
         //set game meta information
         Game.info().setName("littleBeasts");
         Game.info().setSubTitle("");
         Game.info().setVersion("v.0");
+        if (args.length >0)
+            startingMap = args[0];
 
         // initialize the game infrastructure
         Game.init();
@@ -70,5 +73,9 @@ public class Program {
 
     public static MenuScreen getMenuScreen() {
         return menuScreen;
+    }
+
+    public static String getStartingMap() {
+        return startingMap;
     }
 }

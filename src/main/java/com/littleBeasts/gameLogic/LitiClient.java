@@ -47,4 +47,10 @@ public class LitiClient {
     public static void setOnlineGame(boolean onlineGame) {
         LitiClient.onlineGame = onlineGame;
     }
+
+    public static void update(){
+        if (isOnlineGame()) {
+            readBufferedMessages();
+        }
+    }
 }

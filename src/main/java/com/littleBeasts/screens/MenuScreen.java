@@ -1,6 +1,7 @@
 package com.littleBeasts.screens;
 
 import client.Client;
+import com.littleBeasts.Program;
 import com.littleBeasts.gameLogic.GameLogic;
 import com.littleBeasts.gameLogic.GameState;
 import com.littleBeasts.gameLogic.LitiClient;
@@ -91,11 +92,15 @@ public class MenuScreen extends Screen implements IUpdateable {
     private void startGame() {
         this.mainMenu.setEnabled(false);
         LitiClient.setOnlineGame(false);
-        Game.window().getRenderComponent().fadeOut(500);
+        //Game.window().getRenderComponent().fadeOut(500);
 
         Game.loop().perform(100, () -> {
             Game.screens().display("INGAME-SCREEN");
-            Game.world().loadEnvironment("DormRoom");
+            if (Program.getStartingMap() != null) {
+                Game.world().loadEnvironment(Program.getStartingMap());
+            } else {
+                Game.world().loadEnvironment(MapNames.FleaMarket.toString());
+            }
             GameLogic.setState(GameState.INGAME);
         });
     }
