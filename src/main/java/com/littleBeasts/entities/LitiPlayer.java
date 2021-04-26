@@ -2,15 +2,17 @@ package com.littleBeasts.entities;
 
 import calculationEngine.battle.CeBattle;
 import calculationEngine.entities.*;
+import com.littleBeasts.abilities.Attack;
 import com.littleBeasts.gameLogic.GameLogic;
 import com.littleBeasts.gameLogic.LitiMap;
 import com.littleBeasts.gameLogic.PlayerState;
-import com.littleBeasts.abilities.Attack;
+import de.gurkenlabs.litiengine.Align;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.Valign;
 import de.gurkenlabs.litiengine.entities.*;
 import de.gurkenlabs.litiengine.input.KeyboardEntityController;
+import de.gurkenlabs.litiengine.physics.Collision;
 import de.gurkenlabs.litiengine.physics.Force;
 import de.gurkenlabs.litiengine.resources.Resources;
 
@@ -22,8 +24,8 @@ import java.util.List;
 import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 
 @EntityInfo(width = 16, height = 16)
-@MovementInfo(velocity = 70)
-@CollisionInfo(collisionBoxWidth = 14, collisionBoxHeight = 2, collision = true, valign = Valign.DOWN)
+@MovementInfo(velocity = 100)
+@CollisionInfo(collisionBoxWidth = 14, collisionBoxHeight = 6, collision = true, align = Align.CENTER, valign = Valign.DOWN, collisionType = Collision.DYNAMIC)
 public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
     private static LitiPlayer litiPlayerInstance;
     private static PlayerState state = PlayerState.CONTROLLABLE;
@@ -78,10 +80,10 @@ public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
     // ToDo: Change against "real" spawn logic
     public void spawnPlayer() {
         if (!spawned) {
-            Spawnpoint spawnpoint = Game.world().environment().getSpawnpoint("west");
+            Spawnpoint spawnpoint = Game.world().environment().getSpawnpoint("Bed");
             spawnpoint.spawn(this);
             spawned = true;
-            this.detachControllers();
+            //this.detachControllers();
         }
     }
 

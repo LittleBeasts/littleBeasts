@@ -4,3 +4,6 @@ target/
 .idea/
 out/
 littleBeasts.iml
+*.lck
+*.1
+*.properties

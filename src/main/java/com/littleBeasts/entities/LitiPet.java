@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @EntityInfo(width = 16, height = 16)
-@MovementInfo(velocity = 70)
+@MovementInfo(velocity = 110)
 @CollisionInfo(collisionBoxWidth = 14, collisionBoxHeight = 14, collision = true)
 public class LitiPet extends Creature implements IUpdateable, IMobileEntity {
     private static LitiPet litiPetInstance;
@@ -58,7 +58,7 @@ public class LitiPet extends Creature implements IUpdateable, IMobileEntity {
         //if (pathPoints == null || pathPoints.isEmpty()) {
         //    pathPoints = LitiPathfindingController.getPath(this, playerPosition).getPoints();
         //}
-        threshold = this.isIdle() ? 35f : 15f;
+        threshold = this.isIdle() ? 40f : 25f;
         //Point2D pathPoint = pathPoints.remove(0);
         //double x1 = this.getCenter().getX();
         //double x2 = pathPoint.getX();
@@ -67,9 +67,11 @@ public class LitiPet extends Creature implements IUpdateable, IMobileEntity {
         double differenceX = playerPosition.getX() - this.getCenter().getX();
         double differenceY = playerPosition.getY() - this.getCenter().getY();
         double euclideanDistance = Math.sqrt(Math.abs(differenceX * differenceX) + Math.abs(differenceY * differenceY));
-        if (euclideanDistance > threshold ) {
-            this.movementController.setDx((float) differenceX);
-            this.movementController.setDy((float) differenceY);
+        if (euclideanDistance > threshold) {
+            if (Math.abs(differenceX) > threshold / 2)
+                this.movementController.setDx((float) differenceX);
+            if (Math.abs(differenceY) > threshold / 2)
+                this.movementController.setDy((float) differenceY);
         }
     }
     //this.movementController.update();
@@ -78,10 +80,10 @@ public class LitiPet extends Creature implements IUpdateable, IMobileEntity {
     public void spawnPet() {
         if (!spawned) {
             // ToDo: Should be at the player
-            Spawnpoint spawnpoint = Game.world().environment().getSpawnpoint("west");
+            Spawnpoint spawnpoint = Game.world().environment().getSpawnpoint("Bed");
             spawnpoint.spawn(this);
             spawned = true;
-            this.detachControllers();
+            //this.detachControllers();
         }
     }
 

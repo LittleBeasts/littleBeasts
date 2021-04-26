@@ -50,7 +50,7 @@ public class GameLogic implements IUpdateable {
             currentLitiMap.newMapLoadUp();
 
             // spawn the player instance on the spawn point with the name "west"
-            Spawnpoint enter = e.getSpawnpoint("west");
+            Spawnpoint enter = e.getSpawnpoint("Bed");
             if (enter != null) {
                 enter.spawn(LitiPlayer.instance());
                 enter.spawn(LitiPet.instance());
@@ -117,8 +117,10 @@ public class GameLogic implements IUpdateable {
     @Override
     public void update() {
         currentLitiMap.loadNewArea();
+        currentLitiMap.checkFreshlySpawned();
         LitiBattle.startBattle();
         currentLitiMap.checkOpacity();
+        currentLitiMap.checkOverlays();
         LitiBattle.removeBeast();
         if (LitiClient.isOnlineGame()) {
             LitiClient.readBufferedMessages();
