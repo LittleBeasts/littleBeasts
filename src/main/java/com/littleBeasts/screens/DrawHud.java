@@ -125,11 +125,9 @@ public class DrawHud extends GuiComponent {
 
         if (attackMenu.isFocused()) {
             this.attackMenu.draw(g,0);
-            if(DEBUG_CONSOLE_OUT) System.out.println("atack menu drawn");
         }
         if (catchMenu.isFocused()) {
             this.catchMenu.draw(g,1);
-            if(DEBUG_CONSOLE_OUT) System.out.println("catch menu drawn");
         }
 
         //draw beast portraits and stats

@@ -29,11 +29,6 @@ public class DrawAttackMenu extends DrawBattleMenu {
         setUpAttackMenuInput(ceAttacks);
     }
 
-    @Override
-    public void confirm() {
-        super.confirm();
-    }
-
     private void setUpAttackMenuInput(List<CeAttack> ceAttacks) {
         Input.keyboard().onKeyTyped(e -> {
             if (!this.isFocused()) return;
