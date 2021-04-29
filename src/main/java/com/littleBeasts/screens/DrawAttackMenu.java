@@ -7,6 +7,7 @@ import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.input.Input;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import static config.GlobalConfig.*;
@@ -15,7 +16,7 @@ import static config.PlayerConfig.*;
 
 public class DrawAttackMenu extends DrawBattleMenu {
 
-    private String[] items;
+    private ArrayList<String> items;
 
     public DrawAttackMenu(List<CeAttack> ceAttacks) {
         super();
@@ -53,8 +54,8 @@ public class DrawAttackMenu extends DrawBattleMenu {
                 case KeyEvent.VK_SPACE:
                 case KeyEvent.VK_E:
                     Game.audio().playSound("Menu_pick");
-                    if (DEBUG_CONSOLE_OUT) System.out.println(this.items[this.getCurrentPosition()]);
-                    switch (PLAYER_ACTIONS[this.getCurrentPosition()]) {
+                    if (DEBUG_CONSOLE_OUT) System.out.println(this.items.get(this.getCurrentPosition()));
+                    switch (PLAYER_ACTIONS.get(this.getCurrentPosition())) {
                         case "Attack":
                             LitiPlayer.instance().getBattle().useAttack(ceAttacks.get(this.getCurrentPosition()));
                             LitiPlayer.instance().punch();
@@ -72,9 +73,9 @@ public class DrawAttackMenu extends DrawBattleMenu {
     }
 
     public void setItemsFromAttacks(List<CeAttack> ceAttacks) {
-        this.items = new String[ceAttacks.size()];
+        this.items = new ArrayList<>();
         for (CeAttack ceAttack : ceAttacks) {
-            this.items[0] = ceAttack.getName();
+            items.add(ceAttack.getName());
         }
         this.setItems(this.items);
     }

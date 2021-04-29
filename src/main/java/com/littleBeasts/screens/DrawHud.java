@@ -31,8 +31,8 @@ In the draw method of this class all element which need to be displayed are draw
 
 public class DrawHud extends GuiComponent {
     private final DrawBattleMenu battleMenu;
-    private final DrawBattleMenu attackMenu;
-    private final DrawBattleMenu catchMenu;
+    private final DrawAttackMenu attackMenu;
+    private final DrawCatchMenu catchMenu;
 
     private boolean drawAttackMenu = false;
     private boolean drawCatchMenu = false;
@@ -126,6 +126,9 @@ public class DrawHud extends GuiComponent {
         }
         if (catchMenu.isFocused()) {
             this.catchMenu.draw(g,1);
+        }
+        if (battleMenu.isFocused()) {
+            int test =0;
         }
 
         //draw beast portraits and stats

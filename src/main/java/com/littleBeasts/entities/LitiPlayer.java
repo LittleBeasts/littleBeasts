@@ -56,6 +56,7 @@ public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
         // ToDo: Change with new saveGame logic and initialize a new Player correctly
         List<CeAttack> attacks = new ArrayList<>();
         attacks.add(new CeAttack(CeAttacks.Punch));
+        attacks.add(new CeAttack(CeAttacks.Flee));
         this.cePlayer = new CePlayer(new CeStats(CeBeastTypes.PlayerStandard, CeNature.ANGRY, 1, 100, 100, 20, 1, 20, 10, 1), attacks, beastsToCeEntities(littleBeastTeam), false);
         this.playerCeAttacks = cePlayer.getAttacks();
         this.maxHP = cePlayer.getCeStats().getMaxHitPoints();

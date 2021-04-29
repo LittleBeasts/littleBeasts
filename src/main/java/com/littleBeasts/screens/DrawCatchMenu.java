@@ -8,15 +8,15 @@ import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.input.Input;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 import static config.HudConstants.*;
 import static config.HudConstants.ITEMLISTLENGTH;
-import static config.PlayerConfig.PLAYER_ACTIONS;
 
 public class DrawCatchMenu extends DrawBattleMenu {
-    private String[] items;
+
     public DrawCatchMenu(List<CeItem> ceItems) {
         super();
         this.setX(BATTLE_MENU_START + BATTLE_MENU_OFFSET);
@@ -25,10 +25,9 @@ public class DrawCatchMenu extends DrawBattleMenu {
         this.setHeight(HudConstants.HUD_ROW_HEIGHT * this.getAmountOfDrawnItems() / ITEMLISTLENGTH);
         this.setItems(ceItems);
         this.setLastDrawnItem(Math.min(2, ITEMLISTLENGTH));
-        setUpCatchMenuInput(ceItems);
+        setUpMenuInput(ceItems);
     }
-
-    private void setUpCatchMenuInput(List<CeItem> ceAttacks) {
+    private void setUpMenuInput(List<CeItem> ceAttacks) {
         Input.keyboard().onKeyTyped(e -> {
             if (!this.isFocused()) return;
             if (!LitiPlayer.instance().isFighting()) return;
@@ -59,14 +58,12 @@ public class DrawCatchMenu extends DrawBattleMenu {
                     break;
             }
         });
+
     }
 
     private void setItems(List<CeItem> ceItems) {
-        this.items = new String[2];
-//        for (CeItem ceItem : ceItems) {
-            this.items[0] = "cage";
-            this.items[1] = "cage2";
-//        }
-        this.setItems(this.items);
+        this.addItems("cage");
+        this.addItems("cage2");
+
     }
 }
