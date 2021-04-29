@@ -17,7 +17,7 @@ import static config.PlayerConfig.PLAYER_ACTIONS;
 
 public class DrawCatchMenu extends DrawBattleMenu {
     private String[] items;
-    public DrawCatchMenu(List<CeAttack> ceItems) {
+    public DrawCatchMenu(List<CeItem> ceItems) {
         super();
         this.setX(BATTLE_MENU_START + BATTLE_MENU_OFFSET);
         this.setAmountOfItems(2);
@@ -28,7 +28,7 @@ public class DrawCatchMenu extends DrawBattleMenu {
         setUpCatchMenuInput(ceItems);
     }
 
-    private void setUpCatchMenuInput(List<CeAttack> ceAttacks) {
+    private void setUpCatchMenuInput(List<CeItem> ceAttacks) {
         Input.keyboard().onKeyTyped(e -> {
             if (!this.isFocused()) return;
             if (!LitiPlayer.instance().isFighting()) return;
@@ -52,30 +52,21 @@ public class DrawCatchMenu extends DrawBattleMenu {
                 case KeyEvent.VK_SPACE:
                 case KeyEvent.VK_E:
                     Game.audio().playSound("Menu_pick");
-                    if (DEBUG_CONSOLE_OUT) System.out.println(this.items[this.getCurrentPosition()]);
-                    switch (PLAYER_ACTIONS[this.getCurrentPosition()]) {
-                        case "Attack":
-                            LitiPlayer.instance().getBattle().useAttack(ceAttacks.get(this.getCurrentPosition()));
-                            LitiPlayer.instance().punch();
-                            break;
-                        case "Catch":
-                            LitiPlayer.instance().getBattle().catchBeast();
-                            break;
-                        default:
-                            break;
-                    }
+                    LitiPlayer.instance().getBattle().catchBeast();
+                    if (DEBUG_CONSOLE_OUT)
+                        System.out.println("Beast caught: " + LitiPlayer.instance().getBattle().catchBeast());
                     this.confirm();
                     break;
             }
         });
     }
 
-    private void setItems(List<CeAttack> ceItems) {
+    private void setItems(List<CeItem> ceItems) {
         this.items = new String[2];
-        for (CeAttack ceItem : ceItems) {
+//        for (CeItem ceItem : ceItems) {
             this.items[0] = "cage";
             this.items[1] = "cage2";
-        }
+//        }
         this.setItems(this.items);
     }
 }

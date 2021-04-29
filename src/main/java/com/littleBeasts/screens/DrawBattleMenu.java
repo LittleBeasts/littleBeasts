@@ -50,7 +50,7 @@ public class DrawBattleMenu { // dev constructor
 
     private void setUpMenuInput(String[] items) {
         Input.keyboard().onKeyTyped(e -> {
-            if (!focus) return;
+            if (!this.isFocused()) return;
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_UP:
                 case KeyEvent.VK_W:
@@ -69,13 +69,8 @@ public class DrawBattleMenu { // dev constructor
                     if (DEBUG_CONSOLE_OUT) System.out.println(items[currentPosition]);
                     switch (items[currentPosition]) {
                         case "Attack":
-                            this.confirm();
-                            break;
                         case "Catch":
                             this.confirm();
-                            if (DEBUG_CONSOLE_OUT) System.out.println("Action_Catch");
-                            if (DEBUG_CONSOLE_OUT)
-                                System.out.println("Beast caught: " + LitiPlayer.instance().getBattle().catchBeast());
                             break;
                     }
                     break;
@@ -94,6 +89,9 @@ public class DrawBattleMenu { // dev constructor
         }
     }
 
+    public void draw(Graphics2D g) {
+        this.draw(g,0);
+    }
     public void draw(Graphics2D g, int posInBattleMenu) {
         int downShift = posInBattleMenu * SUBMENUSHIFT;
         // draw background
@@ -114,12 +112,12 @@ public class DrawBattleMenu { // dev constructor
             // draw selection
             g.setColor(HudConstants.SELECTCOLOR);
             if (i == currentPosition) {
-                g.drawRect(x, y+downShift + height * (i - firstDrawnItem) / amountOfDrawnItems, width, height / amountOfDrawnItems);
+                g.drawRect(x, y+ downShift + height * (i - firstDrawnItem) / amountOfDrawnItems, width, height / amountOfDrawnItems);
             }
 
             // draw text
             g.setColor(HudConstants.TEXTCOLOR);
-            g.drawString(items[i], x + buttonPad, (y + 20 + buttonPad+downShift) + height * (i - firstDrawnItem) / amountOfDrawnItems);
+            g.drawString(items[i], x + buttonPad, (y + 20 + buttonPad+ downShift) + height * (i - firstDrawnItem) / amountOfDrawnItems);
         }
     }
 

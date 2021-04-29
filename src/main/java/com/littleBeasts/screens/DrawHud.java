@@ -30,7 +30,6 @@ In the draw method of this class all element which need to be displayed are draw
 --------------------------------------------*/
 
 public class DrawHud extends GuiComponent {
-
     private final DrawBattleMenu battleMenu;
     private final DrawBattleMenu attackMenu;
     private final DrawBattleMenu catchMenu;
@@ -56,8 +55,8 @@ public class DrawHud extends GuiComponent {
             drawAttackMenu = !drawAttackMenu;
         });
 
-        //ToDo: Replace parameter with LitiPlayer.CeItems
-        catchMenu = new DrawCatchMenu(LitiPlayer.instance().getPlayerAttacks());
+        //ToDo: get PlayerItems from Player Inventroy
+        catchMenu = new DrawCatchMenu(LitiPlayer.instance().getPlayerItems());
         catchMenu.onConfirm(c -> {
             drawCatchMenu = !drawCatchMenu;
         });
@@ -118,11 +117,10 @@ public class DrawHud extends GuiComponent {
         drawActionMenu(g);
 
 
-        battleMenu.draw(g,0);
+        battleMenu.draw(g);
         catchMenu.setFocus(drawCatchMenu);
         attackMenu.setFocus(drawAttackMenu);
         battleMenu.setFocus(!(drawAttackMenu||drawCatchMenu));
-
         if (attackMenu.isFocused()) {
             this.attackMenu.draw(g,0);
         }

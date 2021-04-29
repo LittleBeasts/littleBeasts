@@ -2,6 +2,7 @@ package com.littleBeasts.entities;
 
 import calculationEngine.battle.CeBattle;
 import calculationEngine.entities.*;
+import calculationEngine.environment.CeItem;
 import com.littleBeasts.abilities.Attack;
 import com.littleBeasts.gameLogic.GameLogic;
 import com.littleBeasts.gameLogic.LitiMap;
@@ -37,6 +38,7 @@ public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
 
     private final CePlayer cePlayer;
     private List<CeAttack> playerCeAttacks;
+    private List<CeItem> playerItems;
     private String playerName = "xXx_BeastSlayer_xXx";
     private int maxHP, currentHP;
     private boolean isFighting;
@@ -263,5 +265,8 @@ public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
 
     public Image getPlayerPortrait() {
         return playerPortrait;
+    }
+    public List<CeItem> getPlayerItems() {
+        return playerItems;
     }
 }
