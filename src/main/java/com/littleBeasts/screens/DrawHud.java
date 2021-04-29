@@ -1,5 +1,7 @@
 package com.littleBeasts.screens;
 
+import calculationEngine.entities.CeAttack;
+import calculationEngine.environment.CeItem;
 import com.littleBeasts.gameLogic.GameLogic;
 import com.littleBeasts.gameLogic.GameState;
 import com.littleBeasts.gameLogic.LitiBattle;
@@ -17,7 +19,9 @@ import de.gurkenlabs.litiengine.resources.Resources;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import java.io.IOException;
+import java.util.ArrayList;
 
+import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 import static config.HudConstants.*;
 
 /*--------------------------------------------
@@ -29,22 +33,33 @@ public class DrawHud extends GuiComponent {
 
     private final DrawBattleMenu battleMenu;
     private final DrawBattleMenu attackMenu;
+    private final DrawBattleMenu catchMenu;
 
     private boolean drawAttackMenu = false;
+    private boolean drawCatchMenu = false;
     private int rollIn = 0;
 
     public DrawHud() {
         super(0, 0, WIDTH, HEIGHT);
 
         battleMenu = new DrawBattleMenu();
-
-        battleMenu.onConfirm(c -> {
-            drawAttackMenu = !drawAttackMenu;
-        });
+            battleMenu.onConfirm(c -> {
+                if (battleMenu.getCurrentPosition()==0) {
+                    drawAttackMenu = !drawAttackMenu;
+                } else if (battleMenu.getCurrentPosition() == 1) {
+                    drawCatchMenu = !drawCatchMenu;
+                }
+            });
 
         attackMenu = new DrawAttackMenu(LitiPlayer.instance().getPlayerAttacks());
         attackMenu.onConfirm(c -> {
             drawAttackMenu = !drawAttackMenu;
+        });
+
+        //ToDo: Replace parameter with LitiPlayer.CeItems
+        catchMenu = new DrawCatchMenu(LitiPlayer.instance().getPlayerAttacks());
+        catchMenu.onConfirm(c -> {
+            drawCatchMenu = !drawCatchMenu;
         });
 
     }
@@ -103,12 +118,18 @@ public class DrawHud extends GuiComponent {
         drawActionMenu(g);
 
 
-        battleMenu.draw(g);
+        battleMenu.draw(g,0);
+        catchMenu.setFocus(drawCatchMenu);
         attackMenu.setFocus(drawAttackMenu);
-        battleMenu.setFocus(!drawAttackMenu);
+        battleMenu.setFocus(!(drawAttackMenu||drawCatchMenu));
 
         if (attackMenu.isFocused()) {
-            this.attackMenu.draw(g);
+            this.attackMenu.draw(g,0);
+            if(DEBUG_CONSOLE_OUT) System.out.println("atack menu drawn");
+        }
+        if (catchMenu.isFocused()) {
+            this.catchMenu.draw(g,1);
+            if(DEBUG_CONSOLE_OUT) System.out.println("catch menu drawn");
         }
 
         //draw beast portraits and stats

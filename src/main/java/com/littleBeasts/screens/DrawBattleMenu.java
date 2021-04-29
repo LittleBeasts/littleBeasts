@@ -72,6 +72,7 @@ public class DrawBattleMenu { // dev constructor
                             this.confirm();
                             break;
                         case "Catch":
+                            this.confirm();
                             if (DEBUG_CONSOLE_OUT) System.out.println("Action_Catch");
                             if (DEBUG_CONSOLE_OUT)
                                 System.out.println("Beast caught: " + LitiPlayer.instance().getBattle().catchBeast());
@@ -93,10 +94,11 @@ public class DrawBattleMenu { // dev constructor
         }
     }
 
-    public void draw(Graphics2D g) {
+    public void draw(Graphics2D g, int posInBattleMenu) {
+        int downShift = posInBattleMenu * SUBMENUSHIFT;
         // draw background
         g.setColor(HudConstants.BACKGROUND);
-        g.fillRect(x, y, width, height);
+        g.fillRect(x, y+downShift, width, height);
 
         // draw buttons
         int buttonPad = 2;
@@ -105,19 +107,19 @@ public class DrawBattleMenu { // dev constructor
             // draw buttons
             g.setColor(HudConstants.BUTTONCOLOR);
             g.fillRect(x + buttonPad,
-                    y + buttonPad + height * (i - firstDrawnItem) / amountOfDrawnItems,
+                    y+downShift + buttonPad + height * (i - firstDrawnItem) / amountOfDrawnItems,
                     width - 2 * buttonPad,
                     height / amountOfDrawnItems - 2 * buttonPad);
 
             // draw selection
             g.setColor(HudConstants.SELECTCOLOR);
             if (i == currentPosition) {
-                g.drawRect(x, y + height * (i - firstDrawnItem) / amountOfDrawnItems, width, height / amountOfDrawnItems);
+                g.drawRect(x, y+downShift + height * (i - firstDrawnItem) / amountOfDrawnItems, width, height / amountOfDrawnItems);
             }
 
             // draw text
             g.setColor(HudConstants.TEXTCOLOR);
-            g.drawString(items[i], x + buttonPad, (y + 20 + buttonPad) + height * (i - firstDrawnItem) / amountOfDrawnItems);
+            g.drawString(items[i], x + buttonPad, (y + 20 + buttonPad+downShift) + height * (i - firstDrawnItem) / amountOfDrawnItems);
         }
     }
 
@@ -169,7 +171,6 @@ public class DrawBattleMenu { // dev constructor
     public void setX(int x) {
         this.x = x;
     }
-
     public void setItems(String[] items) {
         this.items = items;
     }

@@ -1,6 +1,7 @@
 package com.littleBeasts.screens;
 
 import calculationEngine.entities.CeAttack;
+import calculationEngine.environment.CeItem;
 import com.littleBeasts.entities.LitiPlayer;
 import config.HudConstants;
 import de.gurkenlabs.litiengine.Game;
@@ -9,32 +10,25 @@ import de.gurkenlabs.litiengine.input.Input;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
-import static config.GlobalConfig.*;
+import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 import static config.HudConstants.*;
-import static config.PlayerConfig.*;
+import static config.HudConstants.ITEMLISTLENGTH;
+import static config.PlayerConfig.PLAYER_ACTIONS;
 
-public class DrawAttackMenu extends DrawBattleMenu {
-
+public class DrawCatchMenu extends DrawBattleMenu {
     private String[] items;
-
-    public DrawAttackMenu(List<CeAttack> ceAttacks) {
+    public DrawCatchMenu(List<CeAttack> ceItems) {
         super();
         this.setX(BATTLE_MENU_START + BATTLE_MENU_OFFSET);
-        this.setAmountOfItems(ceAttacks.size());
-        this.setAmountOfDrawnItems(Math.min(ceAttacks.size(), ITEMLISTLENGTH));
+        this.setAmountOfItems(2);
+        this.setAmountOfDrawnItems(Math.min(2, ITEMLISTLENGTH));
         this.setHeight(HudConstants.HUD_ROW_HEIGHT * this.getAmountOfDrawnItems() / ITEMLISTLENGTH);
-        this.setItemsFromAttacks(ceAttacks);
-        this.setLastDrawnItem(Math.min(ceAttacks.size(), ITEMLISTLENGTH));
-
-        setUpAttackMenuInput(ceAttacks);
+        this.setItems(ceItems);
+        this.setLastDrawnItem(Math.min(2, ITEMLISTLENGTH));
+        setUpCatchMenuInput(ceItems);
     }
 
-    @Override
-    public void confirm() {
-        super.confirm();
-    }
-
-    private void setUpAttackMenuInput(List<CeAttack> ceAttacks) {
+    private void setUpCatchMenuInput(List<CeAttack> ceAttacks) {
         Input.keyboard().onKeyTyped(e -> {
             if (!this.isFocused()) return;
             if (!LitiPlayer.instance().isFighting()) return;
@@ -76,10 +70,11 @@ public class DrawAttackMenu extends DrawBattleMenu {
         });
     }
 
-    public void setItemsFromAttacks(List<CeAttack> ceAttacks) {
-        this.items = new String[ceAttacks.size()];
-        for (CeAttack ceAttack : ceAttacks) {
-            this.items[0] = ceAttack.getName();
+    private void setItems(List<CeAttack> ceItems) {
+        this.items = new String[2];
+        for (CeAttack ceItem : ceItems) {
+            this.items[0] = "cage";
+            this.items[1] = "cage2";
         }
         this.setItems(this.items);
     }
