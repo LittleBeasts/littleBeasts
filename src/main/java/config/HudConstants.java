@@ -29,6 +29,7 @@ public class HudConstants {
 
     // BattleMenu and SubMenus
     public static final int ITEMLISTLENGTH = 4;
+    public static final int SUBMENUSHIFT = 25;
     public static final Color BACKGROUND = Color.WHITE;
     public static final Color SELECTCOLOR = Color.RED;
     public static final Color BUTTONCOLOR = Color.GRAY;

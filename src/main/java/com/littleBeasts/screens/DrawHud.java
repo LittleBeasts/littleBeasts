@@ -1,5 +1,7 @@
 package com.littleBeasts.screens;
 
+import calculationEngine.entities.CeAttack;
+import calculationEngine.environment.CeItem;
 import com.littleBeasts.gameLogic.GameLogic;
 import com.littleBeasts.gameLogic.GameState;
 import com.littleBeasts.gameLogic.LitiBattle;
@@ -17,7 +19,9 @@ import de.gurkenlabs.litiengine.resources.Resources;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import java.io.IOException;
+import java.util.ArrayList;
 
+import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 import static config.HudConstants.*;
 
 /*--------------------------------------------
@@ -26,25 +30,35 @@ In the draw method of this class all element which need to be displayed are draw
 --------------------------------------------*/
 
 public class DrawHud extends GuiComponent {
-
     private final DrawBattleMenu battleMenu;
-    private final DrawBattleMenu attackMenu;
+    private final DrawAttackMenu attackMenu;
+    private final DrawCatchMenu catchMenu;
 
     private boolean drawAttackMenu = false;
+    private boolean drawCatchMenu = false;
     private int rollIn = 0;
 
     public DrawHud() {
         super(0, 0, WIDTH, HEIGHT);
 
         battleMenu = new DrawBattleMenu();
-
-        battleMenu.onConfirm(c -> {
-            drawAttackMenu = !drawAttackMenu;
-        });
+            battleMenu.onConfirm(c -> {
+                if (battleMenu.getCurrentPosition()==0) {
+                    drawAttackMenu = !drawAttackMenu;
+                } else if (battleMenu.getCurrentPosition() == 1) {
+                    drawCatchMenu = !drawCatchMenu;
+                }
+            });
 
         attackMenu = new DrawAttackMenu(LitiPlayer.instance().getPlayerAttacks());
         attackMenu.onConfirm(c -> {
             drawAttackMenu = !drawAttackMenu;
+        });
+
+        //ToDo: get PlayerItems from Player Inventroy
+        catchMenu = new DrawCatchMenu(LitiPlayer.instance().getPlayerItems());
+        catchMenu.onConfirm(c -> {
+            drawCatchMenu = !drawCatchMenu;
         });
 
     }
@@ -104,11 +118,17 @@ public class DrawHud extends GuiComponent {
 
 
         battleMenu.draw(g);
+        catchMenu.setFocus(drawCatchMenu);
         attackMenu.setFocus(drawAttackMenu);
-        battleMenu.setFocus(!drawAttackMenu);
-
+        battleMenu.setFocus(!(drawAttackMenu||drawCatchMenu));
         if (attackMenu.isFocused()) {
-            this.attackMenu.draw(g);
+            this.attackMenu.draw(g,0);
+        }
+        if (catchMenu.isFocused()) {
+            this.catchMenu.draw(g,1);
+        }
+        if (battleMenu.isFocused()) {
+            int test =0;
         }
 
         //draw beast portraits and stats

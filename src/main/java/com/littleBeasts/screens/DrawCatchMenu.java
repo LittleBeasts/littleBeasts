@@ -1,6 +1,7 @@
 package com.littleBeasts.screens;
 
 import calculationEngine.entities.CeAttack;
+import calculationEngine.environment.CeItem;
 import com.littleBeasts.entities.LitiPlayer;
 import config.HudConstants;
 import de.gurkenlabs.litiengine.Game;
@@ -10,27 +11,23 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import static config.GlobalConfig.*;
+import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 import static config.HudConstants.*;
-import static config.PlayerConfig.*;
+import static config.HudConstants.ITEMLISTLENGTH;
 
-public class DrawAttackMenu extends DrawBattleMenu {
+public class DrawCatchMenu extends DrawBattleMenu {
 
-    private ArrayList<String> items;
-
-    public DrawAttackMenu(List<CeAttack> ceAttacks) {
+    public DrawCatchMenu(List<CeItem> ceItems) {
         super();
         this.setX(BATTLE_MENU_START + BATTLE_MENU_OFFSET);
-        this.setAmountOfItems(ceAttacks.size());
-        this.setAmountOfDrawnItems(Math.min(ceAttacks.size(), ITEMLISTLENGTH));
+        this.setAmountOfItems(2);
+        this.setAmountOfDrawnItems(Math.min(2, ITEMLISTLENGTH));
         this.setHeight(HudConstants.HUD_ROW_HEIGHT * this.getAmountOfDrawnItems() / ITEMLISTLENGTH);
-        this.setItemsFromAttacks(ceAttacks);
-        this.setLastDrawnItem(Math.min(ceAttacks.size(), ITEMLISTLENGTH));
-
-        setUpAttackMenuInput(ceAttacks);
+        this.setItems(ceItems);
+        this.setLastDrawnItem(Math.min(2, ITEMLISTLENGTH));
+        setUpMenuInput(ceItems);
     }
-
-    private void setUpAttackMenuInput(List<CeAttack> ceAttacks) {
+    private void setUpMenuInput(List<CeItem> ceAttacks) {
         Input.keyboard().onKeyTyped(e -> {
             if (!this.isFocused()) return;
             if (!LitiPlayer.instance().isFighting()) return;
@@ -54,29 +51,19 @@ public class DrawAttackMenu extends DrawBattleMenu {
                 case KeyEvent.VK_SPACE:
                 case KeyEvent.VK_E:
                     Game.audio().playSound("Menu_pick");
-                    if (DEBUG_CONSOLE_OUT) System.out.println(this.items.get(this.getCurrentPosition()));
-                    switch (PLAYER_ACTIONS.get(this.getCurrentPosition())) {
-                        case "Attack":
-                            LitiPlayer.instance().getBattle().useAttack(ceAttacks.get(this.getCurrentPosition()));
-                            LitiPlayer.instance().punch();
-                            break;
-                        case "Catch":
-                            LitiPlayer.instance().getBattle().catchBeast();
-                            break;
-                        default:
-                            break;
-                    }
+                    LitiPlayer.instance().getBattle().catchBeast();
+                    if (DEBUG_CONSOLE_OUT)
+                        System.out.println("Beast caught: " + LitiPlayer.instance().getBattle().catchBeast());
                     this.confirm();
                     break;
             }
         });
+
     }
 
-    public void setItemsFromAttacks(List<CeAttack> ceAttacks) {
-        this.items = new ArrayList<>();
-        for (CeAttack ceAttack : ceAttacks) {
-            items.add(ceAttack.getName());
-        }
-        this.setItems(this.items);
+    private void setItems(List<CeItem> ceItems) {
+        this.addItems("cage");
+        this.addItems("cage2");
+
     }
 }
