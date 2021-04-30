@@ -2,6 +2,8 @@ package com.littleBeasts;
 
 import com.littleBeasts.entities.LitiPlayer;
 import com.littleBeasts.gameLogic.*;
+import com.littleBeasts.screens.DrawBattleMenu;
+import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.input.Input;
 
 import java.awt.event.KeyEvent;
@@ -12,6 +14,8 @@ public final class PlayerInput {
     public static void init() {
         AtomicBoolean menu = new AtomicBoolean(false);
         Input.keyboard().onKeyTyped(e -> {
+            if (GameLogic.getState().equals(GameState.BATTLE))
+                battleControls(e);
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_ESCAPE:
                     onEscape(menu);
@@ -24,6 +28,39 @@ public final class PlayerInput {
             }
         });
 
+    }
+
+    private static void battleControls(KeyEvent e) {
+        DrawBattleMenu currentBattleMenu;
+        if (Program.getIngameScreen().getHud().getCatchMenu().isFocused())
+            currentBattleMenu = Program.getIngameScreen().getHud().getCatchMenu();
+        else if (Program.getIngameScreen().getHud().getAttackMenu().isFocused())
+            currentBattleMenu = Program.getIngameScreen().getHud().getAttackMenu();
+        else if (Program.getIngameScreen().getHud().getBattleMenu().isFocused())
+            currentBattleMenu = Program.getIngameScreen().getHud().getBattleMenu();
+        else
+            return;
+
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_UP:
+            case KeyEvent.VK_W:
+                Game.audio().playSound("Menu_change");
+                currentBattleMenu.decPosition();
+                break;
+            case KeyEvent.VK_A:
+                currentBattleMenu.getMenuChange().accept(false);
+                break;
+            case KeyEvent.VK_DOWN:
+            case KeyEvent.VK_S:
+                Game.audio().playSound("Menu_change");
+                currentBattleMenu.incPosition();
+                break;
+            case KeyEvent.VK_D:
+            case KeyEvent.VK_E:
+            case KeyEvent.VK_SPACE:
+                Game.audio().playSound("Menu_pick");
+                currentBattleMenu.confirm();
+        }
     }
 
     private static void onEscape(AtomicBoolean menu) {

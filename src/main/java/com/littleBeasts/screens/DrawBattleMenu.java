@@ -1,6 +1,7 @@
 package com.littleBeasts.screens;
 
-import com.littleBeasts.entities.LitiPlayer;
+import com.littleBeasts.gameLogic.GameLogic;
+import com.littleBeasts.gameLogic.GameState;
 import config.HudConstants;
 import config.PlayerConfig;
 import de.gurkenlabs.litiengine.Game;
@@ -8,7 +9,6 @@ import de.gurkenlabs.litiengine.input.Input;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -30,10 +30,12 @@ public class DrawBattleMenu { // dev constructor
     private int x, amountOfItems, amountOfDrawnItems, height;
     private int firstDrawnItem, lastDrawnItem, currentPosition;
     private ArrayList<String> items;
-    private boolean focus = false;
+    private boolean focus;
     private final List<Consumer<Integer>> confirmConsumer;
+    private Consumer<Boolean> menuChange;
 
-    public DrawBattleMenu() {
+    public DrawBattleMenu(boolean focus) {
+        this.setFocus(focus);
         this.items = new ArrayList<>();
         this.x = BATTLE_MENU_START;
         this.y = HEIGHT - BOTTOM_PAD;
@@ -46,41 +48,11 @@ public class DrawBattleMenu { // dev constructor
         this.firstDrawnItem = 0;
         this.lastDrawnItem = amountOfDrawnItems;
         this.confirmConsumer = new CopyOnWriteArrayList<>();
-
-
+        this.menuChange = this::setFocus;
         setUpMenuInput(items);
     }
 
     private void setUpMenuInput(ArrayList<String> items) {
-        Input.keyboard().onKeyTyped(e -> {
-            if ((this instanceof DrawCatchMenu)) return;
-            if ((this instanceof DrawAttackMenu)) return;
-            if (!this.isFocused()) return;
-            switch (e.getKeyCode()) {
-                case KeyEvent.VK_UP:
-                case KeyEvent.VK_W:
-                    Game.audio().playSound("Menu_change");
-                    this.decPosition();
-                    if (DEBUG_CONSOLE_OUT) System.out.println("Up | " + this.currentPosition);
-                    break;
-                case KeyEvent.VK_DOWN:
-                case KeyEvent.VK_S:
-                    Game.audio().playSound("Menu_change");
-                    this.incPosition();
-                    if (DEBUG_CONSOLE_OUT) System.out.println("Down | " + this.currentPosition);
-                    break;
-                case KeyEvent.VK_D:
-                    Game.audio().playSound("Menu_pick");
-                    if (DEBUG_CONSOLE_OUT) System.out.println(items.get(this.getCurrentPosition()));
-                    switch (items.get(this.getCurrentPosition())) {
-                        case "Attack":
-                        case "Catch":
-                            this.confirm();
-                            break;
-                    }
-                    break;
-            }
-        });
     }
 
     public void onConfirm(Consumer<Integer> cons) {
@@ -202,5 +174,9 @@ public class DrawBattleMenu { // dev constructor
 
     public void setAmountOfItems(int amountOfItems) {
         this.amountOfItems = amountOfItems;
+    }
+
+    public Consumer<Boolean> getMenuChange() {
+        return menuChange;
     }
 }

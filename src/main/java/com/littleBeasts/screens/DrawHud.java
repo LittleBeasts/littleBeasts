@@ -1,13 +1,11 @@
 package com.littleBeasts.screens;
 
-import calculationEngine.entities.CeAttack;
-import calculationEngine.environment.CeItem;
+import com.littleBeasts.entities.LitiBeast;
+import com.littleBeasts.entities.LitiPlayer;
 import com.littleBeasts.gameLogic.GameLogic;
 import com.littleBeasts.gameLogic.GameState;
 import com.littleBeasts.gameLogic.LitiBattle;
 import com.littleBeasts.gameLogic.PlayerState;
-import com.littleBeasts.entities.LitiBeast;
-import com.littleBeasts.entities.LitiPlayer;
 import config.HudConstants;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.graphics.ImageRenderer;
@@ -21,7 +19,6 @@ import java.awt.geom.RoundRectangle2D;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 import static config.HudConstants.*;
 
 /*--------------------------------------------
@@ -33,34 +30,24 @@ public class DrawHud extends GuiComponent {
     private final DrawBattleMenu battleMenu;
     private final DrawAttackMenu attackMenu;
     private final DrawCatchMenu catchMenu;
-
-    private boolean drawAttackMenu = false;
-    private boolean drawCatchMenu = false;
+    private ArrayList<DrawBattleMenu> drawBattleMenus = new ArrayList<>();
     private int rollIn = 0;
 
     public DrawHud() {
         super(0, 0, WIDTH, HEIGHT);
 
-        battleMenu = new DrawBattleMenu();
-            battleMenu.onConfirm(c -> {
-                if (battleMenu.getCurrentPosition()==0) {
-                    drawAttackMenu = !drawAttackMenu;
-                } else if (battleMenu.getCurrentPosition() == 1) {
-                    drawCatchMenu = !drawCatchMenu;
-                }
-            });
-
+        battleMenu = new DrawBattleMenu(true);
         attackMenu = new DrawAttackMenu(LitiPlayer.instance().getPlayerAttacks());
-        attackMenu.onConfirm(c -> {
-            drawAttackMenu = !drawAttackMenu;
-        });
-
-        //ToDo: get PlayerItems from Player Inventroy
+        //ToDo: get PlayerItems from Player Inventory
         catchMenu = new DrawCatchMenu(LitiPlayer.instance().getPlayerItems());
-        catchMenu.onConfirm(c -> {
-            drawCatchMenu = !drawCatchMenu;
+        drawBattleMenus.add(attackMenu);
+        drawBattleMenus.add(catchMenu);
+        battleMenu.onConfirm(c -> {
+            if (c < drawBattleMenus.size()) {
+                drawBattleMenus.get(c).setFocus(true);
+                battleMenu.setFocus(false);
+            }
         });
-
     }
 
     @Override
@@ -85,7 +72,6 @@ public class DrawHud extends GuiComponent {
         } else {
             //this.drawIngameHud(g);
             rollIn = 0;
-            battleMenu.setFocus(false);
         }
     }
 
@@ -117,18 +103,16 @@ public class DrawHud extends GuiComponent {
         drawActionMenu(g);
 
 
-        battleMenu.draw(g);
-        catchMenu.setFocus(drawCatchMenu);
-        attackMenu.setFocus(drawAttackMenu);
-        battleMenu.setFocus(!(drawAttackMenu||drawCatchMenu));
-        if (attackMenu.isFocused()) {
-            this.attackMenu.draw(g,0);
+        this.battleMenu.draw(g);
+        this.battleMenu.setFocus(!(this.attackMenu.isFocused() || this.catchMenu.isFocused()));
+        if (this.attackMenu.isFocused()) {
+            this.attackMenu.draw(g, 0);
         }
-        if (catchMenu.isFocused()) {
-            this.catchMenu.draw(g,1);
+        if (this.catchMenu.isFocused()) {
+            this.catchMenu.draw(g, 1);
         }
-        if (battleMenu.isFocused()) {
-            int test =0;
+        if (this.battleMenu.isFocused()) {
+            int test = 0;
         }
 
         //draw beast portraits and stats
@@ -217,5 +201,11 @@ public class DrawHud extends GuiComponent {
     public DrawBattleMenu getBattleMenu() {
         return battleMenu;
     }
+
+    public DrawBattleMenu getCatchMenu() {
+        return catchMenu;
+    }
+
+    ;
 
 }
