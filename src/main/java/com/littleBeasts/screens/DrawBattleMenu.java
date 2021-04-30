@@ -34,6 +34,7 @@ public class DrawBattleMenu { // dev constructor
     private final List<Consumer<Integer>> confirmConsumer;
 
     public DrawBattleMenu() {
+        this.items = new ArrayList<>();
         this.x = BATTLE_MENU_START;
         this.y = HEIGHT - BOTTOM_PAD;
         this.amountOfItems = PlayerConfig.PLAYER_ACTIONS.size();
@@ -44,8 +45,8 @@ public class DrawBattleMenu { // dev constructor
         this.currentPosition = 0;
         this.firstDrawnItem = 0;
         this.lastDrawnItem = amountOfDrawnItems;
-
         this.confirmConsumer = new CopyOnWriteArrayList<>();
+
 
         setUpMenuInput(items);
     }
