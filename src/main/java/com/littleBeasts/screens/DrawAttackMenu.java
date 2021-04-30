@@ -10,16 +10,16 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import static config.GlobalConfig.*;
+import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 import static config.HudConstants.*;
-import static config.PlayerConfig.*;
+import static config.PlayerConfig.PLAYER_ACTIONS;
 
 public class DrawAttackMenu extends DrawBattleMenu {
 
-    private ArrayList<String> items;
 
     public DrawAttackMenu(List<CeAttack> ceAttacks) {
         super();
+        this.setItems(new ArrayList<>());
         this.setX(BATTLE_MENU_START + BATTLE_MENU_OFFSET);
         this.setAmountOfItems(ceAttacks.size());
         this.setAmountOfDrawnItems(Math.min(ceAttacks.size(), ITEMLISTLENGTH));
@@ -54,7 +54,7 @@ public class DrawAttackMenu extends DrawBattleMenu {
                 case KeyEvent.VK_SPACE:
                 case KeyEvent.VK_E:
                     Game.audio().playSound("Menu_pick");
-                    if (DEBUG_CONSOLE_OUT) System.out.println(this.items.get(this.getCurrentPosition()));
+                    if (DEBUG_CONSOLE_OUT) System.out.println(this.getItems().get(this.getCurrentPosition()));
                     switch (PLAYER_ACTIONS.get(this.getCurrentPosition())) {
                         case "Attack":
                             LitiPlayer.instance().getBattle().useAttack(ceAttacks.get(this.getCurrentPosition()));
@@ -73,10 +73,8 @@ public class DrawAttackMenu extends DrawBattleMenu {
     }
 
     public void setItemsFromAttacks(List<CeAttack> ceAttacks) {
-        this.items = new ArrayList<>();
         for (CeAttack ceAttack : ceAttacks) {
-            items.add(ceAttack.getName());
+            this.addItems(ceAttack.getName());
         }
-        this.setItems(this.items);
     }
 }

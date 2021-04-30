@@ -1,6 +1,5 @@
 package com.littleBeasts.screens;
 
-import calculationEngine.entities.CeAttack;
 import calculationEngine.environment.CeItem;
 import com.littleBeasts.entities.LitiPlayer;
 import config.HudConstants;
@@ -13,21 +12,22 @@ import java.util.List;
 
 import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 import static config.HudConstants.*;
-import static config.HudConstants.ITEMLISTLENGTH;
 
 public class DrawCatchMenu extends DrawBattleMenu {
 
     public DrawCatchMenu(List<CeItem> ceItems) {
         super();
+        this.setItems(new ArrayList<String>());
         this.setX(BATTLE_MENU_START + BATTLE_MENU_OFFSET);
         this.setAmountOfItems(2);
         this.setAmountOfDrawnItems(Math.min(2, ITEMLISTLENGTH));
         this.setHeight(HudConstants.HUD_ROW_HEIGHT * this.getAmountOfDrawnItems() / ITEMLISTLENGTH);
         this.setItems(ceItems);
         this.setLastDrawnItem(Math.min(2, ITEMLISTLENGTH));
-        setUpMenuInput(ceItems);
+        setUpCatchInput(ceItems);
     }
-    private void setUpMenuInput(List<CeItem> ceAttacks) {
+
+    private void setUpCatchInput(List<CeItem> ceItems) {
         Input.keyboard().onKeyTyped(e -> {
             if (!this.isFocused()) return;
             if (!LitiPlayer.instance().isFighting()) return;
