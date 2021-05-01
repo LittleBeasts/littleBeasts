@@ -2,7 +2,7 @@ package com.littleBeasts;
 
 import com.littleBeasts.entities.LitiPlayer;
 import com.littleBeasts.gameLogic.*;
-import com.littleBeasts.screens.DrawBattleMenu;
+import com.littleBeasts.screens.ActionMenu;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.input.Input;
 
@@ -31,11 +31,11 @@ public final class PlayerInput {
     }
 
     private static void battleControls(KeyEvent e) {
-        DrawBattleMenu currentBattleMenu;
-        if (Program.getIngameScreen().getHud().getCatchMenu().isFocused())
-            currentBattleMenu = Program.getIngameScreen().getHud().getCatchMenu();
-        else if (Program.getIngameScreen().getHud().getAttackMenu().isFocused())
-            currentBattleMenu = Program.getIngameScreen().getHud().getAttackMenu();
+        ActionMenu currentBattleMenu;
+        if (Program.getIngameScreen().getHud().getBattleMenu().getCatchMenu().isFocused())
+            currentBattleMenu = Program.getIngameScreen().getHud().getBattleMenu().getCatchMenu();
+        else if (Program.getIngameScreen().getHud().getBattleMenu().getAttackMenu().isFocused())
+            currentBattleMenu = Program.getIngameScreen().getHud().getBattleMenu().getAttackMenu();
         else if (Program.getIngameScreen().getHud().getBattleMenu().isFocused())
             currentBattleMenu = Program.getIngameScreen().getHud().getBattleMenu();
         else

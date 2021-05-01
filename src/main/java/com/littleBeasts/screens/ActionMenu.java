@@ -1,75 +1,45 @@
 package com.littleBeasts.screens;
 
-import com.littleBeasts.gameLogic.GameLogic;
-import com.littleBeasts.gameLogic.GameState;
 import config.HudConstants;
-import config.PlayerConfig;
-import de.gurkenlabs.litiengine.Game;
-import de.gurkenlabs.litiengine.input.Input;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
-import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 import static config.HudConstants.*;
+import static config.HudConstants.ITEMLISTLENGTH;
 
-/*--------------------------------------------
-This class creates a menu for use in battle.
-It is called in the HUD class.
-Height, width and bottom pad should be adjusted in HudConstants
-
-20201105 D.B. Created Class
---------------------------------------------*/
-
-public class DrawBattleMenu { // dev constructor
-    private final int y, width;
-    private int x, amountOfItems, amountOfDrawnItems, height;
-    private int firstDrawnItem, lastDrawnItem, currentPosition;
-    private ArrayList<String> items;
-    private boolean focus;
+public abstract class ActionMenu {
+    protected final int y, width;
+    protected int x, amountOfItems, amountOfDrawnItems, height;
+    protected int firstDrawnItem, lastDrawnItem, currentPosition;
+    protected boolean focus;
     private final List<Consumer<Integer>> confirmConsumer;
+    protected ArrayList<String> items;
     private Consumer<Boolean> menuChange;
-
-    public DrawBattleMenu(boolean focus) {
-        this.setFocus(focus);
-        this.items = new ArrayList<>();
-        this.x = BATTLE_MENU_START;
+    public ActionMenu(ArrayList<String> items) {
+        this.x = getX();
         this.y = HEIGHT - BOTTOM_PAD;
-        this.amountOfItems = PlayerConfig.PLAYER_ACTIONS.size();
+        this.items = items;
+        this.amountOfItems = items.size();
         this.amountOfDrawnItems = (Math.min(amountOfItems, ITEMLISTLENGTH));
         this.width = HudConstants.BATTLE_MENU_WIDTH;
         this.height = HudConstants.HUD_ROW_HEIGHT * amountOfDrawnItems / ITEMLISTLENGTH;
-        this.items = PlayerConfig.PLAYER_ACTIONS;
         this.currentPosition = 0;
         this.firstDrawnItem = 0;
         this.lastDrawnItem = amountOfDrawnItems;
         this.confirmConsumer = new CopyOnWriteArrayList<>();
         this.menuChange = this::setFocus;
-        setUpMenuInput(items);
     }
 
-    private void setUpMenuInput(ArrayList<String> items) {
-    }
+    protected abstract int getX();
 
-    public void onConfirm(Consumer<Integer> cons) {
-        this.confirmConsumer.add(cons);
-    }
-
-    // get events from constructor
-    public void confirm() {
-        for (Consumer<Integer> cons : this.confirmConsumer) {
-            cons.accept(this.currentPosition);
-        }
-    }
 
     public void draw(Graphics2D g) {
         this.draw(g, 0);
     }
-
     public void draw(Graphics2D g, int posInBattleMenu) {
         int downShift = posInBattleMenu * SUBMENUSHIFT;
         // draw background
@@ -98,7 +68,6 @@ public class DrawBattleMenu { // dev constructor
             g.drawString(items.get(i), x + buttonPad, (y + 20 + buttonPad + downShift) + height * (i - firstDrawnItem) / amountOfDrawnItems);
         }
     }
-
     public void incPosition() {
         this.currentPosition = ++this.currentPosition % (amountOfItems);
         if (this.currentPosition == 0) {
@@ -123,60 +92,26 @@ public class DrawBattleMenu { // dev constructor
         }
         this.currentPosition = this.currentPosition % (amountOfItems);
     }
+    protected void addItems(String item) {
+        this.items.add(item);
+    }
 
     public void setFocus(boolean focus) {
         this.focus = focus;
     }
 
-    public int getCurrentFocus() {
-        return currentPosition;
-    }
-
-    public int getCurrentPosition() {
-        return currentPosition;
-    }
-
-    public ArrayList<String> getItems() {
-        return items;
-    }
-
     public boolean isFocused() {
         return this.focus;
     }
-
-    public void setX(int x) {
-        this.x = x;
+    public void onConfirm(Consumer<Integer> cons) {
+        this.confirmConsumer.add(cons);
     }
-
-    public void setItems(ArrayList<String> items) {
-        this.items = items;
-    }
-
-    public void addItems(String item) {
-        this.items.add(item);
-    }
-
-    public void setAmountOfDrawnItems(int amountOfDrawnItems) {
-        this.amountOfDrawnItems = amountOfDrawnItems;
-    }
-
-    public int getAmountOfDrawnItems() {
-        return amountOfDrawnItems;
-    }
-
-    public void setLastDrawnItem(int lastDrawnItem) {
-        this.lastDrawnItem = lastDrawnItem;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public void setAmountOfItems(int amountOfItems) {
-        this.amountOfItems = amountOfItems;
-    }
-
     public Consumer<Boolean> getMenuChange() {
         return menuChange;
+    }
+    public void confirm() {
+        for (Consumer<Integer> cons : this.confirmConsumer) {
+            cons.accept(this.currentPosition);
+        }
     }
 }

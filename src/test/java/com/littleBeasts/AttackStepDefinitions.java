@@ -46,7 +46,7 @@ public class AttackStepDefinitions {
 
     @Then("^a menu opens where the Player can choose an attack$")
     public void aMenuOpensWhereThePlayerCanChooseAnAttack() {
-        Assert.assertTrue(Program.getIngameScreen().getHud().getAttackMenu().isFocused());
+        Assert.assertTrue(Program.getIngameScreen().getHud().getBattleMenu().getAttackMenu().isFocused());
         TestRobot.robotButtonPress(KeyEvent.VK_E);
         TestRobot.robotButtonPress(KeyEvent.VK_B);
         Assert.assertEquals(GameLogic.getState(), GameState.INGAME);

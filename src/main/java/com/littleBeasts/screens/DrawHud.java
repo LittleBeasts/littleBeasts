@@ -17,7 +17,6 @@ import de.gurkenlabs.litiengine.resources.Resources;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import static config.HudConstants.*;
 
@@ -27,25 +26,20 @@ In the draw method of this class all element which need to be displayed are draw
 --------------------------------------------*/
 
 public class DrawHud extends GuiComponent {
-    private final DrawBattleMenu battleMenu;
-    private final DrawAttackMenu attackMenu;
-    private final DrawCatchMenu catchMenu;
-    private ArrayList<DrawBattleMenu> drawBattleMenus = new ArrayList<>();
+    private final BattleMenu battleMenu;
     private int rollIn = 0;
 
     public DrawHud() {
         super(0, 0, WIDTH, HEIGHT);
 
-        battleMenu = new DrawBattleMenu(true);
-        attackMenu = new DrawAttackMenu(LitiPlayer.instance().getPlayerAttacks());
+        battleMenu = new BattleMenu(true);
         //ToDo: get PlayerItems from Player Inventory
-        catchMenu = new DrawCatchMenu(LitiPlayer.instance().getPlayerItems());
-        drawBattleMenus.add(attackMenu);
-        drawBattleMenus.add(catchMenu);
-        battleMenu.onConfirm(c -> {
-            if (c < drawBattleMenus.size()) {
-                drawBattleMenus.get(c).setFocus(true);
-                battleMenu.setFocus(false);
+        battleMenu.onConfirm( c -> {
+            battleMenu.setFocus(false);
+            if (c == 0) {
+                battleMenu.getAttackMenu().setFocus(true);
+            } else if (c == 1) {
+                battleMenu.getCatchMenu().setFocus(true);
             }
         });
     }
@@ -104,12 +98,12 @@ public class DrawHud extends GuiComponent {
 
 
         this.battleMenu.draw(g);
-        this.battleMenu.setFocus(!(this.attackMenu.isFocused() || this.catchMenu.isFocused()));
-        if (this.attackMenu.isFocused()) {
-            this.attackMenu.draw(g, 0);
+        this.battleMenu.setFocus(!(this.battleMenu.getAttackMenu().isFocused() || this.battleMenu.getCatchMenu().isFocused()));
+        if (this.battleMenu.getAttackMenu().isFocused()) {
+            this.battleMenu.getAttackMenu().draw(g, 0);
         }
-        if (this.catchMenu.isFocused()) {
-            this.catchMenu.draw(g, 1);
+        if (this.battleMenu.getCatchMenu().isFocused()) {
+            this.battleMenu.getCatchMenu().draw(g, 1);
         }
         if (this.battleMenu.isFocused()) {
             int test = 0;
@@ -194,17 +188,10 @@ public class DrawHud extends GuiComponent {
         battleMenu.setFocus(focus);
     }
 
-    public DrawBattleMenu getAttackMenu() {
-        return attackMenu;
-    }
-
-    public DrawBattleMenu getBattleMenu() {
+    public BattleMenu getBattleMenu() {
         return battleMenu;
     }
 
-    public DrawBattleMenu getCatchMenu() {
-        return catchMenu;
-    }
 
     ;
 
