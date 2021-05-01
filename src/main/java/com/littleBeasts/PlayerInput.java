@@ -47,6 +47,7 @@ public final class PlayerInput {
                 Game.audio().playSound("Menu_change");
                 currentBattleMenu.decPosition();
                 break;
+            case KeyEvent.VK_LEFT:
             case KeyEvent.VK_A:
                 currentBattleMenu.getMenuChange().accept(false);
                 break;

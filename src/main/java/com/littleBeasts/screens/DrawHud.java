@@ -34,7 +34,7 @@ public class DrawHud extends GuiComponent {
 
         battleMenu = new BattleMenu(true);
         //ToDo: get PlayerItems from Player Inventory
-        battleMenu.onConfirm( c -> {
+        battleMenu.onConfirm(c -> {
             battleMenu.setFocus(false);
             if (c == 0) {
                 battleMenu.getAttackMenu().setFocus(true);
@@ -53,8 +53,6 @@ public class DrawHud extends GuiComponent {
         }
 
         this.drawDamageRolls(g);
-        this.renderPlayerUI(g);
-        this.renderHP(g);
         this.renderBeasts(g);
         if (GameLogic.getState() == GameState.BATTLE) {
             try {
@@ -93,20 +91,14 @@ public class DrawHud extends GuiComponent {
         //Player portrait and stats.
         drawPlayerPortrait(g);
 
-        //Action menu
-        drawActionMenu(g);
-
 
         this.battleMenu.draw(g);
         this.battleMenu.setFocus(!(this.battleMenu.getAttackMenu().isFocused() || this.battleMenu.getCatchMenu().isFocused()));
         if (this.battleMenu.getAttackMenu().isFocused()) {
-            this.battleMenu.getAttackMenu().draw(g, 0);
+            this.battleMenu.getAttackMenu().draw(g, battleMenu.firstDrawnItem);
         }
         if (this.battleMenu.getCatchMenu().isFocused()) {
-            this.battleMenu.getCatchMenu().draw(g, 1);
-        }
-        if (this.battleMenu.isFocused()) {
-            int test = 0;
+            this.battleMenu.getCatchMenu().draw(g, 1 - battleMenu.firstDrawnItem);
         }
 
         //draw beast portraits and stats
@@ -146,23 +138,8 @@ public class DrawHud extends GuiComponent {
         }
     }
 
-    // Methods tbd
-    private void drawActionMenu(Graphics2D g) {
-
-    }
-
-    private void drawContextMenu(Graphics2D g) {
-
-    }
-
+    // TODO: Methods tbd
     private void renderBeasts(Graphics2D g) {
-
-    }
-
-    private void renderPlayerUI(Graphics2D g) {
-    }
-
-    private void renderHP(Graphics2D g) {
 
     }
 
@@ -184,15 +161,8 @@ public class DrawHud extends GuiComponent {
         }
     }
 
-    public void setBattleMenuFocus(boolean focus) {
-        battleMenu.setFocus(focus);
-    }
-
     public BattleMenu getBattleMenu() {
         return battleMenu;
     }
-
-
-    ;
 
 }

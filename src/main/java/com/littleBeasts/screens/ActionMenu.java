@@ -16,17 +16,18 @@ public abstract class ActionMenu {
     protected int x, amountOfItems, amountOfDrawnItems, height;
     protected int firstDrawnItem, lastDrawnItem, currentPosition;
     protected boolean focus;
-    private final List<Consumer<Integer>> confirmConsumer;
     protected ArrayList<String> items;
-    private Consumer<Boolean> menuChange;
+    private final List<Consumer<Integer>> confirmConsumer;
+    private final Consumer<Boolean> menuChange;
+
     public ActionMenu(ArrayList<String> items) {
-        this.x = getX();
+        setX();
         this.y = HEIGHT - BOTTOM_PAD;
+        this.width = HudConstants.BATTLE_MENU_WIDTH;
+        this.height = HudConstants.HUD_ROW_HEIGHT * amountOfDrawnItems / ITEMLISTLENGTH;
         this.items = items;
         this.amountOfItems = items.size();
         this.amountOfDrawnItems = (Math.min(amountOfItems, ITEMLISTLENGTH));
-        this.width = HudConstants.BATTLE_MENU_WIDTH;
-        this.height = HudConstants.HUD_ROW_HEIGHT * amountOfDrawnItems / ITEMLISTLENGTH;
         this.currentPosition = 0;
         this.firstDrawnItem = 0;
         this.lastDrawnItem = amountOfDrawnItems;
@@ -34,12 +35,10 @@ public abstract class ActionMenu {
         this.menuChange = this::setFocus;
     }
 
-    protected abstract int getX();
-
-
     public void draw(Graphics2D g) {
         this.draw(g, 0);
     }
+
     public void draw(Graphics2D g, int posInBattleMenu) {
         int downShift = posInBattleMenu * SUBMENUSHIFT;
         // draw background
@@ -68,6 +67,7 @@ public abstract class ActionMenu {
             g.drawString(items.get(i), x + buttonPad, (y + 20 + buttonPad + downShift) + height * (i - firstDrawnItem) / amountOfDrawnItems);
         }
     }
+
     public void incPosition() {
         this.currentPosition = ++this.currentPosition % (amountOfItems);
         if (this.currentPosition == 0) {
@@ -92,9 +92,6 @@ public abstract class ActionMenu {
         }
         this.currentPosition = this.currentPosition % (amountOfItems);
     }
-    protected void addItems(String item) {
-        this.items.add(item);
-    }
 
     public void setFocus(boolean focus) {
         this.focus = focus;
@@ -103,15 +100,21 @@ public abstract class ActionMenu {
     public boolean isFocused() {
         return this.focus;
     }
+
     public void onConfirm(Consumer<Integer> cons) {
         this.confirmConsumer.add(cons);
     }
+
     public Consumer<Boolean> getMenuChange() {
         return menuChange;
     }
+
     public void confirm() {
         for (Consumer<Integer> cons : this.confirmConsumer) {
             cons.accept(this.currentPosition);
         }
     }
+
+    protected abstract void setX();
+
 }
