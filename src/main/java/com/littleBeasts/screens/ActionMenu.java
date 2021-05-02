@@ -21,12 +21,12 @@ public abstract class ActionMenu {
     private final Consumer<Boolean> menuChange;
 
     public ActionMenu(ArrayList<String> items) {
-        this.amountOfItems = items.size();
+        this.items = items;
+        this.amountOfItems = this.items.size();
         this.amountOfDrawnItems = (Math.min(amountOfItems, ITEMLISTLENGTH));
         this.currentPosition = 0;
         this.firstDrawnItem = 0;
         this.lastDrawnItem = amountOfDrawnItems;
-        this.items = items;
         this.confirmConsumer = new CopyOnWriteArrayList<>();
         this.menuChange = this::setFocus;
         setX();
