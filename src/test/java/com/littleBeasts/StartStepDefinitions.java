@@ -36,7 +36,7 @@ public class StartStepDefinitions {
 
     @Then("^the game starts$")
     public void theGameStarts() {
-//        GameLogic.robotButtonPress(KeyEvent.VK_ESCAPE);
+        TestRobot.robotButtonPress(KeyEvent.VK_ESCAPE);
         Assert.assertEquals(GameLogic.getState(), GameState.INGAME);
     }
 }

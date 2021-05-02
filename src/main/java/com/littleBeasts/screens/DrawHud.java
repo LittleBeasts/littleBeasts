@@ -91,7 +91,6 @@ public class DrawHud extends GuiComponent {
         //Player portrait and stats.
         drawPlayerPortrait(g);
 
-
         this.battleMenu.draw(g);
         this.battleMenu.setFocus(!(this.battleMenu.getAttackMenu().isFocused() || this.battleMenu.getCatchMenu().isFocused()));
         if (this.battleMenu.getAttackMenu().isFocused()) {
