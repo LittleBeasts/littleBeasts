@@ -93,4 +93,9 @@ public class LitiBattle {
     public static void setNextBattlePossible(boolean nextBattlePossible) {
         LitiBattle.nextBattlePossible = nextBattlePossible;
     }
+
+    public static void update(){
+       startBattle();
+       removeBeast();
+    }
 }

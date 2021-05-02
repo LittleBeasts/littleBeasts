@@ -26,36 +26,29 @@ public class GameLogic implements IUpdateable {
         Game.loop().attach(this);
         currentLitiMap = new LitiMap();
         LitiMap.loadFonts();
-        //  Environment.registerMapObjectLoader(new CustomMapObjectLoader());
-
-        // we'll use a camera in our game that is locked to the location of the player
-        camera = new PositionLockCamera(LitiPlayer.instance());
-        camera.setClampToMap(true); // Camara stop at edge of map.
-        camera.setZoom(1.0f, 0);
-        Game.world().setCamera(camera);
+        initialiseCamera();
 
         Game.world().onLoaded(e -> {
             if (e.getMap().getName().equals("title")) {
                 return;
             }
-
-            Game.loop().perform(500, () -> Game.window().getRenderComponent().fadeIn(0));
-
-            LitiPlayer.instance().setIndestructible(false);
-            LitiPlayer.instance().setCollision(true);
-
-            LitiPet.instance().setIndestructible(false);
-            LitiPet.instance().setCollision(false);
-
             currentLitiMap.newMapLoadUp();
 
-            // spawn the player instance on the spawn point with the name "west"
-            Spawnpoint enter = e.getSpawnpoint("Bed");
+
+            Spawnpoint enter = e.getSpawnpoint("debug");
             if (enter != null) {
                 enter.spawn(LitiPlayer.instance());
                 enter.spawn(LitiPet.instance());
+                LitiPet.instance().setX(LitiPet.instance().getX() + 16);
             }
         });
+    }
+
+    private void initialiseCamera() {
+        camera = new PositionLockCamera(LitiPlayer.instance());
+        camera.setClampToMap(true); // Camara stop at edge of map.
+        camera.setZoom(1.0f, 0);
+        Game.world().setCamera(camera);
     }
 
     public static GameState getState() {
@@ -116,15 +109,9 @@ public class GameLogic implements IUpdateable {
 
     @Override
     public void update() {
-        currentLitiMap.loadNewArea();
-        currentLitiMap.checkFreshlySpawned();
-        LitiBattle.startBattle();
-        currentLitiMap.checkOpacity();
-        currentLitiMap.checkOverlays();
-        LitiBattle.removeBeast();
-        if (LitiClient.isOnlineGame()) {
-            LitiClient.readBufferedMessages();
-        }
+        currentLitiMap.update();
+        LitiBattle.update();
+        LitiClient.update();
     }
 
     public static LitiMap getCurrentLitiMap() {

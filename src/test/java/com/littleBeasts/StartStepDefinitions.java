@@ -15,8 +15,10 @@ import java.io.IOException;
 public class StartStepDefinitions {
     @Given("^the Player is in the main menu$")
     public void thePlayerIsInTheMainMenu() throws IOException, FontFormatException {
+        String input[] = new String[1];
+        input[0] = "Arkham";
         if(!Game.hasStarted()) {
-            Program.main(new String[]{});
+            Program.main(input);
         }
         Assert.assertEquals(GameLogic.getState(), GameState.MENU);
         System.out.println("Möööp");

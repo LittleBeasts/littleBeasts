@@ -96,7 +96,7 @@ public final class PlayerInput {
         } else if (e.getKeyCode() == KeyEvent.VK_B && GameLogic.getState() == GameState.BATTLE) {
             GameLogic.setState(GameState.INGAME);
         }
-        if (e.getKeyCode() == KeyEvent.VK_P) {
+        if (e.getKeyCode() == KeyEvent.VK_E) {
             LitiPlayer.instance().interact();
         }
         if (e.getKeyCode() == KeyEvent.VK_I) {

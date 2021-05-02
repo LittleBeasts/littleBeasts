@@ -21,7 +21,9 @@ public class AttackStepDefinitions {
     //Scenario 1
     @Given("^the Player is in a battle$")
     public void thePlayerIsInABattle() throws IOException, FontFormatException {
-        Program.main(new String[]{});
+        String input[] = new String[1];
+        input[0] = "Arkham";
+        Program.main(input);
         if (GameLogic.getState() == GameState.MENU){
             TestRobot.robotButtonPress(KeyEvent.VK_UP);
             TestRobot.robotButtonPress(KeyEvent.VK_ENTER);

@@ -30,7 +30,7 @@ public class LitiMap {
     private static final ArrayList<Font> gameFonts = new ArrayList<>();
     private boolean freshlySpawned = true;
     private long start = System.currentTimeMillis();
-    private int spawnDelay = 1000; //delay in milliseconds
+    private int spawnDelay = 2000; //delay in milliseconds
     private List<Integer> changedTileLayers = new ArrayList<>();
     private boolean deactivateOverlays = false;
     private boolean isInOverlayArea = false;
@@ -71,6 +71,22 @@ public class LitiMap {
                     }
                     LitiPlayer.instance().setFacingDirection(spawnpoint.getDirection());
                     LitiPet.instance().setFacingDirection(spawnpoint.getDirection());
+
+
+                    switch (spawnpoint.getDirection()) {
+                        case LEFT:
+                            LitiPet.instance().setX(LitiPet.instance().getX() - 16);
+                            break;
+                        case RIGHT:
+                            LitiPet.instance().setX(LitiPet.instance().getX() + 16);
+                            break;
+                        case DOWN:
+                            LitiPet.instance().setY(LitiPet.instance().getY() + 16);
+                            break;
+                        case UP:
+                            LitiPet.instance().setY(LitiPet.instance().getY() - 16);
+                            break;
+                    }
 
                     LitiPlayer.instance().setRenderWithLayer(true);
                     newMapLoadUp();
@@ -128,7 +144,7 @@ public class LitiMap {
             for (Spawnpoint spawnpoint : spawnpoints) {
                 mapArea = spawnpoint.getBoundingBox();
                 playerPosition = LitiPlayer.instance().getCenter();
-                playerPosition.setLocation(playerPosition.getX(), playerPosition.getY() + 6);
+                playerPosition.setLocation(playerPosition.getX(), playerPosition.getY() + 12);
                 if (mapArea.contains(playerPosition.getX(), playerPosition.getY())) {
                     this.freshlySpawned = true;
                     break;
@@ -202,4 +218,10 @@ public class LitiMap {
         return gameFonts;
     }
 
+    public void update() {
+        loadNewArea();
+        checkFreshlySpawned();
+        checkOpacity();
+        checkOverlays();
+    }
 }

@@ -5,6 +5,7 @@ import calculationEngine.entities.*;
 import calculationEngine.environment.CeItem;
 import com.littleBeasts.abilities.Attack;
 import com.littleBeasts.gameLogic.GameLogic;
+import com.littleBeasts.gameLogic.GameState;
 import com.littleBeasts.gameLogic.LitiMap;
 import com.littleBeasts.gameLogic.PlayerState;
 import de.gurkenlabs.litiengine.Align;
@@ -62,8 +63,6 @@ public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
         this.maxHP = cePlayer.getCeStats().getMaxHitPoints();
         this.currentHP = cePlayer.getCeStats().getCurrentHitPoints();
 
-
-        // LITIengine
         this.addController(new KeyboardEntityController<>(this));
         this.punch = new Attack(this);
     }
@@ -77,17 +76,7 @@ public class LitiPlayer extends Creature implements IUpdateable, IMobileEntity {
 
     @Override
     public void update() {
-        spawnPlayer();
-    }
 
-    // ToDo: Change against "real" spawn logic
-    public void spawnPlayer() {
-        if (!spawned) {
-            Spawnpoint spawnpoint = Game.world().environment().getSpawnpoint("Bed");
-            spawnpoint.spawn(this);
-            spawned = true;
-            //this.detachControllers();
-        }
     }
 
     public PlayerState getState() {

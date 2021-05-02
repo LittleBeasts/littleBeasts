@@ -2,6 +2,8 @@ package com.littleBeasts.entities;
 
 import calculationEngine.entities.CeAttack;
 import calculationEngine.entities.CeAttacks;
+import com.littleBeasts.gameLogic.GameLogic;
+import com.littleBeasts.gameLogic.GameState;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.*;
@@ -13,7 +15,7 @@ import java.util.List;
 
 @EntityInfo(width = 16, height = 16)
 @MovementInfo(velocity = 110)
-@CollisionInfo(collisionBoxWidth = 14, collisionBoxHeight = 14, collision = true)
+@CollisionInfo(collisionBoxWidth = 14, collisionBoxHeight = 14, collision = false)
 public class LitiPet extends Creature implements IUpdateable, IMobileEntity {
     private static LitiPet litiPetInstance;
     private boolean spawned;
@@ -50,20 +52,13 @@ public class LitiPet extends Creature implements IUpdateable, IMobileEntity {
 
     @Override
     public void update() {
-        spawnPet();
-        Float threshold;
+        followPlayer();
+    }
+
+    private void followPlayer() {
+        float threshold;
         Point2D playerPosition = LitiPlayer.instance().getCenter();
-        //Path petPath;
-        //List<Point2D> pathPoints = null;
-        //if (pathPoints == null || pathPoints.isEmpty()) {
-        //    pathPoints = LitiPathfindingController.getPath(this, playerPosition).getPoints();
-        //}
         threshold = this.isIdle() ? 40f : 25f;
-        //Point2D pathPoint = pathPoints.remove(0);
-        //double x1 = this.getCenter().getX();
-        //double x2 = pathPoint.getX();
-        //double y1 = this.getCenter().getY();
-        //double y2 = pathPoint.getY();
         double differenceX = playerPosition.getX() - this.getCenter().getX();
         double differenceY = playerPosition.getY() - this.getCenter().getY();
         double euclideanDistance = Math.sqrt(Math.abs(differenceX * differenceX) + Math.abs(differenceY * differenceY));
@@ -72,18 +67,6 @@ public class LitiPet extends Creature implements IUpdateable, IMobileEntity {
                 this.movementController.setDx((float) differenceX);
             if (Math.abs(differenceY) > threshold / 2)
                 this.movementController.setDy((float) differenceY);
-        }
-    }
-    //this.movementController.update();
-
-
-    public void spawnPet() {
-        if (!spawned) {
-            // ToDo: Should be at the player
-            Spawnpoint spawnpoint = Game.world().environment().getSpawnpoint("Bed");
-            spawnpoint.spawn(this);
-            spawned = true;
-            //this.detachControllers();
         }
     }
 
