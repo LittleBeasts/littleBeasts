@@ -21,18 +21,18 @@ public abstract class ActionMenu {
     private final Consumer<Boolean> menuChange;
 
     public ActionMenu(ArrayList<String> items) {
-        setX();
-        this.y = HEIGHT - BOTTOM_PAD;
-        this.width = HudConstants.BATTLE_MENU_WIDTH;
-        this.height = HudConstants.HUD_ROW_HEIGHT * amountOfDrawnItems / ITEMLISTLENGTH;
-        this.items = items;
         this.amountOfItems = items.size();
         this.amountOfDrawnItems = (Math.min(amountOfItems, ITEMLISTLENGTH));
         this.currentPosition = 0;
         this.firstDrawnItem = 0;
         this.lastDrawnItem = amountOfDrawnItems;
+        this.items = items;
         this.confirmConsumer = new CopyOnWriteArrayList<>();
         this.menuChange = this::setFocus;
+        setX();
+        this.y = HEIGHT - BOTTOM_PAD;
+        this.width = HudConstants.BATTLE_MENU_WIDTH;
+        this.height = HudConstants.HUD_ROW_HEIGHT * amountOfDrawnItems / ITEMLISTLENGTH;
     }
 
     public void draw(Graphics2D g) {
