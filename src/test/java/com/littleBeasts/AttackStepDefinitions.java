@@ -55,8 +55,8 @@ public class AttackStepDefinitions {
     }
 
     private void returnToMainMenu() {
-        TestRobot.robotButtonPress(KeyEvent.VK_DOWN);
         TestRobot.robotButtonPress(KeyEvent.VK_ESCAPE);
+        TestRobot.robotButtonPress(KeyEvent.VK_DOWN);
         TestRobot.robotButtonPress(KeyEvent.VK_ENTER);
     }
 
