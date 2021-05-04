@@ -120,7 +120,7 @@ public class DrawHud extends GuiComponent {
         drawString(g, playerStats, padding + 100, HEIGHT - padding - elementHeight);
     }
 
-    public static void drawString(Graphics g, String text, int x, int y) {
+    public void drawString(Graphics g, String text, int x, int y) {
         for (String line : text.split("\n"))
             g.drawString(line, x, y += g.getFontMetrics().getHeight());
     }

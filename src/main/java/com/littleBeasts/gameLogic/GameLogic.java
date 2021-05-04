@@ -3,6 +3,7 @@ package com.littleBeasts.gameLogic;
 import com.littleBeasts.entities.LitiPet;
 import com.littleBeasts.entities.LitiPlayer;
 import com.littleBeasts.screens.DrawChatWindow;
+import com.littleBeasts.screens.DrawHud;
 import com.littleBeasts.screens.IngameScreen;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
@@ -21,9 +22,11 @@ public class GameLogic implements IUpdateable {
     private static boolean firstStart = true;
     private static Camera camera;
     private static LitiMap currentLitiMap;
+    private static DrawHud drawHud;
 
     public void init() throws IOException, FontFormatException {
         Game.loop().attach(this);
+        drawHud = new DrawHud();
         currentLitiMap = new LitiMap();
         LitiMap.loadFonts();
         initialiseCamera();
@@ -116,5 +119,9 @@ public class GameLogic implements IUpdateable {
 
     public static LitiMap getCurrentLitiMap() {
         return currentLitiMap;
+    }
+
+    public DrawHud getDrawHud() {
+        return drawHud;
     }
 }
