@@ -10,11 +10,8 @@ import de.gurkenlabs.litiengine.entities.Spawnpoint;
 import de.gurkenlabs.litiengine.environment.tilemap.ITileLayer;
 import de.gurkenlabs.litiengine.graphics.RenderType;
 
-import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -27,15 +24,13 @@ public class LitiMap {
     private Collection<MapArea> mapAreas;
     private Collection<Spawnpoint> spawnpoints;
     private static ArrayList<LitiInteractable> litiInteractables;
-    private static final ArrayList<Font> gameFonts = new ArrayList<>();
     private boolean freshlySpawned = true;
     private long start = System.currentTimeMillis();
-    private int spawnDelay = 2000; //delay in milliseconds
     private List<Integer> changedTileLayers = new ArrayList<>();
     private boolean deactivateOverlays = false;
-    private boolean isInOverlayArea = false;
 
     public void loadNewArea() {
+        int spawnDelay = 2000; //delay in milliseconds
         if (freshlySpawned || (start + spawnDelay) >= System.currentTimeMillis())
             return;
         if (spawnpoints == null)
@@ -47,52 +42,61 @@ public class LitiMap {
             playerPosition = LitiPlayer.instance().getCenter();
             playerPosition.setLocation(playerPosition.getX(), playerPosition.getY() + 12);
             if (mapArea.contains(playerPosition)) {
-                if (area.getSpawnInfo() != null && area.getSpawnInfo().equals("culdesac"))
-                    return;
-                if (area.getName() != null) {
-                    this.freshlySpawned = true;
-                    String spawnpointName = Game.world().environment().getMap().getName();
-                    String targetMapName = area.getName();
-
-                    if (targetMapName.contains("#")) {
-                        spawnpointName += targetMapName.substring(targetMapName.indexOf("#"));
-                        targetMapName = targetMapName.substring(0, targetMapName.indexOf("#"));
-                    }
-                    if (DEBUG_CONSOLE_OUT) {
-                        System.out.println(spawnpointName);
-                        System.out.println(targetMapName);
-                    }
-
-                    Game.world().loadEnvironment(targetMapName);
-                    Spawnpoint spawnpoint = Game.world().environment().getSpawnpoint(spawnpointName);
-                    if (spawnpoint != null) {
-                        spawnpoint.spawn(LitiPlayer.instance());
-                        spawnpoint.spawn(LitiPet.instance());
-                    }
-                    LitiPlayer.instance().setFacingDirection(spawnpoint.getDirection());
-                    LitiPet.instance().setFacingDirection(spawnpoint.getDirection());
-
-
-                    switch (spawnpoint.getDirection()) {
-                        case LEFT:
-                            LitiPet.instance().setX(LitiPet.instance().getX() - 16);
-                            break;
-                        case RIGHT:
-                            LitiPet.instance().setX(LitiPet.instance().getX() + 16);
-                            break;
-                        case DOWN:
-                            LitiPet.instance().setY(LitiPet.instance().getY() + 16);
-                            break;
-                        case UP:
-                            LitiPet.instance().setY(LitiPet.instance().getY() - 16);
-                            break;
-                    }
-
-                    LitiPlayer.instance().setRenderWithLayer(true);
-                    newMapLoadUp();
-                }
+                if (checkMapAreaForSpawnPoint(area)) return;
             }
         }
+    }
+
+    private boolean checkMapAreaForSpawnPoint(Spawnpoint area) {
+        if (area.getSpawnInfo() != null && area.getSpawnInfo().equals("culdesac"))
+            return true;
+        if (area.getName() != null) {
+            this.freshlySpawned = true;
+            String spawnpointName = Game.world().environment().getMap().getName();
+            String targetMapName = area.getName();
+
+            if (targetMapName.contains("#")) {
+                spawnpointName += targetMapName.substring(targetMapName.indexOf("#"));
+                targetMapName = targetMapName.substring(0, targetMapName.indexOf("#"));
+            }
+            if (DEBUG_CONSOLE_OUT) {
+                System.out.println(spawnpointName);
+                System.out.println(targetMapName);
+            }
+
+            spawnPlayer(spawnpointName, targetMapName);
+            newMapLoadUp();
+        }
+        return false;
+    }
+
+    private void spawnPlayer(String spawnpointName, String targetMapName) {
+        Game.world().loadEnvironment(targetMapName);
+        Spawnpoint spawnpoint = Game.world().environment().getSpawnpoint(spawnpointName);
+        if (spawnpoint != null) {
+            spawnpoint.spawn(LitiPlayer.instance());
+            spawnpoint.spawn(LitiPet.instance());
+        }
+        assert spawnpoint != null;
+        LitiPlayer.instance().setFacingDirection(spawnpoint.getDirection());
+        LitiPet.instance().setFacingDirection(spawnpoint.getDirection());
+
+        switch (spawnpoint.getDirection()) {
+            case LEFT:
+                LitiPet.instance().setX(LitiPet.instance().getX() - 16);
+                break;
+            case RIGHT:
+                LitiPet.instance().setX(LitiPet.instance().getX() + 16);
+                break;
+            case DOWN:
+                LitiPet.instance().setY(LitiPet.instance().getY() + 16);
+                break;
+            case UP:
+                LitiPet.instance().setY(LitiPet.instance().getY() - 16);
+                break;
+        }
+
+        LitiPlayer.instance().setRenderWithLayer(true);
     }
 
     public void newMapLoadUp() {
@@ -129,11 +133,6 @@ public class LitiMap {
     private void createTileMapLayerList() {
         this.tileMapLayers = Game.world().environment().getMap().getTileLayers();
     }
-
-    public static ArrayList<LitiInteractable> getInteractables() {
-        return litiInteractables;
-    }
-
 
     public void checkFreshlySpawned() {
         Point2D playerPosition;
@@ -172,7 +171,7 @@ public class LitiMap {
     public void checkOverlays() {
         Point2D playerPosition = LitiPlayer.instance().getCenter();
         playerPosition.setLocation(playerPosition.getX(), playerPosition.getY() + 12);
-        isInOverlayArea = false;
+        boolean isInOverlayArea = false;
         for (MapArea area : mapAreas) {
             if (area.getName().contains("OVERLAY-") && area.getBoundingBox().contains(playerPosition)) {
                 isInOverlayArea = true;
@@ -201,27 +200,14 @@ public class LitiMap {
         }
     }
 
-    public static void loadFonts() throws IOException, FontFormatException {
-        String pathName = "./Fonts";
-        File path = new File(pathName);
-        String[] fontFilesNames = path.list();
-        assert fontFilesNames != null;
-        for (String fontFileName : fontFilesNames) {
-            File fontFile = new File(pathName + "/" + fontFileName);
-            Font gameFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);
-            gameFont = gameFont.deriveFont(10.f);
-            gameFonts.add(gameFont);
-        }
-    }
-
-    public static ArrayList<Font> getGameFonts() {
-        return gameFonts;
-    }
-
     public void update() {
         loadNewArea();
         checkFreshlySpawned();
         checkOpacity();
         checkOverlays();
+    }
+
+    public ArrayList<LitiInteractable> getInteractables() {
+        return litiInteractables;
     }
 }
