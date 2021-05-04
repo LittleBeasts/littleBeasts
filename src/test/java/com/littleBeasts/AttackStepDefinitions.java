@@ -9,7 +9,6 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -24,13 +23,13 @@ public class AttackStepDefinitions {
         String input[] = new String[1];
         input[0] = "Arkham";
         Program.main(input);
-        if (GameLogic.getState() == GameState.MENU){
+        if (Program.getGameLogic().getState() == GameState.MENU){
             TestRobot.robotButtonPress(KeyEvent.VK_UP);
             TestRobot.robotButtonPress(KeyEvent.VK_ENTER);
         }
-        Assert.assertEquals(GameLogic.getState(),GameState.INGAME);
+        Assert.assertEquals(Program.getGameLogic().getState(),GameState.INGAME);
         TestRobot.robotButtonPress(KeyEvent.VK_B);
-        Assert.assertEquals(GameLogic.getState(),GameState.BATTLE);
+        Assert.assertEquals(Program.getGameLogic().getState(),GameState.BATTLE);
 
     }
 
@@ -51,9 +50,9 @@ public class AttackStepDefinitions {
         Assert.assertTrue(Program.getIngameScreen().getHud().getBattleMenu().getAttackMenu().isFocused());
         TestRobot.robotButtonPress(KeyEvent.VK_E);
         TestRobot.robotButtonPress(KeyEvent.VK_B);
-        Assert.assertEquals(GameLogic.getState(), GameState.INGAME);
+        Assert.assertEquals(Program.getGameLogic().getState(), GameState.INGAME);
         returnToMainMenu();
-        Assert.assertEquals(GameLogic.getState(), GameState.MENU);
+        Assert.assertEquals(Program.getGameLogic().getState(), GameState.MENU);
     }
 
     private void returnToMainMenu() {

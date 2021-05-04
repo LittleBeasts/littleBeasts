@@ -1,5 +1,6 @@
 package com.littleBeasts.screens;
 
+import com.littleBeasts.Program;
 import com.littleBeasts.gameLogic.GameLogic;
 import com.littleBeasts.gameLogic.GameState;
 import com.littleBeasts.entities.LitiPlayer;
@@ -41,19 +42,19 @@ public class DrawInventory extends GuiComponent {
         this.level = LitiPlayer.instance().getCePlayer().getCeStats().getLevel();
 
         Input.keyboard().onKeyTyped(KeyEvent.VK_E, e -> {
-            if (GameLogic.getState() == GameState.MENU) {
+            if (Program.getGameLogic().getState() == GameState.MENU) {
                 return;
             }
-            if (GameLogic.getState() == GameState.INVENTORY) {
+            if (Program.getGameLogic().getState() == GameState.INVENTORY) {
                 InventoryState.nextState();
             }
         });
 
         Input.keyboard().onKeyTyped(KeyEvent.VK_Q, e -> {
-            if (GameLogic.getState() == GameState.MENU) {
+            if (Program.getGameLogic().getState() == GameState.MENU) {
                 return;
             }
-            if (GameLogic.getState() == GameState.INVENTORY) {
+            if (Program.getGameLogic().getState() == GameState.INVENTORY) {
                 InventoryState.previousState();
             }
         });
@@ -61,7 +62,7 @@ public class DrawInventory extends GuiComponent {
 
     @Override
     public void render(Graphics2D g) {
-        if (GameLogic.getState().equals(GameState.INVENTORY)) {
+        if (Program.getGameLogic().getState().equals(GameState.INVENTORY)) {
             g.setColor(Color.gray);
             g.fillRect(0, 0, WIDTH, HEIGHT);
 
