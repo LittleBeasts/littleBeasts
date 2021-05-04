@@ -1,5 +1,7 @@
 package com.littleBeasts.screens;
 
+import com.littleBeasts.Program;
+
 public enum InventoryState {
     HEAD,
     NECK,
@@ -10,55 +12,55 @@ public enum InventoryState {
     CONSUMABLES;
 
     public static void nextState(){
-        InventoryState inventoryState = DrawInventory.getInventoryState();
+        InventoryState inventoryState = Program.getGameLogic().getDrawInventory().getInventoryState();
         switch (inventoryState){
             case HEAD:
-                DrawInventory.setInventoryState(InventoryState.NECK);
+                Program.getGameLogic().getDrawInventory().setInventoryState(InventoryState.NECK);
                 break;
             case NECK:
-                DrawInventory.setInventoryState(InventoryState.BODY);
+                Program.getGameLogic().getDrawInventory().setInventoryState(InventoryState.BODY);
                 break;
             case BODY:
-                DrawInventory.setInventoryState(InventoryState.HANDS);
+                Program.getGameLogic().getDrawInventory().setInventoryState(InventoryState.HANDS);
                 break;
             case HANDS:
-                DrawInventory.setInventoryState(InventoryState.FEET);
+                Program.getGameLogic().getDrawInventory().setInventoryState(InventoryState.FEET);
                 break;
             case FEET:
-                DrawInventory.setInventoryState(InventoryState.WEAPON);
+                Program.getGameLogic().getDrawInventory().setInventoryState(InventoryState.WEAPON);
                 break;
             case WEAPON:
-                DrawInventory.setInventoryState(InventoryState.CONSUMABLES);
+                Program.getGameLogic().getDrawInventory().setInventoryState(InventoryState.CONSUMABLES);
                 break;
             case CONSUMABLES:
-                DrawInventory.setInventoryState(InventoryState.HEAD);
+                Program.getGameLogic().getDrawInventory().setInventoryState(InventoryState.HEAD);
                 break;
         }
     }
 
     public static void previousState(){
-        InventoryState inventoryState = DrawInventory.getInventoryState();
+        InventoryState inventoryState = Program.getGameLogic().getDrawInventory().getInventoryState();
         switch (inventoryState){
             case HEAD:
-                DrawInventory.setInventoryState(InventoryState.CONSUMABLES);
+                Program.getGameLogic().getDrawInventory().setInventoryState(InventoryState.CONSUMABLES);
                 break;
             case NECK:
-                DrawInventory.setInventoryState(InventoryState.HEAD);
+                Program.getGameLogic().getDrawInventory().setInventoryState(InventoryState.HEAD);
                 break;
             case BODY:
-                DrawInventory.setInventoryState(InventoryState.NECK);
+                Program.getGameLogic().getDrawInventory().setInventoryState(InventoryState.NECK);
                 break;
             case HANDS:
-                DrawInventory.setInventoryState(InventoryState.BODY);
+                Program.getGameLogic().getDrawInventory().setInventoryState(InventoryState.BODY);
                 break;
             case FEET:
-                DrawInventory.setInventoryState(InventoryState.HANDS);
+                Program.getGameLogic().getDrawInventory().setInventoryState(InventoryState.HANDS);
                 break;
             case WEAPON:
-                DrawInventory.setInventoryState(InventoryState.FEET);
+                Program.getGameLogic().getDrawInventory().setInventoryState(InventoryState.FEET);
                 break;
             case CONSUMABLES:
-                DrawInventory.setInventoryState(InventoryState.WEAPON);
+                Program.getGameLogic().getDrawInventory().setInventoryState(InventoryState.WEAPON);
                 break;
         }
     }

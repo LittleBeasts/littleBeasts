@@ -170,11 +170,11 @@ public class DrawInventory extends GuiComponent {
     }
 
 
-    public static void setInventoryState(InventoryState inventoryState) {
+    public  void setInventoryState(InventoryState inventoryState) {
         DrawInventory.inventoryState = inventoryState;
     }
 
-    public static InventoryState getInventoryState() {
+    public  InventoryState getInventoryState() {
         return inventoryState;
     }
 }
