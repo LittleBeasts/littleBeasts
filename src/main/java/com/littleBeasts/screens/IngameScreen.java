@@ -35,7 +35,6 @@ public class IngameScreen extends Screen {
         this.drawHud = new DrawHud();
         drawChatWindow = new DrawChatWindow();
         inventory = new DrawInventory();
-        DrawChatWindow.init();
         buildIngameMenu();
         this.getComponents().add(ingameMenu);
         this.getComponents().add(drawChatWindow);

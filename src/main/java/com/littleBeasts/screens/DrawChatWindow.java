@@ -17,7 +17,7 @@ import static client.Message.encodeOutgoingMessageForClient;
 import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 import static config.HudConstants.ChatWindowFont;
 
-public class DrawChatWindow extends GuiComponent implements IUpdateable {
+public class DrawChatWindow extends GuiComponent{
     private static final String CURSOR = "|";
     private static StringBuffer buffer;
     private static String showableText;
@@ -26,8 +26,6 @@ public class DrawChatWindow extends GuiComponent implements IUpdateable {
     private static List<String> chatHistory;
     private static int index;
     private static int topElement, bottomElement;
-    private static int scrollbarHeight, scrollPointHeight;
-    private static int scrollPointPosition;
     private static final int amountOfDrawnElements = 6;
     private final Font font = ChatWindowFont;
     private final Point textPoint;
@@ -38,11 +36,6 @@ public class DrawChatWindow extends GuiComponent implements IUpdateable {
     private final int x = 0;
     private final int y = 0;
 
-
-    public static void init() {
-    }
-
-
     public DrawChatWindow() {
         super(0, 0, Game.window().getWidth(), Game.window().getHeight());
         chatHistory = new ArrayList<>();
@@ -51,7 +44,6 @@ public class DrawChatWindow extends GuiComponent implements IUpdateable {
         int x = this.x + this.padding;
         int y = this.y - this.padding;
         this.textPoint = new Point(x, y);
-
 
         /* Create variables to control buffer */
         buffer = new StringBuffer();
@@ -63,26 +55,16 @@ public class DrawChatWindow extends GuiComponent implements IUpdateable {
         this.countDelay = 0;
         this.cursor = false;
         int cursorLength = this.font.getSize();
-        this.topElement = 0;
-        this.bottomElement = amountOfDrawnElements;
-
+        topElement = 0;
+        bottomElement = amountOfDrawnElements;
     }
 
     private static void clearTextField() {
         buffer = new StringBuffer();
         showableText = "";
         clearIndex();
-
     }
 
-    private static void clearHistory() {
-        chatHistory.clear();
-    }
-
-
-    /**
-     * ENTER
-     */
     public static synchronized void returnKey() {
         if (buffer.length() > 0) {
             String value = buffer.toString();
@@ -107,12 +89,8 @@ public class DrawChatWindow extends GuiComponent implements IUpdateable {
         clearTextField();
     }
 
-    /**
-     * ESC
-     */
     public static synchronized void escapeKey() {
         clearTextField();
-        // clearHistory();
     }
 
     private static void clearIndex() {
@@ -121,10 +99,6 @@ public class DrawChatWindow extends GuiComponent implements IUpdateable {
 
     private static int getIndex() {
         return index;
-    }
-
-    private void increaseIndex() {
-        index++;
     }
 
     public static synchronized void delete() {
@@ -192,8 +166,6 @@ public class DrawChatWindow extends GuiComponent implements IUpdateable {
         if (DEBUG_CONSOLE_OUT) System.out.println("Up: Bottom: " + bottomElement + " | Top: " + topElement);
     }
 
-    int tick = 0;
-
     @Override
     public synchronized void render(Graphics2D g) {
         List<String> bufferedMessages = null;
@@ -234,20 +206,14 @@ public class DrawChatWindow extends GuiComponent implements IUpdateable {
         g.drawString(text, textPoint.x + hPadding + fineTuning, height - vPadding - fineTuning);
 
 
-        scrollbarHeight = -height + vPadding * 2;
-        scrollPointHeight = Math.min((scrollbarHeight / (Math.max(chatHistory.size() - amountOfDrawnElements + 1, 1))), -30);
-        scrollPointPosition = chatHistory.size() > amountOfDrawnElements ? scrollPointHeight * (chatHistory.size() - bottomElement) : 0;
+        int scrollbarHeight = -height + vPadding * 2;
+        int scrollPointHeight = Math.min((scrollbarHeight / (Math.max(chatHistory.size() - amountOfDrawnElements + 1, 1))), -30);
+        int scrollPointPosition = chatHistory.size() > amountOfDrawnElements ? scrollPointHeight * (chatHistory.size() - bottomElement) : 0;
 
         g.setColor(Color.BLUE);
         g.fillRect(this.x + hPadding + (width - 2 * hPadding), height - vPadding, 30, scrollbarHeight);
         g.setColor(Color.GREEN);
         g.fillRect(this.x + hPadding + (width - 2 * hPadding), height - vPadding + scrollPointPosition, 30, scrollPointHeight);
-    }
-
-
-    @Override
-    public void update() {
-
     }
 
     private static void drawString(Graphics g, List<String> text, int x, int y) {
