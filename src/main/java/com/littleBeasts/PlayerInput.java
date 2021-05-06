@@ -14,7 +14,7 @@ public final class PlayerInput {
     public static void init() {
         AtomicBoolean menu = new AtomicBoolean(false);
         Input.keyboard().onKeyTyped(e -> {
-            if (GameLogic.getState().equals(GameState.BATTLE))
+            if (Program.getGameLogic().getState().equals(GameState.BATTLE))
                 battleControls(e);
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_ESCAPE:
@@ -69,11 +69,11 @@ public final class PlayerInput {
         if (LitiPlayer.instance().getState() == PlayerState.LOCKED || LitiPlayer.instance().isDead()) {
             return;
         }
-        if (GameLogic.getState() == GameState.INGAME) {
-            GameLogic.setState(GameState.INGAME_MENU);
+        if (Program.getGameLogic().getState() == GameState.INGAME) {
+            Program.getGameLogic().setState(GameState.INGAME_MENU);
             menu.set(true);
         } else {
-            GameLogic.setState(GameState.INGAME);
+            Program.getGameLogic().setState(GameState.INGAME);
             menu.set(false);
         }
     }
@@ -81,32 +81,32 @@ public final class PlayerInput {
     private static void onEnter(AtomicBoolean menu) {
         if (!LitiClient.isOnlineGame())
             return;
-        if (GameLogic.getState() == GameState.MENU) {
+        if (Program.getGameLogic().getState() == GameState.MENU) {
             return;
         }
-        if (GameLogic.getState() == GameState.INGAME && !menu.get()) {
-            GameLogic.setState(GameState.INGAME_CHAT);
+        if (Program.getGameLogic().getState() == GameState.INGAME && !menu.get()) {
+            Program.getGameLogic().setState(GameState.INGAME_CHAT);
         }
         menu.set(true);
     }
 
     private static void onOtherKey(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_B && GameLogic.getState() == GameState.INGAME && LitiBattle.isNextBattlePossible()) {
-            GameLogic.setState(GameState.BATTLE);
-        } else if (e.getKeyCode() == KeyEvent.VK_B && GameLogic.getState() == GameState.BATTLE) {
-            GameLogic.setState(GameState.INGAME);
+        if (e.getKeyCode() == KeyEvent.VK_B && Program.getGameLogic().getState() == GameState.INGAME && LitiBattle.isNextBattlePossible()) {
+            Program.getGameLogic().setState(GameState.BATTLE);
+        } else if (e.getKeyCode() == KeyEvent.VK_B && Program.getGameLogic().getState() == GameState.BATTLE) {
+            Program.getGameLogic().setState(GameState.INGAME);
         }
         if (e.getKeyCode() == KeyEvent.VK_E) {
             LitiPlayer.instance().interact();
         }
         if (e.getKeyCode() == KeyEvent.VK_I) {
-            if (GameLogic.getState() == GameState.MENU) {
+            if (Program.getGameLogic().getState() == GameState.MENU) {
                 return;
             }
-            if (GameLogic.getState() == GameState.INGAME) {
-                GameLogic.setState(GameState.INVENTORY);
-            } else if (GameLogic.getState() == GameState.INVENTORY) {
-                GameLogic.setState(GameState.INGAME);
+            if (Program.getGameLogic().getState() == GameState.INGAME) {
+                Program.getGameLogic().setState(GameState.INVENTORY);
+            } else if (Program.getGameLogic().getState() == GameState.INVENTORY) {
+                Program.getGameLogic().setState(GameState.INGAME);
             }
         }
     }

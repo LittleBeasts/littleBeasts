@@ -30,7 +30,7 @@ public class Program {
 
         //set icon for the game
         Game.window().setIcon(Resources.images().get("sprites/icon.png"));
-        Game.graphics().setBaseRenderScale(4.001f);
+        Game.graphics().setBaseRenderScale(1.001f);
 
         // Load data from the utiLiti game file
         Resources.load("game.litidata");
@@ -48,7 +48,7 @@ public class Program {
         gameLogic.init();
 
         // enter main menu
-        GameLogic.setState(GameState.MENU);
+        gameLogic.setState(GameState.MENU);
         Game.screens().display("MAINMENU");
         Game.audio().playMusic("titlemenu");
         Game.start();

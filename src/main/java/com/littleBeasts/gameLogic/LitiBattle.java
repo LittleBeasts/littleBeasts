@@ -4,6 +4,7 @@ import calculationEngine.battle.CeBattle;
 import calculationEngine.entities.CeAi;
 import calculationEngine.entities.CeBeasts;
 import calculationEngine.entities.CePlayer;
+import com.littleBeasts.Program;
 import com.littleBeasts.entities.LitiBeast;
 import com.littleBeasts.entities.LitiPlayer;
 import de.gurkenlabs.litiengine.Direction;
@@ -58,7 +59,7 @@ public class LitiBattle {
                 }
             } else {
                 if (DEBUG_CONSOLE_OUT) System.out.println("End of fight");
-                GameLogic.setState(GameState.INGAME);
+                Program.getGameLogic().setState(GameState.INGAME);
             }
         }
     }
@@ -68,7 +69,7 @@ public class LitiBattle {
     }
 
     public static void removeBeast(){
-        if (GameLogic.getState() == GameState.INGAME) {
+        if (Program.getGameLogic().getState() == GameState.INGAME) {
             for (int i = 0; i < LITI_BEAST_LIST.size(); i++) {
                 if (LITI_BEAST_LIST.get(i).getBeastStats().isReadyToBeRemoved()) {
                     LITI_BEAST_LIST.get(i).die();

@@ -1,5 +1,6 @@
 package com.littleBeasts.screens;
 
+import com.littleBeasts.Program;
 import com.littleBeasts.entities.LitiBeast;
 import com.littleBeasts.entities.LitiPlayer;
 import com.littleBeasts.gameLogic.GameLogic;
@@ -54,7 +55,7 @@ public class DrawHud extends GuiComponent {
 
         this.drawDamageRolls(g);
         this.renderBeasts(g);
-        if (GameLogic.getState() == GameState.BATTLE) {
+        if (Program.getGameLogic().getState() == GameState.BATTLE) {
             try {
                 this.rollInBars(g);
                 this.drawBattleHud(g);
@@ -143,7 +144,7 @@ public class DrawHud extends GuiComponent {
     }
 
     private void drawIngameHud(Graphics2D g) {
-        if (GameLogic.getState().equals(GameState.INGAME)) {
+        if (Program.getGameLogic().getState().equals(GameState.INGAME)) {
             double y = Game.window().getResolution().getHeight() - TILE_GAP * 2;
             double x = Game.window().getResolution().getWidth() / 2.0;
             double currentWidth = 50.0;

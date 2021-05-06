@@ -51,11 +51,11 @@ public class GameLogic implements IUpdateable {
         Game.world().setCamera(camera);
     }
 
-    public static GameState getState() {
+    public GameState getState() {
         return GameLogic.state;
     }
 
-    public static void setState(GameState state) {
+    public void setState(GameState state) {
         Game.audio().stopMusic();
         Game.world().setCamera(camera);
         Game.world().camera().setZoom(1, 500);
