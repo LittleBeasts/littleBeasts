@@ -1,5 +1,6 @@
 package com.littleBeasts.screens;
 
+import com.littleBeasts.Program;
 import com.littleBeasts.gameLogic.GameLogic;
 import com.littleBeasts.gameLogic.GameState;
 import config.HudConstants;
@@ -47,10 +48,10 @@ public class IngameScreen extends Screen {
         ingameMenu.onConfirm(c -> {
             switch (c) {
                 case 0:
-                    GameLogic.setState(GameState.INGAME);
+                    Program.getGameLogic().setState(GameState.INGAME);
                     break;
                 case 1:
-                    GameLogic.setState(GameState.MENU);
+                    Program.getGameLogic().setState(GameState.MENU);
                     break;
                 case 2:
                     System.exit(0);
