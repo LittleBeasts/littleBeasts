@@ -25,6 +25,8 @@ public class Program {
         if (args.length >0)
             startingMap = args[0];
 
+        startingMap = "Arkham";
+
         // initialize the game infrastructure
         Game.init();
 

@@ -147,7 +147,7 @@ public class LitiPlayer extends Creature implements IMobileEntity {
         if (DEBUG_CONSOLE_OUT) System.out.println("Interaction");
         ArrayList<LitiInteractable> interactables = Program.getGameLogic().getCurrentLitiMap().getInteractables();
         for (LitiInteractable litiInteractable : interactables) {
-            if (litiInteractable.isInProximity(LitiPlayer.instance()) && this.isFacingPoint(litiInteractable.getiEntity().getCenter())) {
+            if (litiInteractable.isInProximity(LitiPlayer.instance()) && litiInteractable.isFacingInteractable(this)) {
 
                 if (litiInteractable.isNpc()) {
                     litiInteractable.getLitiNPC().getGreeting();
@@ -158,21 +158,6 @@ public class LitiPlayer extends Creature implements IMobileEntity {
         }
     }
 
-
-    public boolean isFacingPoint(Point2D point) {
-        int tolerance = 8;
-        switch (this.getFacingDirection()) {
-            case UP:
-                return (this.getCenter().getY() - point.getY()) > 0 && this.getCenter().getX() >= point.getX() - tolerance && this.getCenter().getX() <= point.getX() + tolerance;
-            case DOWN:
-                return (this.getCenter().getY() - point.getY()) < 0 && this.getCenter().getX() >= point.getX() - tolerance && this.getCenter().getX() <= point.getX() + tolerance;
-            case LEFT:
-                return (this.getCenter().getX() - point.getX()) > 0 && this.getCenter().getY() >= point.getY() - tolerance && this.getCenter().getY() <= point.getY() + tolerance;
-            case RIGHT:
-                return (this.getCenter().getX() - point.getX()) < 0 && this.getCenter().getY() >= point.getY() - tolerance && this.getCenter().getY() <= point.getY() + tolerance;
-        }
-        return false;
-    }
 
     public Image getPlayerPortrait() {
         return playerPortrait;

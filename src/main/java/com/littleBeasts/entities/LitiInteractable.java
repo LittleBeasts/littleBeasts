@@ -1,6 +1,10 @@
 package com.littleBeasts.entities;
 
+import de.gurkenlabs.litiengine.entities.Creature;
 import de.gurkenlabs.litiengine.entities.IEntity;
+import de.gurkenlabs.litiengine.entities.IMobileEntity;
+
+import java.awt.geom.Point2D;
 
 public class LitiInteractable {
     private LitiNPC litiNPC;
@@ -46,6 +50,22 @@ public class LitiInteractable {
                 ", isNpc=" + isNpc +
                 ", iEntity=" + iEntity.getName() +
                 '}';
+    }
+
+    public boolean isFacingInteractable(Creature creature) {
+        int tolerance = 8;
+
+        switch (creature.getFacingDirection()) {
+            case UP:
+                return (creature.getCenter().getY() - this.iEntity.getCenter().getY()) > 0 && creature.getCenter().getX() >= this.iEntity.getCenter().getX() - tolerance && creature.getCenter().getX() <= this.iEntity.getCenter().getX() + tolerance;
+            case DOWN:
+                return (creature.getCenter().getY() - this.iEntity.getCenter().getY()) < 0 && creature.getCenter().getX() >= this.iEntity.getCenter().getX() - tolerance && creature.getCenter().getX() <= this.iEntity.getCenter().getX() + tolerance;
+            case LEFT:
+                return (creature.getCenter().getX() - this.iEntity.getCenter().getX()) > 0 && creature.getCenter().getY() >= this.iEntity.getCenter().getY() - tolerance && creature.getCenter().getY() <= this.iEntity.getCenter().getY() + tolerance;
+            case RIGHT:
+                return (creature.getCenter().getX() - this.iEntity.getCenter().getX()) < 0 && creature.getCenter().getY() >= this.iEntity.getCenter().getY() - tolerance && creature.getCenter().getY() <= this.iEntity.getCenter().getY() + tolerance;
+        }
+        return false;
     }
 
     public boolean isNpc() {
