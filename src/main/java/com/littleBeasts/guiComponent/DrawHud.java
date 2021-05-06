@@ -76,7 +76,7 @@ public class DrawHud extends GuiComponent {
     }
 
     private void drawDamageRolls(Graphics2D g) {
-        for (LitiBeast litiBeast : LitiPlayer.instance().getLittleBeastTeam()) {
+        for (LitiBeast litiBeast : LitiPlayer.instance().getLittleBeastTeam().getBeasts()) {
             litiBeast.getBeastStats().drawDamageRolls(g);
         }
         for (LitiBeast litiBeast : LitiBattle.getBeastList()) {
@@ -127,8 +127,8 @@ public class DrawHud extends GuiComponent {
     }
 
     private void drawBeastPortraits(Graphics2D g) {
-        for (LitiBeast beast : LitiPlayer.instance().getLittleBeastTeam()) {
-            beast.getBeastStats().draw(g, LitiPlayer.instance().getLittleBeastTeam().indexOf(beast));
+        for (LitiBeast beast : LitiPlayer.instance().getLittleBeastTeam().getBeasts()) {
+            beast.getBeastStats().draw(g, LitiPlayer.instance().getLittleBeastTeam().getBeasts().indexOf(beast));
         }
         if (LitiBattle.getBeastList() != null) {
             for (LitiBeast beast : LitiBattle.getBeastList()) {
