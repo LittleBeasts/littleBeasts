@@ -67,7 +67,7 @@ public class DrawBeastStats {
         // draw beast info
         g.setFont(HudConstants.HUD_FONT);
         g.setColor(HudConstants.TEXTCOLOR);
-        Program.getGameLogic().getDrawHud().drawString(g, beastInfo, TEAM_START_POINT + offset + BEAST_PORTRAIT_WIDTH, HUD_BOTTOM_START);
+        Program.getIngameScreen().getHud().drawString(g, beastInfo, TEAM_START_POINT + offset + BEAST_PORTRAIT_WIDTH, HUD_BOTTOM_START);
     }
 
     private void damageAnimationOutOfBounds(Graphics2D g) {
