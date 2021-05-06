@@ -12,55 +12,55 @@ public enum InventoryState {
     CONSUMABLES;
 
     public static void nextState(){
-        InventoryState inventoryState = Program.getGameLogic().getDrawInventory().getInventoryState();
+        InventoryState inventoryState = IngameScreen.getInventory().getInventoryState();
         switch (inventoryState){
             case HEAD:
-                Program.getGameLogic().getDrawInventory().setInventoryState(InventoryState.NECK);
+                IngameScreen.getInventory().setInventoryState(InventoryState.NECK);
                 break;
             case NECK:
-                Program.getGameLogic().getDrawInventory().setInventoryState(InventoryState.BODY);
+                IngameScreen.getInventory().setInventoryState(InventoryState.BODY);
                 break;
             case BODY:
-                Program.getGameLogic().getDrawInventory().setInventoryState(InventoryState.HANDS);
+                IngameScreen.getInventory().setInventoryState(InventoryState.HANDS);
                 break;
             case HANDS:
-                Program.getGameLogic().getDrawInventory().setInventoryState(InventoryState.FEET);
+                IngameScreen.getInventory().setInventoryState(InventoryState.FEET);
                 break;
             case FEET:
-                Program.getGameLogic().getDrawInventory().setInventoryState(InventoryState.WEAPON);
+                IngameScreen.getInventory().setInventoryState(InventoryState.WEAPON);
                 break;
             case WEAPON:
-                Program.getGameLogic().getDrawInventory().setInventoryState(InventoryState.CONSUMABLES);
+                IngameScreen.getInventory().setInventoryState(InventoryState.CONSUMABLES);
                 break;
             case CONSUMABLES:
-                Program.getGameLogic().getDrawInventory().setInventoryState(InventoryState.HEAD);
+                IngameScreen.getInventory().setInventoryState(InventoryState.HEAD);
                 break;
         }
     }
 
     public static void previousState(){
-        InventoryState inventoryState = Program.getGameLogic().getDrawInventory().getInventoryState();
+        InventoryState inventoryState = IngameScreen.getInventory().getInventoryState();
         switch (inventoryState){
             case HEAD:
-                Program.getGameLogic().getDrawInventory().setInventoryState(InventoryState.CONSUMABLES);
+                IngameScreen.getInventory().setInventoryState(InventoryState.CONSUMABLES);
                 break;
             case NECK:
-                Program.getGameLogic().getDrawInventory().setInventoryState(InventoryState.HEAD);
+                IngameScreen.getInventory().setInventoryState(InventoryState.HEAD);
                 break;
             case BODY:
-                Program.getGameLogic().getDrawInventory().setInventoryState(InventoryState.NECK);
+                IngameScreen.getInventory().setInventoryState(InventoryState.NECK);
                 break;
             case HANDS:
-                Program.getGameLogic().getDrawInventory().setInventoryState(InventoryState.BODY);
+                IngameScreen.getInventory().setInventoryState(InventoryState.BODY);
                 break;
             case FEET:
-                Program.getGameLogic().getDrawInventory().setInventoryState(InventoryState.HANDS);
+                IngameScreen.getInventory().setInventoryState(InventoryState.HANDS);
                 break;
             case WEAPON:
-                Program.getGameLogic().getDrawInventory().setInventoryState(InventoryState.FEET);
+                IngameScreen.getInventory().setInventoryState(InventoryState.FEET);
                 break;
             case CONSUMABLES:
-                Program.getGameLogic().getDrawInventory().setInventoryState(InventoryState.WEAPON);
+                IngameScreen.getInventory().setInventoryState(InventoryState.WEAPON);
                 break;
         }
     }

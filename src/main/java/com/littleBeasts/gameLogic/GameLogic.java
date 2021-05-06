@@ -22,12 +22,10 @@ public class GameLogic implements IUpdateable {
     private static boolean firstStart = true;
     private static Camera camera;
     private static LitiMap currentLitiMap;
-    private static DrawInventory drawInventory;
 
     public void init() throws IOException, FontFormatException {
         Game.loop().attach(this);
         currentLitiMap = new LitiMap();
-        drawInventory = new DrawInventory();
         LitiMap.loadFonts();
         initialiseCamera();
 
@@ -119,9 +117,5 @@ public class GameLogic implements IUpdateable {
 
     public static LitiMap getCurrentLitiMap() {
         return currentLitiMap;
-    }
-
-    public DrawInventory getDrawInventory() {
-        return drawInventory;
     }
 }
