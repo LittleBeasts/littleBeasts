@@ -75,4 +75,7 @@ public class IngameScreen extends Screen {
     public DrawHud getHud() {
         return drawHud;
     }
+    public static DrawInventory getInventory() {
+        return inventory;
+    }
 }

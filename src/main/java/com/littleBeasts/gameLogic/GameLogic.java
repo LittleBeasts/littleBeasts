@@ -3,6 +3,7 @@ package com.littleBeasts.gameLogic;
 import com.littleBeasts.entities.LitiPet;
 import com.littleBeasts.entities.LitiPlayer;
 import com.littleBeasts.screens.DrawChatWindow;
+import com.littleBeasts.screens.DrawInventory;
 import com.littleBeasts.screens.IngameScreen;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
