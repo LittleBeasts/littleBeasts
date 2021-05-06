@@ -15,7 +15,6 @@ public class Program {
 
     private static GameLogic gameLogic;
     private static IngameScreen ingameScreen;
-    private static MenuScreen menuScreen;
     private static String startingMap = null;
 
     public static void main(String[] args) throws IOException, FontFormatException {
@@ -39,7 +38,7 @@ public class Program {
         // add the screens
         ingameScreen = new IngameScreen();
         Game.screens().add(ingameScreen);
-        menuScreen = new MenuScreen();
+        MenuScreen menuScreen = new MenuScreen();
         Game.screens().add(menuScreen);
 
         // initialize modules
@@ -52,14 +51,6 @@ public class Program {
         GameLogic.setState(GameState.MENU);
         Game.screens().display("MAINMENU");
         Game.audio().playMusic("titlemenu");
-
-//        //-------------------------------------------------------------------------------------------------------------
-//        // test "loot"
-//        JSONObject[] jsonObject = Loot.getLootBySource("monster");
-//        for (JSONObject jo : jsonObject) {
-//            System.out.println(jo);
-//        }
-//        //-------------------------------------------------------------------------------------------------------------
         Game.start();
     }
     
@@ -69,10 +60,6 @@ public class Program {
 
     public static IngameScreen getIngameScreen() {
         return ingameScreen;
-    }
-
-    public static MenuScreen getMenuScreen() {
-        return menuScreen;
     }
 
     public static String getStartingMap() {
