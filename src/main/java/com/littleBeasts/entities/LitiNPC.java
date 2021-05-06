@@ -7,6 +7,7 @@ import de.gurkenlabs.litiengine.entities.IEntity;
 import de.gurkenlabs.litiengine.gui.SpeechBubble;
 import org.json.JSONObject;
 import utilities.JsonReader;
+import utilities.LitiFonts;
 
 import java.awt.*;
 import java.util.Random;
@@ -48,7 +49,7 @@ public class LitiNPC extends Creature {
         this.speechBubbleFont = FontConstants.DEFAULT_FONT;
         if (this.iEntity.getProperties().getProperty("font") != null) {
             String fontName = this.iEntity.getProperties().getProperty("font").getAsString();
-            for (Font font : LitiMap.getGameFonts()) {
+            for (Font font : LitiFonts.getGameFonts()) {
                 if (font.getName().equals(fontName))
                     this.speechBubbleFont = font;
             }
