@@ -93,7 +93,18 @@ public class MenuScreen extends Screen implements IUpdateable {
         this.mainMenu.setEnabled(false);
         LitiClient.setOnlineGame(false);
         //Game.window().getRenderComponent().fadeOut(500);
+        loadUpMap();
+    }
 
+    private void startOnlineGame() throws IOException {
+        this.mainMenu.setEnabled(false);
+        LitiClient.setClient(new Client("TestUser"));
+        LitiClient.setOnlineGame(true);
+        //Game.window().getRenderComponent().fadeOut(500);
+        loadUpMap();
+    }
+
+    private void loadUpMap() {
         Game.loop().perform(100, () -> {
             Game.screens().display("INGAME-SCREEN");
             if (Program.getStartingMap() != null) {
@@ -101,20 +112,7 @@ public class MenuScreen extends Screen implements IUpdateable {
             } else {
                 Game.world().loadEnvironment(MapNames.FleaMarket.toString());
             }
-            Program.getGameLogic().setState(GameState.INGAME);
-        });
-    }
-
-    private void startOnlineGame() throws IOException {
-        this.mainMenu.setEnabled(false);
-        LitiClient.setOnlineGame(true);
-        LitiClient.setClient(new Client("TestUser"));
-        Game.window().getRenderComponent().fadeOut(500);
-
-        Game.loop().perform(100, () -> {
-            Game.screens().display("INGAME-SCREEN");
-            Game.world().loadEnvironment("Arkham");
-            Program.getGameLogic().setState(GameState.INGAME);
+            GameLogic.setState(GameState.INGAME);
         });
     }
 
