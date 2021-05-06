@@ -3,6 +3,7 @@ package com.littleBeasts.battleAnimation;
 import com.littleBeasts.Program;
 import com.littleBeasts.entities.LitiPlayer;
 import com.littleBeasts.gameLogic.GameState;
+import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.entities.Action;
 import de.gurkenlabs.litiengine.entities.IMobileEntity;
 import de.gurkenlabs.litiengine.physics.Force;
@@ -14,6 +15,8 @@ import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 public class AttackAnimation {
 
     IMobileEntity iMobileEntity;
+    private boolean soundPlayer = false;
+
 
     public AttackAnimation(IMobileEntity iMobileEntity) {
         this.iMobileEntity = iMobileEntity;
@@ -22,6 +25,11 @@ public class AttackAnimation {
     // ToDo: extract to Attack Animation class or similar
     @Action(description = "This is a punch, it hurts.")
     public void punch() {
+        if (!soundPlayer) { // TODO: These effects need to be moved to the actual attack.
+            Game.audio().playSound("punch");
+            Game.world().camera().shake(1, 0, 100);
+            soundPlayer = true;
+        }
         iMobileEntity.attachControllers();
         iMobileEntity.movement().attach();
         Point2D origin = iMobileEntity.getCollisionBoxCenter();

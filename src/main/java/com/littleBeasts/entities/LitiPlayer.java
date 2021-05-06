@@ -62,12 +62,16 @@ public class LitiPlayer extends Creature implements IMobileEntity {
         ArrayList<LitiInteractable> interactables = Program.getGameLogic().getCurrentLitiMap().getInteractables();
         for (LitiInteractable litiInteractable : interactables) {
             if (litiInteractable.isInProximity(LitiPlayer.instance()) && litiInteractable.isFacingInteractable(this)) {
-                if (litiInteractable.isNpc()) {
-                    litiInteractable.getLitiNPC().getGreeting();
-                } else if (!litiInteractable.isNpc()) {
-                    litiInteractable.getLitiProp().interact();
-                }
+                interactWithEntity(litiInteractable);
             }
+        }
+    }
+
+    private void interactWithEntity(LitiInteractable litiInteractable) {
+        if (litiInteractable.isNpc()) {
+            litiInteractable.getLitiNPC().getGreeting();
+        } else if (!litiInteractable.isNpc()) {
+            litiInteractable.getLitiProp().interact();
         }
     }
 

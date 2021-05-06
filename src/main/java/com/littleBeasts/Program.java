@@ -46,7 +46,6 @@ public class Program {
         // initialize modules
         PlayerInput.init();
         gameLogic = new GameLogic();
-        LitiPlayer.instance().setGameLogic(gameLogic);
         gameLogic.init();
 
         // enter main menu
