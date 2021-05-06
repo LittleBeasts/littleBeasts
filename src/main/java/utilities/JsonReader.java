@@ -8,7 +8,7 @@ public class JsonReader {
 
     public static JSONObject readJson(String fileName) {
         StringBuilder sJson = new StringBuilder();
-        try (BufferedReader br = new BufferedReader(new FileReader(new File(fileName)))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String str;
             while ((str = br.readLine()) != null) {
                 sJson.append(str).append("\n");

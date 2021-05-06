@@ -20,7 +20,7 @@ public class StartStepDefinitions {
         if(!Game.hasStarted()) {
             Program.main(input);
         }
-        Assert.assertEquals(GameLogic.getState(), GameState.MENU);
+        Assert.assertEquals(Program.getGameLogic().getState(), GameState.MENU);
         System.out.println("Möööp");
     }
 
@@ -39,6 +39,6 @@ public class StartStepDefinitions {
     @Then("^the game starts$")
     public void theGameStarts() {
         TestRobot.robotButtonPress(KeyEvent.VK_ESCAPE);
-        Assert.assertEquals(GameLogic.getState(), GameState.INGAME);
+        Assert.assertEquals(Program.getGameLogic().getState(), GameState.INGAME);
     }
 }
