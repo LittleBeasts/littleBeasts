@@ -1,4 +1,4 @@
-package com.littleBeasts.screens;
+package com.littleBeasts.battleAnimation;
 
 import config.HudConstants;
 import de.gurkenlabs.litiengine.Game;
@@ -6,7 +6,7 @@ import de.gurkenlabs.litiengine.Game;
 import java.awt.*;
 import java.awt.geom.Point2D;
 
-public class DrawDamageAnimation {
+public class DamageAnimation {
     private final Point2D point2D;
     private final int damage, fadeoutSpeed;
     private final double speed;
@@ -14,7 +14,7 @@ public class DrawDamageAnimation {
     private int increment;
     private boolean soundPlayer = false;
 
-    public DrawDamageAnimation(Point2D point2D, int damage) {
+    public DamageAnimation(Point2D point2D, int damage) {
         this.point2D = point2D;
         this.increment = 0;
         this.damage = damage;

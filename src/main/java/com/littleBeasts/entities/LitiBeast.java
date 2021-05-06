@@ -2,7 +2,7 @@ package com.littleBeasts.entities;
 
 import calculationEngine.entities.CeBeasts;
 import calculationEngine.entities.CeEntity;
-import com.littleBeasts.screens.DrawBeastStats;
+import com.littleBeasts.battleAnimation.BeastStats;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.CollisionInfo;
 import de.gurkenlabs.litiengine.entities.Creature;
@@ -18,7 +18,7 @@ public class LitiBeast extends Creature implements IUpdateable {
     private final CeEntity ceEntity;
     private String monsterName;
     private final Image portrait;
-    private DrawBeastStats drawBeastStats;
+    private BeastStats beastStats;
     private int x, y;
     private boolean spwaned;
     private final boolean playerBeast;
@@ -36,12 +36,12 @@ public class LitiBeast extends Creature implements IUpdateable {
         e = new Spawnpoint(x, y);
         e.spawn(this);
         if (!playerBeast) {
-            this.drawBeastStats = new DrawBeastStats(this, false);
+            this.beastStats = new BeastStats(this, false);
         }
     }
 
     public void createBeastStats() {
-        this.drawBeastStats = new DrawBeastStats(this, playerBeast);
+        this.beastStats = new BeastStats(this, playerBeast);
     }
 
     @Override
@@ -66,8 +66,8 @@ public class LitiBeast extends Creature implements IUpdateable {
         return portrait;
     }
 
-    public DrawBeastStats getBeastStats() {
-        return drawBeastStats;
+    public BeastStats getBeastStats() {
+        return beastStats;
     }
 
     public Spawnpoint getE() {

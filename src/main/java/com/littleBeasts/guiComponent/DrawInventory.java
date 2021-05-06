@@ -1,9 +1,9 @@
-package com.littleBeasts.screens;
+package com.littleBeasts.guiComponent;
 
 import com.littleBeasts.Program;
-import com.littleBeasts.gameLogic.GameLogic;
 import com.littleBeasts.gameLogic.GameState;
 import com.littleBeasts.entities.LitiPlayer;
+import com.littleBeasts.screens.InventoryState;
 import de.gurkenlabs.litiengine.Align;
 import de.gurkenlabs.litiengine.Valign;
 import de.gurkenlabs.litiengine.graphics.ImageRenderer;

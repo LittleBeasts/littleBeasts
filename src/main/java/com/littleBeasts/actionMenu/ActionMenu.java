@@ -1,4 +1,4 @@
-package com.littleBeasts.screens;
+package com.littleBeasts.actionMenu;
 
 import config.HudConstants;
 
@@ -117,4 +117,7 @@ public abstract class ActionMenu {
 
     protected abstract void setX();
 
+    public int getFirstDrawnItem() {
+        return firstDrawnItem;
+    }
 }

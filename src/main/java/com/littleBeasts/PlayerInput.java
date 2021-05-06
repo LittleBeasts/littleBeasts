@@ -2,7 +2,7 @@ package com.littleBeasts;
 
 import com.littleBeasts.entities.LitiPlayer;
 import com.littleBeasts.gameLogic.*;
-import com.littleBeasts.screens.ActionMenu;
+import com.littleBeasts.actionMenu.ActionMenu;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.input.Input;
 

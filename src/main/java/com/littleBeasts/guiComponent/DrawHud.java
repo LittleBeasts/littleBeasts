@@ -1,12 +1,12 @@
-package com.littleBeasts.screens;
+package com.littleBeasts.guiComponent;
 
 import com.littleBeasts.Program;
 import com.littleBeasts.entities.LitiBeast;
 import com.littleBeasts.entities.LitiPlayer;
-import com.littleBeasts.gameLogic.GameLogic;
 import com.littleBeasts.gameLogic.GameState;
 import com.littleBeasts.gameLogic.LitiBattle;
 import com.littleBeasts.gameLogic.PlayerState;
+import com.littleBeasts.actionMenu.BattleMenu;
 import config.HudConstants;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.graphics.ImageRenderer;
@@ -95,10 +95,10 @@ public class DrawHud extends GuiComponent {
         this.battleMenu.draw(g);
         this.battleMenu.setFocus(!(this.battleMenu.getAttackMenu().isFocused() || this.battleMenu.getCatchMenu().isFocused()));
         if (this.battleMenu.getAttackMenu().isFocused()) {
-            this.battleMenu.getAttackMenu().draw(g, battleMenu.firstDrawnItem);
+            this.battleMenu.getAttackMenu().draw(g, battleMenu.getFirstDrawnItem());
         }
         if (this.battleMenu.getCatchMenu().isFocused()) {
-            this.battleMenu.getCatchMenu().draw(g, 1 - battleMenu.firstDrawnItem);
+            this.battleMenu.getCatchMenu().draw(g, 1 - battleMenu.getFirstDrawnItem());
         }
 
         //draw beast portraits and stats

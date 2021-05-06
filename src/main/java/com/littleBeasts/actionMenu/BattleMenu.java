@@ -1,4 +1,4 @@
-package com.littleBeasts.screens;
+package com.littleBeasts.actionMenu;
 
 import com.littleBeasts.entities.LitiPlayer;
 import config.PlayerConfig;
