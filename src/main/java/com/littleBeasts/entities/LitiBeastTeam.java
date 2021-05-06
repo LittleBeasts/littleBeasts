@@ -9,6 +9,10 @@ public class LitiBeastTeam {
 
     private List<LitiBeast> littleBeastTeam;
 
+    public LitiBeastTeam() {
+        this.littleBeastTeam = new ArrayList<>();
+    }
+
     public List<LitiBeast> getBeasts() {
         return littleBeastTeam;
     }

@@ -32,12 +32,14 @@ public class LitiPlayer extends Creature implements IMobileEntity {
     private boolean isFighting;
     private final Image playerPortrait;
     private final LitiBeastTeam littleBeastTeam;
+    private CeInventory ceInventory;
 
     // TODO: Change add draw prefix to every drawing class
     public LitiPlayer() {
         super("test");
         this.playerPortrait = Resources.images().get("sprites/char.png");
         this.attackAnimation = new AttackAnimation(this);
+        this.ceInventory = new CeInventory();
         // Calculation Engine
         this.littleBeastTeam = new LitiBeastTeam();
         this.littleBeastTeam.addBeast(new LitiBeast(CeBeasts.FeuerFurz, (int) this.getX(), (int) this.getY(), true));
@@ -121,5 +123,9 @@ public class LitiPlayer extends Creature implements IMobileEntity {
 
     public boolean isFighting() {
         return isFighting;
+    }
+
+    public CeInventory getCeInventory() {
+        return ceInventory;
     }
 }

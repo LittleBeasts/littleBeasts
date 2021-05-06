@@ -1,16 +1,17 @@
 package com.littleBeasts.actionMenu;
 
-import calculationEngine.environment.CeItem;
+import calculationEngine.entities.CeSlot;
+import calculationEngine.environment.CeItemTypes;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import static config.HudConstants.*;
+import static config.HudConstants.BATTLE_MENU_OFFSET;
+import static config.HudConstants.BATTLE_MENU_START;
 
 public class CatchMenu extends ActionMenu {
 
-    public CatchMenu(List<CeItem> ceItems) {
-        super(getItemsNames(ceItems));
+    public CatchMenu(CeSlot[] ceSlot) {
+        super(getItemsNames(ceSlot));
         this.onConfirm(c -> {
             System.out.println("Use Cage: " + this.items.get(c));
             this.setFocus(false);
@@ -22,11 +23,12 @@ public class CatchMenu extends ActionMenu {
         x = BATTLE_MENU_START + BATTLE_MENU_OFFSET;
     }
 
-    public static ArrayList<String> getItemsNames(List<CeItem> ceItems) {
+    public static ArrayList<String> getItemsNames(CeSlot[] ceSlots) {
         ArrayList<String> itemsNames = new ArrayList<>();
-//        for (CeItem ceItem : ceItems) {
-//            itemsNames.add(ceItem.getName());
-//        }
+        for (CeSlot ceSlot : ceSlots) {
+            if (ceSlot != null && ceSlot.getItem() != null && ceSlot.getItem().getType() == CeItemTypes.cage)
+                itemsNames.add(ceSlot.getItem().getName());
+        }
         itemsNames.add("cage");
         itemsNames.add("cage2");
         return itemsNames;
