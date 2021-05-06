@@ -101,7 +101,7 @@ public class MenuScreen extends Screen implements IUpdateable {
             } else {
                 Game.world().loadEnvironment(MapNames.FleaMarket.toString());
             }
-            GameLogic.setState(GameState.INGAME);
+            Program.getGameLogic().setState(GameState.INGAME);
         });
     }
 
@@ -114,7 +114,7 @@ public class MenuScreen extends Screen implements IUpdateable {
         Game.loop().perform(100, () -> {
             Game.screens().display("INGAME-SCREEN");
             Game.world().loadEnvironment("Arkham");
-            GameLogic.setState(GameState.INGAME);
+            Program.getGameLogic().setState(GameState.INGAME);
         });
     }
 

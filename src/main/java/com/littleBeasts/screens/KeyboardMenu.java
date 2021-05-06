@@ -1,5 +1,6 @@
 package com.littleBeasts.screens;
 
+import com.littleBeasts.Program;
 import com.littleBeasts.gameLogic.GameLogic;
 import com.littleBeasts.gameLogic.GameState;
 import de.gurkenlabs.litiengine.Game;
@@ -94,7 +95,7 @@ public class KeyboardMenu extends Menu {
     }
 
     public void draw(Graphics2D g) {
-        if (GameLogic.getState() == GameState.INGAME_MENU) {
+        if (Program.getGameLogic().getState() == GameState.INGAME_MENU) {
             g.setColor(MENU_BACKGROUND);
             g.fillRect(0, 0, WIDTH, HEIGHT);
         }

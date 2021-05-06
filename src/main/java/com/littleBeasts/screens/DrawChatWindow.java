@@ -1,5 +1,6 @@
 package com.littleBeasts.screens;
 
+import com.littleBeasts.Program;
 import com.littleBeasts.gameLogic.GameLogic;
 import com.littleBeasts.gameLogic.GameState;
 import com.littleBeasts.gameLogic.LitiClient;
@@ -136,7 +137,7 @@ public class DrawChatWindow extends GuiComponent implements IUpdateable {
     }
 
     public static void add(KeyEvent e) {
-        if (GameLogic.getState() != GameState.INGAME_CHAT) return;
+        if (Program.getGameLogic().getState() != GameState.INGAME_CHAT) return;
         switch (e.getKeyCode()) {
             case KeyEvent.VK_BACK_SPACE:
                 delete();
