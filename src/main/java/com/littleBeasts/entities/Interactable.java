@@ -7,5 +7,4 @@ public interface Interactable {
     public void interact();
 
     public IEntity getiEntity();
-    //test
 }
