@@ -3,7 +3,7 @@ package com.littleBeasts.entities;
 import calculationEngine.battle.CeBattle;
 import calculationEngine.entities.*;
 import com.littleBeasts.Program;
-import com.littleBeasts.battleAnimation.AttackAnimation;
+import com.littleBeasts.gameLogic.LitiMapFunctions;
 import com.littleBeasts.gameLogic.PlayerState;
 import de.gurkenlabs.litiengine.Align;
 import de.gurkenlabs.litiengine.Valign;
@@ -58,19 +58,11 @@ public class LitiPlayer extends Creature implements IMobileEntity {
     @Action(description = "Interaction with environment")
     public void interact() {
         if (DEBUG_CONSOLE_OUT) System.out.println("Interaction");
-        ArrayList<LitiInteractable> interactables = Program.getGameLogic().getCurrentLitiMap().getInteractables();
-        for (LitiInteractable litiInteractable : interactables) {
-            if (litiInteractable.isInProximity(LitiPlayer.instance()) && litiInteractable.isFacingInteractable(this)) {
-                interactWithEntity(litiInteractable);
+        ArrayList<Interactable> interactables = Program.getGameLogic().getCurrentLitiMap().getInteractables();
+        for (Interactable interactable : interactables) {
+            if (LitiMapFunctions.isInProximity(LitiPlayer.instance(), interactable.getiEntity()) && LitiMapFunctions.isFacingInteractable(this, interactable.getiEntity())) {
+                interactable.interact();
             }
-        }
-    }
-
-    private void interactWithEntity(LitiInteractable litiInteractable) {
-        if (litiInteractable.isNpc()) {
-            litiInteractable.getLitiNPC().getGreeting();
-        } else if (!litiInteractable.isNpc()) {
-            litiInteractable.getLitiProp().interact();
         }
     }
 
