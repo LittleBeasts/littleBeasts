@@ -9,7 +9,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
 import static config.HudConstants.*;
-import static config.HudConstants.ITEMLISTLENGTH;
 
 public abstract class ActionMenu {
     protected final int y, width;
@@ -116,8 +115,4 @@ public abstract class ActionMenu {
     }
 
     protected abstract void setX();
-
-    public int getFirstDrawnItem() {
-        return firstDrawnItem;
-    }
 }

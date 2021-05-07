@@ -7,21 +7,21 @@ import java.util.List;
 
 public class LitiBeastTeam {
 
-    private List<LitiBeast> littleBeastTeam;
+    private List<LitiBeast> littleBeasts;
 
     public LitiBeastTeam() {
-        this.littleBeastTeam = new ArrayList<>();
+        this.littleBeasts = new ArrayList<>();
     }
 
     public List<LitiBeast> getBeasts() {
-        return littleBeastTeam;
+        return littleBeasts;
     }
 
     public void addBeast(LitiBeast litiBeast) {
-        littleBeastTeam.add(litiBeast);
-        int position = littleBeastTeam.indexOf(litiBeast);
+        littleBeasts.add(litiBeast);
+        int position = littleBeasts.indexOf(litiBeast);
         // ToDo: cleanUp Constructor and change Class Name (BeastStats)
-        littleBeastTeam.get(position).createBeastStats();
+        littleBeasts.get(position).createBeastStats();
     }
 
     public List<CeEntity> beastsToCeEntities(List<LitiBeast> litiBeasts) {

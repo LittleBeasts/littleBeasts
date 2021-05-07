@@ -46,14 +46,14 @@ public class BattleMenu extends ActionMenu {
         x = BATTLE_MENU_START;
     }
 
-    public void drawBattlleMenuAndFocusedMenu(Graphics2D g){
+    public void drawBattleMenuAndFocusedMenu(Graphics2D g){
         draw(g);
         setFocus(!(getAttackMenu().isFocused() || getCatchMenu().isFocused()));
         if (getAttackMenu().isFocused()) {
-            getAttackMenu().draw(g, getFirstDrawnItem());
+            getAttackMenu().draw(g, firstDrawnItem);
         }
         if (getCatchMenu().isFocused()) {
-            getCatchMenu().draw(g, 1 - getFirstDrawnItem());
+            getCatchMenu().draw(g, 1 - firstDrawnItem);
         }
     }
 }

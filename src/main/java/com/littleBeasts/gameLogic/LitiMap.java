@@ -40,6 +40,7 @@ public class LitiMap {
         for (Spawnpoint area : spawnpoints) {
             mapArea = area.getBoundingBox();
             playerPosition = LitiPlayer.instance().getCenter();
+            // TODO: Check that the character looks in the right direction
             playerPosition.setLocation(playerPosition.getX(), playerPosition.getY() + 12);
             if (mapArea.contains(playerPosition)) {
                 if (checkMapAreaForSpawnPoint(area)) return;

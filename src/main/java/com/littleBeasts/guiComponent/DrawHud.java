@@ -81,7 +81,7 @@ public class DrawHud extends GuiComponent {
         g.setColor(Color.WHITE);
         //Player portrait and stats.
         drawPlayerPortrait(g);
-        this.battleMenu.drawBattlleMenuAndFocusedMenu(g);
+        this.battleMenu.drawBattleMenuAndFocusedMenu(g);
         //draw beast portraits and stats
         drawBeastPortraits(g);
     }
