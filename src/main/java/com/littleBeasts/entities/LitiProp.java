@@ -12,7 +12,7 @@ import java.util.Collection;
 
 import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 
-public class LitiProp {
+public class LitiProp implements Interactable{
 
     PropState propState;
     private final String name;
@@ -63,6 +63,11 @@ public class LitiProp {
                 }
             });
         }
+    }
+
+    @Override
+    public IEntity getiEntity() {
+        return this.iEntity;
     }
 
     private enum PropState {

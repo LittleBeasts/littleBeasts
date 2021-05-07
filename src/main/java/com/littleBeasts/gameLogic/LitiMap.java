@@ -1,8 +1,6 @@
 package com.littleBeasts.gameLogic;
 
-import com.littleBeasts.entities.LitiInteractable;
-import com.littleBeasts.entities.LitiPet;
-import com.littleBeasts.entities.LitiPlayer;
+import com.littleBeasts.entities.*;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.entities.IEntity;
 import de.gurkenlabs.litiengine.entities.MapArea;
@@ -23,7 +21,7 @@ public class LitiMap {
     private List<ITileLayer> tileMapLayers;
     private Collection<MapArea> mapAreas;
     private Collection<Spawnpoint> spawnpoints;
-    private static ArrayList<LitiInteractable> litiInteractables;
+    private static ArrayList<Interactable> Interactables;
     private boolean freshlySpawned = true;
     private long start = System.currentTimeMillis();
     private List<Integer> changedTileLayers = new ArrayList<>();
@@ -118,15 +116,14 @@ public class LitiMap {
     }
 
     public void createInteractableList() {
-        litiInteractables = new ArrayList<>();
+        Interactables = new ArrayList<>();
         Collection<IEntity> collectionNpc = Game.world().environment().getEntities();
         for (IEntity entity : collectionNpc) {
             if (entity.getName() != null) {
-                if (entity.getName().contains("NPC-")) {
-                    litiInteractables.add(new LitiInteractable(entity, true));
-                } else if (entity.getName().contains("CHEST-")) {
-                    litiInteractables.add(new LitiInteractable(entity, false));
-                }
+                if (entity.getName().contains("NPC-"))
+                    Interactables.add(new LitiNPC(entity));
+                if (entity.getName().contains("CHEST-"))
+                    Interactables.add(new LitiProp(entity));
             }
         }
     }
@@ -208,7 +205,7 @@ public class LitiMap {
         checkOverlays();
     }
 
-    public ArrayList<LitiInteractable> getInteractables() {
-        return litiInteractables;
+    public ArrayList<Interactable> getInteractables() {
+        return Interactables;
     }
 }
