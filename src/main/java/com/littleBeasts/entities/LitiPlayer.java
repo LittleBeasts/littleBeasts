@@ -3,7 +3,6 @@ package com.littleBeasts.entities;
 import calculationEngine.battle.CeBattle;
 import calculationEngine.entities.*;
 import com.littleBeasts.Program;
-import com.littleBeasts.abilities.Attack;
 import com.littleBeasts.battleAnimation.AttackAnimation;
 import com.littleBeasts.gameLogic.PlayerState;
 import de.gurkenlabs.litiengine.Align;
@@ -113,19 +112,19 @@ public class LitiPlayer extends Creature implements IMobileEntity {
         return battle;
     }
 
-    public void setBattle(CeBattle battle) {
-        this.battle = battle;
-    }
-
-    public void setIsFighting(boolean fighting) {
-        isFighting = fighting;
-    }
-
     public boolean isFighting() {
         return isFighting;
     }
 
     public CeInventory getCeInventory() {
         return ceInventory;
+    }
+
+    public void setBattle(CeBattle battle) {
+        this.battle = battle;
+    }
+
+    public void setIsFighting(boolean fighting) {
+        isFighting = fighting;
     }
 }
