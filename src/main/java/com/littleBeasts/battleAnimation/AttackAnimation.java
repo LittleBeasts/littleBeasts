@@ -14,17 +14,11 @@ import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 
 public class AttackAnimation {
 
-    IMobileEntity iMobileEntity;
-    private boolean soundPlayer = false;
-
-
-    public AttackAnimation(IMobileEntity iMobileEntity) {
-        this.iMobileEntity = iMobileEntity;
-    }
+    static boolean soundPlayer = false;
 
     // ToDo: extract to Attack Animation class or similar
     @Action(description = "This is a punch, it hurts.")
-    public void punch() {
+    public static void punch(IMobileEntity iMobileEntity) {
         if (!soundPlayer) { // TODO: These effects need to be moved to the actual attack.
             Game.audio().playSound("punch");
             Game.world().camera().shake(1, 0, 100);
@@ -48,12 +42,12 @@ public class AttackAnimation {
                     e.printStackTrace();
                 }
             }
-            getBack(origin);
+            getBack(iMobileEntity, origin);
         };
         applyForce.run();
     }
 
-    private void getBack(Point2D origin) {
+    private static void getBack(IMobileEntity iMobileEntity, Point2D origin) {
         origin = new Point2D.Double(origin.getX() - 7, origin.getY());
         Force force1 = new Force(origin, 100, 1);
         iMobileEntity.movement().apply(force1);

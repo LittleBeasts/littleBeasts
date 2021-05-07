@@ -25,7 +25,6 @@ public class LitiPlayer extends Creature implements IMobileEntity {
     private static LitiPlayer litiPlayerInstance;
     private static final PlayerState state = PlayerState.CONTROLLABLE;
     private CeBattle battle;
-    private final AttackAnimation attackAnimation;
     private final CePlayer cePlayer;
     private final String playerName = "xXx_BeastSlayer_xXx";
     private boolean isFighting;
@@ -37,7 +36,6 @@ public class LitiPlayer extends Creature implements IMobileEntity {
     public LitiPlayer() {
         super("test");
         this.playerPortrait = Resources.images().get("sprites/char.png");
-        this.attackAnimation = new AttackAnimation(this);
         this.ceInventory = new CeInventory();
         // Calculation Engine
         this.littleBeastTeam = new LitiBeastTeam();
@@ -78,10 +76,6 @@ public class LitiPlayer extends Creature implements IMobileEntity {
 
     public Image getPlayerPortrait() {
         return playerPortrait;
-    }
-
-    public AttackAnimation getAttackAnimation() {
-        return attackAnimation;
     }
 
     public LitiBeastTeam getLittleBeastTeam() {
