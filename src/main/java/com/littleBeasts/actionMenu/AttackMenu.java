@@ -1,6 +1,7 @@
-package com.littleBeasts.screens;
+package com.littleBeasts.actionMenu;
 
 import calculationEngine.entities.CeAttack;
+import com.littleBeasts.battleAnimation.AttackAnimation;
 import com.littleBeasts.entities.LitiPlayer;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class AttackMenu extends ActionMenu {
         super(getAttacksNames(ceAttacks));
         this.onConfirm(c -> {
             LitiPlayer.instance().getBattle().useAttack(ceAttacks.get(c));
-            LitiPlayer.instance().punch();
+            AttackAnimation.punch(LitiPlayer.instance());
             this.setFocus(false);
         });
     }

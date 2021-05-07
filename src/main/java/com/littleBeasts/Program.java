@@ -25,6 +25,8 @@ public class Program {
         if (args.length >0)
             startingMap = args[0];
 
+        startingMap = "Arkham";
+
         // initialize the game infrastructure
         Game.init();
 
@@ -44,7 +46,6 @@ public class Program {
         // initialize modules
         PlayerInput.init();
         gameLogic = new GameLogic();
-        LitiPlayer.instance().setGameLogic(gameLogic);
         gameLogic.init();
 
         // enter main menu

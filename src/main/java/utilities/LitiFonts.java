@@ -1,7 +1,5 @@
 package utilities;
 
-import com.littleBeasts.screens.DrawChatWindow;
-
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;

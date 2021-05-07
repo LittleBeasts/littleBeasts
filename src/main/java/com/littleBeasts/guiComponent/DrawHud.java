@@ -1,9 +1,9 @@
-package com.littleBeasts.screens;
+package com.littleBeasts.guiComponent;
 
 import com.littleBeasts.Program;
+import com.littleBeasts.actionMenu.BattleMenu;
 import com.littleBeasts.entities.LitiBeast;
 import com.littleBeasts.entities.LitiPlayer;
-import com.littleBeasts.gameLogic.GameLogic;
 import com.littleBeasts.gameLogic.GameState;
 import com.littleBeasts.gameLogic.LitiBattle;
 import com.littleBeasts.gameLogic.PlayerState;
@@ -35,14 +35,6 @@ public class DrawHud extends GuiComponent {
 
         battleMenu = new BattleMenu(true);
         //ToDo: get PlayerItems from Player Inventory
-        battleMenu.onConfirm(c -> {
-            battleMenu.setFocus(false);
-            if (c == 0) {
-                battleMenu.getAttackMenu().setFocus(true);
-            } else if (c == 1) {
-                battleMenu.getCatchMenu().setFocus(true);
-            }
-        });
     }
 
     @Override
@@ -76,7 +68,7 @@ public class DrawHud extends GuiComponent {
     }
 
     private void drawDamageRolls(Graphics2D g) {
-        for (LitiBeast litiBeast : LitiPlayer.instance().getLittleBeastTeam()) {
+        for (LitiBeast litiBeast : LitiPlayer.instance().getLittleBeastTeam().getBeasts()) {
             litiBeast.getBeastStats().drawDamageRolls(g);
         }
         for (LitiBeast litiBeast : LitiBattle.getBeastList()) {
@@ -86,24 +78,12 @@ public class DrawHud extends GuiComponent {
     }
 
     private void drawBattleHud(Graphics2D g) throws IOException {
-
         g.setColor(Color.WHITE);
-
         //Player portrait and stats.
         drawPlayerPortrait(g);
-
-        this.battleMenu.draw(g);
-        this.battleMenu.setFocus(!(this.battleMenu.getAttackMenu().isFocused() || this.battleMenu.getCatchMenu().isFocused()));
-        if (this.battleMenu.getAttackMenu().isFocused()) {
-            this.battleMenu.getAttackMenu().draw(g, battleMenu.firstDrawnItem);
-        }
-        if (this.battleMenu.getCatchMenu().isFocused()) {
-            this.battleMenu.getCatchMenu().draw(g, 1 - battleMenu.firstDrawnItem);
-        }
-
+        this.battleMenu.drawBattleMenuAndFocusedMenu(g);
         //draw beast portraits and stats
         drawBeastPortraits(g);
-
     }
 
     private void drawPlayerPortrait(Graphics2D g) throws IOException {
@@ -127,8 +107,8 @@ public class DrawHud extends GuiComponent {
     }
 
     private void drawBeastPortraits(Graphics2D g) {
-        for (LitiBeast beast : LitiPlayer.instance().getLittleBeastTeam()) {
-            beast.getBeastStats().draw(g, LitiPlayer.instance().getLittleBeastTeam().indexOf(beast));
+        for (LitiBeast beast : LitiPlayer.instance().getLittleBeastTeam().getBeasts()) {
+            beast.getBeastStats().draw(g, LitiPlayer.instance().getLittleBeastTeam().getBeasts().indexOf(beast));
         }
         if (LitiBattle.getBeastList() != null) {
             for (LitiBeast beast : LitiBattle.getBeastList()) {

@@ -1,4 +1,4 @@
-package com.littleBeasts.screens;
+package com.littleBeasts.battleAnimation;
 
 import config.HudConstants;
 import de.gurkenlabs.litiengine.Game;
@@ -6,15 +6,16 @@ import de.gurkenlabs.litiengine.Game;
 import java.awt.*;
 import java.awt.geom.Point2D;
 
-public class DrawDamageAnimation {
+import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
+
+public class DamageAnimation {
     private final Point2D point2D;
     private final int damage, fadeoutSpeed;
     private final double speed;
     private final double animationLimit;
     private int increment;
-    private boolean soundPlayer = false;
 
-    public DrawDamageAnimation(Point2D point2D, int damage) {
+    public DamageAnimation(Point2D point2D, int damage) {
         this.point2D = point2D;
         this.increment = 0;
         this.damage = damage;
@@ -24,11 +25,6 @@ public class DrawDamageAnimation {
     }
 
     public void draw(Graphics2D g) {
-        if (!soundPlayer) { // TODO: These effects need to be moved to the actual attack.
-            Game.audio().playSound("punch");
-            Game.world().camera().shake(1, 0, 100);
-            soundPlayer = true;
-        }
         g.setFont(HudConstants.ChatWindowFont);
         // ToDo: Extract to HudConstants
         g.setColor(new Color(255, 0, 0, (Math.max(255 - (fadeoutSpeed * increment++), 0))));

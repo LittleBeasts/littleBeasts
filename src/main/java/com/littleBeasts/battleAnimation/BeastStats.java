@@ -1,4 +1,4 @@
-package com.littleBeasts.screens;
+package com.littleBeasts.battleAnimation;
 
 import com.littleBeasts.Program;
 import com.littleBeasts.entities.LitiBeast;
@@ -18,13 +18,13 @@ import static config.HudConstants.*;
 // |    2020.11.12. D.B.                                                      |
 // |--------------------------------------------------------------------------|
 
-public class DrawBeastStats {
+public class BeastStats {
 
     private final LitiBeast beast;
     private final boolean playerBeast;
-    private final List<DrawDamageAnimation> drawDamageAnimationList = new ArrayList<>();
+    private final List<DamageAnimation> damageAnimationList = new ArrayList<>();
 
-    public DrawBeastStats(LitiBeast beast, boolean isPlayerBeast) {
+    public BeastStats(LitiBeast beast, boolean isPlayerBeast) {
         this.playerBeast = isPlayerBeast;
         this.beast = beast;
     }
@@ -34,11 +34,11 @@ public class DrawBeastStats {
         if (playerBeast) {
             drawPlayerBeastStats(g, teamPosition);
             for (Integer dmg : this.beast.getCeEntity().getDamages()) {
-                drawDamageAnimationList.add(new DrawDamageAnimation((LitiPlayer.instance().getCenter()), dmg));
+                damageAnimationList.add(new DamageAnimation((LitiPlayer.instance().getCenter()), dmg));
             }
         } else {
             for (Integer dmg : this.beast.getCeEntity().getDamages()) {
-                drawDamageAnimationList.add(new DrawDamageAnimation(this.beast.getCenter(), dmg));
+                damageAnimationList.add(new DamageAnimation(this.beast.getCenter(), dmg));
             }
         }
         damageAnimationOutOfBounds(g);
@@ -71,10 +71,10 @@ public class DrawBeastStats {
     }
 
     private void damageAnimationOutOfBounds(Graphics2D g) {
-        for (int i = 0; i < drawDamageAnimationList.size(); i++) {
-            drawDamageAnimationList.get(i).draw(g);
-            if (drawDamageAnimationList.get(i).outOfBounds()) {
-                drawDamageAnimationList.remove(i);
+        for (int i = 0; i < damageAnimationList.size(); i++) {
+            damageAnimationList.get(i).draw(g);
+            if (damageAnimationList.get(i).outOfBounds()) {
+                damageAnimationList.remove(i);
                 if (DEBUG_CONSOLE_OUT) System.out.println("Removed");
             }
         }
@@ -85,6 +85,6 @@ public class DrawBeastStats {
     }
 
     public boolean isReadyToBeRemoved() {
-        return this.drawDamageAnimationList.isEmpty();
+        return this.damageAnimationList.isEmpty();
     }
 }

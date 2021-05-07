@@ -1,4 +1,4 @@
-package com.littleBeasts.screens;
+package com.littleBeasts.guiComponent;
 
 import com.littleBeasts.Program;
 import com.littleBeasts.gameLogic.GameLogic;
