@@ -1,6 +1,5 @@
 package com.littleBeasts;
 
-import com.littleBeasts.gameLogic.GameLogic;
 import com.littleBeasts.gameLogic.GameState;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -17,11 +16,10 @@ public class StartStepDefinitions {
     public void thePlayerIsInTheMainMenu() throws IOException, FontFormatException {
         String input[] = new String[1];
         input[0] = "Arkham";
-        if(!Game.hasStarted()) {
+        if (!Game.hasStarted()) {
             Program.main(input);
         }
         Assert.assertEquals(Program.getGameLogic().getState(), GameState.MENU);
-        System.out.println("Möööp");
     }
 
     @When("^the Player presses the button to start the game$")
@@ -33,7 +31,6 @@ public class StartStepDefinitions {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
     }
 
     @Then("^the game starts$")

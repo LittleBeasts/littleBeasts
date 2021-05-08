@@ -1,6 +1,5 @@
 package com.littleBeasts.entities;
 
-import calculationEngine.battle.CeBattle;
 import calculationEngine.entities.*;
 import com.littleBeasts.Program;
 import com.littleBeasts.gameLogic.LitiMapFunctions;
@@ -24,10 +23,8 @@ import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 public class LitiPlayer extends Creature implements IMobileEntity {
     private static LitiPlayer litiPlayerInstance;
     private static final PlayerState state = PlayerState.CONTROLLABLE;
-    private CeBattle battle;
     private final CePlayer cePlayer;
     private final String playerName = "xXx_BeastSlayer_xXx";
-    private boolean isFighting;
     private final Image playerPortrait;
     private final LitiBeastTeam littleBeastTeam;
     private CeInventory ceInventory;
@@ -94,23 +91,7 @@ public class LitiPlayer extends Creature implements IMobileEntity {
         return cePlayer;
     }
 
-    public CeBattle getBattle() {
-        return battle;
-    }
-
-    public boolean isFighting() {
-        return isFighting;
-    }
-
     public CeInventory getCeInventory() {
         return ceInventory;
-    }
-
-    public void setBattle(CeBattle battle) {
-        this.battle = battle;
-    }
-
-    public void setIsFighting(boolean fighting) {
-        isFighting = fighting;
     }
 }

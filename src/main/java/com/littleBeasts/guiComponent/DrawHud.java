@@ -2,6 +2,7 @@ package com.littleBeasts.guiComponent;
 
 import com.littleBeasts.Program;
 import com.littleBeasts.actionMenu.BattleMenu;
+import com.littleBeasts.battleAnimation.BattleAnimations;
 import com.littleBeasts.entities.LitiBeast;
 import com.littleBeasts.entities.LitiPlayer;
 import com.littleBeasts.gameLogic.GameState;
@@ -68,13 +69,7 @@ public class DrawHud extends GuiComponent {
     }
 
     private void drawDamageRolls(Graphics2D g) {
-        for (LitiBeast litiBeast : LitiPlayer.instance().getLittleBeastTeam().getBeasts()) {
-            litiBeast.getBeastStats().drawDamageRolls(g);
-        }
-        for (LitiBeast litiBeast : LitiBattle.getBeastList()) {
-            if (litiBeast.getBeastStats() != null)
-                litiBeast.getBeastStats().drawDamageRolls(g);
-        }
+        BattleAnimations.draw(g);
     }
 
     private void drawBattleHud(Graphics2D g) throws IOException {

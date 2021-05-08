@@ -5,26 +5,25 @@ import calculationEngine.entities.CeAi;
 import calculationEngine.entities.CeBeasts;
 import calculationEngine.entities.CePlayer;
 import com.littleBeasts.Program;
+import com.littleBeasts.battleAnimation.BattleAnimations;
 import com.littleBeasts.entities.LitiBeast;
 import com.littleBeasts.entities.LitiPlayer;
 import de.gurkenlabs.litiengine.Direction;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.graphics.Camera;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
-
-import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 
 public class LitiBattle {
     private static CeBattle battle;
     private static boolean nextBattlePossible = true;
     private static final List<LitiBeast> LITI_BEAST_LIST = new ArrayList<>(); // list to resolve all animation before removing entity TODO: find a way to finish animation w/o this list.
     private static CePlayer cePlayer;
+    private static LitiBeast litiBeast;
 
     public static void triggerBattle() {
-        int x = 0;
+        int x;
         boolean faceLeft = false;
         if (LitiPlayer.instance().getFacingDirection() == Direction.LEFT) {
             x = (int) LitiPlayer.instance().getX() - 50;
@@ -34,33 +33,46 @@ public class LitiBattle {
         }
         Camera battleCam = new Camera();
         battleCam.setClampToMap(false);
-        Point2D point2D = Game.world().camera().getViewportLocation(LitiPlayer.instance());
         Game.world().setCamera(battleCam);
         Game.world().camera().setZoom(1.5f, 500);
         Game.world().camera().setFocus(LitiPlayer.instance().getX() + (faceLeft ? -25 : 25), LitiPlayer.instance().getY());
 
         //for dev purposes
-        LitiBeast litiBeast = new LitiBeast(CeBeasts.FeuerFurz, x, (int) (LitiPlayer.instance().getY() - (LitiPlayer.instance().getHeight() / 2)), false);
+        litiBeast = new LitiBeast(CeBeasts.FeuerFurz, x, (int) (LitiPlayer.instance().getY() - (LitiPlayer.instance().getHeight() / 2)), false);
         litiBeast.setFacingDirection(LitiPlayer.instance().getFacingDirection().getOpposite());
         LITI_BEAST_LIST.add(litiBeast);
 
         cePlayer = LitiPlayer.instance().getCePlayer();
         CeAi ai = new CeAi(litiBeast.getCeEntity());
         battle = new CeBattle(LitiPlayer.instance().getCePlayer(), ai);
-        LitiPlayer.instance().setBattle(battle);
-        LitiPlayer.instance().setIsFighting(true);
     }
 
     public static void startBattle() {
-        if (LitiPlayer.instance().isFighting()) {
+        if (battle == null) return;
+        if (Program.getGameLogic().getState() == GameState.BATTLE) {
             if (battle.getTurn() != null) {
                 if (battle.getTurn().getNumber() == cePlayer.getNumber()) {
 
                 }
             } else {
-                if (DEBUG_CONSOLE_OUT) System.out.println("End of fight");
+
                 Program.getGameLogic().setState(GameState.INGAME);
             }
+        }
+    }
+
+    public static void createDamageAnimations() {
+        if (litiBeast != null) {
+            for (int damage : litiBeast.getCeEntity().getDamages())
+                BattleAnimations.animateDamage(litiBeast, damage);
+        }
+        for (LitiBeast litiBeast : LitiPlayer.instance().getLittleBeastTeam().getBeasts()) {
+            for (int damage : litiBeast.getCeEntity().getDamages()) {
+                BattleAnimations.animateDamage(LitiPlayer.instance(), damage);
+            }
+        }
+        for (int damage : LitiPlayer.instance().getCePlayer().getDamages()) {
+            BattleAnimations.animateDamage(LitiPlayer.instance(), damage);
         }
     }
 
@@ -68,13 +80,13 @@ public class LitiBattle {
         return battle;
     }
 
-    public static void removeBeast(){
+    public static void removeBeast() {
         if (Program.getGameLogic().getState() == GameState.INGAME) {
             for (int i = 0; i < LITI_BEAST_LIST.size(); i++) {
-                if (LITI_BEAST_LIST.get(i).getBeastStats().isReadyToBeRemoved()) {
+                if (BattleAnimations.allAnimationsDone()) {
                     LITI_BEAST_LIST.get(i).die();
                     Game.world().environment().remove(LITI_BEAST_LIST.get(i));
-                    LITI_BEAST_LIST.remove(i);
+                    LITI_BEAST_LIST.remove(LITI_BEAST_LIST.get(i));
                 }
                 if (LITI_BEAST_LIST.size() == 0) {
                     nextBattlePossible = true;
@@ -95,8 +107,10 @@ public class LitiBattle {
         LitiBattle.nextBattlePossible = nextBattlePossible;
     }
 
-    public static void update(){
-       startBattle();
-       removeBeast();
+    public static void update() {
+        startBattle();
+        removeBeast();
+        if (Program.getGameLogic().getState() == GameState.BATTLE)
+            createDamageAnimations();
     }
 }

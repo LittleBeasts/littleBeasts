@@ -64,7 +64,6 @@ public class GameLogic implements IUpdateable {
         Game.loop().setTimeScale(1);
         LitiPlayer.instance().attachControllers();
         LitiPlayer.instance().movement().attach();
-        LitiPlayer.instance().setIsFighting(false);
         Input.keyboard().onKeyTyped(DrawChatWindow::add);
 
         switch (state) {
