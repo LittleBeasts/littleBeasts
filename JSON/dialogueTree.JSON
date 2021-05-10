@@ -1,32 +1,32 @@
 {
     "day1": {
-      "heading": "Day 1",
       "scene1": {
         "heading": "At Home",
-        "dialog1": [
+        "dialoguePartner": [],
+        "dialogue": [
           {
             "speaker": "$name",
             "text": "Hey sweety, did you also have a strange dream?"
           },
           {
-            "speaker": "Nike",
-            "text": "Meow",
+            "speaker": "$nameCat",
+            "text": "Meow"
           },
           {
             "speaker": "$name",
             "text": "Something is not right, I should talk to the Professor."
           },
           {
-            "speaker": "Nike",
-            "text": "Meow?",
+            "speaker": "$nameCat",
+            "text": "Meow?"
           },
           {
             "speaker": "$name",
-            "text": "Let's got to his office!"
-          },
+            "text": "Let's go to his office!"
+          }
         ],
         "trigger":{
-          "Nike": "dialog1"
+          "Cat": "dialog1"
         }
       },
       "tutorial":{

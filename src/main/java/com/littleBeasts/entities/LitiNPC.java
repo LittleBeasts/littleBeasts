@@ -26,10 +26,10 @@ public class LitiNPC extends Creature implements Interactable {
     }
 
     private JSONObject getDefaultAnswers(String name) {
-        return getDialogtree().getJSONObject("default").getJSONObject(name);
+        return getDialogueTree().getJSONObject("default").getJSONObject(name);
     }
 
-    private JSONObject getDialogtree() {
+    private JSONObject getDialogueTree() {
         return JsonReader.readJson("./JSON/dialogueTree.JSON");
     }
 
