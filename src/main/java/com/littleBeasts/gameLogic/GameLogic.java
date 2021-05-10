@@ -65,6 +65,8 @@ public class GameLogic implements IUpdateable {
         LitiPlayer.instance().attachControllers();
         LitiPlayer.instance().movement().attach();
         LitiPlayer.instance().setIsFighting(false);
+        IngameScreen.drawChatWindow.setVisible(false);
+        IngameScreen.ingameMenu.setVisible(false);
         Input.keyboard().onKeyTyped(DrawChatWindow::add);
 
         switch (state) {

@@ -1,5 +1,7 @@
 package com.littleBeasts.sceneManager;
 
+import com.littleBeasts.Program;
+import com.littleBeasts.gameLogic.GameState;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.entities.IEntity;
 
@@ -18,6 +20,7 @@ public class scenePlayer {
     public static void startScene() throws SceneNotPossibleError {
         script = parseScript(day, scene);
         isScenePossible();
+        Program.getGameLogic().setState(GameState.DIALOGUE);
         playScene();
         turnPage();
     }
@@ -64,5 +67,9 @@ public class scenePlayer {
         for (IEntity iEntity : iEntities)
             charactersOnMap.add(iEntity.getName());
         return charactersOnMap;
+    }
+
+    public static Script getScript() {
+        return script;
     }
 }

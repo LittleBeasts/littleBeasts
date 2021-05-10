@@ -1,8 +1,12 @@
 package com.littleBeasts;
 
-import com.littleBeasts.entities.LitiPlayer;
-import com.littleBeasts.gameLogic.*;
 import com.littleBeasts.actionMenu.ActionMenu;
+import com.littleBeasts.entities.LitiPlayer;
+import com.littleBeasts.gameLogic.GameState;
+import com.littleBeasts.gameLogic.LitiBattle;
+import com.littleBeasts.gameLogic.LitiClient;
+import com.littleBeasts.gameLogic.PlayerState;
+import com.littleBeasts.sceneManager.scenePlayer;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.input.Input;
 
@@ -16,6 +20,10 @@ public final class PlayerInput {
         Input.keyboard().onKeyTyped(e -> {
             if (Program.getGameLogic().getState().equals(GameState.BATTLE))
                 battleControls(e);
+            if (Program.getGameLogic().getState().equals(GameState.DIALOGUE) && e.getKeyCode() == KeyEvent.VK_E) {
+                scenePlayer.getScript().getDialogue().getSpeechBubble().hide();
+                return;
+            }
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_ESCAPE:
                     onEscape(menu);

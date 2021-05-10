@@ -1,13 +1,12 @@
 package com.littleBeasts.sceneManager;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 public class Script {
 
-    private  String header;
-    private  String[] dialoguePartner;
-    private Dialogue dialogue;
+    private final String header;
+    private final String[] dialoguePartner;
+    private final Dialogue dialogue;
 
     public Script(String header, String[] dialoguePartner, JSONArray JSONDialogue) {
         this.header = header;

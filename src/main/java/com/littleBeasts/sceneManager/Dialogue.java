@@ -1,11 +1,12 @@
 package com.littleBeasts.sceneManager;
 
+import com.littleBeasts.Program;
 import com.littleBeasts.entities.LitiPet;
 import com.littleBeasts.entities.LitiPlayer;
+import com.littleBeasts.gameLogic.GameState;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.entities.IEntity;
 import de.gurkenlabs.litiengine.gui.SpeechBubble;
-import de.gurkenlabs.litiengine.gui.SpeechBubbleListener;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -15,8 +16,9 @@ import java.util.List;
 
 public class Dialogue {
 
-    JSONArray jsonDialogue;
-    List<DialogueToken> dialogueTokens = new ArrayList<>();
+    private final JSONArray jsonDialogue;
+    private final List<DialogueToken> dialogueTokens = new ArrayList<>();
+    private SpeechBubble speechBubble;
 
     public Dialogue(JSONArray jsonDialogue) {
         this.jsonDialogue = jsonDialogue;
@@ -29,8 +31,9 @@ public class Dialogue {
         }
     }
 
-    private class DialogueToken {
-        private String speaker, text;
+    private static class DialogueToken {
+        private final String speaker;
+        private final String text;
 
         public DialogueToken(JSONObject jsonObject) {
             this.speaker = jsonObject.getString("speaker");
@@ -41,9 +44,14 @@ public class Dialogue {
     public void startDialogue() {
         if (this.dialogueTokens.size() > 0) {
             DialogueToken currentDialogueToken = this.dialogueTokens.remove(0);
-            SpeechBubble speechBubble = SpeechBubble.create(getSpeakerEntity(currentDialogueToken.speaker), currentDialogueToken.text);
+            speechBubble = SpeechBubble.create(getSpeakerEntity(currentDialogueToken.speaker), currentDialogueToken.text);
             speechBubble.addListener(this::startDialogue);
-        }
+        } else
+            Program.getGameLogic().setState(GameState.INGAME);
+    }
+
+    public SpeechBubble getSpeechBubble() {
+        return speechBubble;
     }
 
     private IEntity getSpeakerEntity(String entityName) {

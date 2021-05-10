@@ -108,6 +108,7 @@ public class MenuScreen extends Screen implements IUpdateable {
 
     private void loadUpMap() {
         Game.loop().perform(100, () -> {
+            Program.getGameLogic().setState(GameState.INGAME);
             Game.screens().display("INGAME-SCREEN");
             if (Program.getStartingMap() != null) {
                 Game.world().loadEnvironment(Program.getStartingMap());
@@ -119,7 +120,7 @@ public class MenuScreen extends Screen implements IUpdateable {
             } else {
                 Game.world().loadEnvironment(MapNames.FleaMarket.toString());
             }
-            Program.getGameLogic().setState(GameState.INGAME);
+            //Program.getGameLogic().setState(GameState.INGAME);
         });
     }
 
