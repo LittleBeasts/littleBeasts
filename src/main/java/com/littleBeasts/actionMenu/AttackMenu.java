@@ -16,7 +16,7 @@ public class AttackMenu extends ActionMenu {
     public AttackMenu(List<CeAttack> ceAttacks) {
         super(getAttacksNames(ceAttacks));
         this.onConfirm(c -> {
-            LitiBattle.getBattle().useAttack(ceAttacks.get(c));
+            LitiBattle.getCeBattle().useAttack(ceAttacks.get(c));
             AttackAnimation.punch(LitiPlayer.instance());
             this.setFocus(false);
         });

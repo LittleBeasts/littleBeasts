@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LitiBattle {
-    private static CeBattle battle;
+    private static CeBattle ceBattle;
     private static boolean nextBattlePossible = true;
     private static final List<LitiBeast> LITI_BEAST_LIST = new ArrayList<>(); // list to resolve all animation before removing entity TODO: find a way to finish animation w/o this list.
     private static CePlayer cePlayer;
@@ -44,14 +44,14 @@ public class LitiBattle {
 
         cePlayer = LitiPlayer.instance().getCePlayer();
         CeAi ai = new CeAi(litiBeast.getCeEntity());
-        battle = new CeBattle(LitiPlayer.instance().getCePlayer(), ai);
+        ceBattle = new CeBattle(LitiPlayer.instance().getCePlayer(), ai);
     }
 
     public static void startBattle() {
-        if (battle == null) return;
+        if (ceBattle == null) return;
         if (Program.getGameLogic().getState() == GameState.BATTLE) {
-            if (battle.getTurn() != null) {
-                if (battle.getTurn().getNumber() == cePlayer.getNumber()) {
+            if (ceBattle.getTurn() != null) {
+                if (ceBattle.getTurn().getNumber() == cePlayer.getNumber()) {
 
                 }
             } else {
@@ -76,8 +76,8 @@ public class LitiBattle {
         }
     }
 
-    public static CeBattle getBattle() {
-        return battle;
+    public static CeBattle getCeBattle() {
+        return ceBattle;
     }
 
     public static void removeBeast() {
