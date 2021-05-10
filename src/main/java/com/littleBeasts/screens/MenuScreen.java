@@ -4,6 +4,7 @@ import client.Client;
 import com.littleBeasts.Program;
 import com.littleBeasts.gameLogic.GameState;
 import com.littleBeasts.gameLogic.LitiClient;
+import com.littleBeasts.gameLogic.MapNames;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.MapArea;

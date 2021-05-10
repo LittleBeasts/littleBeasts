@@ -1,4 +1,4 @@
-package com.littleBeasts.screens;
+package com.littleBeasts.gameLogic;
 
 public enum MapNames {
     Arkham,

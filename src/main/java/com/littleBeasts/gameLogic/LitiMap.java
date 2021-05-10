@@ -2,7 +2,7 @@ package com.littleBeasts.gameLogic;
 
 import com.littleBeasts.entities.*;
 import com.littleBeasts.sceneManager.SceneNotPossibleError;
-import com.littleBeasts.sceneManager.scenePlayer;
+import com.littleBeasts.sceneManager.ScenePlayer;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.entities.IEntity;
 import de.gurkenlabs.litiengine.entities.MapArea;
@@ -49,7 +49,6 @@ public class LitiMap {
     }
 
     public void checkAreas() throws SceneNotPossibleError {
-
         for (MapArea area : mapAreas) {
             if (area.getName().contains("OPACITY-") && area.getBoundingBox().contains(LitiPlayer.instance().getCenter())) {
                 checkOpacity(area.getName().replace("OPACITY-", ""));
@@ -57,13 +56,12 @@ public class LitiMap {
                 checkSceneAreas(area.getName().replace("SCENE-", ""));
             }
         }
-
     }
 
     public void checkSceneAreas(String scene) throws SceneNotPossibleError {
         int dayInt = Integer.parseInt(scene.substring(0, scene.indexOf("-")));
         int sceneInt = Integer.parseInt(scene.substring(scene.indexOf("-") + 1));
-        scenePlayer.startScene(dayInt, sceneInt);
+        ScenePlayer.startScene(dayInt, sceneInt);
     }
 
     private boolean checkMapAreaForSpawnPoint(Spawnpoint area) {
@@ -164,6 +162,7 @@ public class LitiMap {
                 playerPosition.setLocation(playerPosition.getX(), playerPosition.getY() + 12);
                 if (mapArea.contains(playerPosition.getX(), playerPosition.getY())) {
                     this.freshlySpawned = true;
+                    this.start = System.currentTimeMillis();
                     break;
                 }
             }

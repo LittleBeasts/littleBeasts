@@ -9,16 +9,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static com.littleBeasts.sceneManager.scriptParser.parseScript;
+import static com.littleBeasts.sceneManager.ScriptParser.parseScript;
 
-public class scenePlayer {
+public class ScenePlayer {
 
     private static int day = 1, scene = 1;
     private static Script script;
 
 
     public static void startScene(int day, int scene) throws SceneNotPossibleError {
-        if (scenePlayer.day == day && scenePlayer.scene == scene) {
+        if (ScenePlayer.day == day && ScenePlayer.scene == scene) {
             script = parseScript(day, scene);
             isScenePossible();
             Program.getGameLogic().setState(GameState.DIALOGUE);

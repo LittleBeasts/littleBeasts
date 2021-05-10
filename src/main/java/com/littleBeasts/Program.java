@@ -1,8 +1,8 @@
 package com.littleBeasts;
 
-import com.littleBeasts.entities.LitiPlayer;
 import com.littleBeasts.gameLogic.GameLogic;
 import com.littleBeasts.gameLogic.GameState;
+import com.littleBeasts.gameLogic.MapNames;
 import com.littleBeasts.screens.IngameScreen;
 import com.littleBeasts.screens.MenuScreen;
 import de.gurkenlabs.litiengine.Game;
@@ -22,11 +22,10 @@ public class Program {
         Game.info().setName("littleBeasts");
         Game.info().setSubTitle("");
         Game.info().setVersion("v.0");
-        if (args.length >0)
+        if (args.length > 0)
             startingMap = args[0];
 
-        startingMap = "Arkham";
-
+        startingMap = MapNames.homelessArea.toString();
         // initialize the game infrastructure
         Game.init();
 
@@ -54,7 +53,7 @@ public class Program {
         Game.audio().playMusic("titlemenu");
         Game.start();
     }
-    
+
     public static GameLogic getGameLogic() {
         return gameLogic;
     }

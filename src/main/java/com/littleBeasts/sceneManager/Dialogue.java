@@ -4,6 +4,8 @@ import com.littleBeasts.Program;
 import com.littleBeasts.entities.LitiPet;
 import com.littleBeasts.entities.LitiPlayer;
 import com.littleBeasts.gameLogic.GameState;
+import config.DialogueConstants;
+import config.FontConstants;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.entities.IEntity;
 import de.gurkenlabs.litiengine.gui.SpeechBubble;
@@ -44,7 +46,7 @@ public class Dialogue {
     public void startDialogue() {
         if (this.dialogueTokens.size() > 0) {
             DialogueToken currentDialogueToken = this.dialogueTokens.remove(0);
-            speechBubble = SpeechBubble.create(getSpeakerEntity(currentDialogueToken.speaker), currentDialogueToken.text);
+            speechBubble = SpeechBubble.create(getSpeakerEntity(currentDialogueToken.speaker), currentDialogueToken.text, DialogueConstants.defaultSpeechBubble, FontConstants.DEFAULT_FONT);
             speechBubble.addListener(this::startDialogue);
         } else
             Program.getGameLogic().setState(GameState.INGAME);
