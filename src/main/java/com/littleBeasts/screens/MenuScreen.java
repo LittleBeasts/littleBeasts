@@ -2,7 +2,6 @@ package com.littleBeasts.screens;
 
 import client.Client;
 import com.littleBeasts.Program;
-import com.littleBeasts.gameLogic.GameLogic;
 import com.littleBeasts.gameLogic.GameState;
 import com.littleBeasts.gameLogic.LitiClient;
 import de.gurkenlabs.litiengine.Game;
@@ -16,14 +15,6 @@ import java.io.IOException;
 import java.util.Collection;
 
 import static config.HudConstants.MAIN_MENU_ITEMS;
-
-/*--------------------------------------------
-This class creates a menu for use in battle.
-It is called in the HUD class.
-Height, width and bottom pad should be adjusted in HudConstants
-
-20201105 D.B. Created Class
---------------------------------------------*/
 
 public class MenuScreen extends Screen implements IUpdateable {
 
