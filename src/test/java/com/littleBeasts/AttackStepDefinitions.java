@@ -2,13 +2,13 @@ package com.littleBeasts;
 
 
 import com.littleBeasts.entities.LitiPlayer;
-import com.littleBeasts.gameLogic.GameLogic;
 import com.littleBeasts.gameLogic.GameState;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -23,14 +23,13 @@ public class AttackStepDefinitions {
         String input[] = new String[1];
         input[0] = "Arkham";
         Program.main(input);
-        if (Program.getGameLogic().getState() == GameState.MENU){
+        if (Program.getGameLogic().getState() == GameState.MENU) {
             TestRobot.robotButtonPress(KeyEvent.VK_UP);
             TestRobot.robotButtonPress(KeyEvent.VK_ENTER);
         }
-        Assert.assertEquals(Program.getGameLogic().getState(),GameState.INGAME);
+        Assert.assertEquals(Program.getGameLogic().getState(), GameState.INGAME);
         TestRobot.robotButtonPress(KeyEvent.VK_B);
-        Assert.assertEquals(Program.getGameLogic().getState(),GameState.BATTLE);
-
+        Assert.assertEquals(Program.getGameLogic().getState(), GameState.BATTLE);
     }
 
     @And("^the Player is not dead$")
@@ -98,7 +97,6 @@ public class AttackStepDefinitions {
     @Then("^the Player does not deal damage to its target$")
     public void thePlayerDoesNotDealDamageToItsTarget() {
     }
-
 
 }
 
