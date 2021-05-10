@@ -3,6 +3,7 @@ package com.littleBeasts.gameLogic;
 import com.littleBeasts.entities.LitiPet;
 import com.littleBeasts.entities.LitiPlayer;
 import com.littleBeasts.guiComponent.DrawChatWindow;
+import com.littleBeasts.sceneManager.SceneNotPossibleError;
 import com.littleBeasts.screens.IngameScreen;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
@@ -112,7 +113,11 @@ public class GameLogic implements IUpdateable {
 
     @Override
     public void update() {
-        currentLitiMap.update();
+        try {
+            currentLitiMap.update();
+        } catch (SceneNotPossibleError sceneNotPossibleError) {
+            sceneNotPossibleError.printStackTrace();
+        }
         LitiBattle.update();
         LitiClient.update();
     }
@@ -120,4 +125,5 @@ public class GameLogic implements IUpdateable {
     public LitiMap getCurrentLitiMap() {
         return currentLitiMap;
     }
+
 }

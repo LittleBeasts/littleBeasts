@@ -1,6 +1,8 @@
 package com.littleBeasts.gameLogic;
 
 import com.littleBeasts.entities.*;
+import com.littleBeasts.sceneManager.SceneNotPossibleError;
+import com.littleBeasts.sceneManager.scenePlayer;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.entities.IEntity;
 import de.gurkenlabs.litiengine.entities.MapArea;
@@ -44,6 +46,24 @@ public class LitiMap {
                 if (checkMapAreaForSpawnPoint(area)) return;
             }
         }
+    }
+
+    public void checkAreas() throws SceneNotPossibleError {
+
+        for (MapArea area : mapAreas) {
+            if (area.getName().contains("OPACITY-") && area.getBoundingBox().contains(LitiPlayer.instance().getCenter())) {
+                checkOpacity(area.getName().replace("OPACITY-", ""));
+            } else if (area.getName().contains("SCENE-") && area.getBoundingBox().contains(LitiPlayer.instance().getCenter())) {
+                checkSceneAreas(area.getName().replace("SCENE-", ""));
+            }
+        }
+
+    }
+
+    public void checkSceneAreas(String scene) throws SceneNotPossibleError {
+        int dayInt = Integer.parseInt(scene.substring(0, scene.indexOf("-")));
+        int sceneInt = Integer.parseInt(scene.substring(scene.indexOf("-") + 1));
+        scenePlayer.startScene(dayInt, sceneInt);
     }
 
     private boolean checkMapAreaForSpawnPoint(Spawnpoint area) {
@@ -150,14 +170,7 @@ public class LitiMap {
         }
     }
 
-    public void checkOpacity() {
-        String layerName = "";
-        for (MapArea area : mapAreas) {
-            if (area.getName().contains("OPACITY-") && area.getBoundingBox().contains(LitiPlayer.instance().getCenter())) {
-                layerName = area.getName().replace("OPACITY-", "");
-            }
-        }
-
+    public void checkOpacity(String layerName) {
         for (ITileLayer layer : tileMapLayers) {
             if (layer.getName().equals(layerName)) {
                 layer.setOpacity(0.5f);
@@ -198,10 +211,10 @@ public class LitiMap {
         }
     }
 
-    public void update() {
+    public void update() throws SceneNotPossibleError {
         loadNewArea();
         checkFreshlySpawned();
-        checkOpacity();
+        checkAreas();
         checkOverlays();
     }
 

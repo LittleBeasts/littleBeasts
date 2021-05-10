@@ -17,12 +17,14 @@ public class scenePlayer {
     private static Script script;
 
 
-    public static void startScene() throws SceneNotPossibleError {
-        script = parseScript(day, scene);
-        isScenePossible();
-        Program.getGameLogic().setState(GameState.DIALOGUE);
-        playScene();
-        turnPage();
+    public static void startScene(int day, int scene) throws SceneNotPossibleError {
+        if (scenePlayer.day == day && scenePlayer.scene == scene) {
+            script = parseScript(day, scene);
+            isScenePossible();
+            Program.getGameLogic().setState(GameState.DIALOGUE);
+            playScene();
+            turnPage();
+        }
     }
 
     public static void isScenePossible() throws SceneNotPossibleError {

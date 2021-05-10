@@ -2,10 +2,8 @@ package com.littleBeasts.screens;
 
 import client.Client;
 import com.littleBeasts.Program;
-import com.littleBeasts.gameLogic.GameLogic;
 import com.littleBeasts.gameLogic.GameState;
 import com.littleBeasts.gameLogic.LitiClient;
-import com.littleBeasts.sceneManager.SceneNotPossibleError;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.MapArea;
@@ -16,16 +14,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.Collection;
 
-import static com.littleBeasts.sceneManager.scenePlayer.startScene;
 import static config.HudConstants.MAIN_MENU_ITEMS;
-
-/*--------------------------------------------
-This class creates a menu for use in battle.
-It is called in the HUD class.
-Height, width and bottom pad should be adjusted in HudConstants
-
-20201105 D.B. Created Class
---------------------------------------------*/
 
 public class MenuScreen extends Screen implements IUpdateable {
 
@@ -108,19 +97,13 @@ public class MenuScreen extends Screen implements IUpdateable {
 
     private void loadUpMap() {
         Game.loop().perform(100, () -> {
-            Program.getGameLogic().setState(GameState.INGAME);
             Game.screens().display("INGAME-SCREEN");
             if (Program.getStartingMap() != null) {
                 Game.world().loadEnvironment(Program.getStartingMap());
-                try {
-                    startScene();
-                } catch (SceneNotPossibleError sceneNotPossibleError) {
-                    sceneNotPossibleError.printStackTrace();
-                }
             } else {
                 Game.world().loadEnvironment(MapNames.FleaMarket.toString());
             }
-            //Program.getGameLogic().setState(GameState.INGAME);
+            Program.getGameLogic().setState(GameState.INGAME);
         });
     }
 
