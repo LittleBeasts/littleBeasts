@@ -1,5 +1,6 @@
 package com.littleBeasts.gameLogic;
 
+import com.littleBeasts.Program;
 import com.littleBeasts.entities.*;
 import com.littleBeasts.sceneManager.SceneNotPossibleError;
 import com.littleBeasts.sceneManager.ScenePlayer;
@@ -209,6 +210,7 @@ public class LitiMap {
     }
 
     public void update() throws SceneNotPossibleError {
+        if (Program.getGameLogic().getState() != GameState.INGAME) return;
         loadNewArea();
         checkFreshlySpawned();
         checkAreas();

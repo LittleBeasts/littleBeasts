@@ -7,7 +7,6 @@ import com.littleBeasts.entities.LitiBeast;
 import com.littleBeasts.entities.LitiPlayer;
 import com.littleBeasts.gameLogic.GameState;
 import com.littleBeasts.gameLogic.LitiBattle;
-import com.littleBeasts.gameLogic.PlayerState;
 import config.HudConstants;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.graphics.ImageRenderer;
@@ -42,7 +41,7 @@ public class DrawHud extends GuiComponent {
     public void render(Graphics2D g) {
         super.render(g);
 
-        if (Game.world().environment() == null || LitiPlayer.instance().isDead() || LitiPlayer.instance().getState() != PlayerState.CONTROLLABLE) {
+        if (Game.world().environment() == null || LitiPlayer.instance().isDead()) {
             return;
         }
 
@@ -81,7 +80,7 @@ public class DrawHud extends GuiComponent {
         drawBeastPortraits(g);
     }
 
-    private void drawPlayerPortrait(Graphics2D g) throws IOException {
+    private void drawPlayerPortrait(Graphics2D g) {
         g.setColor(BACKGROUND);
         int padding = HUD_START_POINT;
         int elementHeight = HUD_ROW_HEIGHT;
