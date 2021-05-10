@@ -16,7 +16,6 @@ public class ScenePlayer {
     private static int day = 1, scene = 1;
     private static Script script;
 
-
     public static void startScene(int day, int scene) throws SceneNotPossibleError {
         if (ScenePlayer.day == day && ScenePlayer.scene == scene) {
             script = parseScript(day, scene);

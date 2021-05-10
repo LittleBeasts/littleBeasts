@@ -57,7 +57,6 @@ public class MenuScreen extends Screen implements IUpdateable {
         });
     }
 
-
     @Override
     public void prepare() {
         this.mainMenu.setEnabled(true);

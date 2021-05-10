@@ -27,7 +27,7 @@ public class LitiPlayer extends Creature implements IMobileEntity {
     private final String playerName = "xXx_BeastSlayer_xXx";
     private final Image playerPortrait;
     private final LitiBeastTeam littleBeastTeam;
-    private CeInventory ceInventory;
+    private final CeInventory ceInventory;
 
     // TODO: Change add draw prefix to every drawing class
     public LitiPlayer() {

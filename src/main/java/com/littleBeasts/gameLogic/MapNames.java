@@ -1,6 +1,7 @@
 package com.littleBeasts.gameLogic;
 
 public enum MapNames {
+
     Arkham,
     Atrium,
     CourtYard_Dorms_Library,
