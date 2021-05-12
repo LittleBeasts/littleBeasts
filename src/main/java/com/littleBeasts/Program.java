@@ -1,28 +1,30 @@
 package com.littleBeasts;
 
-import com.littleBeasts.entities.LitiPlayer;
 import com.littleBeasts.gameLogic.GameLogic;
 import com.littleBeasts.gameLogic.GameState;
 import com.littleBeasts.screens.IngameScreen;
 import com.littleBeasts.screens.MenuScreen;
 import de.gurkenlabs.litiengine.Game;
+import de.gurkenlabs.litiengine.graphics.Spritesheet;
 import de.gurkenlabs.litiengine.resources.Resources;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class Program {
 
     private static GameLogic gameLogic;
     private static IngameScreen ingameScreen;
     private static String startingMap = null;
+    public static HashMap<String, Spritesheet> spritesheetMap;
 
     public static void main(String[] args) throws IOException, FontFormatException {
         //set game meta information
         Game.info().setName("littleBeasts");
         Game.info().setSubTitle("");
         Game.info().setVersion("v.0");
-        if (args.length >0)
+        if (args.length > 0)
             startingMap = args[0];
 
         startingMap = "Arkham";
@@ -54,7 +56,7 @@ public class Program {
         Game.audio().playMusic("titlemenu");
         Game.start();
     }
-    
+
     public static GameLogic getGameLogic() {
         return gameLogic;
     }
