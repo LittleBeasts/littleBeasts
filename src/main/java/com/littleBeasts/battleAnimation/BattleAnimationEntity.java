@@ -24,16 +24,12 @@ public class BattleAnimationEntity extends Creature implements IMobileEntity {
         for (Spritesheet spritesheet : battleAnimations) {
             if (spritesheet.getName().contains("battleAnimation")) {
                 int[] animationFrames = new int[spritesheet.getColumns() * spritesheet.getRows()];
-                System.out.println("Frames: " + animationFrames.length);
                 Animation animation = new Animation(spritesheet, false, false, animationFrames);
-                animation.setDurationForAllKeyFrames(4);
+                animation.setDurationForAllKeyFrames(3);
                 this.animations().add(animation);
-                this.animations().setDefault(animation);
-                this.renderWithLayer();
-                this.setVisible(true);
-                this.setRenderType(RenderType.OVERLAY);
             }
         }
+        this.setRenderType(RenderType.OVERLAY);
         this.setName("BattleAnimator");
     }
 
@@ -43,4 +39,6 @@ public class BattleAnimationEntity extends Creature implements IMobileEntity {
         }
         return battleAnimationEntity;
     }
+
+
 }

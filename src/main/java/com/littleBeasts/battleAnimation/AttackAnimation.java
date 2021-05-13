@@ -1,17 +1,18 @@
 package com.littleBeasts.battleAnimation;
 
+import calculationEngine.entities.CeAttack;
 import com.littleBeasts.Program;
 import com.littleBeasts.entities.LitiPlayer;
 import com.littleBeasts.gameLogic.GameState;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
-import de.gurkenlabs.litiengine.entities.Action;
 import de.gurkenlabs.litiengine.entities.IMobileEntity;
 import de.gurkenlabs.litiengine.graphics.animation.Animation;
 import de.gurkenlabs.litiengine.graphics.animation.AnimationListener;
 import de.gurkenlabs.litiengine.physics.Force;
 
 import java.awt.geom.Point2D;
+import java.util.Locale;
 
 public class AttackAnimation {
 
@@ -19,66 +20,68 @@ public class AttackAnimation {
     static IUpdateable forceCheck;
     static AnimationListener animationListener;
 
-    @Action(description = "This is a punch, it hurts.")
-    public static void punch(IMobileEntity attacker, IMobileEntity defender) {
-        System.out.println("Punch");
+    public static void startMeleeAnimation(IMobileEntity attacker, IMobileEntity defender, CeAttack ceAttack) {
         if (!soundPlayer) {
             Game.audio().playSound("punch");
-            Game.world().camera().shake(1, 0, 100);
             soundPlayer = true;
         }
+        String animationName = "battleAnimation-" + ceAttack.getName().toLowerCase(Locale.ROOT);
         attacker.attachControllers();
         attacker.movement().attach();
         Point2D origin = attacker.getCollisionBoxCenter();
-        Point2D target = new Point2D.Double(origin.getX() + 50, origin.getY());
+        Point2D target = defender.getCollisionBoxCenter();
         Force force = new Force(target, 200, 1);
-        force.setCancelOnCollision(false);
+        force.setCancelOnCollision(true);
         attacker.movement().apply(force);
-        System.out.println(origin);
-        System.out.println(target);
 
         forceCheck = () -> {
             if (force.hasEnded()) {
-                attackAnimation(attacker, origin, defender);
+                attackAnimation(attacker, origin, defender, animationName);
             }
         };
         Game.loop().attach(forceCheck);
     }
 
-    private static void attackAnimation(IMobileEntity attacker, Point2D origin, IMobileEntity defender) {
+    private static void attackAnimation(IMobileEntity attacker, Point2D origin, IMobileEntity defender, String animationName) {
         Game.loop().detach(forceCheck);
         animationListener = new AnimationListener() {
             @Override
             public void played(Animation animation) {
+                Game.world().camera().shake(1, 0, 100);
             }
 
             @Override
             public void finished(Animation animation) {
-                getBack(attacker, origin);
+                BattleAnimationEntity.instance().setVisible(false);
+                returnToOrigin(attacker, origin);
             }
         };
-        Game.world().environment().add(BattleAnimationEntity.instance());
-        BattleAnimationEntity.instance().animations().addListener(animationListener);
-        BattleAnimationEntity.instance().animations().setDefault(BattleAnimationEntity.instance().animations().get("battleAnimation-scratchAttack"));
-        BattleAnimationEntity.instance().setLocation(defender.getLocation().getX() + 10, defender.getLocation().getY() + 10);
-        BattleAnimationEntity.instance().animations().attach();
-        BattleAnimationEntity.instance().animations().get("battleAnimation-scratchAttack").start();
+        playAttackAnimation(defender, animationName);
     }
 
-    private static void getBack(IMobileEntity iMobileEntity, Point2D origin) {
+    private static void playAttackAnimation(IMobileEntity animationTarget, String animationName) {
+        Game.world().environment().add(BattleAnimationEntity.instance());
+        BattleAnimationEntity.instance().animations().addListener(animationListener);
+        BattleAnimationEntity.instance().animations().setDefault(BattleAnimationEntity.instance().animations().get(animationName));
+        BattleAnimationEntity.instance().setVisible(true);
+        BattleAnimationEntity.instance().animations().get(animationName).start();
+        BattleAnimationEntity.instance().setLocation(animationTarget.getLocation().getX() + 10, animationTarget.getLocation().getY() + 10);
+    }
+
+    private static void returnToOrigin(IMobileEntity iMobileEntity, Point2D origin) {
         BattleAnimationEntity.instance().animations().removeListener(animationListener);
         origin = new Point2D.Double(origin.getX() - 7, origin.getY());
         Force force1 = new Force(origin, 100, 1);
         iMobileEntity.movement().apply(force1);
         forceCheck = () -> {
             if (force1.hasEnded()) {
-                getBackContinue();
+                resetAnimation();
             }
         };
         Game.loop().attach(forceCheck);
     }
 
-    private static void getBackContinue() {
+    private static void resetAnimation() {
         if (Program.getGameLogic().getState().equals(GameState.BATTLE)) {
             while (!LitiPlayer.instance().animations().get("test-idle-right").isPlaying()) {
                 LitiPlayer.instance().animations().get("test-idle-right").start();
