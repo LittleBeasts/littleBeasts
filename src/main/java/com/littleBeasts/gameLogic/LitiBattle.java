@@ -104,6 +104,10 @@ public class LitiBattle {
         return nextBattlePossible;
     }
 
+    public static LitiBeast getLitiBeast() {
+        return litiBeast;
+    }
+
     public static void setNextBattlePossible(boolean nextBattlePossible) {
         LitiBattle.nextBattlePossible = nextBattlePossible;
     }

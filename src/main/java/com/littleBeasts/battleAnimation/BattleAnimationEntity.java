@@ -1,13 +1,20 @@
 package com.littleBeasts.battleAnimation;
 
-import de.gurkenlabs.litiengine.entities.Creature;
-import de.gurkenlabs.litiengine.entities.IMobileEntity;
+import de.gurkenlabs.litiengine.Align;
+import de.gurkenlabs.litiengine.Valign;
+import de.gurkenlabs.litiengine.entities.*;
+import de.gurkenlabs.litiengine.graphics.RenderType;
 import de.gurkenlabs.litiengine.graphics.Spritesheet;
 import de.gurkenlabs.litiengine.graphics.animation.Animation;
+import de.gurkenlabs.litiengine.physics.Collision;
 import de.gurkenlabs.litiengine.resources.Resources;
 
 import java.util.Collection;
 
+
+@EntityInfo(width = 16, height = 16)
+@MovementInfo(velocity = 100)
+@CollisionInfo(collisionBoxWidth = 0, collisionBoxHeight = 0, collision = false, align = Align.CENTER, valign = Valign.DOWN, collisionType = Collision.DYNAMIC)
 public class BattleAnimationEntity extends Creature implements IMobileEntity {
 
     private static BattleAnimationEntity battleAnimationEntity;
@@ -21,6 +28,10 @@ public class BattleAnimationEntity extends Creature implements IMobileEntity {
                 Animation animation = new Animation(spritesheet, false, false, animationFrames);
                 animation.setDurationForAllKeyFrames(4);
                 this.animations().add(animation);
+                this.animations().setDefault(animation);
+                this.renderWithLayer();
+                this.setVisible(true);
+                this.setRenderType(RenderType.OVERLAY);
             }
         }
         this.setName("BattleAnimator");

@@ -1,5 +1,6 @@
 package com.littleBeasts.gameLogic;
 
+import com.littleBeasts.battleAnimation.BattleAnimationEntity;
 import com.littleBeasts.entities.*;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.entities.IEntity;
@@ -75,10 +76,13 @@ public class LitiMap {
         if (spawnpoint != null) {
             spawnpoint.spawn(LitiPlayer.instance());
             spawnpoint.spawn(LitiPet.instance());
+            for (IEntity iEntity : Game.world().environment().getEntities())
+                System.out.println(iEntity.getName());
         }
         assert spawnpoint != null;
         LitiPlayer.instance().setFacingDirection(spawnpoint.getDirection());
         LitiPet.instance().setFacingDirection(spawnpoint.getDirection());
+
 
         switch (spawnpoint.getDirection()) {
             case LEFT:

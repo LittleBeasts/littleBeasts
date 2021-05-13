@@ -13,61 +13,60 @@ import de.gurkenlabs.litiengine.physics.Force;
 
 import java.awt.geom.Point2D;
 
-import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
-
 public class AttackAnimation {
 
     static boolean soundPlayer = false;
     static IUpdateable forceCheck;
+    static AnimationListener animationListener;
 
     @Action(description = "This is a punch, it hurts.")
-    public static void punch(IMobileEntity iMobileEntity) {
+    public static void punch(IMobileEntity attacker, IMobileEntity defender) {
+        System.out.println("Punch");
         if (!soundPlayer) {
             Game.audio().playSound("punch");
             Game.world().camera().shake(1, 0, 100);
             soundPlayer = true;
         }
-        iMobileEntity.attachControllers();
-        iMobileEntity.movement().attach();
-        Point2D origin = iMobileEntity.getCollisionBoxCenter();
+        attacker.attachControllers();
+        attacker.movement().attach();
+        Point2D origin = attacker.getCollisionBoxCenter();
         Point2D target = new Point2D.Double(origin.getX() + 50, origin.getY());
         Force force = new Force(target, 200, 1);
-        force.setCancelOnCollision(true);
-        iMobileEntity.movement().apply(force);
-        if (DEBUG_CONSOLE_OUT) System.out.println(origin);
-        if (DEBUG_CONSOLE_OUT) System.out.println(target);
+        force.setCancelOnCollision(false);
+        attacker.movement().apply(force);
+        System.out.println(origin);
+        System.out.println(target);
 
         forceCheck = () -> {
             if (force.hasEnded()) {
-                attackAnimation(iMobileEntity, origin);
+                attackAnimation(attacker, origin, defender);
             }
         };
         Game.loop().attach(forceCheck);
     }
 
-    private static void attackAnimation(IMobileEntity iMobileEntity, Point2D origin) {
+    private static void attackAnimation(IMobileEntity attacker, Point2D origin, IMobileEntity defender) {
         Game.loop().detach(forceCheck);
-        AnimationListener animationListener = new AnimationListener() {
+        animationListener = new AnimationListener() {
             @Override
             public void played(Animation animation) {
-                //System.out.println("Animation started: " + animation.getName());
             }
 
             @Override
             public void finished(Animation animation) {
-                //System.out.println("Animation done: " + animation.getName());
-                getBack(iMobileEntity, origin);
+                getBack(attacker, origin);
             }
         };
-
+        Game.world().environment().add(BattleAnimationEntity.instance());
         BattleAnimationEntity.instance().animations().addListener(animationListener);
         BattleAnimationEntity.instance().animations().setDefault(BattleAnimationEntity.instance().animations().get("battleAnimation-scratchAttack"));
-        BattleAnimationEntity.instance().setLocation(LitiPlayer.instance().getLocation().getX(), LitiPlayer.instance().getLocation().getY());
-        System.out.println(BattleAnimationEntity.instance().animations().get("battleAnimation-scratchAttack").getTotalDuration());
+        BattleAnimationEntity.instance().setLocation(defender.getLocation().getX() + 10, defender.getLocation().getY() + 10);
+        BattleAnimationEntity.instance().animations().attach();
         BattleAnimationEntity.instance().animations().get("battleAnimation-scratchAttack").start();
     }
 
     private static void getBack(IMobileEntity iMobileEntity, Point2D origin) {
+        BattleAnimationEntity.instance().animations().removeListener(animationListener);
         origin = new Point2D.Double(origin.getX() - 7, origin.getY());
         Force force1 = new Force(origin, 100, 1);
         iMobileEntity.movement().apply(force1);
@@ -86,6 +85,8 @@ public class AttackAnimation {
             }
             LitiPlayer.instance().movement().detach();
             LitiPlayer.instance().detachControllers();
+        } else if (Program.getGameLogic().getState().equals(GameState.INGAME)) {
+            BattleAnimationEntity.instance().die();
         }
         Game.loop().detach(forceCheck);
     }
