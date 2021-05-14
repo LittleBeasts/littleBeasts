@@ -1,6 +1,8 @@
 package com.littleBeasts.screens;
 
-import com.littleBeasts.GameLogic;
+import com.littleBeasts.Program;
+import com.littleBeasts.gameLogic.GameLogic;
+import com.littleBeasts.gameLogic.GameState;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.gui.Menu;
 import de.gurkenlabs.litiengine.input.Input;
@@ -11,21 +13,23 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
+import static config.HudConstants.*;
+
+/*--------------------------------------------
+This class creates a KeyBoardMenu with a list of items
+It is used for the main and ingame menus
+
+2020.11.12 D.B. refactored
+--------------------------------------------*/
+
 public class KeyboardMenu extends Menu {
 
-    //public static final Color ROMAN_RED = new Color(140, 16, 16);
-    public static final Color BUTTON_RED = new Color(140, 16, 16, 200);
-    public static final Color BUTTON_BLACK = new Color(0, 0, 0, 200);
-    //public static final Sound SETTING_CHANGE_SOUND = Resources.sounds().get("swing1.ogg");
-    public static final int MENU_DELAY = 180;
-
     private final List<Consumer<Integer>> confirmConsumer;
-    protected int currentPosition = -1;
+    private int currentPosition;
+    private static long lastMenuInput;
 
-    public static long lastMenuInput;
-
-    public KeyboardMenu(double x, double y, double width, double height, String... items) {
-        super(x, y, width, height, items);
+    public KeyboardMenu(String... menuItems) {
+        super(MENU_CENTER_X - MENU_BUTTON_WIDTH / 2, MENU_CENTER_Y * 1.3, MENU_BUTTON_WIDTH, MENU_CENTER_Y / 2, menuItems);
         this.confirmConsumer = new CopyOnWriteArrayList<>();
 
         Input.keyboard().onKeyReleased(e -> {
@@ -33,7 +37,6 @@ public class KeyboardMenu extends Menu {
                 if (this.menuInputIsLocked()) {
                     return;
                 }
-
                 this.confirm();
                 Game.audio().playSound("Menu_pick");
                 lastMenuInput = Game.time().now();
@@ -41,25 +44,25 @@ public class KeyboardMenu extends Menu {
         });
 
         Input.keyboard().onKeyPressed(e -> {
-            if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
-                if (this.menuInputIsLocked()) {
-                    return;
-                }
-                Game.audio().playSound("Menu_change");
-                decPosition();
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_UP:
+                case KeyEvent.VK_W:
+                    if (this.menuInputIsLocked()) {
+                        return;
+                    }
+                    Game.audio().playSound("Menu_change");
+                    decPosition();
+                    break;
+                case KeyEvent.VK_DOWN:
+                case KeyEvent.VK_S:
+                    if (this.menuInputIsLocked()) {
+                        return;
+                    }
+                    Game.audio().playSound("Menu_change");
+                    incPosition();
+                    break;
             }
         });
-
-        Input.keyboard().onKeyPressed(e -> {
-            if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
-                if (this.menuInputIsLocked()) {
-                    return;
-                }
-                Game.audio().playSound("Menu_change");
-                incPosition();
-            }
-        });
-
     }
 
     private boolean menuInputIsLocked() {
@@ -82,15 +85,20 @@ public class KeyboardMenu extends Menu {
         }
 
         this.getCellComponents().forEach(comp -> {
-            comp.setFont(GameLogic.MENU_FONT);
-            comp.getAppearance().setForeColor(Color.WHITE);
+            comp.setFont(MENU_FONT);
+            comp.getAppearance().setForeColor(MENU_FONT_COLOR);
             comp.getAppearance().setBackgroundColor1(BUTTON_BLACK);
             comp.getAppearanceHovered().setBackgroundColor1(BUTTON_RED);
             comp.getAppearance().setTransparentBackground(false);
             comp.getAppearanceHovered().setTransparentBackground(false);
-            //comp.getAppearance().setTextAntialiasing(RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-            //comp.getAppearanceHovered().setTextAntialiasing(RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         });
+    }
+
+    public void draw(Graphics2D g) {
+        if (Program.getGameLogic().getState() == GameState.INGAME_MENU) {
+            g.setColor(MENU_BACKGROUND);
+            g.fillRect(0, 0, WIDTH, HEIGHT);
+        }
     }
 
     public void onConfirm(Consumer<Integer> cons) {
@@ -118,11 +126,6 @@ public class KeyboardMenu extends Menu {
         for (int i = 0; i < this.getCellComponents().size(); i++) {
             this.getCellComponents().get(i).setHovered(i == this.currentPosition);
         }
-
         lastMenuInput = Game.time().now();
-
-        if (this.isVisible()) {
-            //Game.audio().playSound(SETTING_CHANGE_SOUND);
-        }
     }
 }
