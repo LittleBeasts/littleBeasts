@@ -161,7 +161,7 @@ public class LitiMap {
                 playerPosition.setLocation(playerPosition.getX(), playerPosition.getY() + 12);
                 if (mapArea.contains(playerPosition.getX(), playerPosition.getY())) {
                     this.freshlySpawned = true;
-                    this.start = System.currentTimeMillis();
+                    this.start = System.currentTimeMillis(); // reset timer for spawn check.
                     break;
                 }
             }

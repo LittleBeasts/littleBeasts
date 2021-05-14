@@ -18,9 +18,11 @@ public final class PlayerInput {
     public static void init() {
         AtomicBoolean menu = new AtomicBoolean(false);
         Input.keyboard().onKeyTyped(e -> {
-            if (Program.getGameLogic().getState().equals(GameState.BATTLE))
+            if (Program.getGameLogic().getState().equals(GameState.BATTLE)) {
                 battleControls(e);
-            if (Program.getGameLogic().getState().equals(GameState.DIALOGUE) && e.getKeyCode() == KeyEvent.VK_E) {
+                return;
+            }
+            else if (Program.getGameLogic().getState().equals(GameState.DIALOGUE) && e.getKeyCode() == KeyEvent.VK_E) {
                 ScenePlayer.getScript().getDialogue().getSpeechBubble().hide();
                 return;
             }
