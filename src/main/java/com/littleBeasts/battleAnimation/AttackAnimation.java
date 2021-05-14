@@ -26,16 +26,19 @@ public class AttackAnimation {
             soundPlayer = true;
         }
         String animationName = "battleAnimation-" + ceAttack.getName().toLowerCase(Locale.ROOT);
+        // attach controller, so the force can be applied (perhaps there is a better way to that)
         attacker.attachControllers();
         attacker.movement().attach();
         Point2D origin = attacker.getCollisionBoxCenter();
         Point2D target = defender.getCollisionBoxCenter();
+        // create a force, which pull the entity towards the target
         Force force = new Force(target, 200, 1);
         force.setCancelOnCollision(true);
         attacker.movement().apply(force);
 
         forceCheck = () -> {
             if (force.hasEnded()) {
+                // trigger the attack animation, when the character has arrived at target.
                 attackAnimation(attacker, origin, defender, animationName);
             }
         };
@@ -53,6 +56,7 @@ public class AttackAnimation {
             @Override
             public void finished(Animation animation) {
                 BattleAnimationEntity.instance().setVisible(false);
+                // trigger return animation, when the attack animation is done.
                 returnToOrigin(attacker, origin);
             }
         };
@@ -61,14 +65,16 @@ public class AttackAnimation {
 
     private static void playAttackAnimation(IMobileEntity animationTarget, String animationName) {
         Game.world().environment().add(BattleAnimationEntity.instance());
+        BattleAnimationEntity.instance().setVisible(true);
+        // add listener to animation so it can trigger when stopped.
         BattleAnimationEntity.instance().animations().addListener(animationListener);
         BattleAnimationEntity.instance().animations().setDefault(BattleAnimationEntity.instance().animations().get(animationName));
-        BattleAnimationEntity.instance().setVisible(true);
-        BattleAnimationEntity.instance().animations().get(animationName).start();
         BattleAnimationEntity.instance().setLocation(animationTarget.getLocation().getX() + 10, animationTarget.getLocation().getY() + 10);
+        BattleAnimationEntity.instance().animations().get(animationName).start();
     }
 
     private static void returnToOrigin(IMobileEntity iMobileEntity, Point2D origin) {
+        // remove listener, because from now on it will always be finished.
         BattleAnimationEntity.instance().animations().removeListener(animationListener);
         origin = new Point2D.Double(origin.getX() - 7, origin.getY());
         Force force1 = new Force(origin, 100, 1);
@@ -83,12 +89,14 @@ public class AttackAnimation {
 
     private static void resetAnimation() {
         if (Program.getGameLogic().getState().equals(GameState.BATTLE)) {
+            // set the animation back to idling
             while (!LitiPlayer.instance().animations().get("test-idle-right").isPlaying()) {
                 LitiPlayer.instance().animations().get("test-idle-right").start();
             }
             LitiPlayer.instance().movement().detach();
             LitiPlayer.instance().detachControllers();
         } else if (Program.getGameLogic().getState().equals(GameState.INGAME)) {
+            // remove BattleAnimation from map.
             BattleAnimationEntity.instance().die();
         }
         Game.loop().detach(forceCheck);
