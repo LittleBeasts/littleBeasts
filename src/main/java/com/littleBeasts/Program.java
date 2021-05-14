@@ -25,7 +25,7 @@ public class Program {
         if (args.length > 0)
             startingMap = args[0];
 
-        startingMap = MapNames.Arkham.toString();
+        startingMap = MapNames.industrialArea.toString();
         // initialize the game infrastructure
         Game.init();
 
