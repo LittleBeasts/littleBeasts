@@ -23,6 +23,7 @@ public class LitiBattle {
     private static LitiBeast litiBeast;
 
     public static void triggerBattle() {
+
         int x;
         boolean faceLeft = false;
         if (LitiPlayer.instance().getFacingDirection() == Direction.LEFT) {
@@ -101,6 +102,10 @@ public class LitiBattle {
 
     public static boolean isNextBattlePossible() {
         return nextBattlePossible;
+    }
+
+    public static LitiBeast getLitiBeast() {
+        return litiBeast;
     }
 
     public static void setNextBattlePossible(boolean nextBattlePossible) {

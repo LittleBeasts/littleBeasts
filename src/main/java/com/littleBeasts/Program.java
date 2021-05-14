@@ -6,16 +6,19 @@ import com.littleBeasts.gameLogic.MapNames;
 import com.littleBeasts.screens.IngameScreen;
 import com.littleBeasts.screens.MenuScreen;
 import de.gurkenlabs.litiengine.Game;
+import de.gurkenlabs.litiengine.graphics.Spritesheet;
 import de.gurkenlabs.litiengine.resources.Resources;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class Program {
 
     private static GameLogic gameLogic;
     private static IngameScreen ingameScreen;
     private static String startingMap = null;
+    public static HashMap<String, Spritesheet> spritesheetMap;
 
     public static void main(String[] args) throws IOException, FontFormatException {
         //set game meta information
