@@ -11,6 +11,8 @@ import de.gurkenlabs.litiengine.resources.Resources;
 
 import java.util.Collection;
 
+import static config.HudConstants.BATTLE_ANIMATION_KEYFRAME_DURATION;
+
 
 @EntityInfo(width = 16, height = 16)
 @MovementInfo(velocity = 100)
@@ -25,7 +27,7 @@ public class BattleAnimationEntity extends Creature implements IMobileEntity {
             if (spritesheet.getName().contains("battleAnimation")) {
                 int[] animationFrames = new int[spritesheet.getColumns() * spritesheet.getRows()];
                 Animation animation = new Animation(spritesheet, false, false, animationFrames);
-                animation.setDurationForAllKeyFrames(3);
+                animation.setDurationForAllKeyFrames(BATTLE_ANIMATION_KEYFRAME_DURATION);
                 this.animations().add(animation);
             }
         }
