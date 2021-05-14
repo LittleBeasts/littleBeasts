@@ -13,7 +13,7 @@ import java.awt.*;
 
 public class IngameScreen extends Screen {
     public static final String NAME = "INGAME-SCREEN";
-    public static KeyboardMenu ingameMenu ;
+    public static KeyboardMenu ingameMenu;
     public static DrawChatWindow drawChatWindow;
     public static DrawInventory inventory;
     private DrawHud drawHud;
