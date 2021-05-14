@@ -51,11 +51,12 @@ public class LitiMap {
     public void checkAreas() throws SceneNotPossibleError {
         String layerName = "";
         for (MapArea area : mapAreas) {
-            if (area.getName().contains("OPACITY-") && area.getBoundingBox().contains(LitiPlayer.instance().getCenter())) {
-                layerName = area.getName().replace("OPACITY-", "");
-            } else if (area.getName().contains("SCENE-") && area.getBoundingBox().contains(LitiPlayer.instance().getCenter())) {
-                checkSceneAreas(area.getName().replace("SCENE-", ""));
-            }
+            if (area.getBoundingBox().contains(LitiPlayer.instance().getCenter()))
+                if (area.getName().contains("OPACITY-")) {
+                    layerName = area.getName().replace("OPACITY-", "");
+                } else if (area.getName().contains("SCENE-")) {
+                    checkSceneAreas(area.getName().replace("SCENE-", ""));
+                }
         }
         setOpacityForMapLayer(layerName);
     }

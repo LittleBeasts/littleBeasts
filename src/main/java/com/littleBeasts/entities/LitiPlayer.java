@@ -22,7 +22,7 @@ import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 @CollisionInfo(collisionBoxWidth = 14, collisionBoxHeight = 6, collision = true, align = Align.CENTER, valign = Valign.DOWN, collisionType = Collision.DYNAMIC)
 public class LitiPlayer extends Creature implements IMobileEntity {
     private static LitiPlayer litiPlayerInstance;
-    private static PlayerState playerState = PlayerState.CONTROLLABLE;
+    private static PlayerState playerState = PlayerState.LOCKED;
     private final CePlayer cePlayer;
     private final String playerName = "xXx_BeastSlayer_xXx";
     private final Image playerPortrait;
