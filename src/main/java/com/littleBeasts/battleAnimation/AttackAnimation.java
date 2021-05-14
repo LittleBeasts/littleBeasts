@@ -13,19 +13,15 @@ import de.gurkenlabs.litiengine.physics.Force;
 
 import java.awt.geom.Point2D;
 import java.util.Locale;
-import java.util.function.Function;
 
 public class AttackAnimation {
 
-    static boolean soundPlayer = false;
     static IUpdateable forceCheck;
     static AnimationListener animationListener;
 
     public static void startMeleeAnimation(IMobileEntity attacker, IMobileEntity defender, CeAttack ceAttack) {
-        if (!soundPlayer) {
-            Game.audio().playSound("punch");
-            soundPlayer = true;
-        }
+
+        Game.audio().playSound("punch");
         String animationName = "battleAnimation-" + ceAttack.getName().toLowerCase(Locale.ROOT);
         // attach controller, so the force can be applied (perhaps there is a better way to that)
         attacker.attachControllers();
