@@ -13,6 +13,7 @@ import de.gurkenlabs.litiengine.physics.Force;
 
 import java.awt.geom.Point2D;
 import java.util.Locale;
+import java.util.function.Function;
 
 public class AttackAnimation {
 
@@ -56,6 +57,7 @@ public class AttackAnimation {
             @Override
             public void finished(Animation animation) {
                 BattleAnimationEntity.instance().setVisible(false);
+                BattleAnimationEntity.instance().animations().removeListener(this);
                 // trigger return animation, when the attack animation is done.
                 returnToOrigin(attacker, origin);
             }
@@ -75,16 +77,33 @@ public class AttackAnimation {
 
     private static void returnToOrigin(IMobileEntity iMobileEntity, Point2D origin) {
         // remove listener, because from now on it will always be finished.
-        BattleAnimationEntity.instance().animations().removeListener(animationListener);
+
         origin = new Point2D.Double(origin.getX() - 7, origin.getY());
-        Force force1 = new Force(origin, 100, 1);
-        iMobileEntity.movement().apply(force1);
-        forceCheck = () -> {
-            if (force1.hasEnded()) {
-                resetAnimation();
+        Force force = new Force(origin, 100, 1);
+        iMobileEntity.movement().apply(force);
+        ForceListener forceListener = new ForceListener() {
+            Force force;
+            boolean attached = false;
+
+            @Override
+            public void update() {
+                this.finished(force);
+            }
+
+            @Override
+            public void finished(Force force) {
+                if (!attached) {
+                    Game.loop().attach(this);
+                    attached = true;
+                }
+                this.force = force;
+                if (force.hasEnded()) {
+                    Game.loop().detach(this);
+                    resetAnimation();
+                }
             }
         };
-        Game.loop().attach(forceCheck);
+        forceListener.finished(force);
     }
 
     private static void resetAnimation() {
@@ -100,5 +119,10 @@ public class AttackAnimation {
             BattleAnimationEntity.instance().die();
         }
         Game.loop().detach(forceCheck);
+    }
+
+    private interface ForceListener extends IUpdateable {
+        default void finished(Force force) {
+        }
     }
 }
