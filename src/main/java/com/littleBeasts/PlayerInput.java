@@ -20,24 +20,21 @@ public final class PlayerInput {
         Input.keyboard().onKeyTyped(e -> {
             if (Program.getGameLogic().getState().equals(GameState.BATTLE)) {
                 battleControls(e);
-                return;
-            }
-            else if (Program.getGameLogic().getState().equals(GameState.DIALOGUE) && e.getKeyCode() == KeyEvent.VK_E) {
+            } else if (Program.getGameLogic().getState().equals(GameState.DIALOGUE) && e.getKeyCode() == KeyEvent.VK_E) {
                 ScenePlayer.getScript().getDialogue().getSpeechBubble().hide();
-                return;
-            }
-            switch (e.getKeyCode()) {
-                case KeyEvent.VK_ESCAPE:
-                    onEscape(menu);
-                    break;
-                case KeyEvent.VK_ENTER:
-                    onEnter(menu);
-                    break;
-                default:
-                    onOtherKey(e);
+            } else {
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_ESCAPE:
+                        onEscape(menu);
+                        break;
+                    case KeyEvent.VK_ENTER:
+                        onEnter(menu);
+                        break;
+                    default:
+                        onOtherKey(e);
+                }
             }
         });
-
     }
 
     private static void battleControls(KeyEvent e) {
