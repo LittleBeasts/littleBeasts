@@ -51,4 +51,8 @@ public class HudConstants {
     public static final double MENU_BUTTON_WIDTH = 450;
     public static final double MENU_CENTER_X = Game.window().getResolution().getWidth() / 2.0;
     public static final double MENU_CENTER_Y = Game.window().getResolution().getHeight() * 1 / 2;
+
+    // Battle animations
+    public static final int BATTLE_ANIMATION_KEYFRAME_DURATION = 3;
+
 }

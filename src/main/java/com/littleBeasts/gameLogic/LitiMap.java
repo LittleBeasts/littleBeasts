@@ -80,6 +80,7 @@ public class LitiMap {
         LitiPlayer.instance().setFacingDirection(spawnpoint.getDirection());
         LitiPet.instance().setFacingDirection(spawnpoint.getDirection());
 
+
         switch (spawnpoint.getDirection()) {
             case LEFT:
                 LitiPet.instance().setX(LitiPet.instance().getX() - 16);
