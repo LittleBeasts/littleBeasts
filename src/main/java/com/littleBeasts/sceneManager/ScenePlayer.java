@@ -19,35 +19,23 @@ public class ScenePlayer {
     public static void startScene(int day, int scene) throws SceneNotPossibleError {
         if (ScenePlayer.day == day && ScenePlayer.scene == scene) {
             script = parseScript(day, scene);
-            isScenePossible();
+            if (!isScenePossible()) throw new SceneNotPossibleError();
             Program.getGameLogic().setState(GameState.DIALOGUE);
             playScene();
             turnPage();
         }
     }
 
-    public static void isScenePossible() throws SceneNotPossibleError {
+    public static boolean isScenePossible() {
         List<String> charactersOnMap = getCharactersOnMap();
         List<String> missingCharacters = new ArrayList<>();
-        boolean sceneIsPossible = true;
         String[] dialoguePartners = script.getDialoguePartner();
         for (String dialoguePartner : dialoguePartners) {
             if (!charactersOnMap.contains(dialoguePartner)) {
-                sceneIsPossible = false;
                 missingCharacters.add(dialoguePartner);
             }
         }
-        if (!sceneIsPossible) {
-            throwSceneNotPossibleError(missingCharacters);
-        }
-
-    }
-
-    private static void throwSceneNotPossibleError(List<String> missingCharacters) throws SceneNotPossibleError {
-        StringBuilder missingCharactersString = new StringBuilder();
-        for (String character : missingCharacters)
-            missingCharactersString.append(character);
-        throw new SceneNotPossibleError(missingCharactersString.toString());
+        return missingCharacters.size() > 0;
     }
 
     public static void playScene() {
