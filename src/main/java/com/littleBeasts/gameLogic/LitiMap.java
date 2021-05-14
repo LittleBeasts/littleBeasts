@@ -26,13 +26,13 @@ public class LitiMap {
     private Collection<Spawnpoint> spawnpoints;
     private static ArrayList<Interactable> Interactables;
     private boolean freshlySpawned = true;
-    private long start = System.currentTimeMillis();
+    private long freshlySpawnedTime = System.currentTimeMillis();
     private List<Integer> changedTileLayers = new ArrayList<>();
     private boolean deactivateOverlays = false;
 
     public void loadNewArea() {
         int spawnDelay = 2000; //delay in milliseconds
-        if (freshlySpawned || (start + spawnDelay) >= System.currentTimeMillis())
+        if (freshlySpawned || (freshlySpawnedTime + spawnDelay) >= System.currentTimeMillis())
             return;
         if (spawnpoints == null)
             loadCurrentSpawnPoints();
@@ -126,7 +126,7 @@ public class LitiMap {
         loadCurrentMapAreas();
         loadCurrentSpawnPoints();
         this.freshlySpawned = true;
-        this.start = System.currentTimeMillis();
+        this.freshlySpawnedTime = System.currentTimeMillis();
     }
 
     private void loadCurrentSpawnPoints() {
@@ -166,7 +166,7 @@ public class LitiMap {
                 playerPosition.setLocation(playerPosition.getX(), playerPosition.getY() + 12);
                 if (mapArea.contains(playerPosition.getX(), playerPosition.getY())) {
                     this.freshlySpawned = true;
-                    this.start = System.currentTimeMillis(); // reset timer for spawn check.
+                    this.freshlySpawnedTime = System.currentTimeMillis(); // reset timer for spawn check.
                     break;
                 }
             }
