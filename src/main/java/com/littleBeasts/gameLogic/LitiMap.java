@@ -1,6 +1,9 @@
 package com.littleBeasts.gameLogic;
 
+import com.littleBeasts.Program;
 import com.littleBeasts.entities.*;
+import com.littleBeasts.sceneManager.SceneNotPossibleError;
+import com.littleBeasts.sceneManager.ScenePlayer;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.entities.IEntity;
 import de.gurkenlabs.litiengine.entities.MapArea;
@@ -23,13 +26,13 @@ public class LitiMap {
     private Collection<Spawnpoint> spawnpoints;
     private static ArrayList<Interactable> Interactables;
     private boolean freshlySpawned = true;
-    private long start = System.currentTimeMillis();
+    private long freshlySpawnedTime = System.currentTimeMillis();
     private List<Integer> changedTileLayers = new ArrayList<>();
     private boolean deactivateOverlays = false;
 
     public void loadNewArea() {
         int spawnDelay = 2000; //delay in milliseconds
-        if (freshlySpawned || (start + spawnDelay) >= System.currentTimeMillis())
+        if (freshlySpawned || (freshlySpawnedTime + spawnDelay) >= System.currentTimeMillis())
             return;
         if (spawnpoints == null)
             loadCurrentSpawnPoints();
@@ -38,12 +41,30 @@ public class LitiMap {
         for (Spawnpoint area : spawnpoints) {
             mapArea = area.getBoundingBox();
             playerPosition = LitiPlayer.instance().getCenter();
-            // TODO: Check that the character looks in the right direction
             playerPosition.setLocation(playerPosition.getX(), playerPosition.getY() + 12);
             if (mapArea.contains(playerPosition)) {
                 if (checkMapAreaForSpawnPoint(area)) return;
             }
         }
+    }
+
+    public void checkAreas() throws SceneNotPossibleError {
+        String layerName = "";
+        for (MapArea area : mapAreas) {
+            if (area.getBoundingBox().contains(LitiPlayer.instance().getCenter()))
+                if (area.getName().contains("OPACITY-")) {
+                    layerName = area.getName().replace("OPACITY-", "");
+                } else if (area.getName().contains("SCENE-")) {
+                    checkSceneAreas(area.getName().replace("SCENE-", ""));
+                }
+        }
+        setOpacityForMapLayer(layerName);
+    }
+
+    public void checkSceneAreas(String scene) throws SceneNotPossibleError {
+        int dayInt = Integer.parseInt(scene.substring(0, scene.indexOf("-")));
+        int sceneInt = Integer.parseInt(scene.substring(scene.indexOf("-") + 1));
+        ScenePlayer.startScene(dayInt, sceneInt);
     }
 
     private boolean checkMapAreaForSpawnPoint(Spawnpoint area) {
@@ -95,8 +116,8 @@ public class LitiMap {
                 LitiPet.instance().setY(LitiPet.instance().getY() - 16);
                 break;
         }
-
-        LitiPlayer.instance().setRenderWithLayer(true);
+        System.out.println(LitiPlayer.instance().getRenderType());
+        //LitiPlayer.instance().setRenderWithLayer(true);
     }
 
     public void newMapLoadUp() {
@@ -105,7 +126,7 @@ public class LitiMap {
         loadCurrentMapAreas();
         loadCurrentSpawnPoints();
         this.freshlySpawned = true;
-        this.start = System.currentTimeMillis();
+        this.freshlySpawnedTime = System.currentTimeMillis();
     }
 
     private void loadCurrentSpawnPoints() {
@@ -145,20 +166,14 @@ public class LitiMap {
                 playerPosition.setLocation(playerPosition.getX(), playerPosition.getY() + 12);
                 if (mapArea.contains(playerPosition.getX(), playerPosition.getY())) {
                     this.freshlySpawned = true;
+                    this.freshlySpawnedTime = System.currentTimeMillis(); // reset timer for spawn check.
                     break;
                 }
             }
         }
     }
 
-    public void checkOpacity() {
-        String layerName = "";
-        for (MapArea area : mapAreas) {
-            if (area.getName().contains("OPACITY-") && area.getBoundingBox().contains(LitiPlayer.instance().getCenter())) {
-                layerName = area.getName().replace("OPACITY-", "");
-            }
-        }
-
+    private void setOpacityForMapLayer(String layerName) {
         for (ITileLayer layer : tileMapLayers) {
             if (layer.getName().equals(layerName)) {
                 layer.setOpacity(0.5f);
@@ -199,10 +214,11 @@ public class LitiMap {
         }
     }
 
-    public void update() {
+    public void update() throws SceneNotPossibleError {
+        if (Program.getGameLogic().getState() != GameState.INGAME) return;
         loadNewArea();
         checkFreshlySpawned();
-        checkOpacity();
+        checkAreas();
         checkOverlays();
     }
 

@@ -2,6 +2,7 @@ package com.littleBeasts;
 
 import com.littleBeasts.gameLogic.GameLogic;
 import com.littleBeasts.gameLogic.GameState;
+import com.littleBeasts.gameLogic.MapNames;
 import com.littleBeasts.screens.IngameScreen;
 import com.littleBeasts.screens.MenuScreen;
 import de.gurkenlabs.litiengine.Game;
@@ -27,17 +28,16 @@ public class Program {
         if (args.length > 0)
             startingMap = args[0];
 
-        startingMap = "Arkham";
-
+        startingMap = MapNames.industrialArea.toString();
         // initialize the game infrastructure
         Game.init();
 
         //set icon for the game
-        Game.window().setIcon(Resources.images().get("sprites/icon.png"));
+        Game.window().setIcon(Resources.images().get(Program.class.getResource("/sprites/icon.png").getPath()));
         Game.graphics().setBaseRenderScale(1.001f);
 
         // Load data from the utiLiti game file
-        Resources.load("game.litidata");
+        Resources.load(Program.class.getResource("/game.litidata"));
 
         // add the screens
         ingameScreen = new IngameScreen();

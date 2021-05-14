@@ -1,8 +1,12 @@
 package com.littleBeasts;
 
-import com.littleBeasts.entities.LitiPlayer;
-import com.littleBeasts.gameLogic.*;
 import com.littleBeasts.actionMenu.ActionMenu;
+import com.littleBeasts.entities.LitiPlayer;
+import com.littleBeasts.gameLogic.GameState;
+import com.littleBeasts.gameLogic.LitiBattle;
+import com.littleBeasts.gameLogic.LitiClient;
+import com.littleBeasts.gameLogic.PlayerState;
+import com.littleBeasts.sceneManager.ScenePlayer;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.input.Input;
 
@@ -14,20 +18,23 @@ public final class PlayerInput {
     public static void init() {
         AtomicBoolean menu = new AtomicBoolean(false);
         Input.keyboard().onKeyTyped(e -> {
-            if (Program.getGameLogic().getState().equals(GameState.BATTLE))
+            if (Program.getGameLogic().getState().equals(GameState.BATTLE)) {
                 battleControls(e);
-            switch (e.getKeyCode()) {
-                case KeyEvent.VK_ESCAPE:
-                    onEscape(menu);
-                    break;
-                case KeyEvent.VK_ENTER:
-                    onEnter(menu);
-                    break;
-                default:
-                    onOtherKey(e);
+            } else if (Program.getGameLogic().getState().equals(GameState.DIALOGUE) && e.getKeyCode() == KeyEvent.VK_E) {
+                ScenePlayer.getScript().getDialogue().getSpeechBubble().hide();
+            } else {
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_ESCAPE:
+                        onEscape(menu);
+                        break;
+                    case KeyEvent.VK_ENTER:
+                        onEnter(menu);
+                        break;
+                    default:
+                        onOtherKey(e);
+                }
             }
         });
-
     }
 
     private static void battleControls(KeyEvent e) {

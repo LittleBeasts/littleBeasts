@@ -7,5 +7,6 @@ public enum GameState {
     INGAME_CHAT,
     INVENTORY,
     BATTLE,
-    GAME_OVER;
+    GAME_OVER,
+    DIALOGUE;
 }

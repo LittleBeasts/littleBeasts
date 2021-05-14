@@ -22,12 +22,12 @@ import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 @CollisionInfo(collisionBoxWidth = 14, collisionBoxHeight = 6, collision = true, align = Align.CENTER, valign = Valign.DOWN, collisionType = Collision.DYNAMIC)
 public class LitiPlayer extends Creature implements IMobileEntity {
     private static LitiPlayer litiPlayerInstance;
-    private static final PlayerState state = PlayerState.CONTROLLABLE;
+    private static PlayerState playerState = PlayerState.LOCKED;
     private final CePlayer cePlayer;
     private final String playerName = "xXx_BeastSlayer_xXx";
     private final Image playerPortrait;
     private final LitiBeastTeam littleBeastTeam;
-    private CeInventory ceInventory;
+    private final CeInventory ceInventory;
 
     // TODO: Change add draw prefix to every drawing class
     public LitiPlayer() {
@@ -63,6 +63,16 @@ public class LitiPlayer extends Creature implements IMobileEntity {
         }
     }
 
+    public void setState(PlayerState state) {
+        playerState = state;
+        if (playerState == PlayerState.CONTROLLABLE) {
+            LitiPlayer.instance().attachControllers();
+            LitiPlayer.instance().movement().attach();
+        } else if (playerState == PlayerState.LOCKED) {
+            LitiPlayer.instance().detachControllers();
+        }
+    }
+
     public Image getPlayerPortrait() {
         return playerPortrait;
     }
@@ -72,7 +82,7 @@ public class LitiPlayer extends Creature implements IMobileEntity {
     }
 
     public PlayerState getState() {
-        return state;
+        return playerState;
     }
 
     public List<CeAttack> getPlayerAttacks() {

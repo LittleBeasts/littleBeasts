@@ -1,15 +1,18 @@
 package utilities;
 
+import com.littleBeasts.Program;
+
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class LitiFonts {
     private static final ArrayList<Font> gameFonts = new ArrayList<>();
 
     public static void loadFonts() throws IOException, FontFormatException {
-        String pathName = "./Fonts";
+        String pathName = Objects.requireNonNull(Program.class.getResource("/Fonts")).getPath();
         File path = new File(pathName);
         String[] fontFilesNames = path.list();
         assert fontFilesNames != null;

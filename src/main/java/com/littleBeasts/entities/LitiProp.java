@@ -1,5 +1,6 @@
 package com.littleBeasts.entities;
 
+import config.FontConstants;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.entities.IEntity;
 import de.gurkenlabs.litiengine.entities.Prop;
@@ -12,7 +13,7 @@ import java.util.Collection;
 
 import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 
-public class LitiProp implements Interactable{
+public class LitiProp implements Interactable {
 
     PropState propState;
     private final String name;
@@ -53,7 +54,7 @@ public class LitiProp implements Interactable{
                         propState = PropState.OPENED;
                         if (DEBUG_CONSOLE_OUT)
                             System.out.println("I contained: " + prop.getProperties().getProperty("item").getAsString());
-                        SpeechBubble.create(iEntity, "I contained: " + prop.getProperties().getProperty("item").getAsString());
+                        SpeechBubble.create(iEntity, "I contained: " + prop.getProperties().getProperty("item").getAsString(), SpeechBubble.DEFAULT_APPEARANCE, FontConstants.DEFAULT_FONT);
                         if (!prop.hasCollision())
                             prop.setCollision(true);
                         animationController.detach();

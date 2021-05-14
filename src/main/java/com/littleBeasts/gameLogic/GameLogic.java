@@ -3,6 +3,7 @@ package com.littleBeasts.gameLogic;
 import com.littleBeasts.entities.LitiPet;
 import com.littleBeasts.entities.LitiPlayer;
 import com.littleBeasts.guiComponent.DrawChatWindow;
+import com.littleBeasts.sceneManager.SceneNotPossibleError;
 import com.littleBeasts.screens.IngameScreen;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
@@ -57,13 +58,11 @@ public class GameLogic implements IUpdateable {
     }
 
     public void setState(GameState state) {
-        Game.audio().stopMusic();
         Game.world().setCamera(camera);
         Game.world().camera().setZoom(1, 500);
         GameLogic.state = state;
+        LitiPlayer.instance().setState(PlayerState.LOCKED);
         Game.loop().setTimeScale(1);
-        LitiPlayer.instance().attachControllers();
-        LitiPlayer.instance().movement().attach();
         Input.keyboard().onKeyTyped(DrawChatWindow::add);
 
         switch (state) {
@@ -76,30 +75,27 @@ public class GameLogic implements IUpdateable {
                 break;
             case BATTLE:
                 LitiBattle.setNextBattlePossible(false);
-                LitiPlayer.instance().detachControllers();
                 Game.audio().playMusic("battle");
                 LitiBattle.triggerBattle();
                 break;
             case INGAME:
                 firstStart = false;
+                LitiPlayer.instance().setState(PlayerState.CONTROLLABLE);
                 IngameScreen.drawChatWindow.setVisible(false);
                 IngameScreen.ingameMenu.setVisible(false);
                 Game.audio().playMusic("arkham");
                 break;
             case INGAME_MENU:
                 Game.loop().setTimeScale(0);
-                LitiPlayer.instance().detachControllers();
                 IngameScreen.ingameMenu.setVisible(true);
                 Game.audio().playMusic("ingameMenu");
                 break;
             case INGAME_CHAT:
-                LitiPlayer.instance().detachControllers();
                 IngameScreen.drawChatWindow.setVisible(true);
                 Game.audio().playMusic("ingameMenu");
                 break;
             case INVENTORY:
                 Game.loop().setTimeScale(0);
-                LitiPlayer.instance().detachControllers();
                 IngameScreen.inventory.setVisible(true);
                 Game.audio().playMusic("ingameMenu");
                 break;
@@ -109,7 +105,11 @@ public class GameLogic implements IUpdateable {
 
     @Override
     public void update() {
-        currentLitiMap.update();
+        try {
+            currentLitiMap.update();
+        } catch (SceneNotPossibleError sceneNotPossibleError) {
+            sceneNotPossibleError.printStackTrace();
+        }
         LitiBattle.update();
         LitiClient.update();
     }
@@ -117,4 +117,5 @@ public class GameLogic implements IUpdateable {
     public LitiMap getCurrentLitiMap() {
         return currentLitiMap;
     }
+
 }
