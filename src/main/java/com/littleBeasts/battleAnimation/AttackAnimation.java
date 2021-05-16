@@ -20,7 +20,7 @@ public class AttackAnimation {
     static AnimationListener animationListener;
 
     public static void startMeleeAnimation(IMobileEntity attacker, IMobileEntity defender, CeAttack ceAttack) {
-
+        LitiPlayer.instance().detachControllers();
         Game.audio().playSound("punch");
         String animationName = "battleAnimation-" + ceAttack.getName().toLowerCase(Locale.ROOT);
         // attach controller, so the force can be applied (perhaps there is a better way to that)

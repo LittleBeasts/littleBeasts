@@ -31,7 +31,7 @@ public class LitiMap {
     private boolean deactivateOverlays = false;
 
     public void loadNewArea() {
-        int spawnDelay = 2000; //delay in milliseconds
+        int spawnDelay = 1000; //delay in milliseconds
         if (freshlySpawned || (freshlySpawnedTime + spawnDelay) >= System.currentTimeMillis())
             return;
         if (spawnpoints == null)
