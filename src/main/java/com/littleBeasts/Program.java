@@ -29,7 +29,7 @@ public class Program {
         if (args.length > 0)
             startingMap = args[0];
 
-        startingMap = MapNames.residentialArea.toString();
+        startingMap = MapNames.CourtYard_Dorms_Library.toString();
         // initialize the game infrastructure
         Game.init();
 
