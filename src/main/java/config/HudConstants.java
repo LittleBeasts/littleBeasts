@@ -36,6 +36,9 @@ public class HudConstants {
     public static final Color TEXTCOLOR = Color.BLACK;
     public static final Color HPBARCOLOR = new Color(255, 0, 0, 100);
     public static final String NO_ITEMS_PLACEHOLDER = "No items";
+    public static final int ATTACK_MENU_POS_IN_BATTLE_MENU = 0;
+    public static final int CATCH_MENU_POS_IN_BATTLE_MENU = 1;
+    public static final int ITEM_MENU_POS_IN_BATTLE_MENU = 4;
 
     public static final Font ChatWindowFont = new Font("Serif", Font.PLAIN, 55);
 
