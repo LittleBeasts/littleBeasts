@@ -115,7 +115,6 @@ public class LitiMap {
         LitiPlayer.instance().setFacingDirection(spawnpoint.getDirection());
         LitiPet.instance().setFacingDirection(spawnpoint.getDirection());
 
-
         switch (spawnpoint.getDirection()) {
             case LEFT:
                 LitiPet.instance().setX(LitiPet.instance().getX() - 16);
@@ -130,8 +129,6 @@ public class LitiMap {
                 LitiPet.instance().setY(LitiPet.instance().getY() - 16);
                 break;
         }
-        System.out.println(LitiPlayer.instance().getRenderType());
-        //LitiPlayer.instance().setRenderWithLayer(true);
     }
 
     public void newMapLoadUp() {
