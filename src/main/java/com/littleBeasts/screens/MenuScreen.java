@@ -2,20 +2,16 @@ package com.littleBeasts.screens;
 
 import client.Client;
 import com.littleBeasts.Program;
-import com.littleBeasts.entities.LitiPlayer;
 import com.littleBeasts.gameLogic.GameState;
 import com.littleBeasts.gameLogic.LitiClient;
 import com.littleBeasts.gameLogic.MapNames;
-import com.littleBeasts.gameLogic.PlayerState;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
-import de.gurkenlabs.litiengine.entities.MapArea;
 import de.gurkenlabs.litiengine.graphics.TextRenderer;
 import de.gurkenlabs.litiengine.gui.screens.Screen;
 
 import java.awt.*;
 import java.io.IOException;
-import java.util.Collection;
 
 import static config.HudConstants.MAIN_MENU_ITEMS;
 
@@ -24,7 +20,6 @@ public class MenuScreen extends Screen implements IUpdateable {
     private KeyboardMenu mainMenu;
     public long lastPlayed;
     private static final String COPYRIGHT = "2020 littleBeasts";
-    private static Collection<MapArea> mapAreas;
 
     public MenuScreen() {
         super("MAINMENU");
@@ -41,16 +36,17 @@ public class MenuScreen extends Screen implements IUpdateable {
         this.mainMenu.onConfirm(c -> {
             switch (c) {
                 case 0:
+                case 1:
                     this.startGame();
                     break;
-                case 1:
+                case 2:
                     try {
                         this.startOnlineGame();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     break;
-                case 3:
+                case 4:
                     this.exit();
                     break;
                 default:
@@ -68,7 +64,6 @@ public class MenuScreen extends Screen implements IUpdateable {
         Game.graphics().setBaseRenderScale(6f * Game.window().getResolutionScale());
         this.mainMenu.incPosition();
         Game.world().loadEnvironment("Arkham");
-        mapAreas = Game.world().environment().getAreas();
         Game.world().camera().setFocus(Game.world().environment().getCenter());
     }
 
@@ -85,7 +80,6 @@ public class MenuScreen extends Screen implements IUpdateable {
     private void startGame() {
         this.mainMenu.setEnabled(false);
         LitiClient.setOnlineGame(false);
-        //Game.window().getRenderComponent().fadeOut(500);
         loadUpMap();
     }
 
@@ -93,11 +87,11 @@ public class MenuScreen extends Screen implements IUpdateable {
         this.mainMenu.setEnabled(false);
         LitiClient.setClient(new Client("TestUser"));
         LitiClient.setOnlineGame(true);
-        //Game.window().getRenderComponent().fadeOut(500);
         loadUpMap();
     }
 
     private void loadUpMap() {
+        Game.loop().setTimeScale(1);
         Game.loop().perform(100, () -> {
             Game.screens().display("INGAME-SCREEN");
             if (Program.getStartingMap() != null) {
