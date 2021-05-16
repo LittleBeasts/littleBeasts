@@ -4,7 +4,6 @@ import com.littleBeasts.Program;
 import com.littleBeasts.entities.*;
 import com.littleBeasts.sceneManager.SceneNotPossibleError;
 import com.littleBeasts.sceneManager.ScenePlayer;
-import de.gurkenlabs.litiengine.Direction;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.entities.IEntity;
 import de.gurkenlabs.litiengine.entities.MapArea;
@@ -49,17 +48,7 @@ public class LitiMap {
     }
 
     public boolean isFacingCorrectDirection(Spawnpoint spawnpoint) {
-        switch (spawnpoint.getDirection()) {
-            case UP:
-                if (LitiPlayer.instance().getFacingDirection() == Direction.DOWN) return true;
-            case DOWN:
-                if (LitiPlayer.instance().getFacingDirection() == Direction.UP) return true;
-            case LEFT:
-                if (LitiPlayer.instance().getFacingDirection() == Direction.RIGHT) return true;
-            case RIGHT:
-                if (LitiPlayer.instance().getFacingDirection() == Direction.LEFT) return true;
-        }
-        return false;
+        return spawnpoint.getDirection() == LitiPlayer.instance().getFacingDirection().getOpposite();
     }
 
     public void checkAreas() throws SceneNotPossibleError {
