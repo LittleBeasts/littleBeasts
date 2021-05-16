@@ -15,8 +15,6 @@ public enum MapNames {
     Warehouse,
     homelessArea,
     industrialArea,
-    residentialArea1,
-    residentialArea2,
-    residentialArea3
+    residentialArea
 
 }
