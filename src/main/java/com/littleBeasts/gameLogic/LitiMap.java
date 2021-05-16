@@ -4,6 +4,7 @@ import com.littleBeasts.Program;
 import com.littleBeasts.entities.*;
 import com.littleBeasts.sceneManager.SceneNotPossibleError;
 import com.littleBeasts.sceneManager.ScenePlayer;
+import de.gurkenlabs.litiengine.Direction;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.entities.IEntity;
 import de.gurkenlabs.litiengine.entities.MapArea;
@@ -36,16 +37,29 @@ public class LitiMap {
             return;
         if (spawnpoints == null)
             loadCurrentSpawnPoints();
-        Point2D playerPosition;
+        Point2D playerPosition = LitiPlayer.instance().getCenter();
+        playerPosition.setLocation(playerPosition.getX(), playerPosition.getY() + 12);
         Rectangle2D mapArea;
-        for (Spawnpoint area : spawnpoints) {
-            mapArea = area.getBoundingBox();
-            playerPosition = LitiPlayer.instance().getCenter();
-            playerPosition.setLocation(playerPosition.getX(), playerPosition.getY() + 12);
-            if (mapArea.contains(playerPosition)) {
-                if (checkMapAreaForSpawnPoint(area)) return;
+        for (Spawnpoint spawnpoint : spawnpoints) {
+            mapArea = spawnpoint.getBoundingBox();
+            if (isFacingCorrectDirection(spawnpoint) && mapArea.contains(playerPosition)) {
+                if (checkMapAreaForSpawnPoint(spawnpoint)) return;
             }
         }
+    }
+
+    public boolean isFacingCorrectDirection(Spawnpoint spawnpoint) {
+        switch (spawnpoint.getDirection()) {
+            case UP:
+                if (LitiPlayer.instance().getFacingDirection() == Direction.DOWN) return true;
+            case DOWN:
+                if (LitiPlayer.instance().getFacingDirection() == Direction.UP) return true;
+            case LEFT:
+                if (LitiPlayer.instance().getFacingDirection() == Direction.RIGHT) return true;
+            case RIGHT:
+                if (LitiPlayer.instance().getFacingDirection() == Direction.LEFT) return true;
+        }
+        return false;
     }
 
     public void checkAreas() throws SceneNotPossibleError {
@@ -67,13 +81,13 @@ public class LitiMap {
         ScenePlayer.startScene(dayInt, sceneInt);
     }
 
-    private boolean checkMapAreaForSpawnPoint(Spawnpoint area) {
-        if (area.getSpawnInfo() != null && area.getSpawnInfo().equals("culdesac"))
+    private boolean checkMapAreaForSpawnPoint(Spawnpoint spawnpoint) {
+        if (spawnpoint.getSpawnInfo() != null && spawnpoint.getSpawnInfo().equals("culdesac"))
             return true;
-        if (area.getName() != null) {
+        if (spawnpoint.getName() != null) {
             this.freshlySpawned = true;
             String spawnpointName = Game.world().environment().getMap().getName();
-            String targetMapName = area.getName();
+            String targetMapName = spawnpoint.getName();
 
             if (targetMapName.contains("#")) {
                 spawnpointName += targetMapName.substring(targetMapName.indexOf("#"));
