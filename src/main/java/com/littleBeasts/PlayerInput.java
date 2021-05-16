@@ -38,6 +38,8 @@ public final class PlayerInput {
             currentBattleMenu = Program.getIngameScreen().getHud().getBattleMenu().getAttackMenu();
         else if (Program.getIngameScreen().getHud().getBattleMenu().isFocused())
             currentBattleMenu = Program.getIngameScreen().getHud().getBattleMenu();
+        else if(Program.getIngameScreen().getHud().getBattleMenu().getItemMenu().isFocused())
+            currentBattleMenu = Program.getIngameScreen().getHud().getBattleMenu().getItemMenu();
         else
             return;
 

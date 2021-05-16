@@ -21,6 +21,8 @@ public abstract class ActionMenu {
 
     public ActionMenu(ArrayList<String> items) {
         this.items = items;
+        if(items.size()==0)
+            items.add("no items");
         this.amountOfItems = this.items.size();
         this.amountOfDrawnItems = (Math.min(amountOfItems, ITEMLISTLENGTH));
         this.currentPosition = 0;

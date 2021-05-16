@@ -12,6 +12,7 @@ public class BattleMenu extends ActionMenu {
 
     private AttackMenu attackMenu;
     private CatchMenu catchMenu;
+    private ItemMenu itemMenu;
 
     public BattleMenu(boolean focus) {
         super(PlayerConfig.PLAYER_ACTIONS);
@@ -24,6 +25,8 @@ public class BattleMenu extends ActionMenu {
                 getAttackMenu().setFocus(true);
             } else if (c == 1) {
                 getCatchMenu().setFocus(true);
+            } else if (c == 4) {
+                getItemMenu().setFocus(true);
             }
         });
     }
@@ -31,6 +34,7 @@ public class BattleMenu extends ActionMenu {
     public void createSubMenus() {
         attackMenu = new AttackMenu(LitiPlayer.instance().getPlayerAttacks());
         catchMenu = new CatchMenu(LitiPlayer.instance().getCeInventory().getSlots());
+        itemMenu = new ItemMenu(LitiPlayer.instance().getCeInventory().getSlots());
     }
 
     public AttackMenu getAttackMenu() {
@@ -48,12 +52,19 @@ public class BattleMenu extends ActionMenu {
 
     public void drawBattleMenuAndFocusedMenu(Graphics2D g){
         draw(g);
-        setFocus(!(getAttackMenu().isFocused() || getCatchMenu().isFocused()));
+        setFocus(!(getAttackMenu().isFocused() || getCatchMenu().isFocused() || getItemMenu().isFocused()));
         if (getAttackMenu().isFocused()) {
             getAttackMenu().draw(g, firstDrawnItem);
         }
         if (getCatchMenu().isFocused()) {
             getCatchMenu().draw(g, 1 - firstDrawnItem);
         }
+        if (getItemMenu().isFocused()) {
+            getItemMenu().draw(g, 4 - firstDrawnItem);
+        }
+    }
+
+    public ItemMenu getItemMenu() {
+        return itemMenu;
     }
 }
