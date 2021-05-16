@@ -15,11 +15,13 @@ public class ItemMenu extends ActionMenu {
     public ItemMenu(CeSlot[] ceSlots) {
         super(getItemsNames(ceSlots));
         this.onConfirm(c -> {
-            try {
-                if (ceSlots[c].getItem() != null)
+            if (ceSlots[c].getItem() != null) {
+                try {
                     LitiPlayer.instance().getCeInventory().useItem(ceSlots[c].getItem());
-            } catch (ItemNotInInventoryException e) {
-                System.out.println("shit");
+                } catch (ItemNotInInventoryException e) {
+                    // handle exception
+                    e.printStackTrace();
+                }
             }
             if (DEBUG_CONSOLE_OUT)
                 System.out.println("Use item: " + this.items.get(c));

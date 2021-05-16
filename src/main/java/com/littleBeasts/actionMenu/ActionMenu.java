@@ -20,9 +20,9 @@ public abstract class ActionMenu {
     private final Consumer<Boolean> menuChange;
 
     public ActionMenu(ArrayList<String> items) {
+        if(items.isEmpty())
+            items.add(NO_ITEMS_PLACEHOLDER);
         this.items = items;
-        if(items.size()==0)
-            items.add("no items");
         this.amountOfItems = this.items.size();
         this.amountOfDrawnItems = (Math.min(amountOfItems, ITEMLISTLENGTH));
         this.currentPosition = 0;
