@@ -72,7 +72,6 @@ public class LitiPlayer extends Creature implements IMobileEntity {
         } else if (playerState == PlayerState.LOCKED) {
             this.detachControllers();
         }
-        System.out.println(state);
     }
 
     public Image getPlayerPortrait() {
