@@ -36,6 +36,7 @@ public class DrawInventory extends GuiComponent {
     private final int inventorySize;
     private final int maxItemsOnPage = 5;
     private int firstItem;
+    //TODO: Implement QUARTER_WIDTH instead of WIDTH / 4
 
     public DrawInventory() {
         super(0, 0, WIDTH, HEIGHT);
@@ -250,7 +251,6 @@ public class DrawInventory extends GuiComponent {
             indicatorPosition++;
             firstItem++;
         }
-        System.out.println(currentCursorPosition + " + " + indicatorPosition + " / " + inventorySize);
     }
 
     public void decrementCursorPosition() {
@@ -260,6 +260,5 @@ public class DrawInventory extends GuiComponent {
             indicatorPosition--;
             firstItem--;
         }
-        System.out.println(currentCursorPosition + " + " + indicatorPosition + " / " + inventorySize);
     }
 }
