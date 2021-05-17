@@ -54,13 +54,13 @@ public class BattleMenu extends ActionMenu {
         draw(g);
         setFocus(!(getAttackMenu().isFocused() || getCatchMenu().isFocused() || getItemMenu().isFocused()));
         if (getAttackMenu().isFocused()) {
-            getAttackMenu().draw(g, firstDrawnItem);
+            getAttackMenu().draw(g,PlayerConfig.PLAYER_ACTIONS.indexOf("Attack") - firstDrawnItem);
         }
         if (getCatchMenu().isFocused()) {
-            getCatchMenu().draw(g, 1 - firstDrawnItem);
+            getCatchMenu().draw(g, PlayerConfig.PLAYER_ACTIONS.indexOf("Catch") - firstDrawnItem);
         }
         if (getItemMenu().isFocused()) {
-            getItemMenu().draw(g, 4 - firstDrawnItem);
+            getItemMenu().draw(g, PlayerConfig.PLAYER_ACTIONS.indexOf("Item") - firstDrawnItem);
         }
     }
 
