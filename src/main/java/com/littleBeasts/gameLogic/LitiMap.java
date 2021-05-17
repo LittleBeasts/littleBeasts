@@ -122,6 +122,7 @@ public class LitiMap {
 
     public void newMapLoadUp() {
         Program.getGameLogic().setState(GameState.LOADING);
+        resetOldMap();
         createInteractableList();
         createTileMapLayerList();
         loadCurrentMapAreas();
@@ -129,6 +130,12 @@ public class LitiMap {
         this.freshlySpawned = true;
         this.freshlySpawnedTime = System.currentTimeMillis();
         Program.getGameLogic().setState(GameState.INGAME);
+    }
+
+    private void resetOldMap() {
+        for (Integer layerNumber : changedTileLayers) {
+            tileMapLayers.get(layerNumber).setRenderType(RenderType.OVERLAY);
+        }
     }
 
     private void loadCurrentSpawnPoints() {
