@@ -21,11 +21,11 @@ public class BattleMenu extends ActionMenu {
 
         onConfirm(c -> {
             setFocus(false);
-            if (c == ATTACK_MENU_POS_IN_BATTLE_MENU) {
+            if (c == PlayerConfig.PLAYER_ACTIONS.indexOf("Attack")) {
                 getAttackMenu().setFocus(true);
-            } else if (c == CATCH_MENU_POS_IN_BATTLE_MENU) {
+            } else if (c == PlayerConfig.PLAYER_ACTIONS.indexOf("Catch")) {
                 getCatchMenu().setFocus(true);
-            } else if (c == ITEM_MENU_POS_IN_BATTLE_MENU) {
+            } else if (c == PlayerConfig.PLAYER_ACTIONS.indexOf("Item")) {
                 getItemMenu().setFocus(true);
             }
         });
