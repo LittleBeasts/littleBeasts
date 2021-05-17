@@ -9,6 +9,7 @@ import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.graphics.Spritesheet;
 import de.gurkenlabs.litiengine.resources.Resources;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.HashMap;
@@ -29,12 +30,13 @@ public class Program {
         if (args.length > 0)
             startingMap = args[0];
 
-        startingMap = MapNames.Warrens.toString();
+        startingMap = MapNames.Arkham.toString();
         // initialize the game infrastructure
         Game.init();
 
         //set icon for the game
-        Game.window().setIcon(Resources.images().get(Objects.requireNonNull(Program.class.getResource("/sprites/icon.png")).getPath()));
+
+        Game.window().setIcon(ImageIO.read(Objects.requireNonNull(Program.class.getResourceAsStream("/sprites/icon.png"))));
         Game.graphics().setBaseRenderScale(1.001f);
 
         // Load data from the utiLiti game file

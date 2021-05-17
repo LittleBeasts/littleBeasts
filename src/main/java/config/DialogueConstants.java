@@ -14,6 +14,6 @@ public class DialogueConstants {
     private static final Color borderColor = new Color(255, 0, 0, 255);
     private static final float padding = 3.f;
 
-    public static final JSONObject dialogueTree = JsonReader.readJson(Program.class.getResource("/JSON/dialogueTree.JSON").getPath());
+    public static final JSONObject dialogueTree = JsonReader.readJson(Program.class.getResourceAsStream("/JSON/dialogueTree.JSON"));
     public static final SpeechBubbleAppearance defaultSpeechBubble = new SpeechBubbleAppearance(foreColor, backColor, borderColor, padding);
 }
