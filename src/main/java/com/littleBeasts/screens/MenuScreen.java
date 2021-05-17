@@ -1,9 +1,7 @@
 package com.littleBeasts.screens;
 
-import calculationEngine.entities.NoPlaceInInventoryException;
 import client.Client;
 import com.littleBeasts.Program;
-import com.littleBeasts.entities.LitiPlayer;
 import com.littleBeasts.gameLogic.GameState;
 import com.littleBeasts.gameLogic.LitiClient;
 import com.littleBeasts.gameLogic.MapNames;
@@ -92,7 +90,6 @@ public class MenuScreen extends Screen implements IUpdateable {
         this.mainMenu.setEnabled(false);
         LitiClient.setClient(new Client("TestUser"));
         LitiClient.setOnlineGame(true);
-        //Game.window().getRenderComponent().fadeOut(500);
         loadUpMap();
     }
 
@@ -103,11 +100,6 @@ public class MenuScreen extends Screen implements IUpdateable {
             if (Program.getStartingMap() != null) {
                 Game.world().loadEnvironment(Program.getStartingMap());
                 Program.getGameLogic().getCurrentLitiMap().newMapLoadUp();
-                try {
-                    LitiPlayer.instance().addItemToPlayerInventory();
-                } catch (NoPlaceInInventoryException e) {
-                    e.printStackTrace();
-                }
             } else {
                 Game.world().loadEnvironment(MapNames.FleaMarket.toString());
             }
