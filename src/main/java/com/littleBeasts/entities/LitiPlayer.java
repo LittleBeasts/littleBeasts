@@ -25,12 +25,11 @@ public class LitiPlayer extends Creature implements IMobileEntity {
     private static LitiPlayer litiPlayerInstance;
     private static PlayerState playerState = PlayerState.LOCKED;
     private final CePlayer cePlayer;
-    private final String playerName = "xXx_BeastSlayer_xXx";
     private final Image playerPortrait;
     private final LitiBeastTeam littleBeastTeam;
     private final CeInventory ceInventory;
+    private boolean hasController = false;
 
-    // TODO: Change add draw prefix to every drawing class
     public LitiPlayer() {
         super("test");
         this.playerPortrait = Resources.images().get("sprites/char.png");
@@ -43,7 +42,6 @@ public class LitiPlayer extends Creature implements IMobileEntity {
         attacks.add(new CeAttack(CeAttacks.Punch));
         attacks.add(new CeAttack(CeAttacks.Flee));
         this.cePlayer = new CePlayer(new CeStats(CeBeastTypes.PlayerStandard, CeNature.ANGRY, 1, 100, 100, 20, 1, 20, 10, 1), attacks, littleBeastTeam.beastsToCeEntities(littleBeastTeam.getBeasts()), false);
-        this.addController(new KeyboardEntityController<>(this));
     }
 
     public static LitiPlayer instance() {
@@ -78,10 +76,13 @@ public class LitiPlayer extends Creature implements IMobileEntity {
     public void setState(PlayerState state) {
         playerState = state;
         if (playerState == PlayerState.CONTROLLABLE) {
-            LitiPlayer.instance().attachControllers();
-            LitiPlayer.instance().movement().attach();
+            if (!hasController) {
+                this.addController(new KeyboardEntityController<>(this));
+                hasController = true;
+            }
+            this.attachControllers();
         } else if (playerState == PlayerState.LOCKED) {
-            LitiPlayer.instance().detachControllers();
+            this.detachControllers();
         }
     }
 
@@ -102,7 +103,7 @@ public class LitiPlayer extends Creature implements IMobileEntity {
     }
 
     public String getPlayerName() {
-        return playerName;
+        return "xXx_BeastSlayer_xXx";
     }
 
     public int getMaxHP() {

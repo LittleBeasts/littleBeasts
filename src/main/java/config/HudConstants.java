@@ -35,6 +35,7 @@ public class HudConstants {
     public static final Color BUTTONCOLOR = Color.GRAY;
     public static final Color TEXTCOLOR = Color.BLACK;
     public static final Color HPBARCOLOR = new Color(255, 0, 0, 100);
+    public static final String NO_ITEMS_PLACEHOLDER = "No items";
 
     public static final Font ChatWindowFont = new Font("Serif", Font.PLAIN, 55);
 
@@ -47,7 +48,7 @@ public class HudConstants {
     public static final Color MENU_FONT_COLOR = Color.WHITE;
     public static final int MENU_DELAY = 180;
     public static final String[] INGAME_MENU_ITEMS = new String[]{"Continue", "To Main Menu", "Exit"};
-    public static final String[] MAIN_MENU_ITEMS = new String[]{"Single Player Game", "Play Online", "Instructions", "Exit"};
+    public static final String[] MAIN_MENU_ITEMS = new String[]{"Load Game", "Single Player Game", "Play Online", "Instructions", "Exit"};
     public static final double MENU_BUTTON_WIDTH = 450;
     public static final double MENU_CENTER_X = Game.window().getResolution().getWidth() / 2.0;
     public static final double MENU_CENTER_Y = Game.window().getResolution().getHeight() * 1 / 2;
