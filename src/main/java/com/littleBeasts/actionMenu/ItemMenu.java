@@ -2,22 +2,22 @@ package com.littleBeasts.actionMenu;
 
 import calculationEngine.entities.CeSlot;
 import calculationEngine.entities.ItemNotInInventoryException;
+import calculationEngine.environment.CeItem;
 import com.littleBeasts.entities.LitiPlayer;
 
 import java.util.ArrayList;
 
 import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
-import static config.HudConstants.BATTLE_MENU_OFFSET;
-import static config.HudConstants.BATTLE_MENU_START;
+import static config.HudConstants.*;
 
 public class ItemMenu extends ActionMenu {
 
-    public ItemMenu(CeSlot[] ceSlots) {
-        super(getItemsNames(ceSlots));
+    public ItemMenu(ArrayList<CeItem> ceItems) {
+        super(getItemsNames(ceItems));
         this.onConfirm(c -> {
-            if (ceSlots[c].getItem() != null) {
+            if (!ceItems.isEmpty() && ceItems.get(c) != null) {
                 try {
-                    LitiPlayer.instance().getCeInventory().useItem(ceSlots[c].getItem());
+                    LitiPlayer.instance().getCeInventory().useItem(ceItems.get(c));
                 } catch (ItemNotInInventoryException e) {
                     // handle exception
                     e.printStackTrace();
@@ -34,12 +34,14 @@ public class ItemMenu extends ActionMenu {
         x = BATTLE_MENU_START + BATTLE_MENU_OFFSET;
     }
 
-    public static ArrayList<String> getItemsNames(CeSlot[] ceSlots) {
+    public static ArrayList<String> getItemsNames(ArrayList<CeItem> ceItems) {
         ArrayList<String> itemsNames = new ArrayList<>();
-        for (CeSlot ceSlot : ceSlots) {
-            if (ceSlot.getItem() != null)
-                itemsNames.add(ceSlot.getItem().getName());
+        for (CeItem ceItem : ceItems) {
+            if (ceItem != null)
+                itemsNames.add(ceItem.getName());
         }
+        if (itemsNames.isEmpty())
+            itemsNames.add(NO_ITEMS_PLACEHOLDER);
         return itemsNames;
     }
 }

@@ -33,8 +33,8 @@ public class BattleMenu extends ActionMenu {
 
     public void createSubMenus() {
         attackMenu = new AttackMenu(LitiPlayer.instance().getPlayerAttacks());
-        catchMenu = new CatchMenu(LitiPlayer.instance().getCeInventory().getSlots());
-        itemMenu = new ItemMenu(LitiPlayer.instance().getCeInventory().getSlots());
+        catchMenu = new CatchMenu(LitiPlayer.instance().getCeInventory().getCages());
+        itemMenu = new ItemMenu(LitiPlayer.instance().getCeInventory().getConsumables());
     }
 
     public AttackMenu getAttackMenu() {
