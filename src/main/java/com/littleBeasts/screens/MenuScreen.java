@@ -37,7 +37,7 @@ public class MenuScreen extends Screen implements IUpdateable {
             switch (c) {
                 case 0:
                 case 1:
-                    this.startGame();
+                    this.startLocalGame();
                     break;
                 case 2:
                     try {
@@ -77,7 +77,7 @@ public class MenuScreen extends Screen implements IUpdateable {
         super.render(g);
     }
 
-    private void startGame() {
+    private void startLocalGame() {
         this.mainMenu.setEnabled(false);
         LitiClient.setOnlineGame(false);
         loadUpMap();

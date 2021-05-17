@@ -4,6 +4,7 @@ import calculationEngine.entities.CeAttack;
 import com.littleBeasts.Program;
 import com.littleBeasts.entities.LitiPlayer;
 import com.littleBeasts.gameLogic.GameState;
+import com.littleBeasts.gameLogic.PlayerState;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.IMobileEntity;
@@ -20,7 +21,7 @@ public class AttackAnimation {
     static AnimationListener animationListener;
 
     public static void startMeleeAnimation(IMobileEntity attacker, IMobileEntity defender, CeAttack ceAttack) {
-        LitiPlayer.instance().detachControllers();
+        LitiPlayer.instance().setState(PlayerState.LOCKED);
         Game.audio().playSound("punch");
         String animationName = "battleAnimation-" + ceAttack.getName().toLowerCase(Locale.ROOT);
         // attach controller, so the force can be applied (perhaps there is a better way to that)
@@ -108,8 +109,7 @@ public class AttackAnimation {
             while (!LitiPlayer.instance().animations().get("test-idle-right").isPlaying()) {
                 LitiPlayer.instance().animations().get("test-idle-right").start();
             }
-            LitiPlayer.instance().movement().detach();
-            LitiPlayer.instance().detachControllers();
+            LitiPlayer.instance().setState(PlayerState.LOCKED);
         } else if (Program.getGameLogic().getState().equals(GameState.INGAME)) {
             // remove BattleAnimation from map.
             BattleAnimationEntity.instance().die();
