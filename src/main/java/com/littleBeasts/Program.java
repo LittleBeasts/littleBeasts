@@ -12,6 +12,7 @@ import de.gurkenlabs.litiengine.resources.Resources;
 import java.awt.*;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Program {
 
@@ -28,12 +29,12 @@ public class Program {
         if (args.length > 0)
             startingMap = args[0];
 
-        startingMap = MapNames.industrialArea.toString();
+        startingMap = MapNames.Warrens.toString();
         // initialize the game infrastructure
         Game.init();
 
         //set icon for the game
-        Game.window().setIcon(Resources.images().get(Program.class.getResource("/sprites/icon.png").getPath()));
+        Game.window().setIcon(Resources.images().get(Objects.requireNonNull(Program.class.getResource("/sprites/icon.png")).getPath()));
         Game.graphics().setBaseRenderScale(1.001f);
 
         // Load data from the utiLiti game file

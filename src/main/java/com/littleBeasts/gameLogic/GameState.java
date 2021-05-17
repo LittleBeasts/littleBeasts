@@ -8,5 +8,6 @@ public enum GameState {
     INVENTORY,
     BATTLE,
     GAME_OVER,
+    LOADING,
     DIALOGUE;
 }

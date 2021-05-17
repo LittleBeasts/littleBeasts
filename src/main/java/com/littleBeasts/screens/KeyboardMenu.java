@@ -1,7 +1,6 @@
 package com.littleBeasts.screens;
 
 import com.littleBeasts.Program;
-import com.littleBeasts.gameLogic.GameLogic;
 import com.littleBeasts.gameLogic.GameState;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.gui.Menu;

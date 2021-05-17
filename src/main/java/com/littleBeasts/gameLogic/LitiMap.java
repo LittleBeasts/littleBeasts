@@ -31,21 +31,24 @@ public class LitiMap {
     private boolean deactivateOverlays = false;
 
     public void loadNewArea() {
-        int spawnDelay = 2000; //delay in milliseconds
+        int spawnDelay = 1000; //delay in milliseconds
         if (freshlySpawned || (freshlySpawnedTime + spawnDelay) >= System.currentTimeMillis())
             return;
         if (spawnpoints == null)
             loadCurrentSpawnPoints();
-        Point2D playerPosition;
+        Point2D playerPosition = LitiPlayer.instance().getCenter();
+        playerPosition.setLocation(playerPosition.getX(), playerPosition.getY() + 12);
         Rectangle2D mapArea;
-        for (Spawnpoint area : spawnpoints) {
-            mapArea = area.getBoundingBox();
-            playerPosition = LitiPlayer.instance().getCenter();
-            playerPosition.setLocation(playerPosition.getX(), playerPosition.getY() + 12);
-            if (mapArea.contains(playerPosition)) {
-                if (checkMapAreaForSpawnPoint(area)) return;
+        for (Spawnpoint spawnpoint : spawnpoints) {
+            mapArea = spawnpoint.getBoundingBox();
+            if (isFacingCorrectDirection(spawnpoint) && mapArea.contains(playerPosition)) {
+                if (checkMapAreaForSpawnPoint(spawnpoint)) return;
             }
         }
+    }
+
+    public boolean isFacingCorrectDirection(Spawnpoint spawnpoint) {
+        return spawnpoint.getDirection() == LitiPlayer.instance().getFacingDirection().getOpposite();
     }
 
     public void checkAreas() throws SceneNotPossibleError {
@@ -67,13 +70,13 @@ public class LitiMap {
         ScenePlayer.startScene(dayInt, sceneInt);
     }
 
-    private boolean checkMapAreaForSpawnPoint(Spawnpoint area) {
-        if (area.getSpawnInfo() != null && area.getSpawnInfo().equals("culdesac"))
+    private boolean checkMapAreaForSpawnPoint(Spawnpoint spawnpoint) {
+        if (spawnpoint.getSpawnInfo() != null && spawnpoint.getSpawnInfo().equals("culdesac"))
             return true;
-        if (area.getName() != null) {
+        if (spawnpoint.getName() != null) {
             this.freshlySpawned = true;
             String spawnpointName = Game.world().environment().getMap().getName();
-            String targetMapName = area.getName();
+            String targetMapName = spawnpoint.getName();
 
             if (targetMapName.contains("#")) {
                 spawnpointName += targetMapName.substring(targetMapName.indexOf("#"));
@@ -101,7 +104,6 @@ public class LitiMap {
         LitiPlayer.instance().setFacingDirection(spawnpoint.getDirection());
         LitiPet.instance().setFacingDirection(spawnpoint.getDirection());
 
-
         switch (spawnpoint.getDirection()) {
             case LEFT:
                 LitiPet.instance().setX(LitiPet.instance().getX() - 16);
@@ -116,17 +118,24 @@ public class LitiMap {
                 LitiPet.instance().setY(LitiPet.instance().getY() - 16);
                 break;
         }
-        System.out.println(LitiPlayer.instance().getRenderType());
-        //LitiPlayer.instance().setRenderWithLayer(true);
     }
 
     public void newMapLoadUp() {
+        Program.getGameLogic().setState(GameState.LOADING);
+        resetOldMap();
         createInteractableList();
         createTileMapLayerList();
         loadCurrentMapAreas();
         loadCurrentSpawnPoints();
         this.freshlySpawned = true;
         this.freshlySpawnedTime = System.currentTimeMillis();
+        Program.getGameLogic().setState(GameState.INGAME);
+    }
+
+    private void resetOldMap() {
+        for (Integer layerNumber : changedTileLayers) {
+            tileMapLayers.get(layerNumber).setRenderType(RenderType.OVERLAY);
+        }
     }
 
     private void loadCurrentSpawnPoints() {
