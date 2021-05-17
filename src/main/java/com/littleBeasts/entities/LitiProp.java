@@ -1,5 +1,6 @@
 package com.littleBeasts.entities;
 
+import calculationEngine.entities.NoPlaceInInventoryException;
 import calculationEngine.environment.CeItem;
 import calculationEngine.environment.CeLoot;
 import config.FontConstants;
@@ -60,11 +61,11 @@ public class LitiProp implements Interactable {
                         SpeechBubble.create(iEntity, "I contained: " + itemName, SpeechBubble.DEFAULT_APPEARANCE, FontConstants.DEFAULT_FONT);
                         CeItem ceItem = CeLoot.lootItem(itemName);
                         System.out.println(ceItem.getName());
-                        //try {
-                        //    LitiPlayer.instance().getCeInventory().addItemToInventory();
-                        //} catch (NoPlaceInInventoryException e) {
-                        //    e.printStackTrace();
-                        //}
+                        try {
+                            LitiPlayer.instance().getCeInventory().addItemToInventory(CeLoot.lootItem(itemName));
+                        } catch (NoPlaceInInventoryException e) {
+                            e.printStackTrace();
+                        }
                         if (!prop.hasCollision())
                             prop.setCollision(true);
                         animationController.detach();

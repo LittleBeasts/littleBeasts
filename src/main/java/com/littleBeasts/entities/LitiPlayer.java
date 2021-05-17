@@ -1,7 +1,7 @@
 package com.littleBeasts.entities;
 
 import calculationEngine.entities.*;
-import calculationEngine.environment.CeItem;
+import calculationEngine.environment.CeLoot;
 import com.littleBeasts.Program;
 import com.littleBeasts.gameLogic.LitiMapFunctions;
 import com.littleBeasts.gameLogic.PlayerState;
@@ -54,10 +54,14 @@ public class LitiPlayer extends Creature implements IMobileEntity {
     }
 
     public void addItemToPlayerInventory() throws NoPlaceInInventoryException {
-        CeItem ceItem = new CeItem();
-        int[] itemBonusStats = {20, 0, 0, 0, 0, 0, 0};
-        ceItem.setNewLootedItem("Test", "Test", false, "consumable", 1, itemBonusStats, "Test");
-        this.ceInventory.addItemToInventory(ceItem);
+        System.out.println(CeLoot.lootItem("cage"));
+        CeInventory inventory = LitiPlayer.instance().ceInventory;
+        inventory.addItemToInventory(CeLoot.lootItem("cage"));
+        System.out.println("Amount: " + inventory.getSlots()[0].getAmount()); // should be 1
+        inventory.addItemToInventory(CeLoot.lootItem("cage"));
+        System.out.println("Amount: " + inventory.getSlots()[0].getAmount()); // should be 2
+        inventory.addItemToInventory(CeLoot.lootItem("aHealingPotion"));
+        System.out.println(inventory.getSlots()[1].getItem().toString());
     }
 
     @Action(description = "Interaction with environment")
