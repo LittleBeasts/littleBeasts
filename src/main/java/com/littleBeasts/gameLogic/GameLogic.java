@@ -34,9 +34,6 @@ public class GameLogic implements IUpdateable {
             if (e.getMap().getName().equals("title")) {
                 return;
             }
-            currentLitiMap.newMapLoadUp();
-
-
             Spawnpoint enter = e.getSpawnpoint("debug");
             if (enter != null) {
                 enter.spawn(LitiPlayer.instance());

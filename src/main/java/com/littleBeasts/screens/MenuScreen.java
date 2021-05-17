@@ -96,6 +96,7 @@ public class MenuScreen extends Screen implements IUpdateable {
             Game.screens().display("INGAME-SCREEN");
             if (Program.getStartingMap() != null) {
                 Game.world().loadEnvironment(Program.getStartingMap());
+                Program.getGameLogic().getCurrentLitiMap().newMapLoadUp();
             } else {
                 Game.world().loadEnvironment(MapNames.FleaMarket.toString());
             }
