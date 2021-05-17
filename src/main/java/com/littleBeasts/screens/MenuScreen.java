@@ -1,7 +1,9 @@
 package com.littleBeasts.screens;
 
+import calculationEngine.entities.NoPlaceInInventoryException;
 import client.Client;
 import com.littleBeasts.Program;
+import com.littleBeasts.entities.LitiPlayer;
 import com.littleBeasts.gameLogic.GameState;
 import com.littleBeasts.gameLogic.LitiClient;
 import com.littleBeasts.gameLogic.MapNames;
@@ -100,6 +102,11 @@ public class MenuScreen extends Screen implements IUpdateable {
             Game.screens().display("INGAME-SCREEN");
             if (Program.getStartingMap() != null) {
                 Game.world().loadEnvironment(Program.getStartingMap());
+                try {
+                    LitiPlayer.instance().addItemToPlayerInventory();
+                } catch (NoPlaceInInventoryException e) {
+                    e.printStackTrace();
+                }
             } else {
                 Game.world().loadEnvironment(MapNames.FleaMarket.toString());
             }

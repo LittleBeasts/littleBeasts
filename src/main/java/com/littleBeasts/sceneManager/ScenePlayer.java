@@ -35,7 +35,7 @@ public class ScenePlayer {
                 missingCharacters.add(dialoguePartner);
             }
         }
-        return missingCharacters.size() > 0;
+        return missingCharacters.size() == 0;
     }
 
     public static void playScene() {

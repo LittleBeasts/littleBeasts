@@ -1,6 +1,7 @@
 package com.littleBeasts.entities;
 
 import calculationEngine.entities.*;
+import calculationEngine.environment.CeItem;
 import com.littleBeasts.Program;
 import com.littleBeasts.gameLogic.LitiMapFunctions;
 import com.littleBeasts.gameLogic.PlayerState;
@@ -50,6 +51,13 @@ public class LitiPlayer extends Creature implements IMobileEntity {
             litiPlayerInstance = new LitiPlayer();
         }
         return litiPlayerInstance;
+    }
+
+    public void addItemToPlayerInventory() throws NoPlaceInInventoryException {
+        CeItem ceItem = new CeItem();
+        int[] itemBonusStats = {20, 0, 0, 0, 0, 0, 0};
+        ceItem.setNewLootedItem("Test", "Test", false, "consumable", 1, itemBonusStats, "Test");
+        this.ceInventory.addItemToInventory(ceItem);
     }
 
     @Action(description = "Interaction with environment")

@@ -1,0 +1,149 @@
+{
+  "cage": {
+    "name": "Cage",
+    "spriteName": "sprite_name",
+    "id": "#7",
+    "description": "Cage to catch a litteBeast",
+    "probability": "90",
+    "uses": 1,
+    "effects": "Catch",
+    "unique": false,
+    "type": "cage",
+    "bonusStats":[
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      0
+    ],
+    "rarity": "common"
+  },
+  "aHealingPotion": {
+    "name": "A healing potion",
+    "spriteName": "sprite_name",
+    "id": "#2",
+    "description": "Heals a portion of your life",
+    "probability": "80",
+    "uses": 1,
+    "effects": "Heals 10HP",
+    "unique": false,
+    "type": "consumable",
+    "bonusStats":[
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      0
+    ],
+    "rarity": "common"
+  },
+  "aGreaterHealingPotion": {
+    "id": "#5",
+    "name": "A greater healing potion",
+    "spriteName": "sprite_name",
+    "description": "Heals a portion of your life",
+    "probability": "20",
+    "uses": 1,
+    "effects": "Heals 10HP",
+    "type": "consumable",
+    "unique": false,
+    "bonusStats":[
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      0
+    ],
+    "rarity": "common"
+  },
+  "stickOfBeating": {
+    "id": "#3",
+    "name": "The Stick of Beating",
+    "spriteName": "sprite_name",
+    "description": "It's a stick, you can hit someone with it. Don't.",
+    "probability": "80",
+    "uses": 1,
+    "effects": "It hurts.",
+    "type": "weapon",
+    "unique": false,
+    "bonusStats":[
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      0
+    ],
+    "rarity": "rare"
+  },
+  "StickOfMoreBeating": {
+    "id": "#4",
+    "name": "The Stick of more Beating",
+    "spriteName": "sprite_name",
+    "description": "It's a stick, you can hit someone with it. Do.",
+    "probability": "20",
+    "uses": 1,
+    "effects": "It hurts.",
+    "type": "weapon",
+    "unique": false,
+    "bonusStats":[
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      0
+    ],
+    "rarity": "rare"
+  },
+  "hammerOfZordon": {
+    "id": "#1",
+    "name": "The Hammer of Zordon",
+    "spriteName": "sprite_name",
+    "description": "It's Zordons Hammer, what do you think it will do?",
+    "probability": "90",
+    "uses": 1,
+    "effects": "Hammers like crazy",
+    "type": "weapon",
+    "unique": false,
+    "bonusStats":[
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      0
+    ],
+    "rarity": "legendary"
+  },
+  "hammerOfKarl": {
+    "id": "#6",
+    "name": "The Hammer of Karl",
+    "spriteName": "sprite_name",
+    "description": "It's Karls Hammer, it hammers",
+    "probability": "10",
+    "uses": 1,
+    "effects": "Hammers like totally crazy",
+    "type": "weapon",
+    "unique": false,
+    "bonusStats":[
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      0
+    ],
+    "rarity": "legendary"
+  }
+}

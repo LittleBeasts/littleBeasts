@@ -7,6 +7,7 @@ import com.littleBeasts.gameLogic.LitiBattle;
 import com.littleBeasts.gameLogic.LitiClient;
 import com.littleBeasts.gameLogic.PlayerState;
 import com.littleBeasts.sceneManager.ScenePlayer;
+import com.littleBeasts.screens.IngameScreen;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.input.Input;
 
@@ -22,6 +23,8 @@ public final class PlayerInput {
                 battleControls(e);
             } else if (Program.getGameLogic().getState().equals(GameState.DIALOGUE) && e.getKeyCode() == KeyEvent.VK_E) {
                 ScenePlayer.getScript().getDialogue().getSpeechBubble().hide();
+            } else if (Program.getGameLogic().getState().equals(GameState.INVENTORY)) {
+                inventoryControls(e);
             } else {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_ESCAPE:
@@ -35,6 +38,19 @@ public final class PlayerInput {
                 }
             }
         });
+    }
+
+    private static void inventoryControls(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_DOWN:
+            case KeyEvent.VK_S:
+                IngameScreen.getInventory().incrementCursorPosition();
+                break;
+            case KeyEvent.VK_UP:
+            case KeyEvent.VK_W:
+                IngameScreen.getInventory().decrementCursorPosition();
+                break;
+        }
     }
 
     private static void battleControls(KeyEvent e) {

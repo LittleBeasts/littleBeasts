@@ -81,22 +81,22 @@ public class GameLogic implements IUpdateable {
             case INGAME:
                 firstStart = false;
                 LitiPlayer.instance().setState(PlayerState.CONTROLLABLE);
-                IngameScreen.drawChatWindow.setVisible(false);
-                IngameScreen.ingameMenu.setVisible(false);
+                IngameScreen.getDrawChatWindow().setVisible(false);
+                IngameScreen.getIngameMenu().setVisible(false);
                 Game.audio().playMusic("arkham");
                 break;
             case INGAME_MENU:
                 Game.loop().setTimeScale(0);
-                IngameScreen.ingameMenu.setVisible(true);
+                IngameScreen.getIngameMenu().setVisible(true);
                 Game.audio().playMusic("ingameMenu");
                 break;
             case INGAME_CHAT:
-                IngameScreen.drawChatWindow.setVisible(true);
+                IngameScreen.getDrawChatWindow().setVisible(true);
                 Game.audio().playMusic("ingameMenu");
                 break;
             case INVENTORY:
                 Game.loop().setTimeScale(0);
-                IngameScreen.inventory.setVisible(true);
+                IngameScreen.getInventory().setVisible(true);
                 Game.audio().playMusic("ingameMenu");
                 break;
         }
