@@ -39,14 +39,8 @@ public final class PlayerInput {
 
     private static void battleControls(KeyEvent e) {
         ActionMenu currentBattleMenu;
-        if (Program.getIngameScreen().getHud().getBattleMenu().getCatchMenu().isFocused())
-            currentBattleMenu = Program.getIngameScreen().getHud().getBattleMenu().getCatchMenu();
-        else if (Program.getIngameScreen().getHud().getBattleMenu().getAttackMenu().isFocused())
-            currentBattleMenu = Program.getIngameScreen().getHud().getBattleMenu().getAttackMenu();
-        else if (Program.getIngameScreen().getHud().getBattleMenu().isFocused())
-            currentBattleMenu = Program.getIngameScreen().getHud().getBattleMenu();
-        else
-            return;
+        if (getFocusedMenu() == null) return;
+        currentBattleMenu = getFocusedMenu();
 
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
@@ -70,6 +64,18 @@ public final class PlayerInput {
                 Game.audio().playSound("Menu_pick");
                 currentBattleMenu.confirm();
         }
+    }
+
+    private static ActionMenu getFocusedMenu() {
+        if (Program.getIngameScreen().getHud().getBattleMenu().getCatchMenu().isFocused())
+            return Program.getIngameScreen().getHud().getBattleMenu().getCatchMenu();
+        else if (Program.getIngameScreen().getHud().getBattleMenu().getAttackMenu().isFocused())
+            return Program.getIngameScreen().getHud().getBattleMenu().getAttackMenu();
+        else if (Program.getIngameScreen().getHud().getBattleMenu().isFocused())
+            return Program.getIngameScreen().getHud().getBattleMenu();
+        else if (Program.getIngameScreen().getHud().getBattleMenu().getItemMenu().isFocused())
+            return Program.getIngameScreen().getHud().getBattleMenu().getItemMenu();
+        else return null;
     }
 
     private static void onEscape(AtomicBoolean menu) {
