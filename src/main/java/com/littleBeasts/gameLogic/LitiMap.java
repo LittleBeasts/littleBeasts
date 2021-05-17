@@ -121,12 +121,14 @@ public class LitiMap {
     }
 
     public void newMapLoadUp() {
+        Program.getGameLogic().setState(GameState.LOADING);
         createInteractableList();
         createTileMapLayerList();
         loadCurrentMapAreas();
         loadCurrentSpawnPoints();
         this.freshlySpawned = true;
         this.freshlySpawnedTime = System.currentTimeMillis();
+        Program.getGameLogic().setState(GameState.INGAME);
     }
 
     private void loadCurrentSpawnPoints() {

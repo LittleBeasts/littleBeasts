@@ -7,14 +7,13 @@ public enum MapNames {
     CourtYard_Dorms_Library,
     CourtYard_Faculty,
     Crater,
-    DormRoom,
     FleaMarket,
-    HallWay,
     LoisImportExport,
     Office,
     Warehouse,
     homelessArea,
     industrialArea,
-    residentialArea
+    residentialArea,
+    Warrens
 
 }
