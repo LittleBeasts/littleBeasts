@@ -53,9 +53,12 @@ public class IngameScreen extends Screen {
                     Program.getGameLogic().setState(GameState.INGAME);
                     break;
                 case 1:
-                    Program.getGameLogic().setState(GameState.MENU);
+                    Program.getGameLogic().setState(GameState.SAVE_MENU);
                     break;
                 case 2:
+                    Program.getGameLogic().setState(GameState.MENU);
+                    break;
+                case 3:
                     System.exit(0);
                     break;
                 default:

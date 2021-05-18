@@ -85,6 +85,8 @@ public class GameLogic implements IUpdateable {
                 IngameScreen.ingameMenu.setVisible(true);
                 Game.audio().playMusic("ingameMenu");
                 break;
+            case SAVE_MENU:
+                break;
             case INGAME_CHAT:
                 IngameScreen.drawChatWindow.setVisible(true);
                 Game.audio().playMusic("ingameMenu");

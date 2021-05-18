@@ -1,7 +1,5 @@
 package com.littleBeasts.screens;
 
-import com.littleBeasts.Program;
-
 public enum InventoryState {
     HEAD,
     NECK,
