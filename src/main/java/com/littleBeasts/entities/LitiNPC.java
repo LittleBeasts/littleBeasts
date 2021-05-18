@@ -5,6 +5,7 @@ import de.gurkenlabs.litiengine.entities.Creature;
 import de.gurkenlabs.litiengine.entities.IEntity;
 import de.gurkenlabs.litiengine.gui.SpeechBubble;
 import org.json.JSONObject;
+import utilities.LitiFonts;
 
 import java.awt.*;
 import java.util.Random;
@@ -22,6 +23,7 @@ public class LitiNPC extends Creature implements Interactable {
         this.iEntity = iEntity;
         this.name = iEntity.getName();
         this.npcDialogueTree = getDefaultAnswers(name.replace("NPC-", ""));
+        this.setFont();
     }
 
     private JSONObject getDefaultAnswers(String name) {
@@ -31,13 +33,18 @@ public class LitiNPC extends Creature implements Interactable {
 
     public void getGreeting() {
         Random random = new Random();
-        try {
-            this.speechBubbleFont.getSize();
-            SpeechBubble.create(iEntity, npcDialogueTree.getJSONArray("greetings").get(random.nextInt(npcDialogueTree.getJSONArray("greetings").length())).toString(), SpeechBubble.DEFAULT_APPEARANCE, this.speechBubbleFont);
-        } catch (Exception e) {
-            System.out.println(e);
+        SpeechBubble.create(iEntity, npcDialogueTree.getJSONArray("greetings").get(random.nextInt(npcDialogueTree.getJSONArray("greetings").length())).toString(), SpeechBubble.DEFAULT_APPEARANCE, this.speechBubbleFont);
+    }
+
+    private void setFont() {
+        this.speechBubbleFont = FontConstants.DEFAULT_FONT;
+        if (iEntity.getProperties().getProperty("font") != null) {
+            String fontName = iEntity.getProperties().getProperty("font").getAsString();
+            for (Font font : LitiFonts.getGameFonts()) {
+                if (font.getName().equals(fontName))
+                    this.speechBubbleFont = font;
+            }
         }
-        npcDialogueTree.getJSONArray("greetings").get(random.nextInt(npcDialogueTree.getJSONArray("greetings").length())).toString();
     }
 
     @Override

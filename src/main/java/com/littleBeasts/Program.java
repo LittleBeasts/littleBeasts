@@ -21,13 +21,13 @@ public class Program {
     private static String startingMap = null;
 
     public static void main(String[] args) throws IOException, FontFormatException {
-        LitiFonts.loadFonts();
         //set game meta information
         Game.info().setName("littleBeasts");
         Game.info().setSubTitle("");
         Game.info().setVersion("v.0");
-        if (args.length > 0)
+        if (args.length > 0) {
             startingMap = args[0];
+        }
 
         startingMap = MapNames.Arkham.toString();
         // initialize the game infrastructure
@@ -40,6 +40,8 @@ public class Program {
 
         // Load data from the utiLiti game file
         Resources.load(Program.class.getResource("/game.litidata"));
+
+        LitiFonts.loadFonts();
 
         // add the screens
         ingameScreen = new IngameScreen();
