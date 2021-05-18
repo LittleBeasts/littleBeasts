@@ -51,17 +51,6 @@ public class LitiPlayer extends Creature implements IMobileEntity {
         return litiPlayerInstance;
     }
 
-    public void addItemToPlayerInventory() throws NoPlaceInInventoryException {
-        System.out.println(CeLoot.lootItem("cage"));
-        CeInventory inventory = LitiPlayer.instance().ceInventory;
-        inventory.addItemToInventory(CeLoot.lootItem("cage"));
-        System.out.println("Amount: " + inventory.getSlots()[0].getAmount()); // should be 1
-        inventory.addItemToInventory(CeLoot.lootItem("cage"));
-        System.out.println("Amount: " + inventory.getSlots()[0].getAmount()); // should be 2
-        inventory.addItemToInventory(CeLoot.lootItem("aHealingPotion"));
-        System.out.println(inventory.getSlots()[1].getItem().toString());
-    }
-
     @Action(description = "Interaction with environment")
     public void interact() {
         if (DEBUG_CONSOLE_OUT) System.out.println("Interaction");

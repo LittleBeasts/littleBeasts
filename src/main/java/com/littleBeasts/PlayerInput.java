@@ -50,6 +50,9 @@ public final class PlayerInput {
             case KeyEvent.VK_W:
                 IngameScreen.getInventory().decrementCursorPosition();
                 break;
+            case KeyEvent.VK_I:
+            case KeyEvent.VK_ESCAPE:
+                Program.getGameLogic().setState(GameState.INGAME);
         }
     }
 
