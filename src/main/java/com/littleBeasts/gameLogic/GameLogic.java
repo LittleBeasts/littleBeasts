@@ -11,7 +11,6 @@ import de.gurkenlabs.litiengine.entities.Spawnpoint;
 import de.gurkenlabs.litiengine.graphics.Camera;
 import de.gurkenlabs.litiengine.graphics.PositionLockCamera;
 import de.gurkenlabs.litiengine.input.Input;
-import utilities.LitiFonts;
 
 import java.awt.*;
 import java.io.IOException;
@@ -27,16 +26,12 @@ public class GameLogic implements IUpdateable {
     public void init() throws IOException, FontFormatException {
         Game.loop().attach(this);
         currentLitiMap = new LitiMap();
-        LitiFonts.loadFonts();
         initialiseCamera();
 
         Game.world().onLoaded(e -> {
             if (e.getMap().getName().equals("title")) {
                 return;
             }
-            currentLitiMap.newMapLoadUp();
-
-
             Spawnpoint enter = e.getSpawnpoint("debug");
             if (enter != null) {
                 enter.spawn(LitiPlayer.instance());
@@ -81,22 +76,24 @@ public class GameLogic implements IUpdateable {
             case INGAME:
                 firstStart = false;
                 LitiPlayer.instance().setState(PlayerState.CONTROLLABLE);
-                IngameScreen.drawChatWindow.setVisible(false);
-                IngameScreen.ingameMenu.setVisible(false);
+                IngameScreen.getDrawChatWindow().setVisible(false);
+                IngameScreen.getIngameMenu().setVisible(false);
                 Game.audio().playMusic("arkham");
                 break;
             case INGAME_MENU:
                 Game.loop().setTimeScale(0);
-                IngameScreen.ingameMenu.setVisible(true);
+                IngameScreen.getIngameMenu().setVisible(true);
                 Game.audio().playMusic("ingameMenu");
                 break;
+            case SAVE_MENU:
+                break;
             case INGAME_CHAT:
-                IngameScreen.drawChatWindow.setVisible(true);
+                IngameScreen.getDrawChatWindow().setVisible(true);
                 Game.audio().playMusic("ingameMenu");
                 break;
             case INVENTORY:
                 Game.loop().setTimeScale(0);
-                IngameScreen.inventory.setVisible(true);
+                IngameScreen.getInventory().setVisible(true);
                 Game.audio().playMusic("ingameMenu");
                 break;
         }

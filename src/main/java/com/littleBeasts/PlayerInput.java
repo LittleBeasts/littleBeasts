@@ -7,6 +7,7 @@ import com.littleBeasts.gameLogic.LitiBattle;
 import com.littleBeasts.gameLogic.LitiClient;
 import com.littleBeasts.gameLogic.PlayerState;
 import com.littleBeasts.sceneManager.ScenePlayer;
+import com.littleBeasts.screens.IngameScreen;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.input.Input;
 
@@ -22,6 +23,8 @@ public final class PlayerInput {
                 battleControls(e);
             } else if (Program.getGameLogic().getState().equals(GameState.DIALOGUE) && e.getKeyCode() == KeyEvent.VK_E) {
                 ScenePlayer.getScript().getDialogue().getSpeechBubble().hide();
+            } else if (Program.getGameLogic().getState().equals(GameState.INVENTORY)) {
+                inventoryControls(e);
             } else {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_ESCAPE:
@@ -37,16 +40,26 @@ public final class PlayerInput {
         });
     }
 
+    private static void inventoryControls(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_DOWN:
+            case KeyEvent.VK_S:
+                IngameScreen.getInventory().incrementCursorPosition();
+                break;
+            case KeyEvent.VK_UP:
+            case KeyEvent.VK_W:
+                IngameScreen.getInventory().decrementCursorPosition();
+                break;
+            case KeyEvent.VK_I:
+            case KeyEvent.VK_ESCAPE:
+                Program.getGameLogic().setState(GameState.INGAME);
+        }
+    }
+
     private static void battleControls(KeyEvent e) {
         ActionMenu currentBattleMenu;
-        if (Program.getIngameScreen().getHud().getBattleMenu().getCatchMenu().isFocused())
-            currentBattleMenu = Program.getIngameScreen().getHud().getBattleMenu().getCatchMenu();
-        else if (Program.getIngameScreen().getHud().getBattleMenu().getAttackMenu().isFocused())
-            currentBattleMenu = Program.getIngameScreen().getHud().getBattleMenu().getAttackMenu();
-        else if (Program.getIngameScreen().getHud().getBattleMenu().isFocused())
-            currentBattleMenu = Program.getIngameScreen().getHud().getBattleMenu();
-        else
-            return;
+        if (getFocusedMenu() == null) return;
+        currentBattleMenu = getFocusedMenu();
 
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
@@ -70,6 +83,18 @@ public final class PlayerInput {
                 Game.audio().playSound("Menu_pick");
                 currentBattleMenu.confirm();
         }
+    }
+
+    private static ActionMenu getFocusedMenu() {
+        if (Program.getIngameScreen().getHud().getBattleMenu().getCatchMenu().isFocused())
+            return Program.getIngameScreen().getHud().getBattleMenu().getCatchMenu();
+        else if (Program.getIngameScreen().getHud().getBattleMenu().getAttackMenu().isFocused())
+            return Program.getIngameScreen().getHud().getBattleMenu().getAttackMenu();
+        else if (Program.getIngameScreen().getHud().getBattleMenu().isFocused())
+            return Program.getIngameScreen().getHud().getBattleMenu();
+        else if (Program.getIngameScreen().getHud().getBattleMenu().getItemMenu().isFocused())
+            return Program.getIngameScreen().getHud().getBattleMenu().getItemMenu();
+        else return null;
     }
 
     private static void onEscape(AtomicBoolean menu) {

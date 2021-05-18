@@ -33,13 +33,7 @@ public class LitiNPC extends Creature implements Interactable {
 
     public void getGreeting() {
         Random random = new Random();
-        try {
-            this.speechBubbleFont.getSize();
-            SpeechBubble.create(iEntity, npcDialogueTree.getJSONArray("greetings").get(random.nextInt(npcDialogueTree.getJSONArray("greetings").length())).toString(), SpeechBubble.DEFAULT_APPEARANCE, this.speechBubbleFont);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        npcDialogueTree.getJSONArray("greetings").get(random.nextInt(npcDialogueTree.getJSONArray("greetings").length())).toString();
+        SpeechBubble.create(iEntity, npcDialogueTree.getJSONArray("greetings").get(random.nextInt(npcDialogueTree.getJSONArray("greetings").length())).toString(), SpeechBubble.DEFAULT_APPEARANCE, this.speechBubbleFont);
     }
 
     private void setFont() {

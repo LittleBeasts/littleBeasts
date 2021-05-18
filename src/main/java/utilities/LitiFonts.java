@@ -1,9 +1,9 @@
 package utilities;
 
 import com.littleBeasts.Program;
+import config.FontConstants;
 
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -12,13 +12,8 @@ public class LitiFonts {
     private static final ArrayList<Font> gameFonts = new ArrayList<>();
 
     public static void loadFonts() throws IOException, FontFormatException {
-        String pathName = Objects.requireNonNull(Program.class.getResource("/Fonts")).getPath();
-        File path = new File(pathName);
-        String[] fontFilesNames = path.list();
-        assert fontFilesNames != null;
-        for (String fontFileName : fontFilesNames) {
-            File fontFile = new File(pathName + "/" + fontFileName);
-            Font gameFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+        for (String fontFileName : FontConstants.FONT_LIST) {
+            Font gameFont = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Program.class.getResourceAsStream("/Fonts/" + fontFileName)));
             gameFont = gameFont.deriveFont(10.f);
             gameFonts.add(gameFont);
         }

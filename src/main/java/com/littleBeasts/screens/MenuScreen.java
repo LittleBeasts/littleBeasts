@@ -39,16 +39,17 @@ public class MenuScreen extends Screen implements IUpdateable {
         this.mainMenu.onConfirm(c -> {
             switch (c) {
                 case 0:
-                    this.startGame();
-                    break;
                 case 1:
+                    this.startLocalGame();
+                    break;
+                case 2:
                     try {
                         this.startOnlineGame();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     break;
-                case 3:
+                case 4:
                     this.exit();
                     break;
                 default:
@@ -66,7 +67,6 @@ public class MenuScreen extends Screen implements IUpdateable {
         Game.graphics().setBaseRenderScale(6f * Game.window().getResolutionScale());
         this.mainMenu.incPosition();
         Game.world().loadEnvironment("Arkham");
-        mapAreas = Game.world().environment().getAreas();
         Game.world().camera().setFocus(Game.world().environment().getCenter());
     }
 
@@ -80,10 +80,9 @@ public class MenuScreen extends Screen implements IUpdateable {
         super.render(g);
     }
 
-    private void startGame() {
+    private void startLocalGame() {
         this.mainMenu.setEnabled(false);
         LitiClient.setOnlineGame(false);
-        //Game.window().getRenderComponent().fadeOut(500);
         loadUpMap();
     }
 
@@ -91,15 +90,16 @@ public class MenuScreen extends Screen implements IUpdateable {
         this.mainMenu.setEnabled(false);
         LitiClient.setClient(new Client("TestUser"));
         LitiClient.setOnlineGame(true);
-        //Game.window().getRenderComponent().fadeOut(500);
         loadUpMap();
     }
 
     private void loadUpMap() {
+        Game.loop().setTimeScale(1);
         Game.loop().perform(100, () -> {
             Game.screens().display("INGAME-SCREEN");
             if (Program.getStartingMap() != null) {
                 Game.world().loadEnvironment(Program.getStartingMap());
+                Program.getGameLogic().getCurrentLitiMap().newMapLoadUp();
             } else {
                 Game.world().loadEnvironment(MapNames.FleaMarket.toString());
             }
