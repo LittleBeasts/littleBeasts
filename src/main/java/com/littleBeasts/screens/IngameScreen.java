@@ -13,9 +13,9 @@ import java.awt.*;
 
 public class IngameScreen extends Screen {
     public static final String NAME = "INGAME-SCREEN";
-    public static KeyboardMenu ingameMenu;
-    public static DrawChatWindow drawChatWindow;
-    public static DrawInventory inventory;
+    private static KeyboardMenu ingameMenu;
+    private static DrawChatWindow drawChatWindow;
+    private static DrawInventory inventory;
     private DrawHud drawHud;
 
     public IngameScreen() {
@@ -33,8 +33,8 @@ public class IngameScreen extends Screen {
         Game.audio().stopMusic();
     }
 
-
     protected void initializeComponents() {
+        this.drawHud = new DrawHud();
         this.drawHud = new DrawHud();
         drawChatWindow = new DrawChatWindow();
         inventory = new DrawInventory();
@@ -67,7 +67,6 @@ public class IngameScreen extends Screen {
         });
     }
 
-
     @Override
     public void render(Graphics2D g) {
         if (Game.world().environment() != null) {
@@ -80,7 +79,16 @@ public class IngameScreen extends Screen {
     public DrawHud getHud() {
         return drawHud;
     }
+
     public static DrawInventory getInventory() {
         return inventory;
+    }
+
+    public static DrawChatWindow getDrawChatWindow() {
+        return drawChatWindow;
+    }
+
+    public static KeyboardMenu getIngameMenu() {
+        return ingameMenu;
     }
 }

@@ -7,11 +7,13 @@ import com.littleBeasts.gameLogic.LitiClient;
 import com.littleBeasts.gameLogic.MapNames;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
+import de.gurkenlabs.litiengine.entities.MapArea;
 import de.gurkenlabs.litiengine.graphics.TextRenderer;
 import de.gurkenlabs.litiengine.gui.screens.Screen;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.Collection;
 
 import static config.HudConstants.MAIN_MENU_ITEMS;
 
@@ -20,6 +22,7 @@ public class MenuScreen extends Screen implements IUpdateable {
     private KeyboardMenu mainMenu;
     public long lastPlayed;
     private static final String COPYRIGHT = "2020 littleBeasts";
+    private static Collection<MapArea> mapAreas;
 
     public MenuScreen() {
         super("MAINMENU");

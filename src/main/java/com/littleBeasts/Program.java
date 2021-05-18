@@ -1,5 +1,7 @@
 package com.littleBeasts;
 
+import calculationEngine.entities.NoPlaceInInventoryException;
+import com.littleBeasts.entities.LitiPlayer;
 import com.littleBeasts.gameLogic.GameLogic;
 import com.littleBeasts.gameLogic.GameState;
 import com.littleBeasts.gameLogic.MapNames;

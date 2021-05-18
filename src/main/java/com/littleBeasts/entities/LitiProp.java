@@ -1,5 +1,7 @@
 package com.littleBeasts.entities;
 
+import calculationEngine.entities.NoPlaceInInventoryException;
+import calculationEngine.environment.CeLoot;
 import config.FontConstants;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.entities.IEntity;
@@ -52,9 +54,15 @@ public class LitiProp implements Interactable {
                     if (animation.getName().equals("damaged")) {
                         prop.die();
                         propState = PropState.OPENED;
+                        String itemName = prop.getProperties().getProperty("item").getAsString();
                         if (DEBUG_CONSOLE_OUT)
-                            System.out.println("I contained: " + prop.getProperties().getProperty("item").getAsString());
-                        SpeechBubble.create(iEntity, "I contained: " + prop.getProperties().getProperty("item").getAsString(), SpeechBubble.DEFAULT_APPEARANCE, FontConstants.DEFAULT_FONT);
+                            System.out.println("I contained: " + itemName);
+                        SpeechBubble.create(iEntity, "I contained: " + itemName, SpeechBubble.DEFAULT_APPEARANCE, FontConstants.DEFAULT_FONT);
+                        try {
+                            LitiPlayer.instance().getCeInventory().addItemToInventory(CeLoot.lootItem(itemName));
+                        } catch (NoPlaceInInventoryException e) {
+                            e.printStackTrace();
+                        }
                         if (!prop.hasCollision())
                             prop.setCollision(true);
                         animationController.detach();

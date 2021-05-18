@@ -1,10 +1,12 @@
 package config;
 
+import com.littleBeasts.Program;
 import de.gurkenlabs.litiengine.gui.SpeechBubbleAppearance;
 import org.json.JSONObject;
 import utilities.JsonReader;
 
 import java.awt.*;
+import java.util.Objects;
 
 public class DialogueConstants {
 
