@@ -1,6 +1,7 @@
 package com.littleBeasts.entities;
 
 import calculationEngine.entities.*;
+import calculationEngine.environment.CeLoot;
 import com.littleBeasts.Program;
 import com.littleBeasts.gameLogic.LitiMapFunctions;
 import com.littleBeasts.gameLogic.PlayerState;
