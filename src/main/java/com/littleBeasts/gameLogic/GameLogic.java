@@ -11,7 +11,6 @@ import de.gurkenlabs.litiengine.entities.Spawnpoint;
 import de.gurkenlabs.litiengine.graphics.Camera;
 import de.gurkenlabs.litiengine.graphics.PositionLockCamera;
 import de.gurkenlabs.litiengine.input.Input;
-import utilities.LitiFonts;
 
 import java.awt.*;
 import java.io.IOException;
@@ -27,7 +26,6 @@ public class GameLogic implements IUpdateable {
     public void init() throws IOException, FontFormatException {
         Game.loop().attach(this);
         currentLitiMap = new LitiMap();
-        LitiFonts.loadFonts();
         initialiseCamera();
 
         Game.world().onLoaded(e -> {
