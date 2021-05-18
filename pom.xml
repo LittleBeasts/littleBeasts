@@ -32,7 +32,6 @@
                             <bundleJre>true</bundleJre>
                             <generateInstaller>true</generateInstaller>
                             <customizedJre>false</customizedJre>
-                            <platform>windows</platform>
                         </configuration>
                     </execution>
                 </executions>
