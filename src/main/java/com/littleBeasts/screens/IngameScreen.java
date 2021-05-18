@@ -5,6 +5,7 @@ import com.littleBeasts.gameLogic.GameState;
 import com.littleBeasts.guiComponent.DrawChatWindow;
 import com.littleBeasts.guiComponent.DrawHud;
 import com.littleBeasts.guiComponent.DrawInventory;
+import com.littleBeasts.guiComponent.DrawSaveMenu;
 import config.HudConstants;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.gui.screens.Screen;
@@ -16,6 +17,7 @@ public class IngameScreen extends Screen {
     public static KeyboardMenu ingameMenu;
     public static DrawChatWindow drawChatWindow;
     public static DrawInventory inventory;
+    public static DrawSaveMenu saveMenu;
     private DrawHud drawHud;
 
     public IngameScreen() {
@@ -42,6 +44,7 @@ public class IngameScreen extends Screen {
         this.getComponents().add(ingameMenu);
         this.getComponents().add(drawChatWindow);
         this.getComponents().add(inventory);
+        this.getComponents().add(saveMenu);
         this.getComponents().add(this.drawHud);
     }
 
@@ -53,9 +56,12 @@ public class IngameScreen extends Screen {
                     Program.getGameLogic().setState(GameState.INGAME);
                     break;
                 case 1:
-                    Program.getGameLogic().setState(GameState.MENU);
+                    Program.getGameLogic().setState(GameState.SAVE_MENU);
                     break;
                 case 2:
+                    Program.getGameLogic().setState(GameState.MENU);
+                    break;
+                case 3:
                     System.exit(0);
                     break;
                 default:

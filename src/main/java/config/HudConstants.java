@@ -47,7 +47,7 @@ public class HudConstants {
     public static final Font MENU_FONT = new Font("Serif", Font.BOLD, 13);
     public static final Color MENU_FONT_COLOR = Color.WHITE;
     public static final int MENU_DELAY = 180;
-    public static final String[] INGAME_MENU_ITEMS = new String[]{"Continue", "To Main Menu", "Exit"};
+    public static final String[] INGAME_MENU_ITEMS = new String[]{"Continue", "Save / Load", "To Main Menu", "Exit"};
     public static final String[] MAIN_MENU_ITEMS = new String[]{"Load Game", "Single Player Game", "Play Online", "Instructions", "Exit"};
     public static final double MENU_BUTTON_WIDTH = 450;
     public static final double MENU_CENTER_X = Game.window().getResolution().getWidth() / 2.0;
