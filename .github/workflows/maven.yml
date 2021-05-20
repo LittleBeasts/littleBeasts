@@ -10,7 +10,7 @@ on:
 jobs:
   build:
 
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -28,7 +28,7 @@ jobs:
         current-version: '0.0.0-alpha1'
         version-fragment: 'major'
     - name: Upload Artifacts
-      run: mkdir builds && cp target/littleBeasts/*.exe builds/littleBeasts-${{ steps.bump_version.outputs.next-version }}.exe
+      run: mkdir builds && cp target/littleBeasts-1.0-SNAPSHOT.jar builds/littleBeasts-${{ steps.bump_version.outputs.next-version }}.jar
     - uses: actions/upload-artifact@v2
       with:
         name: littleBeasts
@@ -50,6 +50,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-        asset_path: builds/littleBeasts-${{ steps.bump_version.outputs.next-version }}.exe
-        asset_name: littleBeasts.exe
-        asset_content_type: application/octet-stream
+        asset_path: builds/littleBeasts-${{ steps.bump_version.outputs.next-version }}.jar
+        asset_name: littleBeasts.jar
+        asset_content_type: application/java-archive
