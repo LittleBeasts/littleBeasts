@@ -1,10 +1,10 @@
 package com.littlebeasts.screens;
 
 import com.littlebeasts.Program;
-import com.littlebeasts.gameLogic.GameState;
-import com.littlebeasts.guiComponent.DrawChatWindow;
-import com.littlebeasts.guiComponent.DrawHud;
-import com.littlebeasts.guiComponent.DrawInventory;
+import com.littlebeasts.gamelogic.GameState;
+import com.littlebeasts.guicomponent.DrawChatWindow;
+import com.littlebeasts.guicomponent.DrawHud;
+import com.littlebeasts.guicomponent.DrawInventory;
 import config.HudConstants;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.gui.screens.Screen;

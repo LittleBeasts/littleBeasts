@@ -1,8 +1,8 @@
-package com.littlebeasts.guiComponent;
+package com.littlebeasts.guicomponent;
 
 import com.littlebeasts.Program;
-import com.littlebeasts.gameLogic.GameState;
-import com.littlebeasts.gameLogic.LitiClient;
+import com.littlebeasts.gamelogic.GameState;
+import com.littlebeasts.gamelogic.LitiClient;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.gui.GuiComponent;
 

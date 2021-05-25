@@ -1,4 +1,4 @@
-package com.littlebeasts.sceneManager;
+package com.littlebeasts.scenemanager;
 
 import org.json.JSONArray;
 

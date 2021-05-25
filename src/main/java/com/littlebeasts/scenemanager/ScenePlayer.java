@@ -1,7 +1,7 @@
-package com.littlebeasts.sceneManager;
+package com.littlebeasts.scenemanager;
 
 import com.littlebeasts.Program;
-import com.littlebeasts.gameLogic.GameState;
+import com.littlebeasts.gamelogic.GameState;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.entities.IEntity;
 
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static com.littlebeasts.sceneManager.ScriptParser.parseScript;
+import static com.littlebeasts.scenemanager.ScriptParser.parseScript;
 
 public class ScenePlayer {
 

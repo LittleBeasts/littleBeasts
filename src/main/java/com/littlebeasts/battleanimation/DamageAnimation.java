@@ -1,4 +1,4 @@
-package com.littlebeasts.battleAnimation;
+package com.littlebeasts.battleanimation;
 
 import config.HudConstants;
 import de.gurkenlabs.litiengine.Game;

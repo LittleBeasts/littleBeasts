@@ -1,6 +1,6 @@
 package com.littlebeasts;
 
-import com.littlebeasts.gameLogic.GameState;
+import com.littlebeasts.gamelogic.GameState;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;

@@ -1,9 +1,9 @@
-package com.littlebeasts.gameLogic;
+package com.littlebeasts.gamelogic;
 
 import com.littlebeasts.entities.LitiPet;
 import com.littlebeasts.entities.LitiPlayer;
-import com.littlebeasts.guiComponent.DrawChatWindow;
-import com.littlebeasts.sceneManager.SceneNotPossibleError;
+import com.littlebeasts.guicomponent.DrawChatWindow;
+import com.littlebeasts.scenemanager.SceneNotPossibleError;
 import com.littlebeasts.screens.IngameScreen;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;

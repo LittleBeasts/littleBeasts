@@ -1,4 +1,4 @@
-package com.littlebeasts.sceneManager;
+package com.littlebeasts.scenemanager;
 
 public class SceneNotPossibleError extends Throwable {
     public SceneNotPossibleError() {

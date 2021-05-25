@@ -1,9 +1,9 @@
-package com.littlebeasts.sceneManager;
+package com.littlebeasts.scenemanager;
 
 import com.littlebeasts.Program;
 import com.littlebeasts.entities.LitiPet;
 import com.littlebeasts.entities.LitiPlayer;
-import com.littlebeasts.gameLogic.GameState;
+import com.littlebeasts.gamelogic.GameState;
 import config.DialogueConstants;
 import config.FontConstants;
 import de.gurkenlabs.litiengine.Game;

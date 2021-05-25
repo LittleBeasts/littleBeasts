@@ -2,9 +2,9 @@ package com.littlebeasts.screens;
 
 import client.Client;
 import com.littlebeasts.Program;
-import com.littlebeasts.gameLogic.GameState;
-import com.littlebeasts.gameLogic.LitiClient;
-import com.littlebeasts.gameLogic.MapNames;
+import com.littlebeasts.gamelogic.GameState;
+import com.littlebeasts.gamelogic.LitiClient;
+import com.littlebeasts.gamelogic.MapNames;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.MapArea;

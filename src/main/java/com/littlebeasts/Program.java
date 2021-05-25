@@ -1,8 +1,8 @@
 package com.littlebeasts;
 
-import com.littlebeasts.gameLogic.GameLogic;
-import com.littlebeasts.gameLogic.GameState;
-import com.littlebeasts.gameLogic.MapNames;
+import com.littlebeasts.gamelogic.GameLogic;
+import com.littlebeasts.gamelogic.GameState;
+import com.littlebeasts.gamelogic.MapNames;
 import com.littlebeasts.screens.IngameScreen;
 import com.littlebeasts.screens.MenuScreen;
 import de.gurkenlabs.litiengine.Game;

@@ -1,11 +1,11 @@
-package com.littlebeasts.gameLogic;
+package com.littlebeasts.gamelogic;
 
 import calculationEngine.battle.CeBattle;
 import calculationEngine.entities.CeAi;
 import calculationEngine.entities.CeBeasts;
 import calculationEngine.entities.CePlayer;
 import com.littlebeasts.Program;
-import com.littlebeasts.battleAnimation.BattleAnimations;
+import com.littlebeasts.battleanimation.BattleAnimations;
 import com.littlebeasts.entities.LitiBeast;
 import com.littlebeasts.entities.LitiPlayer;
 import de.gurkenlabs.litiengine.Direction;

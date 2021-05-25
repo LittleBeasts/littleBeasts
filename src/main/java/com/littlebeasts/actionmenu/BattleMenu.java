@@ -1,12 +1,11 @@
-package com.littlebeasts.actionMenu;
+package com.littlebeasts.actionmenu;
 
 import com.littlebeasts.entities.LitiPlayer;
 import config.PlayerConfig;
 
-
 import java.awt.*;
 
-import static config.HudConstants.*;
+import static config.HudConstants.BATTLE_MENU_START;
 
 public class BattleMenu extends ActionMenu {
 
@@ -50,11 +49,11 @@ public class BattleMenu extends ActionMenu {
         x = BATTLE_MENU_START;
     }
 
-    public void drawBattleMenuAndFocusedMenu(Graphics2D g){
+    public void drawBattleMenuAndFocusedMenu(Graphics2D g) {
         draw(g);
         setFocus(!(getAttackMenu().isFocused() || getCatchMenu().isFocused() || getItemMenu().isFocused()));
         if (getAttackMenu().isFocused()) {
-            getAttackMenu().draw(g,PlayerConfig.PLAYER_ACTIONS.indexOf("Attack") - firstDrawnItem);
+            getAttackMenu().draw(g, PlayerConfig.PLAYER_ACTIONS.indexOf("Attack") - firstDrawnItem);
         }
         if (getCatchMenu().isFocused()) {
             getCatchMenu().draw(g, PlayerConfig.PLAYER_ACTIONS.indexOf("Catch") - firstDrawnItem);

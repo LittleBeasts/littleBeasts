@@ -1,4 +1,4 @@
-package com.littlebeasts.actionMenu;
+package com.littlebeasts.actionmenu;
 
 import calculationEngine.entities.ItemNotInInventoryException;
 import calculationEngine.environment.CeItem;

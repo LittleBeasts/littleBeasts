@@ -1,4 +1,4 @@
-package com.littlebeasts.battleAnimation;
+package com.littlebeasts.battleanimation;
 
 import com.littlebeasts.Program;
 import com.littlebeasts.entities.LitiBeast;

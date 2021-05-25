@@ -1,9 +1,9 @@
-package com.littlebeasts.actionMenu;
+package com.littlebeasts.actionmenu;
 
 import calculationEngine.entities.CeAttack;
-import com.littlebeasts.battleAnimation.AttackAnimation;
+import com.littlebeasts.battleanimation.AttackAnimation;
 import com.littlebeasts.entities.LitiPlayer;
-import com.littlebeasts.gameLogic.LitiBattle;
+import com.littlebeasts.gamelogic.LitiBattle;
 
 import java.util.ArrayList;
 import java.util.List;

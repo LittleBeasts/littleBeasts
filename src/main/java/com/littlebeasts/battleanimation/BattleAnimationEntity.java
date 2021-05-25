@@ -1,4 +1,4 @@
-package com.littlebeasts.battleAnimation;
+package com.littlebeasts.battleanimation;
 
 import de.gurkenlabs.litiengine.Align;
 import de.gurkenlabs.litiengine.Valign;

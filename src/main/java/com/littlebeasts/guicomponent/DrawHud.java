@@ -1,12 +1,12 @@
-package com.littlebeasts.guiComponent;
+package com.littlebeasts.guicomponent;
 
 import com.littlebeasts.Program;
-import com.littlebeasts.actionMenu.BattleMenu;
-import com.littlebeasts.battleAnimation.BattleAnimations;
+import com.littlebeasts.actionmenu.BattleMenu;
+import com.littlebeasts.battleanimation.BattleAnimations;
 import com.littlebeasts.entities.LitiBeast;
 import com.littlebeasts.entities.LitiPlayer;
-import com.littlebeasts.gameLogic.GameState;
-import com.littlebeasts.gameLogic.LitiBattle;
+import com.littlebeasts.gamelogic.GameState;
+import com.littlebeasts.gamelogic.LitiBattle;
 import config.HudConstants;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.graphics.ImageRenderer;

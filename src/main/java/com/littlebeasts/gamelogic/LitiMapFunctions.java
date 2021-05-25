@@ -1,4 +1,4 @@
-package com.littlebeasts.gameLogic;
+package com.littlebeasts.gamelogic;
 
 import de.gurkenlabs.litiengine.entities.Creature;
 import de.gurkenlabs.litiengine.entities.IEntity;
@@ -30,7 +30,8 @@ public class LitiMapFunctions {
                 return (creature.getCenter().getX() - targetEntity.getX()) > 0 && creature.getCenter().getY() >= targetEntity.getY() - tolerance && creature.getCenter().getY() <= targetEntity.getY() + tolerance;
             case RIGHT:
                 return (creature.getCenter().getX() - targetEntity.getX()) < 0 && creature.getCenter().getY() >= targetEntity.getY() - tolerance && creature.getCenter().getY() <= targetEntity.getY() + tolerance;
+            default:
+                return false;
         }
-        return false;
     }
 }

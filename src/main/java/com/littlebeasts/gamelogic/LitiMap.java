@@ -1,9 +1,9 @@
-package com.littlebeasts.gameLogic;
+package com.littlebeasts.gamelogic;
 
 import com.littlebeasts.Program;
 import com.littlebeasts.entities.*;
-import com.littlebeasts.sceneManager.SceneNotPossibleError;
-import com.littlebeasts.sceneManager.ScenePlayer;
+import com.littlebeasts.scenemanager.SceneNotPossibleError;
+import com.littlebeasts.scenemanager.ScenePlayer;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.entities.IEntity;
 import de.gurkenlabs.litiengine.entities.MapArea;

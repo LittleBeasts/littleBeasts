@@ -1,4 +1,4 @@
-package com.littlebeasts.gameLogic;
+package com.littlebeasts.gamelogic;
 
 public enum PlayerState {
 

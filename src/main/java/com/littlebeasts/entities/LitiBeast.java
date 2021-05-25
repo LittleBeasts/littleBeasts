@@ -2,7 +2,7 @@ package com.littlebeasts.entities;
 
 import calculationEngine.entities.CeBeasts;
 import calculationEngine.entities.CeEntity;
-import com.littlebeasts.battleAnimation.BeastStats;
+import com.littlebeasts.battleanimation.BeastStats;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.CollisionInfo;
 import de.gurkenlabs.litiengine.entities.Creature;

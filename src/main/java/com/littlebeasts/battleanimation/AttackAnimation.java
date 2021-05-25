@@ -1,10 +1,10 @@
-package com.littlebeasts.battleAnimation;
+package com.littlebeasts.battleanimation;
 
 import calculationEngine.entities.CeAttack;
 import com.littlebeasts.Program;
 import com.littlebeasts.entities.LitiPlayer;
-import com.littlebeasts.gameLogic.GameState;
-import com.littlebeasts.gameLogic.PlayerState;
+import com.littlebeasts.gamelogic.GameState;
+import com.littlebeasts.gamelogic.PlayerState;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.IMobileEntity;

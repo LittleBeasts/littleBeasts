@@ -2,8 +2,8 @@ package com.littlebeasts.entities;
 
 import calculationEngine.entities.*;
 import com.littlebeasts.Program;
-import com.littlebeasts.gameLogic.LitiMapFunctions;
-import com.littlebeasts.gameLogic.PlayerState;
+import com.littlebeasts.gamelogic.LitiMapFunctions;
+import com.littlebeasts.gamelogic.PlayerState;
 import config.FontConstants;
 import de.gurkenlabs.litiengine.Align;
 import de.gurkenlabs.litiengine.Valign;

@@ -1,9 +1,9 @@
-package com.littlebeasts.guiComponent;
+package com.littlebeasts.guicomponent;
 
 import calculationEngine.entities.CeSlot;
 import com.littlebeasts.Program;
 import com.littlebeasts.entities.LitiPlayer;
-import com.littlebeasts.gameLogic.GameState;
+import com.littlebeasts.gamelogic.GameState;
 import com.littlebeasts.screens.InventoryState;
 import de.gurkenlabs.litiengine.Align;
 import de.gurkenlabs.litiengine.Valign;

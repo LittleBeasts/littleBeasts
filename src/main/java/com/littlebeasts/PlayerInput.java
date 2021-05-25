@@ -1,12 +1,12 @@
 package com.littlebeasts;
 
-import com.littlebeasts.actionMenu.ActionMenu;
+import com.littlebeasts.actionmenu.ActionMenu;
 import com.littlebeasts.entities.LitiPlayer;
-import com.littlebeasts.gameLogic.GameState;
-import com.littlebeasts.gameLogic.LitiBattle;
-import com.littlebeasts.gameLogic.LitiClient;
-import com.littlebeasts.gameLogic.PlayerState;
-import com.littlebeasts.sceneManager.ScenePlayer;
+import com.littlebeasts.gamelogic.GameState;
+import com.littlebeasts.gamelogic.LitiBattle;
+import com.littlebeasts.gamelogic.LitiClient;
+import com.littlebeasts.gamelogic.PlayerState;
+import com.littlebeasts.scenemanager.ScenePlayer;
 import com.littlebeasts.screens.IngameScreen;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.input.Input;
@@ -53,6 +53,8 @@ public final class PlayerInput {
             case KeyEvent.VK_I:
             case KeyEvent.VK_ESCAPE:
                 Program.getGameLogic().setState(GameState.INGAME);
+            default:
+                Program.getGameLogic().setState(GameState.INGAME);
         }
     }
 
@@ -82,6 +84,7 @@ public final class PlayerInput {
             case KeyEvent.VK_SPACE:
                 Game.audio().playSound("Menu_pick");
                 currentBattleMenu.confirm();
+            default:
         }
     }
 
