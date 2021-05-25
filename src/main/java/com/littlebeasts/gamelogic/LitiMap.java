@@ -41,8 +41,8 @@ public class LitiMap {
         Rectangle2D mapArea;
         for (Spawnpoint spawnpoint : spawnpoints) {
             mapArea = spawnpoint.getBoundingBox();
-            if (isFacingCorrectDirection(spawnpoint) && mapArea.contains(playerPosition)) {
-                if (checkMapAreaForSpawnPoint(spawnpoint)) return;
+            if (isFacingCorrectDirection(spawnpoint) && mapArea.contains(playerPosition) && checkMapAreaForSpawnPoint(spawnpoint)) {
+                return;
             }
         }
     }
