@@ -31,7 +31,7 @@ public class Program {
             startingMap = args[0];
         }
 
-        startingMap = MapNames.Arkham.toString();
+        startingMap = MapNames.Warrens.toString();
         // initialize the game infrastructure
         Game.init();
 
