@@ -37,4 +37,14 @@ public class LitiPropSign implements Interactable {
         return iEntity.getCenter();
     }
 
+    @Override
+    public String toString() {
+        return "LitiPropSign{" +
+                "name='" + name + '\'' +
+                ", iEntity=" + iEntity +
+                ", prop=" + prop +
+                ", isAccessible=" + isAccessible +
+                ", text='" + text + '\'' +
+                '}';
+    }
 }

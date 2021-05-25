@@ -111,4 +111,15 @@ public class LitiPlayer extends Creature implements IMobileEntity {
     public CeInventory getCeInventory() {
         return ceInventory;
     }
+
+    @Override
+    public String toString() {
+        return "LitiPlayer{" +
+                "cePlayer=" + cePlayer +
+                ", playerPortrait=" + playerPortrait +
+                ", littleBeastTeam=" + littleBeastTeam +
+                ", ceInventory=" + ceInventory +
+                ", hasController=" + hasController +
+                '}';
+    }
 }
