@@ -7,7 +7,7 @@ import java.util.List;
 
 public class LitiBeastTeam {
 
-    private List<LitiBeast> littleBeasts;
+    private final List<LitiBeast> littleBeasts;
 
     public LitiBeastTeam() {
         this.littleBeasts = new ArrayList<>();

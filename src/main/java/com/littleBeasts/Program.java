@@ -1,7 +1,5 @@
 package com.littleBeasts;
 
-import calculationEngine.entities.NoPlaceInInventoryException;
-import com.littleBeasts.entities.LitiPlayer;
 import com.littleBeasts.gameLogic.GameLogic;
 import com.littleBeasts.gameLogic.GameState;
 import com.littleBeasts.gameLogic.MapNames;
@@ -31,7 +29,7 @@ public class Program {
             startingMap = args[0];
         }
 
-        startingMap = MapNames.Warrens.toString();
+        startingMap = MapNames.FleaMarket.toString();
         // initialize the game infrastructure
         Game.init();
 

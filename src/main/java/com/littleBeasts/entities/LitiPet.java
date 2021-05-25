@@ -2,9 +2,6 @@ package com.littleBeasts.entities;
 
 import calculationEngine.entities.CeAttack;
 import calculationEngine.entities.CeAttacks;
-import com.littleBeasts.gameLogic.GameLogic;
-import com.littleBeasts.gameLogic.GameState;
-import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.*;
 import de.gurkenlabs.litiengine.physics.MovementController;
@@ -21,8 +18,8 @@ public class LitiPet extends Creature implements IUpdateable, IMobileEntity {
     private boolean spawned;
 
     private List<CeAttack> petCeAttacks;
-    private String petName = "xXx_Beast_xXx";
-    private MovementController movementController;
+    private final String petName = "xXx_Beast_xXx";
+    private final MovementController movementController;
     private int maxHP, currentHP;
     //private final Image playerPortrait;
 

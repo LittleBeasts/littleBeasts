@@ -1,11 +1,9 @@
 package com.littleBeasts.guiComponent;
 
 import com.littleBeasts.Program;
-import com.littleBeasts.gameLogic.GameLogic;
 import com.littleBeasts.gameLogic.GameState;
 import com.littleBeasts.gameLogic.LitiClient;
 import de.gurkenlabs.litiengine.Game;
-import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.gui.GuiComponent;
 
 import java.awt.*;
@@ -18,7 +16,7 @@ import static client.Message.encodeOutgoingMessageForClient;
 import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 import static config.HudConstants.ChatWindowFont;
 
-public class DrawChatWindow extends GuiComponent{
+public class DrawChatWindow extends GuiComponent {
     private static final String CURSOR = "|";
     private static StringBuffer buffer;
     private static String showableText;
@@ -169,7 +167,7 @@ public class DrawChatWindow extends GuiComponent{
 
     @Override
     public synchronized void render(Graphics2D g) {
-        List<String> bufferedMessages = null;
+        List<String> bufferedMessages;
         bufferedMessages = LitiClient.getBufferedMessages();
         if (bufferedMessages != null) {
             chatHistory.addAll(bufferedMessages);

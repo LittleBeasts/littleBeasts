@@ -19,10 +19,11 @@ public class LitiBeast extends Creature implements IUpdateable {
     private String monsterName;
     private final Image portrait;
     private BeastStats beastStats;
-    private int x, y;
+    private final int x;
+    private final int y;
     private boolean spwaned;
     private final boolean playerBeast;
-    private Spawnpoint e;
+    private final Spawnpoint e;
 
     public LitiBeast(CeBeasts beasts, int x, int y, boolean playerBeast) {
         super(beasts.name());

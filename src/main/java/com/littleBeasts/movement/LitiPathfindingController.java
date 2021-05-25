@@ -6,7 +6,6 @@ import de.gurkenlabs.litiengine.entities.behavior.AStarGrid;
 import de.gurkenlabs.litiengine.entities.behavior.AStarPathFinder;
 import de.gurkenlabs.litiengine.entities.behavior.Path;
 
-import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 
 public class LitiPathfindingController {

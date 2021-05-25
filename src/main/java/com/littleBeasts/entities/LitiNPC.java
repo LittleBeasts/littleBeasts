@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import utilities.LitiFonts;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.util.Random;
 
 import static config.DialogueConstants.dialogueTree;
@@ -60,7 +61,9 @@ public class LitiNPC extends Creature implements Interactable {
     }
 
     @Override
-    public IEntity getiEntity() {
-        return this.iEntity;
+    public Point2D getCenter() {
+        return iEntity.getCenter();
     }
+
+
 }

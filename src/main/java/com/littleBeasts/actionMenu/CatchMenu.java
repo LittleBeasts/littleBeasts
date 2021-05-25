@@ -1,8 +1,6 @@
 package com.littleBeasts.actionMenu;
 
-import calculationEngine.entities.CeSlot;
 import calculationEngine.environment.CeItem;
-import calculationEngine.environment.CeItemTypes;
 
 import java.util.ArrayList;
 

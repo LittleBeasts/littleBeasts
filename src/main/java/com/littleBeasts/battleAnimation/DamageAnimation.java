@@ -6,8 +6,6 @@ import de.gurkenlabs.litiengine.Game;
 import java.awt.*;
 import java.awt.geom.Point2D;
 
-import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
-
 public class DamageAnimation {
     private final Point2D point2D;
     private final int damage, fadeoutSpeed;

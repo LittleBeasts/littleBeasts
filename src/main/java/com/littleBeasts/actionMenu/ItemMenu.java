@@ -1,6 +1,5 @@
 package com.littleBeasts.actionMenu;
 
-import calculationEngine.entities.CeSlot;
 import calculationEngine.entities.ItemNotInInventoryException;
 import calculationEngine.environment.CeItem;
 import com.littleBeasts.entities.LitiPlayer;
