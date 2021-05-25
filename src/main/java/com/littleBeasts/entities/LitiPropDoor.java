@@ -9,7 +9,7 @@ import de.gurkenlabs.litiengine.gui.SpeechBubble;
 import java.awt.geom.Point2D;
 
 public class LitiPropDoor implements Interactable {
-    LitiPropChest.PropState propState;
+    private PropState propState;
     private final String name;
     private final IEntity iEntity;
     private final Prop prop;
@@ -20,7 +20,7 @@ public class LitiPropDoor implements Interactable {
         this.name = iEntity.getName();
         this.iEntity = iEntity;
         this.prop = Game.world().environment().getProp(this.name);
-        this.propState = LitiPropChest.PropState.CLOSED;
+        this.propState = PropState.CLOSED;
         this.isLocked = false;
         if (prop.getProperties().getProperty("locked") != null)
             this.isLocked = prop.getProperties().getProperty("locked").getAsBool();
@@ -37,7 +37,7 @@ public class LitiPropDoor implements Interactable {
 
         this.prop.setVisible(false);
         this.prop.setCollision(false);
-        propState = LitiPropChest.PropState.OPENED;
+        propState = PropState.OPENED;
         Game.world().environment().remove(this.iEntity);
     }
 

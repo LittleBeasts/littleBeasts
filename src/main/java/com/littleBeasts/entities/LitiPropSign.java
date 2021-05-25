@@ -8,7 +8,6 @@ import java.awt.geom.Point2D;
 
 public class LitiPropSign implements Interactable {
 
-    LitiPropChest.PropState propState;
     private final String name;
     private final IEntity iEntity;
     private final Prop prop;
@@ -20,7 +19,6 @@ public class LitiPropSign implements Interactable {
         name = iEntity.getName();
         this.iEntity = iEntity;
         prop = Game.world().environment().getProp(this.name);
-        propState = LitiPropChest.PropState.CLOSED;
         isAccessible = true;
         if (prop.getProperties().getProperty("prerequisite") != null)
             this.isAccessible = prop.getProperties().getProperty("prerequisite").getAsBool();

@@ -18,7 +18,7 @@ import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 
 public class LitiPropChest implements Interactable {
 
-    PropState propState;
+    private PropState propState;
     private final String name;
     private final IEntity iEntity;
     private final Prop prop;
@@ -78,12 +78,6 @@ public class LitiPropChest implements Interactable {
     @Override
     public Point2D getCenter() {
         return iEntity.getCenter();
-    }
-
-
-    enum PropState {
-        CLOSED,
-        OPENED
     }
 
     @Override
