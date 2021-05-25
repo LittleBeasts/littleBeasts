@@ -153,8 +153,10 @@ public class LitiMap {
             if (entity.getName() != null) {
                 if (entity.getName().contains("NPC-"))
                     Interactables.add(new LitiNPC(entity));
-                if (entity.getName().contains("CHEST-"))
+                else if (entity.getName().contains("CHEST-"))
                     Interactables.add(new LitiProp(entity));
+                else if (entity.getName().contains("DOOR"))
+                    Interactables.add((new LitiDoor(entity)));
             }
         }
     }

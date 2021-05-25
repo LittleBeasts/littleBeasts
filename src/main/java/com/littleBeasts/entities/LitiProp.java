@@ -79,7 +79,7 @@ public class LitiProp implements Interactable {
         return this.iEntity;
     }
 
-    private enum PropState {
+    enum PropState {
         CLOSED,
         OPENED
     }
