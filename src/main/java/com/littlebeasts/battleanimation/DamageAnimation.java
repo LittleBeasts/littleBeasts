@@ -8,7 +8,8 @@ import java.awt.geom.Point2D;
 
 public class DamageAnimation {
     private final Point2D point2D;
-    private final int damage, fadeoutSpeed;
+    private final int damage;
+    private final int fadeoutSpeed;
     private final double speed;
     private final double animationLimit;
     private int increment;

@@ -35,6 +35,7 @@ public final class PlayerInput {
                         break;
                     default:
                         onOtherKey(e);
+                        break;
                 }
             }
         });
@@ -50,11 +51,9 @@ public final class PlayerInput {
             case KeyEvent.VK_W:
                 IngameScreen.getInventory().decrementCursorPosition();
                 break;
-            case KeyEvent.VK_I:
-            case KeyEvent.VK_ESCAPE:
-                Program.getGameLogic().setState(GameState.INGAME);
             default:
                 Program.getGameLogic().setState(GameState.INGAME);
+                break;
         }
     }
 
@@ -84,7 +83,10 @@ public final class PlayerInput {
             case KeyEvent.VK_SPACE:
                 Game.audio().playSound("Menu_pick");
                 currentBattleMenu.confirm();
+                break;
             default:
+                break;
+
         }
     }
 

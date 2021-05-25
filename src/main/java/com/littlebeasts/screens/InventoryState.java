@@ -27,11 +27,11 @@ public enum InventoryState {
             case FEET:
                 IngameScreen.getInventory().setInventoryState(InventoryState.WEAPON);
                 break;
-            case WEAPON:
-                IngameScreen.getInventory().setInventoryState(InventoryState.CONSUMABLES);
-                break;
             case CONSUMABLES:
                 IngameScreen.getInventory().setInventoryState(InventoryState.HEAD);
+                break;
+            default:
+                IngameScreen.getInventory().setInventoryState(InventoryState.CONSUMABLES);
                 break;
         }
     }
@@ -59,6 +59,7 @@ public enum InventoryState {
                 break;
             default:
                 IngameScreen.getInventory().setInventoryState(InventoryState.CONSUMABLES);
+                break;
         }
     }
 

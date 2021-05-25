@@ -27,7 +27,7 @@ public class AttackAnimation {
         // attach controller, so the force can be applied (perhaps there is a better way to that)
         attacker.attachControllers();
         attacker.movement().attach();
-        Point2D origin = attacker.getCollisionBoxCenter();
+        Point2D startingPosition = attacker.getCollisionBoxCenter();
         Point2D target = defender.getCollisionBoxCenter();
         // create a force, which pull the entity towards the target
         Force force = new Force(target, 200, 1);
@@ -37,13 +37,13 @@ public class AttackAnimation {
         forceCheck = () -> {
             if (force.hasEnded()) {
                 // trigger the attack animation, when the character has arrived at target.
-                attackAnimation(attacker, origin, defender, animationName);
+                attackAnimation(attacker, startingPosition, defender, animationName);
             }
         };
         Game.loop().attach(forceCheck);
     }
 
-    private static void attackAnimation(IMobileEntity attacker, Point2D origin, IMobileEntity defender, String animationName) {
+    private static void attackAnimation(IMobileEntity attacker, Point2D startingPosition, IMobileEntity defender, String animationName) {
         Game.loop().detach(forceCheck);
         animationListener = new AnimationListener() {
             @Override
@@ -56,7 +56,7 @@ public class AttackAnimation {
                 BattleAnimationEntity.instance().setVisible(false);
                 BattleAnimationEntity.instance().animations().removeListener(this);
                 // trigger return animation, when the attack animation is done.
-                returnToOrigin(attacker, origin);
+                returnToStartingPosition(attacker, startingPosition);
             }
         };
         playAttackAnimation(defender, animationName);
@@ -72,11 +72,11 @@ public class AttackAnimation {
         BattleAnimationEntity.instance().animations().get(animationName).start();
     }
 
-    private static void returnToOrigin(IMobileEntity iMobileEntity, Point2D origin) {
+    private static void returnToStartingPosition(IMobileEntity iMobileEntity, Point2D startingPosition) {
         // remove listener, because from now on it will always be finished.
 
-        origin = new Point2D.Double(origin.getX() - 7, origin.getY());
-        Force force = new Force(origin, 100, 1);
+        startingPosition = new Point2D.Double(startingPosition.getX() - 7, startingPosition.getY());
+        Force force = new Force(startingPosition, 100, 1);
         iMobileEntity.movement().apply(force);
         ForceListener forceListener = new ForceListener() {
             Force force;

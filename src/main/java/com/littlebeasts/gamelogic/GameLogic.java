@@ -58,13 +58,6 @@ public class GameLogic implements IUpdateable {
         Input.keyboard().onKeyTyped(DrawChatWindow::add);
 
         switch (state) {
-            case MENU:
-                if (!firstStart) {
-                    Game.loop().setTimeScale(0);
-                    Game.screens().display("MAINMENU");
-                    Game.audio().playMusic("titlemenu");
-                }
-                break;
             case BATTLE:
                 LitiBattle.setNextBattlePossible(false);
                 Game.audio().playMusic("battle");
@@ -92,6 +85,13 @@ public class GameLogic implements IUpdateable {
                 Game.loop().setTimeScale(0);
                 IngameScreen.getInventory().setVisible(true);
                 Game.audio().playMusic("ingameMenu");
+                break;
+            default:
+                if (!firstStart) {
+                    Game.loop().setTimeScale(0);
+                    Game.screens().display("MAINMENU");
+                    Game.audio().playMusic("titlemenu");
+                }
                 break;
         }
         if (DEBUG_CONSOLE_OUT) System.out.println(GameLogic.state.name());

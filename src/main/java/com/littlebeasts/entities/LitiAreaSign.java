@@ -38,6 +38,7 @@ public class LitiAreaSign implements Interactable {
                 break;
             default:
                 adjustedCenter = area.getCenter();
+                break;
         }
     }
 

@@ -15,6 +15,8 @@ import de.gurkenlabs.litiengine.graphics.Camera;
 import java.util.ArrayList;
 import java.util.List;
 
+import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
+
 public class LitiBattle {
     private static CeBattle ceBattle;
     private static boolean nextBattlePossible = true;
@@ -53,7 +55,7 @@ public class LitiBattle {
         if (Program.getGameLogic().getState() == GameState.BATTLE) {
             if (ceBattle.getTurn() != null) {
                 if (ceBattle.getTurn().getNumber() == cePlayer.getNumber()) {
-
+                    if (DEBUG_CONSOLE_OUT) System.out.println("Battle round");
                 }
             } else {
 

@@ -15,21 +15,11 @@ import java.util.List;
 @CollisionInfo(collisionBoxWidth = 14, collisionBoxHeight = 14, collision = false)
 public class LitiPet extends Creature implements IUpdateable, IMobileEntity {
     private static LitiPet litiPetInstance;
-    private boolean spawned;
 
-    private List<CeAttack> petCeAttacks;
-    private final String petName = "xXx_Beast_xXx";
     private final MovementController movementController;
-    private int maxHP, currentHP;
 
-
-    //private final Attack punch; // TODO: create correct Attack structure similar to CE
-
-    // TODO: Change add draw prefix to every drawing class
     public LitiPet() {
         super("bwcat");
-        //this.playerPortrait = Resources.images().get("sprites/char.png");
-        // ToDo: Change with new saveGame logic and initialize a new Player correctly
         List<CeAttack> attacks = new ArrayList<>();
         attacks.add(new CeAttack(CeAttacks.Punch));
         movementController = new MovementController<>(this);
@@ -62,22 +52,5 @@ public class LitiPet extends Creature implements IUpdateable, IMobileEntity {
                 this.movementController.setDy((float) differenceY);
         }
     }
-
-    public List<CeAttack> getPetAttacks() {
-        return petCeAttacks;
-    }
-
-    public String getPetName() {
-        return petName;
-    }
-
-    public int getMaxHP() {
-        return maxHP;
-    }
-
-    public int getCurrentHP() {
-        return currentHP;
-    }
-
 }
 
