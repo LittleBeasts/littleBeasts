@@ -14,13 +14,6 @@ import java.util.function.Consumer;
 
 import static config.HudConstants.*;
 
-/*--------------------------------------------
-This class creates a KeyBoardMenu with a list of items
-It is used for the main and ingame menus
-
-2020.11.12 D.B. refactored
---------------------------------------------*/
-
 public class KeyboardMenu extends Menu {
 
     private final List<Consumer<Integer>> confirmConsumer;

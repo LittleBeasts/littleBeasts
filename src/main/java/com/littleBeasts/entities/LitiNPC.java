@@ -49,13 +49,6 @@ public class LitiNPC extends Creature implements Interactable {
     }
 
     @Override
-    public String toString() {
-        return "LitiNPC{" +
-                "name='" + name + '\'' +
-                '}';
-    }
-
-    @Override
     public void interact() {
         getGreeting();
     }
@@ -65,5 +58,10 @@ public class LitiNPC extends Creature implements Interactable {
         return iEntity.getCenter();
     }
 
-
+    @Override
+    public String toString() {
+        return "LitiNPC{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

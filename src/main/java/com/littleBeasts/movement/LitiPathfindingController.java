@@ -21,6 +21,4 @@ public class LitiPathfindingController {
         }
         return currentPathFinder.findPath(entity, target);
     }
-
-
 }

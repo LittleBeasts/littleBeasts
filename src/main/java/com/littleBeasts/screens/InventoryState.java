@@ -9,9 +9,9 @@ public enum InventoryState {
     WEAPON,
     CONSUMABLES;
 
-    public static void nextState(){
+    public static void nextState() {
         InventoryState inventoryState = IngameScreen.getInventory().getInventoryState();
-        switch (inventoryState){
+        switch (inventoryState) {
             case HEAD:
                 IngameScreen.getInventory().setInventoryState(InventoryState.NECK);
                 break;
@@ -36,9 +36,9 @@ public enum InventoryState {
         }
     }
 
-    public static void previousState(){
+    public static void previousState() {
         InventoryState inventoryState = IngameScreen.getInventory().getInventoryState();
-        switch (inventoryState){
+        switch (inventoryState) {
             case HEAD:
                 IngameScreen.getInventory().setInventoryState(InventoryState.CONSUMABLES);
                 break;
@@ -62,6 +62,5 @@ public enum InventoryState {
                 break;
         }
     }
-
 
 }

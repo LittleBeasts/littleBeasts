@@ -14,7 +14,6 @@ public class LitiPropSign implements Interactable {
     private boolean isAccessible;
     private String text;
 
-
     public LitiPropSign(IEntity iEntity) {
         name = iEntity.getName();
         this.iEntity = iEntity;

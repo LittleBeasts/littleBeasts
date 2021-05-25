@@ -21,7 +21,6 @@ public class LitiPet extends Creature implements IUpdateable, IMobileEntity {
     private final String petName = "xXx_Beast_xXx";
     private final MovementController movementController;
     private int maxHP, currentHP;
-    //private final Image playerPortrait;
 
 
     //private final Attack punch; // TODO: create correct Attack structure similar to CE
@@ -30,12 +29,9 @@ public class LitiPet extends Creature implements IUpdateable, IMobileEntity {
     public LitiPet() {
         super("bwcat");
         //this.playerPortrait = Resources.images().get("sprites/char.png");
-        // Calculation Engine
         // ToDo: Change with new saveGame logic and initialize a new Player correctly
         List<CeAttack> attacks = new ArrayList<>();
         attacks.add(new CeAttack(CeAttacks.Punch));
-        // LITIengine
-        //this.addController(new KeyboardEntityController<>(this));
         movementController = new MovementController<>(this);
         this.addController(movementController);
     }

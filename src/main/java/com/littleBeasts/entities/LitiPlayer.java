@@ -35,7 +35,6 @@ public class LitiPlayer extends Creature implements IMobileEntity {
         super("test");
         this.playerPortrait = Resources.images().get("sprites/char.png");
         this.ceInventory = new CeInventory();
-        // Calculation Engine
         this.littleBeastTeam = new LitiBeastTeam();
         this.littleBeastTeam.addBeast(new LitiBeast(CeBeasts.FeuerFurz, (int) this.getX(), (int) this.getY(), true));
         // ToDo: Change with new saveGame logic and initialize a new Player correctly

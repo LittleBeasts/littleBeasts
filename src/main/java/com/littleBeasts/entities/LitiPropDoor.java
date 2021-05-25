@@ -15,7 +15,6 @@ public class LitiPropDoor implements Interactable {
     private final Prop prop;
     private boolean isLocked;
 
-
     public LitiPropDoor(IEntity iEntity) {
         this.name = iEntity.getName();
         this.iEntity = iEntity;
@@ -49,7 +48,6 @@ public class LitiPropDoor implements Interactable {
     private boolean hasKey() {
         return false;
     }
-
 
     @Override
     public String toString() {

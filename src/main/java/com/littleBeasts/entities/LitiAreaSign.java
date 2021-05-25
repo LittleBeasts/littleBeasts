@@ -48,4 +48,15 @@ public class LitiAreaSign implements Interactable {
     public Point2D getCenter() {
         return adjustedCenter;
     }
+
+    @Override
+    public String toString() {
+        return "LitiAreaSign{" +
+                "name='" + name + '\'' +
+                ", area=" + area +
+                ", text='" + text + '\'' +
+                ", direction='" + direction + '\'' +
+                ", adjustedCenter=" + adjustedCenter +
+                '}';
+    }
 }

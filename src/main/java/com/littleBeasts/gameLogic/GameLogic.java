@@ -12,9 +12,6 @@ import de.gurkenlabs.litiengine.graphics.Camera;
 import de.gurkenlabs.litiengine.graphics.PositionLockCamera;
 import de.gurkenlabs.litiengine.input.Input;
 
-import java.awt.*;
-import java.io.IOException;
-
 import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 
 public class GameLogic implements IUpdateable {
@@ -23,7 +20,7 @@ public class GameLogic implements IUpdateable {
     private static Camera camera;
     private static LitiMap currentLitiMap;
 
-    public void init() throws IOException, FontFormatException {
+    public void init() {
         Game.loop().attach(this);
         currentLitiMap = new LitiMap();
         initialiseCamera();
