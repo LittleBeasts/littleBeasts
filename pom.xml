@@ -28,7 +28,7 @@
                             <goal>package</goal>
                         </goals>
                         <configuration>
-                            <mainClass>com.littleBeasts.Program</mainClass>
+                            <mainClass>com.littlebeasts.Program</mainClass>
                             <bundleJre>true</bundleJre>
                             <generateInstaller>true</generateInstaller>
                             <customizedJre>false</customizedJre>
