@@ -1,12 +1,10 @@
 package config;
 
-import com.littleBeasts.Program;
 import de.gurkenlabs.litiengine.gui.SpeechBubbleAppearance;
 import org.json.JSONObject;
 import utilities.JsonReader;
 
 import java.awt.*;
-import java.util.Objects;
 
 public class DialogueConstants {
 
@@ -17,4 +15,5 @@ public class DialogueConstants {
 
     public static final JSONObject dialogueTree = JsonReader.readJson("/JSON/dialogueTree.JSON");
     public static final SpeechBubbleAppearance defaultSpeechBubble = new SpeechBubbleAppearance(foreColor, backColor, borderColor, padding);
+
 }
