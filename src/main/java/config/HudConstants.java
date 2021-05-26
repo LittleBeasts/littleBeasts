@@ -6,7 +6,6 @@ import java.awt.*;
 
 public class HudConstants {
 
-
     public static final int BOTTOM_PAD = 140; //Pad from Bottom of Screen
     public static final int HUD_BOTTOM_START = (int) Game.window().getResolution().getHeight() - BOTTOM_PAD;
     public static final int HUD_ROW_HEIGHT = 100; // Height of HUD elements
@@ -25,7 +24,6 @@ public class HudConstants {
     public static final int BATTLEBARHEIGHT = 180;
 
     public static final Font HUD_FONT = new Font("Serif", Font.PLAIN, 15);
-
 
     // BattleMenu and SubMenus
     public static final int ITEMLISTLENGTH = 4;
