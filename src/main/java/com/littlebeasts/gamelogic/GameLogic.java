@@ -1,11 +1,13 @@
 package com.littlebeasts.gamelogic;
 
+import com.littlebeasts.Program;
 import com.littlebeasts.entities.LitiPet;
 import com.littlebeasts.entities.LitiPlayer;
 import com.littlebeasts.guicomponent.DrawChatWindow;
 import com.littlebeasts.scenemanager.SceneNotPossibleError;
 import com.littlebeasts.screens.IngameScreen;
 import com.littlebeasts.screens.KeyboardMenu;
+import com.littlebeasts.screens.MenuScreen;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.Spawnpoint;
@@ -53,13 +55,18 @@ public class GameLogic implements IUpdateable {
     public void setState(GameState state) {
         Game.world().setCamera(camera);
         Game.world().camera().setZoom(1, 500);
+        GameState lastState = getState();
         GameLogic.state = state;
         LitiPlayer.instance().setState(PlayerState.LOCKED);
         Game.loop().setTimeScale(1);
         Input.keyboard().onKeyTyped(DrawChatWindow::add);
-
+        Program.getIngameScreen().deactivateAllScreens();
+        Program.getMenuScreen().getSaveMenu().setEnabled(false);
+        Program.getMenuScreen().getSaveMenu().setVisible(false);
         switch (state) {
             case MENU:
+                Program.getMenuScreen().getMainMenu().setEnabled(true);
+                Program.getMenuScreen().getMainMenu().setVisible(true);
                 if (!firstStart) {
                     Game.loop().setTimeScale(0);
                     Game.screens().display("MAINMENU");
@@ -74,19 +81,24 @@ public class GameLogic implements IUpdateable {
             case INGAME:
                 firstStart = false;
                 LitiPlayer.instance().setState(PlayerState.CONTROLLABLE);
-                IngameScreen.getDrawChatWindow().setVisible(false);
-                IngameScreen.getIngameMenu().setVisible(false);
                 Game.audio().playMusic("arkham");
                 break;
             case INGAME_MENU:
                 Game.loop().setTimeScale(0);
                 IngameScreen.getIngameMenu().setVisible(true);
+                IngameScreen.getIngameMenu().setEnabled(true);
                 Game.audio().playMusic("ingameMenu");
                 break;
             case SAVE_MENU:
-                IngameScreen.getIngameMenu().setVisible(false);
-                IngameScreen.getSaveMenu().setEnabled(true);
-                IngameScreen.getSaveMenu().setVisible(true);
+                if (lastState == GameState.INGAME_MENU) {
+                    IngameScreen.getSaveMenu().setEnabled(true);
+                    IngameScreen.getSaveMenu().setVisible(true);
+                } else {
+                    Program.getMenuScreen().getSaveMenu().setEnabled(true);
+                    Program.getMenuScreen().getSaveMenu().setVisible(true);
+
+                }
+                System.out.println("save menu enabled");
                 Game.audio().playMusic("ingameMenu");
                 break;
             case INGAME_CHAT:

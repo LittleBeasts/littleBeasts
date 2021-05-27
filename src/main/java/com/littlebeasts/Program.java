@@ -63,4 +63,8 @@ public class Program {
     public static String getStartingMap() {
         return startingMap;
     }
+
+    public static MenuScreen getMenuScreen() {
+        return menuScreen;
+    }
 }

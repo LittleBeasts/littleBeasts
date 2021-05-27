@@ -5,14 +5,15 @@ import com.littlebeasts.Program;
 import com.littlebeasts.gamelogic.GameState;
 import com.littlebeasts.gamelogic.LitiClient;
 import com.littlebeasts.gamelogic.MapNames;
+import com.littlebeasts.guicomponent.SaveMenu;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.MapArea;
 import de.gurkenlabs.litiengine.graphics.TextRenderer;
+import de.gurkenlabs.litiengine.gui.GuiComponent;
 import de.gurkenlabs.litiengine.gui.screens.Screen;
 
 import java.awt.*;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Collection;
 
@@ -21,6 +22,7 @@ import static config.HudConstants.MAIN_MENU_ITEMS;
 public class MenuScreen extends Screen implements IUpdateable {
 
     private KeyboardMenu mainMenu;
+    private SaveMenu saveMenu;
     public long lastPlayed;
     private static final String COPYRIGHT = "2020 littleBeasts";
     private static Collection<MapArea> mapAreas;
@@ -36,7 +38,9 @@ public class MenuScreen extends Screen implements IUpdateable {
     @Override
     protected void initializeComponents() {
         this.mainMenu = new KeyboardMenu(MAIN_MENU_ITEMS);
+        this.saveMenu = new SaveMenu(true);
         this.getComponents().add(this.mainMenu);
+        this.getComponents().add(this.saveMenu);
         this.mainMenu.onConfirm(c -> {
             switch (c) {
                 case 0:
@@ -45,7 +49,6 @@ public class MenuScreen extends Screen implements IUpdateable {
                 case 1:
                     mainMenu.setVisible(false);
                     mainMenu.setEnabled(false);
-                    IngameScreen.getSaveMenu().setCameFromMainMenu(true);
                     Program.getGameLogic().setState(GameState.SAVE_MENU);
                     break;
                 case 2:
@@ -68,6 +71,8 @@ public class MenuScreen extends Screen implements IUpdateable {
     public void prepare() {
         this.mainMenu.setEnabled(true);
         super.prepare();
+        saveMenu.setVisible(false);
+        saveMenu.setEnabled(false);
         Game.loop().attach(this);
         Game.window().getRenderComponent().setBackground(Color.BLACK);
         Game.graphics().setBaseRenderScale(6f * Game.window().getResolutionScale());
@@ -128,5 +133,9 @@ public class MenuScreen extends Screen implements IUpdateable {
     }
     public KeyboardMenu getMainMenu() {
         return mainMenu;
+    }
+
+    public GuiComponent getSaveMenu() {
+        return saveMenu;
     }
 }

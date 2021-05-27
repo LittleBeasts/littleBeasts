@@ -8,6 +8,7 @@ import com.littlebeasts.guicomponent.DrawInventory;
 import com.littlebeasts.guicomponent.SaveMenu;
 import config.HudConstants;
 import de.gurkenlabs.litiengine.Game;
+import de.gurkenlabs.litiengine.gui.GuiComponent;
 import de.gurkenlabs.litiengine.gui.screens.Screen;
 
 import java.awt.*;
@@ -40,13 +41,21 @@ public class IngameScreen extends Screen {
         this.drawHud = new DrawHud();
         drawChatWindow = new DrawChatWindow();
         inventory = new DrawInventory();
-        saveMenu = new SaveMenu();
+        saveMenu = new SaveMenu(false);
         buildIngameMenu();
         this.getComponents().add(ingameMenu);
         this.getComponents().add(drawChatWindow);
         this.getComponents().add(inventory);
         this.getComponents().add(saveMenu);
         this.getComponents().add(this.drawHud);
+        deactivateAllScreens();
+    }
+
+    public void deactivateAllScreens() {
+        for (GuiComponent menu : this.getComponents()) {
+            menu.setEnabled(false);
+            menu.setVisible(false);
+        }
     }
 
     private void buildIngameMenu() {
@@ -99,4 +108,5 @@ public class IngameScreen extends Screen {
     public static KeyboardMenu getIngameMenu() {
         return ingameMenu;
     }
+
 }
