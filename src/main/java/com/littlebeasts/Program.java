@@ -18,6 +18,7 @@ public class Program {
 
     private static GameLogic gameLogic;
     private static IngameScreen ingameScreen;
+    private static MenuScreen menuScreen;
     private static String startingMap = null;
 
     public static void main(String[] args) throws IOException, FontFormatException {
@@ -38,7 +39,7 @@ public class Program {
 
         ingameScreen = new IngameScreen();
         Game.screens().add(ingameScreen);
-        MenuScreen menuScreen = new MenuScreen();
+        menuScreen = new MenuScreen();
         Game.screens().add(menuScreen);
 
         PlayerInput.init();

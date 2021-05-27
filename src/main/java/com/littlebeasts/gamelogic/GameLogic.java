@@ -5,6 +5,7 @@ import com.littlebeasts.entities.LitiPlayer;
 import com.littlebeasts.guicomponent.DrawChatWindow;
 import com.littlebeasts.scenemanager.SceneNotPossibleError;
 import com.littlebeasts.screens.IngameScreen;
+import com.littlebeasts.screens.KeyboardMenu;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.Spawnpoint;
@@ -84,6 +85,7 @@ public class GameLogic implements IUpdateable {
                 break;
             case SAVE_MENU:
                 IngameScreen.getIngameMenu().setVisible(false);
+                IngameScreen.getSaveMenu().setEnabled(true);
                 IngameScreen.getSaveMenu().setVisible(true);
                 Game.audio().playMusic("ingameMenu");
                 break;

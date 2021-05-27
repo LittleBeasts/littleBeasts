@@ -12,6 +12,7 @@ import de.gurkenlabs.litiengine.graphics.TextRenderer;
 import de.gurkenlabs.litiengine.gui.screens.Screen;
 
 import java.awt.*;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Collection;
 
@@ -39,8 +40,13 @@ public class MenuScreen extends Screen implements IUpdateable {
         this.mainMenu.onConfirm(c -> {
             switch (c) {
                 case 0:
-                case 1:
                     this.startLocalGame();
+                    break;
+                case 1:
+                    mainMenu.setVisible(false);
+                    mainMenu.setEnabled(false);
+                    IngameScreen.getSaveMenu().setCameFromMainMenu(true);
+                    Program.getGameLogic().setState(GameState.SAVE_MENU);
                     break;
                 case 2:
                     try {
@@ -119,5 +125,8 @@ public class MenuScreen extends Screen implements IUpdateable {
         if (this.lastPlayed == 0) {
             this.lastPlayed = Game.loop().getTicks();
         }
+    }
+    public KeyboardMenu getMainMenu() {
+        return mainMenu;
     }
 }

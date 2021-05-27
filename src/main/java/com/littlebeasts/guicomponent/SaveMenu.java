@@ -29,6 +29,12 @@ public class SaveMenu extends GuiComponent {
     private final double slotNameXPosition = boxXPosition + (separatorXPosition - boxXPosition) / 2.5;
     private final int horizontalOffset = WIDTH / 10;
 
+    public void setCameFromMainMenu(boolean cameFromMainMenu) {
+        this.cameFromMainMenu = cameFromMainMenu;
+    }
+
+    private boolean cameFromMainMenu;
+
     public SaveMenu() {
         super(0, 0, WIDTH, HEIGHT);
         Input.keyboard().onKeyTyped(e -> {
@@ -42,8 +48,6 @@ public class SaveMenu extends GuiComponent {
 
     private void handleInput(KeyEvent e) {
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_ESCAPE:
-                Program.getGameLogic().setState(GameState.INGAME_MENU);
             case KeyEvent.VK_DOWN:
             case KeyEvent.VK_S:
                 incrementCursorPosition();
@@ -54,18 +58,20 @@ public class SaveMenu extends GuiComponent {
                 break;
             case KeyEvent.VK_ENTER:
                 loadOrSaveGame();
+                break;
+            case KeyEvent.VK_ESCAPE:
+                Program.getGameLogic().setState(GameState.INGAME_MENU);
+                break;
         }
     }
 
     @Override
     public void render(Graphics2D g) {
-        if (Program.getGameLogic().getState().equals(GameState.SAVE_MENU)) {
             g.setColor(MENU_BACKGROUND);
             g.fillRect(0, 0, WIDTH, HEIGHT);
             drawMenuHeader(g);
             drawSlots(g);
             drawSlotsDescription(g);
-        }
     }
 
 
@@ -115,7 +121,7 @@ public class SaveMenu extends GuiComponent {
         }
     }
 
-    private void loadOrSaveGame() {
+    public void loadOrSaveGame() {
 //        if (savedGames.get(currentCursorPosition) == null) {
 //            saveGame();
 //        } else {
