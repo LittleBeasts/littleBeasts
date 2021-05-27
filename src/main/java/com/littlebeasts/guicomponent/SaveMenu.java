@@ -28,8 +28,9 @@ public class SaveMenu extends GuiComponent {
     private final int shift = HEIGHT / 15;
     private final double slotNameXPosition = boxXPosition + (separatorXPosition - boxXPosition) / 2.5;
     private final int horizontalOffset = WIDTH / 10;
-
-    public SaveMenu() {
+    private final GameState originMenu;
+    private boolean focused;
+    public SaveMenu(GameState menu) {
         super(0, 0, WIDTH, HEIGHT);
         Input.keyboard().onKeyTyped(e -> {
             if (Program.getGameLogic().getState().equals(GameState.SAVE_MENU)) {
@@ -38,12 +39,19 @@ public class SaveMenu extends GuiComponent {
         });
         //TODO load save games from json into arraylist savedGames
         savedGames = new ArrayList<>();
+        this.originMenu = menu;
     }
 
     private void handleInput(KeyEvent e) {
+        if(!focused) return;
         switch (e.getKeyCode()) {
             case KeyEvent.VK_ESCAPE:
-                Program.getGameLogic().setState(GameState.INGAME_MENU);
+                if (originMenu == GameState.MENU)
+                    Program.getGameLogic().setState(GameState.MENU);
+                else if (originMenu == GameState.INGAME_MENU)
+                    Program.getGameLogic().setState(GameState.INGAME_MENU);
+                focused = false;
+                break;
             case KeyEvent.VK_DOWN:
             case KeyEvent.VK_S:
                 incrementCursorPosition();
@@ -54,6 +62,7 @@ public class SaveMenu extends GuiComponent {
                 break;
             case KeyEvent.VK_ENTER:
                 loadOrSaveGame();
+                break;
         }
     }
 
@@ -139,5 +148,9 @@ public class SaveMenu extends GuiComponent {
 //            return EMPTY_SLOT_PLACEHOLDER;
 //        }
         return EMPTY_SLOT_PLACEHOLDER;
+    }
+
+    public void setFocus(boolean focused) {
+        this.focused = focused;
     }
 }

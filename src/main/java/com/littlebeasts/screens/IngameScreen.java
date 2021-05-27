@@ -40,7 +40,7 @@ public class IngameScreen extends Screen {
         this.drawHud = new DrawHud();
         drawChatWindow = new DrawChatWindow();
         inventory = new DrawInventory();
-        saveMenu = new SaveMenu();
+        saveMenu = new SaveMenu(GameState.INGAME_MENU);
         buildIngameMenu();
         this.getComponents().add(ingameMenu);
         this.getComponents().add(drawChatWindow);
@@ -57,6 +57,7 @@ public class IngameScreen extends Screen {
                     Program.getGameLogic().setState(GameState.INGAME);
                     break;
                 case 1:
+                    saveMenu.setFocus(true);
                     Program.getGameLogic().setState(GameState.SAVE_MENU);
                     break;
                 case 2:

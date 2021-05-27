@@ -1,15 +1,18 @@
 package com.littlebeasts.gamelogic;
 
+import com.littlebeasts.Program;
 import com.littlebeasts.entities.LitiPet;
 import com.littlebeasts.entities.LitiPlayer;
 import com.littlebeasts.guicomponent.DrawChatWindow;
 import com.littlebeasts.scenemanager.SceneNotPossibleError;
 import com.littlebeasts.screens.IngameScreen;
+import com.littlebeasts.screens.MenuScreen;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.Spawnpoint;
 import de.gurkenlabs.litiengine.graphics.Camera;
 import de.gurkenlabs.litiengine.graphics.PositionLockCamera;
+import de.gurkenlabs.litiengine.gui.GuiComponent;
 import de.gurkenlabs.litiengine.input.Input;
 
 import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
@@ -56,9 +59,10 @@ public class GameLogic implements IUpdateable {
         LitiPlayer.instance().setState(PlayerState.LOCKED);
         Game.loop().setTimeScale(1);
         Input.keyboard().onKeyTyped(DrawChatWindow::add);
-
+//        deactivateAllMenus();
         switch (state) {
             case MENU:
+                Program.getMenuScreen().getMainMenu().setVisible(true);
                 if (!firstStart) {
                     Game.loop().setTimeScale(0);
                     Game.screens().display("MAINMENU");
