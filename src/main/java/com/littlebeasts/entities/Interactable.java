@@ -6,7 +6,7 @@ import java.awt.geom.Point2D;
 
 public interface Interactable {
 
-    public void interact();
+    void interact();
 
     Point2D getCenter();
 }
