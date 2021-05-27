@@ -37,7 +37,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>com.littleBeasts.Program</mainClass>
+                  <mainClass>com.littlebeasts.Program</mainClass>
                 </transformer>
               </transformers>
             </configuration>
