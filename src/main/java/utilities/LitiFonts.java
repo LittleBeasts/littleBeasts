@@ -1,6 +1,6 @@
 package utilities;
 
-import com.littleBeasts.Program;
+import com.littlebeasts.Program;
 import config.FontConstants;
 
 import java.awt.*;
