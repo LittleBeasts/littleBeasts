@@ -27,7 +27,7 @@ public class SaveMenu extends GuiComponent {
     private final int separatorXPosition = boxXPosition + boxWidth / 6;
     private final int shift = HEIGHT / 15;
     private final double slotNameXPosition = boxXPosition + (separatorXPosition - boxXPosition) / 2.5;
-    private final int offset = WIDTH / 10;
+    private final int horizontalOffset = WIDTH / 10;
 
     public SaveMenu() {
         super(0, 0, WIDTH, HEIGHT);
@@ -95,7 +95,7 @@ public class SaveMenu extends GuiComponent {
     private void drawSlotsDescription(Graphics2D g) {
         for (int i = 0; i < slots.length; i++) {
             String description = getSaveGameDescription(i);
-            TextRenderer.render(g, description, separatorXPosition + offset, initialBoxYPosition + (i + 1) * shift + boxHeight / 2 + menuFont.getSize() / 2);
+            TextRenderer.render(g, description, separatorXPosition + horizontalOffset, initialBoxYPosition + (i + 1) * shift + boxHeight / 2 + menuFont.getSize() / 2);
         }
     }
 
