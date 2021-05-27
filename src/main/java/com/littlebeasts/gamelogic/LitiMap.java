@@ -41,8 +41,8 @@ public class LitiMap {
         Rectangle2D mapArea;
         for (Spawnpoint spawnpoint : spawnpoints) {
             mapArea = spawnpoint.getBoundingBox();
-            if (isFacingCorrectDirection(spawnpoint) && mapArea.contains(playerPosition)) {
-                if (checkMapAreaForSpawnPoint(spawnpoint)) return;
+            if (isFacingCorrectDirection(spawnpoint) && mapArea.contains(playerPosition) && checkMapAreaForSpawnPoint(spawnpoint)) {
+                return;
             }
         }
     }
@@ -123,9 +123,9 @@ public class LitiMap {
     public void newMapLoadUp() {
         Program.getGameLogic().setState(GameState.LOADING);
         resetOldMap();
-        createInteractableList();
-        createTileMapLayerList();
         loadCurrentMapAreas();
+        createTileMapLayerList();
+        createInteractableList();
         loadCurrentSpawnPoints();
         this.freshlySpawned = true;
         this.freshlySpawnedTime = System.currentTimeMillis();
@@ -153,9 +153,17 @@ public class LitiMap {
             if (entity.getName() != null) {
                 if (entity.getName().contains("NPC-"))
                     Interactables.add(new LitiNPC(entity));
-                if (entity.getName().contains("CHEST-"))
-                    Interactables.add(new LitiProp(entity));
+                else if (entity.getName().contains("CHEST-"))
+                    Interactables.add(new LitiPropChest(entity));
+                else if (entity.getName().contains("DOOR-"))
+                    Interactables.add((new LitiPropDoor(entity)));
+                else if (entity.getName().contains("SIGN-"))
+                    Interactables.add((new LitiPropSign(entity)));
             }
+        }
+        for (MapArea area : mapAreas) {
+            if (area.getName().contains("INTERACTION-"))
+                Interactables.add(new LitiAreaSign(area));
         }
     }
 

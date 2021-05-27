@@ -11,9 +11,15 @@ import java.util.function.Consumer;
 import static config.HudConstants.*;
 
 public abstract class ActionMenu {
-    protected final int y, width;
-    protected int x, amountOfItems, amountOfDrawnItems, height;
-    protected int firstDrawnItem, lastDrawnItem, currentPosition;
+    protected final int y;
+    protected final int width;
+    protected int x;
+    protected int amountOfItems;
+    protected int amountOfDrawnItems;
+    protected int height;
+    protected int firstDrawnItem;
+    protected int lastDrawnItem;
+    protected int currentPosition;
     protected boolean focus;
     protected ArrayList<String> items;
     private final List<Consumer<Integer>> confirmConsumer;

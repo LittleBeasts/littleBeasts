@@ -10,5 +10,5 @@ public enum GameState {
     BATTLE,
     GAME_OVER,
     LOADING,
-    DIALOGUE;
+    DIALOGUE
 }

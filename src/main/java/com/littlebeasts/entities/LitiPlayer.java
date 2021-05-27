@@ -4,9 +4,11 @@ import calculationEngine.entities.*;
 import com.littlebeasts.Program;
 import com.littlebeasts.gamelogic.LitiMapFunctions;
 import com.littlebeasts.gamelogic.PlayerState;
+import config.FontConstants;
 import de.gurkenlabs.litiengine.Align;
 import de.gurkenlabs.litiengine.Valign;
 import de.gurkenlabs.litiengine.entities.*;
+import de.gurkenlabs.litiengine.gui.SpeechBubble;
 import de.gurkenlabs.litiengine.input.KeyboardEntityController;
 import de.gurkenlabs.litiengine.physics.Collision;
 import de.gurkenlabs.litiengine.resources.Resources;
@@ -33,7 +35,6 @@ public class LitiPlayer extends Creature implements IMobileEntity {
         super("test");
         this.playerPortrait = Resources.images().get("sprites/char.png");
         this.ceInventory = new CeInventory();
-        // Calculation Engine
         this.littleBeastTeam = new LitiBeastTeam();
         this.littleBeastTeam.addBeast(new LitiBeast(CeBeasts.FeuerFurz, (int) this.getX(), (int) this.getY(), true));
         // ToDo: Change with new saveGame logic and initialize a new Player correctly
@@ -55,10 +56,14 @@ public class LitiPlayer extends Creature implements IMobileEntity {
         if (DEBUG_CONSOLE_OUT) System.out.println("Interaction");
         ArrayList<Interactable> interactables = Program.getGameLogic().getCurrentLitiMap().getInteractables();
         for (Interactable interactable : interactables) {
-            if (LitiMapFunctions.isInProximity(LitiPlayer.instance(), interactable.getiEntity()) && LitiMapFunctions.isFacingInteractable(this, interactable.getiEntity())) {
+            if (LitiMapFunctions.isInProximity(LitiPlayer.instance(), interactable.getCenter()) && LitiMapFunctions.isFacingInteractable(this, interactable.getCenter())) {
                 interactable.interact();
             }
         }
+    }
+
+    public void speak(String string) {
+        SpeechBubble.create(this, string, SpeechBubble.DEFAULT_APPEARANCE, FontConstants.DEFAULT_FONT);
     }
 
     public void setState(PlayerState state) {
@@ -104,5 +109,16 @@ public class LitiPlayer extends Creature implements IMobileEntity {
 
     public CeInventory getCeInventory() {
         return ceInventory;
+    }
+
+    @Override
+    public String toString() {
+        return "LitiPlayer{" +
+                "cePlayer=" + cePlayer +
+                ", playerPortrait=" + playerPortrait +
+                ", littleBeastTeam=" + littleBeastTeam +
+                ", ceInventory=" + ceInventory +
+                ", hasController=" + hasController +
+                '}';
     }
 }

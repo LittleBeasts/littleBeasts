@@ -10,5 +10,4 @@ public class MessageProtocolConstants {
     public static final String INCOMINGMESSAGE = "0103";
     public static final String OUTGOINGMESSAGE = "0104";
 
-
 }

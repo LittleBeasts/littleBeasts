@@ -16,7 +16,7 @@ import static client.Message.encodeOutgoingMessageForClient;
 import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
 import static config.HudConstants.ChatWindowFont;
 
-public class DrawChatWindow extends GuiComponent{
+public class DrawChatWindow extends GuiComponent {
     private static final String CURSOR = "|";
     private static StringBuffer buffer;
     private static String showableText;
@@ -167,7 +167,7 @@ public class DrawChatWindow extends GuiComponent{
 
     @Override
     public synchronized void render(Graphics2D g) {
-        List<String> bufferedMessages = null;
+        List<String> bufferedMessages;
         bufferedMessages = LitiClient.getBufferedMessages();
         if (bufferedMessages != null) {
             chatHistory.addAll(bufferedMessages);

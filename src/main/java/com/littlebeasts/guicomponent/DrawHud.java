@@ -127,7 +127,7 @@ public class DrawHud extends GuiComponent {
 
             // RenderEngine.renderShape(g,actualRect);
             ShapeRenderer.render(g, actualRect);
-            Font font = new Font(g.getFont().getName(), 0, 30);
+            Font font = new Font(g.getFont().getName(), Font.PLAIN, 30);
             g.setFont(font);
             TextRenderer.render(g, "50/50", x - 100.0, y, true);
 

@@ -15,4 +15,5 @@ public class DialogueConstants {
 
     public static final JSONObject dialogueTree = JsonReader.readJson("/JSON/dialogueTree.JSON");
     public static final SpeechBubbleAppearance defaultSpeechBubble = new SpeechBubbleAppearance(foreColor, backColor, borderColor, padding);
+
 }

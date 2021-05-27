@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import utilities.LitiFonts;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.util.Random;
 
 import static config.DialogueConstants.dialogueTree;
@@ -48,19 +49,19 @@ public class LitiNPC extends Creature implements Interactable {
     }
 
     @Override
-    public String toString() {
-        return "LitiNPC{" +
-                "name='" + name + '\'' +
-                '}';
-    }
-
-    @Override
     public void interact() {
         getGreeting();
     }
 
     @Override
-    public IEntity getiEntity() {
-        return this.iEntity;
+    public Point2D getCenter() {
+        return iEntity.getCenter();
+    }
+
+    @Override
+    public String toString() {
+        return "LitiNPC{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }
