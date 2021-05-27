@@ -25,7 +25,7 @@ jobs:
         id: bump_version
         uses: christian-draeger/increment-semantic-version@1.0.2
         with:
-          current-version: '1.1.0-alpha1'
+          current-version: '1.1.1-alpha1'
           version-fragment: 'bug'
       - name: Upload Artifacts
         run: mkdir builds && cp target/littleBeasts-1.0-SNAPSHOT.jar builds/littleBeasts-${{ steps.bump_version.outputs.next-version }}.jar
