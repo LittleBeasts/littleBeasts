@@ -18,7 +18,6 @@
                 </configuration>
             </plugin>
             <plugin>
-<<<<<<< HEAD
                 <groupId>io.github.fvarrui</groupId>
                 <artifactId>javapackager</artifactId>
                 <version>1.5.1</version>
@@ -38,8 +37,6 @@
                 </executions>
             </plugin>
             <plugin>
-=======
->>>>>>> 2be8cc771870a2cfbed89e399de0c853c566d583
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.2.0</version>
