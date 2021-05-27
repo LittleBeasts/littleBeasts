@@ -59,7 +59,6 @@ public class GameLogic implements IUpdateable {
         LitiPlayer.instance().setState(PlayerState.LOCKED);
         Game.loop().setTimeScale(1);
         Input.keyboard().onKeyTyped(DrawChatWindow::add);
-//        deactivateAllMenus();
         switch (state) {
             case MENU:
                 Program.getMenuScreen().getMainMenu().setVisible(true);
