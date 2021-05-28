@@ -11,11 +11,18 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-import static config.HudConstants.*;
+import static config.HudConstants.MENU_FONT;
+import static config.HudConstants.WIDTH;
+import static config.HudConstants.HEIGHT;
+import static config.HudConstants.MENU_BACKGROUND;
+import static config.HudConstants.BUTTON_BLACK;
+import static config.HudConstants.BUTTON_RED;
+import static config.HudConstants.EMPTY_SLOT_PLACEHOLDER;
+
 
 public class SaveMenu extends GuiComponent {
     //TODO load save games from json into arraylist savedGames
-    private ArrayList<Object> savedGames;
+//    private ArrayList<Object> savedGames;
     private final String[] slots = {"Save 1", "Save 2", "Save 3", "Save 4"};
     private final Font menuFont = MENU_FONT;
     private int currentCursorPosition;
@@ -38,8 +45,6 @@ public class SaveMenu extends GuiComponent {
                 handleInput(e);
             }
         });
-        //TODO load save games from json into arraylist savedGames
-        savedGames = new ArrayList<>();
         this.originMenu = menu;
     }
 
@@ -66,6 +71,8 @@ public class SaveMenu extends GuiComponent {
             case KeyEvent.VK_ENTER:
                 loadOrSaveGame();
                 Game.audio().playSound("Menu_pick");
+                break;
+            default:
                 break;
         }
     }
@@ -107,7 +114,7 @@ public class SaveMenu extends GuiComponent {
 
     private void drawSlotsDescription(Graphics2D g) {
         for (int i = 0; i < slots.length; i++) {
-            String description = getSaveGameDescription(i);
+            String description = getSaveGameDescription();
             TextRenderer.render(g, description, separatorXPosition + horizontalOffset, initialBoxYPosition + (i + 1) * shift + boxHeight / 2 + menuFont.getSize() / 2);
         }
     }
@@ -136,15 +143,7 @@ public class SaveMenu extends GuiComponent {
 //        }
     }
 
-    //TODO
-    private void loadGame() {
-    }
-
-    //TODO
-    private void saveGame() {
-    }
-
-    private String getSaveGameDescription(int i) {
+    private String getSaveGameDescription() {
 //        if (savedGames.get(i) != null) {
 //            //TODO: read out and return saveGame stats
 //            return savedGames.get(i).getDescription();

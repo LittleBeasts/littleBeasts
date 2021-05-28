@@ -2,7 +2,6 @@ package com.littlebeasts.screens;
 
 import client.Client;
 import com.littlebeasts.Program;
-import com.littlebeasts.gamelogic.GameLogic;
 import com.littlebeasts.gamelogic.GameState;
 import com.littlebeasts.gamelogic.LitiClient;
 import com.littlebeasts.gamelogic.MapNames;
