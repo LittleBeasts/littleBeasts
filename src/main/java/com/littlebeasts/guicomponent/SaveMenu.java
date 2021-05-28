@@ -2,6 +2,7 @@ package com.littlebeasts.guicomponent;
 
 import com.littlebeasts.Program;
 import com.littlebeasts.gamelogic.GameState;
+import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.graphics.TextRenderer;
 import de.gurkenlabs.litiengine.gui.GuiComponent;
 import de.gurkenlabs.litiengine.input.Input;
@@ -55,13 +56,16 @@ public class SaveMenu extends GuiComponent {
             case KeyEvent.VK_DOWN:
             case KeyEvent.VK_S:
                 incrementCursorPosition();
+                Game.audio().playSound("Menu_change");
                 break;
             case KeyEvent.VK_UP:
             case KeyEvent.VK_W:
                 decrementCursorPosition();
+                Game.audio().playSound("Menu_change");
                 break;
             case KeyEvent.VK_ENTER:
                 loadOrSaveGame();
+                Game.audio().playSound("Menu_pick");
                 break;
         }
     }
