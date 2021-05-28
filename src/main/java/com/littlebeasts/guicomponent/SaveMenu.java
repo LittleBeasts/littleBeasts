@@ -9,7 +9,6 @@ import de.gurkenlabs.litiengine.input.Input;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
 import static config.HudConstants.MENU_FONT;
 import static config.HudConstants.WIDTH;
