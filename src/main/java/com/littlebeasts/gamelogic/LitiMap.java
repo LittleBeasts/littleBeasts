@@ -1,18 +1,18 @@
 package com.littlebeasts.gamelogic;
 
-import calculationEngine.entities.CeBeasts;
 import com.littlebeasts.Program;
 import com.littlebeasts.entities.*;
 import com.littlebeasts.scenemanager.SceneNotPossibleError;
 import com.littlebeasts.scenemanager.ScenePlayer;
 import de.gurkenlabs.litiengine.Game;
+import de.gurkenlabs.litiengine.entities.Creature;
 import de.gurkenlabs.litiengine.entities.IEntity;
 import de.gurkenlabs.litiengine.entities.MapArea;
 import de.gurkenlabs.litiengine.entities.Spawnpoint;
 import de.gurkenlabs.litiengine.entities.behavior.IBehaviorController;
 import de.gurkenlabs.litiengine.environment.tilemap.ITileLayer;
 import de.gurkenlabs.litiengine.graphics.RenderType;
-import de.gurkenlabs.litiengine.physics.MovementController;
+import de.gurkenlabs.litiengine.graphics.animation.Animation;
 
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -247,37 +247,58 @@ public class LitiMap {
     private void getMonstersFromMap() {
         for (IEntity iEntity : Game.world().environment().getEntities()) {
             if (iEntity.getName() != null && iEntity.getName().contains("monster")) {
-                LitiBeast litiBeast = new LitiBeast(CeBeasts.FeuerFurz,0,0,false);
-                IBehaviorController iBehaviorController = new IBehaviorController() {
+                Creature creature = Game.world().environment().getCreature(iEntity.getName());
+                System.out.println(creature.getName());
 
+                for (Animation animation : creature.animations().getAll())
+                    System.out.println(animation.getName());
+                creature.animations().attach();
+                IBehaviorController behaviorController = new IBehaviorController() {
                     @Override
                     public IEntity getEntity() {
-                        return iEntity;
+                        return null;
                     }
 
                     @Override
                     public void update() {
-                        beastMovement(this.getEntity());
+                        beastMovement(creature);
                     }
                 };
-                iEntity.behavior().attach();
-                System.out.println(iEntity.getName());
+                creature.addController(behaviorController);
+                creature.behavior().attach();
             }
         }
     }
 
-    public void beastMovement(IEntity iEntity) {
-        int push = 10;
+
+    public void beastMovement(Creature creature) {
+        int push = 5;
         int pull = 10;
-        int scope = 10;
+        int scope = 100;
+        float speed = 0.01f;
 
-        int distanceToPlayer = distanceBetweenTwoPoint(LitiPlayer.instance().getCenter(), iEntity.getCenter());
-        int dX = (int) Math.abs(LitiPlayer.instance().getCenter().getX() - iEntity.getCenter().getX());
-        int dY = (int) Math.abs(LitiPlayer.instance().getCenter().getY() - iEntity.getCenter().getY());
-
-        if (distanceToPlayer < scope) {
-
+        int distanceToPlayer = distanceBetweenTwoPoint(LitiPlayer.instance().getCenter(), creature.getCenter());
+        int dX = Math.max((int) (Math.abs(LitiPlayer.instance().getCenter().getX() - creature.getCenter().getX()) * speed), 1);
+        int dY = Math.max((int) (Math.abs(LitiPlayer.instance().getCenter().getY() - creature.getCenter().getY()) * speed), 1);
+        if (distanceToPlayer < scope && distanceToPlayer > push) {
+            System.out.println("In scope");
+            creature.movement().setDy(-dY);
+            creature.movement().setDx(-dX);
+        } else {
+            idleMovement(creature);
         }
+    }
+
+    Point2D point2D;
+    boolean originSaved = false;
+
+
+    private void idleMovement(Creature creature) {
+        if (!originSaved)
+            point2D = creature.getCenter();
+
+        //left/right
+        creature.movement().setDx(-1);
 
     }
 
