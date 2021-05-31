@@ -33,14 +33,4 @@ public class ItemMenu extends ActionMenu {
         x = BATTLE_MENU_START + BATTLE_MENU_OFFSET;
     }
 
-    public static ArrayList<String> getItemsNames(ArrayList<CeItem> ceItems) {
-        ArrayList<String> itemsNames = new ArrayList<>();
-        for (CeItem ceItem : ceItems) {
-            if (ceItem != null)
-                itemsNames.add(ceItem.getName());
-        }
-        if (itemsNames.isEmpty())
-            itemsNames.add(NO_ITEMS_PLACEHOLDER);
-        return itemsNames;
-    }
 }

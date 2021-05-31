@@ -1,5 +1,6 @@
 package com.littlebeasts.actionmenu;
 
+import calculationEngine.environment.CeItem;
 import config.HudConstants;
 
 import java.awt.*;
@@ -118,6 +119,17 @@ public abstract class ActionMenu {
         for (Consumer<Integer> cons : this.confirmConsumer) {
             cons.accept(this.currentPosition);
         }
+    }
+
+    public static ArrayList<String> getItemsNames(ArrayList<CeItem> ceItems) {
+        ArrayList<String> itemsNames = new ArrayList<>();
+        for (CeItem ceItem : ceItems) {
+            if (ceItem != null)
+                itemsNames.add(ceItem.getName());
+        }
+        if (itemsNames.isEmpty())
+            itemsNames.add(NO_ITEMS_PLACEHOLDER);
+        return itemsNames;
     }
 
     protected abstract void setX();
