@@ -30,7 +30,7 @@ public class Program {
             startingMap = args[0];
         }
 
-        startingMap = MapNames.FleaMarket.toString();
+        startingMap = MapNames.Arkham.toString();
 
         Game.init();
         Game.window().setIcon(ImageIO.read(Objects.requireNonNull(Program.class.getResourceAsStream("/sprites/icon.png"))));

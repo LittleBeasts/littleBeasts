@@ -1,5 +1,6 @@
 package com.littlebeasts.gamelogic;
 
+import calculationEngine.entities.CeBeasts;
 import com.littlebeasts.Program;
 import com.littlebeasts.entities.*;
 import com.littlebeasts.scenemanager.SceneNotPossibleError;
@@ -8,8 +9,10 @@ import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.entities.IEntity;
 import de.gurkenlabs.litiengine.entities.MapArea;
 import de.gurkenlabs.litiengine.entities.Spawnpoint;
+import de.gurkenlabs.litiengine.entities.behavior.IBehaviorController;
 import de.gurkenlabs.litiengine.environment.tilemap.ITileLayer;
 import de.gurkenlabs.litiengine.graphics.RenderType;
+import de.gurkenlabs.litiengine.physics.MovementController;
 
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -29,6 +32,7 @@ public class LitiMap {
     private long freshlySpawnedTime = System.currentTimeMillis();
     private List<Integer> changedTileLayers = new ArrayList<>();
     private boolean deactivateOverlays = false;
+    private List<LitiBeast> litiBeastsOnMap;
 
     public void loadNewArea() {
         int spawnDelay = 1000; //delay in milliseconds
@@ -127,6 +131,7 @@ public class LitiMap {
         createTileMapLayerList();
         createInteractableList();
         loadCurrentSpawnPoints();
+        getMonstersFromMap();
         this.freshlySpawned = true;
         this.freshlySpawnedTime = System.currentTimeMillis();
         Program.getGameLogic().setState(GameState.INGAME);
@@ -239,7 +244,51 @@ public class LitiMap {
         checkOverlays();
     }
 
+    private void getMonstersFromMap() {
+        for (IEntity iEntity : Game.world().environment().getEntities()) {
+            if (iEntity.getName() != null && iEntity.getName().contains("monster")) {
+                LitiBeast litiBeast = new LitiBeast(CeBeasts.FeuerFurz,0,0,false);
+                IBehaviorController iBehaviorController = new IBehaviorController() {
+
+                    @Override
+                    public IEntity getEntity() {
+                        return iEntity;
+                    }
+
+                    @Override
+                    public void update() {
+                        beastMovement(this.getEntity());
+                    }
+                };
+                iEntity.behavior().attach();
+                System.out.println(iEntity.getName());
+            }
+        }
+    }
+
+    public void beastMovement(IEntity iEntity) {
+        int push = 10;
+        int pull = 10;
+        int scope = 10;
+
+        int distanceToPlayer = distanceBetweenTwoPoint(LitiPlayer.instance().getCenter(), iEntity.getCenter());
+        int dX = (int) Math.abs(LitiPlayer.instance().getCenter().getX() - iEntity.getCenter().getX());
+        int dY = (int) Math.abs(LitiPlayer.instance().getCenter().getY() - iEntity.getCenter().getY());
+
+        if (distanceToPlayer < scope) {
+
+        }
+
+    }
+
     public ArrayList<Interactable> getInteractables() {
         return Interactables;
+    }
+
+    public int distanceBetweenTwoPoint(Point2D point1, Point2D point2) {
+        return (int) Math.sqrt((point2.getX() - point1.getX()) *
+                (point2.getX() - point1.getX()) +
+                (point2.getY() - point1.getY()) *
+                        (point2.getY() - point1.getY()));
     }
 }
