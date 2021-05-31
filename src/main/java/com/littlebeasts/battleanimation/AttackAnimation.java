@@ -17,8 +17,8 @@ import java.util.Locale;
 
 public class AttackAnimation {
 
-    static IUpdateable forceCheck;
-    static AnimationListener animationListener;
+    static private IUpdateable forceCheck;
+    static private AnimationListener animationListener;
 
     public static void startMeleeAnimation(IMobileEntity attacker, IMobileEntity defender, CeAttack ceAttack) {
         LitiPlayer.instance().setState(PlayerState.LOCKED);
@@ -72,9 +72,9 @@ public class AttackAnimation {
         BattleAnimationEntity.instance().animations().get(animationName).start();
     }
 
-    private static void returnToStartingPosition(IMobileEntity iMobileEntity, Point2D startingPosition) {
+    private static void returnToStartingPosition(IMobileEntity iMobileEntity, Point2D startingPositionInput) {
         // remove listener, because from now on it will always be finished.
-
+        Point2D startingPosition = startingPositionInput;
         startingPosition = new Point2D.Double(startingPosition.getX() - 7, startingPosition.getY());
         Force force = new Force(startingPosition, 100, 1);
         iMobileEntity.movement().apply(force);
@@ -118,7 +118,6 @@ public class AttackAnimation {
     }
 
     private interface ForceListener extends IUpdateable {
-        default void finished(Force force) {
-        }
+        void finished(Force force);
     }
 }

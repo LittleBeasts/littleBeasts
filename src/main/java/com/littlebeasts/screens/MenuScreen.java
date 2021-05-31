@@ -3,26 +3,26 @@ package com.littlebeasts.screens;
 import client.Client;
 import com.littlebeasts.Program;
 import com.littlebeasts.gamelogic.GameState;
-import com.littlebeasts.gamelogic.LitiClient;
+import com.littlebeasts.gamelogic.LitiClientUtils;
 import com.littlebeasts.gamelogic.MapNames;
+import com.littlebeasts.guicomponent.SaveMenu;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
-import de.gurkenlabs.litiengine.entities.MapArea;
 import de.gurkenlabs.litiengine.graphics.TextRenderer;
 import de.gurkenlabs.litiengine.gui.screens.Screen;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.io.IOException;
-import java.util.Collection;
 
 import static config.HudConstants.MAIN_MENU_ITEMS;
 
 public class MenuScreen extends Screen implements IUpdateable {
 
     private KeyboardMenu mainMenu;
+    private SaveMenu saveMenu;
     public long lastPlayed;
     private static final String COPYRIGHT = "2020 littleBeasts";
-    private static Collection<MapArea> mapAreas;
 
     public MenuScreen() {
         super("MAINMENU");
@@ -35,10 +35,17 @@ public class MenuScreen extends Screen implements IUpdateable {
     @Override
     protected void initializeComponents() {
         this.mainMenu = new KeyboardMenu(MAIN_MENU_ITEMS);
+        this.saveMenu = new SaveMenu(GameState.MENU);
         this.getComponents().add(this.mainMenu);
+        this.getComponents().add(this.saveMenu);
         this.mainMenu.onConfirm(c -> {
             switch (c) {
                 case 0:
+                    mainMenu.setVisible(false);
+                    saveMenu.setFocus(true);
+                    Program.getGameLogic().setState(GameState.SAVE_MENU);
+                    saveMenu.setVisible(true);
+                    break;
                 case 1:
                     this.startLocalGame();
                     break;
@@ -82,14 +89,14 @@ public class MenuScreen extends Screen implements IUpdateable {
 
     private void startLocalGame() {
         this.mainMenu.setEnabled(false);
-        LitiClient.setOnlineGame(false);
+        LitiClientUtils.setOnlineGame(false);
         loadUpMap();
     }
 
     private void startOnlineGame() throws IOException {
         this.mainMenu.setEnabled(false);
-        LitiClient.setClient(new Client("TestUser"));
-        LitiClient.setOnlineGame(true);
+        LitiClientUtils.setClient(new Client("TestUser"));
+        LitiClientUtils.setOnlineGame(true);
         loadUpMap();
     }
 
@@ -119,5 +126,13 @@ public class MenuScreen extends Screen implements IUpdateable {
         if (this.lastPlayed == 0) {
             this.lastPlayed = Game.loop().getTicks();
         }
+    }
+
+    public KeyboardMenu getMainMenu() {
+        return mainMenu;
+    }
+
+    public SaveMenu getSaveMenu() {
+        return saveMenu;
     }
 }

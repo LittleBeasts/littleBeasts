@@ -1,5 +1,6 @@
 package com.littlebeasts.gamelogic;
 
+import com.littlebeasts.Program;
 import com.littlebeasts.entities.LitiPet;
 import com.littlebeasts.entities.LitiPlayer;
 import com.littlebeasts.guicomponent.DrawChatWindow;
@@ -12,7 +13,7 @@ import de.gurkenlabs.litiengine.graphics.Camera;
 import de.gurkenlabs.litiengine.graphics.PositionLockCamera;
 import de.gurkenlabs.litiengine.input.Input;
 
-import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
+import static config.GlobalConstants.DEBUG_CONSOLE_OUT;
 
 public class GameLogic implements IUpdateable {
     private static GameState state = GameState.INGAME;
@@ -56,9 +57,9 @@ public class GameLogic implements IUpdateable {
         LitiPlayer.instance().setState(PlayerState.LOCKED);
         Game.loop().setTimeScale(1);
         Input.keyboard().onKeyTyped(DrawChatWindow::add);
-
         switch (state) {
             case MENU:
+                Program.getMenuScreen().getMainMenu().setVisible(true);
                 if (!firstStart) {
                     Game.loop().setTimeScale(0);
                     Game.screens().display("MAINMENU");
@@ -66,9 +67,9 @@ public class GameLogic implements IUpdateable {
                 }
                 break;
             case BATTLE:
-                LitiBattle.setNextBattlePossible(false);
+                LitiBattleUtils.setNextBattlePossible(false);
                 Game.audio().playMusic("battle");
-                LitiBattle.triggerBattle();
+                LitiBattleUtils.triggerBattle();
                 break;
             case INGAME:
                 firstStart = false;
@@ -80,6 +81,11 @@ public class GameLogic implements IUpdateable {
             case INGAME_MENU:
                 Game.loop().setTimeScale(0);
                 IngameScreen.getIngameMenu().setVisible(true);
+                Game.audio().playMusic("ingameMenu");
+                break;
+            case SAVE_MENU:
+                IngameScreen.getIngameMenu().setVisible(false);
+                IngameScreen.getSaveMenu().setVisible(true);
                 Game.audio().playMusic("ingameMenu");
                 break;
             case INGAME_CHAT:
@@ -105,8 +111,8 @@ public class GameLogic implements IUpdateable {
         } catch (SceneNotPossibleError sceneNotPossibleError) {
             sceneNotPossibleError.printStackTrace();
         }
-        LitiBattle.update();
-        LitiClient.update();
+        LitiBattleUtils.update();
+        LitiClientUtils.update();
     }
 
     public LitiMap getCurrentLitiMap() {

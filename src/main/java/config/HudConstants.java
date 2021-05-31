@@ -2,7 +2,8 @@ package config;
 
 import de.gurkenlabs.litiengine.Game;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
 
 public class HudConstants {
 
@@ -42,7 +43,7 @@ public class HudConstants {
     public static final Color MENU_BACKGROUND = new Color(100, 100, 100, 150);
     public static final Color BUTTON_RED = new Color(140, 16, 16, 200);
     public static final Color BUTTON_BLACK = new Color(0, 0, 0, 200);
-    public static final Font MENU_FONT = new Font("Serif", Font.BOLD, 13);
+    public static final Font MENU_FONT = new Font("Serif", Font.BOLD, 18);
     public static final Color MENU_FONT_COLOR = Color.WHITE;
     public static final int MENU_DELAY = 180;
     public static final String[] INGAME_MENU_ITEMS = new String[]{"Continue", "Save / Load", "To Main Menu", "Exit"};
@@ -50,6 +51,7 @@ public class HudConstants {
     public static final double MENU_BUTTON_WIDTH = 450;
     public static final double MENU_CENTER_X = Game.window().getResolution().getWidth() / 2.0;
     public static final double MENU_CENTER_Y = Game.window().getResolution().getHeight() * 1 / 2;
+    public static final String EMPTY_SLOT_PLACEHOLDER = "Press Enter to Save current game state";
 
     // Battle animations
     public static final int BATTLE_ANIMATION_KEYFRAME_DURATION = 3;

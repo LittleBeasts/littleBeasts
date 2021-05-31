@@ -3,7 +3,12 @@ package client;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import static config.MessageProtocolConstants.*;
+import static config.MessageProtocolConstants.ENDOFTEXT;
+import static config.MessageProtocolConstants.ENDOFTRANSMISSION;
+import static config.MessageProtocolConstants.INCOMINGMESSAGE;
+import static config.MessageProtocolConstants.OUTGOINGMESSAGE;
+import static config.MessageProtocolConstants.STARTOFHEADING;
+import static config.MessageProtocolConstants.STARTOFTEXT;
 
 public class Message {
 

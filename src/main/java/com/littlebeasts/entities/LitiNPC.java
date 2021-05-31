@@ -5,9 +5,9 @@ import de.gurkenlabs.litiengine.entities.Creature;
 import de.gurkenlabs.litiengine.entities.IEntity;
 import de.gurkenlabs.litiengine.gui.SpeechBubble;
 import org.json.JSONObject;
-import utilities.LitiFonts;
+import utilities.LitiFontsUtils;
 
-import java.awt.*;
+import java.awt.Font;
 import java.awt.geom.Point2D;
 import java.util.Random;
 
@@ -41,7 +41,7 @@ public class LitiNPC extends Creature implements Interactable {
         this.speechBubbleFont = FontConstants.DEFAULT_FONT;
         if (iEntity.getProperties().getProperty("font") != null) {
             String fontName = iEntity.getProperties().getProperty("font").getAsString();
-            for (Font font : LitiFonts.getGameFonts()) {
+            for (Font font : LitiFontsUtils.getGameFonts()) {
                 if (font.getName().equals(fontName))
                     this.speechBubbleFont = font;
             }

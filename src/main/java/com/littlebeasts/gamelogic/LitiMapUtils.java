@@ -5,9 +5,9 @@ import de.gurkenlabs.litiengine.entities.IEntity;
 
 import java.awt.geom.Point2D;
 
-import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
+import static config.GlobalConstants.DEBUG_CONSOLE_OUT;
 
-public class LitiMapFunctions {
+public class LitiMapUtils {
 
     public static boolean isInProximity(IEntity firstEntity, Point2D point2D) {
         double deltaX = firstEntity.getCenter().getX() - point2D.getX();

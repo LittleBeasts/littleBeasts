@@ -2,9 +2,9 @@ package config;
 
 import de.gurkenlabs.litiengine.gui.SpeechBubbleAppearance;
 import org.json.JSONObject;
-import utilities.JsonReader;
+import utilities.JsonReaderUtils;
 
-import java.awt.*;
+import java.awt.Color;
 
 public class DialogueConstants {
 
@@ -13,7 +13,7 @@ public class DialogueConstants {
     private static final Color borderColor = new Color(255, 0, 0, 255);
     private static final float padding = 3.f;
 
-    public static final JSONObject dialogueTree = JsonReader.readJson("/JSON/dialogueTree.JSON");
+    public static final JSONObject dialogueTree = JsonReaderUtils.readJson("/JSON/dialogueTree.JSON");
     public static final SpeechBubbleAppearance defaultSpeechBubble = new SpeechBubbleAppearance(foreColor, backColor, borderColor, padding);
 
 }

@@ -2,33 +2,38 @@ package com.littlebeasts.guicomponent;
 
 import com.littlebeasts.Program;
 import com.littlebeasts.gamelogic.GameState;
-import com.littlebeasts.gamelogic.LitiClient;
+import com.littlebeasts.gamelogic.LitiClientUtils;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.gui.GuiComponent;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static client.Message.encodeOutgoingMessageForClient;
-import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
+import static config.GlobalConstants.DEBUG_CONSOLE_OUT;
 import static config.HudConstants.ChatWindowFont;
 
 public class DrawChatWindow extends GuiComponent {
     private static final String CURSOR = "|";
-    private static StringBuffer buffer;
-    private static String showableText;
-    private static int maxLength;
-    private static String validCharacters;
-    private static List<String> chatHistory;
+    private static StringBuffer buffer = new StringBuffer();
+    private static String showableText = "";
+    private static final int maxLength = 38;
+    private static final String validCharacters = "qwertzuiopüasdfghjklöäyxcvbnmQWERTZUIOPÜASDFGHJKLÖÄYXCVBNM1234567890ß!?., ";
+    private static final List<String> chatHistory = new ArrayList<>();
     private static int index;
-    private static int topElement, bottomElement;
+    private static int topElement = 0;
     private static final int amountOfDrawnElements = 6;
+    private static int bottomElement = amountOfDrawnElements;
     private final Font font = ChatWindowFont;
     private final Point textPoint;
-    private int padding;
+    private final int padding = 2;
 
     private int countDelay;
     private boolean cursor;
@@ -37,25 +42,12 @@ public class DrawChatWindow extends GuiComponent {
 
     public DrawChatWindow() {
         super(0, 0, Game.window().getWidth(), Game.window().getHeight());
-        chatHistory = new ArrayList<>();
-        validCharacters = "qwertzuiopüasdfghjklöäyxcvbnmQWERTZUIOPÜASDFGHJKLÖÄYXCVBNM1234567890ß!?., ";
-        /* Set text point */
         int x = this.x + this.padding;
         int y = this.y - this.padding;
         this.textPoint = new Point(x, y);
-
-        /* Create variables to control buffer */
-        buffer = new StringBuffer();
-        showableText = "";
-        maxLength = 38;
         clearIndex();
-
-        /* Create variables to control cursor */
         this.countDelay = 0;
         this.cursor = false;
-        int cursorLength = this.font.getSize();
-        topElement = 0;
-        bottomElement = amountOfDrawnElements;
     }
 
     private static void clearTextField() {
@@ -68,7 +60,7 @@ public class DrawChatWindow extends GuiComponent {
         if (buffer.length() > 0) {
             String value = buffer.toString();
             try {
-                LitiClient.sendMessageToServer(encodeOutgoingMessageForClient(LitiClient.getClient().getName(), value));
+                LitiClientUtils.sendMessageToServer(encodeOutgoingMessageForClient(LitiClientUtils.getClient().getName(), value));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -83,7 +75,6 @@ public class DrawChatWindow extends GuiComponent {
                     bottomElement++;
                 }
             }
-
         }
         clearTextField();
     }
@@ -119,29 +110,27 @@ public class DrawChatWindow extends GuiComponent {
                 break;
             case KeyEvent.VK_ESCAPE:
                 escapeKey();
+                break;
             case KeyEvent.VK_UP:
                 decIncrement();
                 break;
             case KeyEvent.VK_DOWN:
                 incIncrement();
                 break;
+            default:
+                break;
         }
 
-
-        /* Validate size */
         if (buffer.length() >= maxLength) {
             return;
         }
 
-        /* Validate character */
         if (validCharacters.indexOf(e.getKeyChar()) == -1) {
             return;
         }
 
-        /* Add char in buffer */
         buffer.append(e.getKeyChar());
 
-        /* Get showable text with index */
         showableText = buffer.substring(getIndex(), buffer.length());
     }
 
@@ -168,7 +157,7 @@ public class DrawChatWindow extends GuiComponent {
     @Override
     public synchronized void render(Graphics2D g) {
         List<String> bufferedMessages;
-        bufferedMessages = LitiClient.getBufferedMessages();
+        bufferedMessages = LitiClientUtils.getBufferedMessages();
         if (bufferedMessages != null) {
             chatHistory.addAll(bufferedMessages);
         }
@@ -215,7 +204,9 @@ public class DrawChatWindow extends GuiComponent {
         g.fillRect(this.x + hPadding + (width - 2 * hPadding), height - vPadding + scrollPointPosition, 30, scrollPointHeight);
     }
 
-    private static void drawString(Graphics g, List<String> text, int x, int y) {
+    private static void drawString(Graphics g, List<String> text, int xIn, int yIn) {
+        int x = xIn;
+        int y = yIn;
         for (int i = topElement; i < bottomElement; i++) {
             if (i < text.size() && text.get(i) != null)
                 g.drawString(text.get(i), x, y += g.getFontMetrics().getHeight());

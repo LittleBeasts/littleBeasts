@@ -2,7 +2,11 @@ package com.littlebeasts.battleanimation;
 
 import de.gurkenlabs.litiengine.Align;
 import de.gurkenlabs.litiengine.Valign;
-import de.gurkenlabs.litiengine.entities.*;
+import de.gurkenlabs.litiengine.entities.CollisionInfo;
+import de.gurkenlabs.litiengine.entities.Creature;
+import de.gurkenlabs.litiengine.entities.EntityInfo;
+import de.gurkenlabs.litiengine.entities.IMobileEntity;
+import de.gurkenlabs.litiengine.entities.MovementInfo;
 import de.gurkenlabs.litiengine.graphics.RenderType;
 import de.gurkenlabs.litiengine.graphics.Spritesheet;
 import de.gurkenlabs.litiengine.graphics.animation.Animation;
@@ -12,7 +16,6 @@ import de.gurkenlabs.litiengine.resources.Resources;
 import java.util.Collection;
 
 import static config.HudConstants.BATTLE_ANIMATION_KEYFRAME_DURATION;
-
 
 @EntityInfo(width = 16, height = 16)
 @MovementInfo(velocity = 100)
