@@ -10,7 +10,7 @@ import config.HudConstants;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.gui.screens.Screen;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 
 public class IngameScreen extends Screen {
     public static final String NAME = "INGAME-SCREEN";

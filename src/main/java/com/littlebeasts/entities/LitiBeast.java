@@ -9,9 +9,9 @@ import de.gurkenlabs.litiengine.entities.Creature;
 import de.gurkenlabs.litiengine.entities.Spawnpoint;
 import de.gurkenlabs.litiengine.resources.Resources;
 
-import java.awt.*;
+import java.awt.Image;
 
-import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
+import static config.GlobalConstants.DEBUG_CONSOLE_OUT;
 
 @CollisionInfo(collisionBoxWidth = 14, collisionBoxHeight = 30, collision = true)
 public class LitiBeast extends Creature implements IUpdateable {

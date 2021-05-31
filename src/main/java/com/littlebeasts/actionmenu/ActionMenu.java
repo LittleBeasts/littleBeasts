@@ -1,8 +1,8 @@
 package com.littlebeasts.actionmenu;
 
-import config.HudConstants;
+import calculationEngine.environment.CeItem;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -36,8 +36,8 @@ public abstract class ActionMenu {
         this.menuChange = this::setFocus;
         setX();
         this.y = HEIGHT - BOTTOM_PAD;
-        this.width = HudConstants.BATTLE_MENU_WIDTH;
-        this.height = HudConstants.HUD_ROW_HEIGHT * amountOfDrawnItems / ITEMLISTLENGTH;
+        this.width = BATTLE_MENU_WIDTH;
+        this.height = HUD_ROW_HEIGHT * amountOfDrawnItems / ITEMLISTLENGTH;
     }
 
     public void draw(Graphics2D g) {
@@ -47,7 +47,7 @@ public abstract class ActionMenu {
     public void draw(Graphics2D g, int posInBattleMenu) {
         int downShift = posInBattleMenu * SUBMENUSHIFT;
         // draw background
-        g.setColor(HudConstants.BACKGROUND);
+        g.setColor(BACKGROUND);
         g.fillRect(x, y + downShift, width, height);
 
         // draw buttons
@@ -55,20 +55,20 @@ public abstract class ActionMenu {
 
         for (int i = firstDrawnItem; i < lastDrawnItem; i++) {
             // draw buttons
-            g.setColor(HudConstants.BUTTONCOLOR);
+            g.setColor(BUTTONCOLOR);
             g.fillRect(x + buttonPad,
                     y + downShift + buttonPad + height * (i - firstDrawnItem) / amountOfDrawnItems,
                     width - 2 * buttonPad,
                     height / amountOfDrawnItems - 2 * buttonPad);
 
             // draw selection
-            g.setColor(HudConstants.SELECTCOLOR);
+            g.setColor(SELECTCOLOR);
             if (i == currentPosition) {
                 g.drawRect(x, y + downShift + height * (i - firstDrawnItem) / amountOfDrawnItems, width, height / amountOfDrawnItems);
             }
 
             // draw text
-            g.setColor(HudConstants.TEXTCOLOR);
+            g.setColor(TEXTCOLOR);
             g.drawString(items.get(i), x + buttonPad, (y + 20 + buttonPad + downShift) + height * (i - firstDrawnItem) / amountOfDrawnItems);
         }
     }
@@ -118,6 +118,17 @@ public abstract class ActionMenu {
         for (Consumer<Integer> cons : this.confirmConsumer) {
             cons.accept(this.currentPosition);
         }
+    }
+
+    public static ArrayList<String> getItemsNames(ArrayList<CeItem> ceItems) {
+        ArrayList<String> itemsNames = new ArrayList<>();
+        for (CeItem ceItem : ceItems) {
+            if (ceItem != null)
+                itemsNames.add(ceItem.getName());
+        }
+        if (itemsNames.isEmpty())
+            itemsNames.add(NO_ITEMS_PLACEHOLDER);
+        return itemsNames;
     }
 
     protected abstract void setX();

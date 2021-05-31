@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
+import static config.GlobalConstants.DEBUG_CONSOLE_OUT;
 
-public class LitiClient {
+public class LitiClientUtils {
     private static Client client;
     private static List<String> bufferedMessages;
     private static boolean onlineGame;
@@ -37,7 +37,7 @@ public class LitiClient {
     }
 
     public static void setClient(Client client) {
-        LitiClient.client = client;
+        LitiClientUtils.client = client;
     }
 
     public static boolean isOnlineGame() {
@@ -45,7 +45,7 @@ public class LitiClient {
     }
 
     public static void setOnlineGame(boolean onlineGame) {
-        LitiClient.onlineGame = onlineGame;
+        LitiClientUtils.onlineGame = onlineGame;
     }
 
     public static void update(){

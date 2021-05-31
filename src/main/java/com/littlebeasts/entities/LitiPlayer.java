@@ -1,23 +1,35 @@
 package com.littlebeasts.entities;
 
-import calculationEngine.entities.*;
+import calculationEngine.entities.CeAttack;
+import calculationEngine.entities.CeAttacks;
+import calculationEngine.entities.CeBeastTypes;
+import calculationEngine.entities.CeBeasts;
+import calculationEngine.entities.CeInventory;
+import calculationEngine.entities.CeNature;
+import calculationEngine.entities.CePlayer;
+import calculationEngine.entities.CeStats;
 import com.littlebeasts.Program;
-import com.littlebeasts.gamelogic.LitiMapFunctions;
+import com.littlebeasts.gamelogic.LitiMapUtils;
 import com.littlebeasts.gamelogic.PlayerState;
 import config.FontConstants;
 import de.gurkenlabs.litiengine.Align;
 import de.gurkenlabs.litiengine.Valign;
-import de.gurkenlabs.litiengine.entities.*;
+import de.gurkenlabs.litiengine.entities.Action;
+import de.gurkenlabs.litiengine.entities.CollisionInfo;
+import de.gurkenlabs.litiengine.entities.Creature;
+import de.gurkenlabs.litiengine.entities.EntityInfo;
+import de.gurkenlabs.litiengine.entities.IMobileEntity;
+import de.gurkenlabs.litiengine.entities.MovementInfo;
 import de.gurkenlabs.litiengine.gui.SpeechBubble;
 import de.gurkenlabs.litiengine.input.KeyboardEntityController;
 import de.gurkenlabs.litiengine.physics.Collision;
 import de.gurkenlabs.litiengine.resources.Resources;
 
-import java.awt.*;
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
 
-import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
+import static config.GlobalConstants.DEBUG_CONSOLE_OUT;
 
 @EntityInfo(width = 16, height = 16)
 @MovementInfo(velocity = 100)
@@ -56,7 +68,7 @@ public class LitiPlayer extends Creature implements IMobileEntity {
         if (DEBUG_CONSOLE_OUT) System.out.println("Interaction");
         ArrayList<Interactable> interactables = Program.getGameLogic().getCurrentLitiMap().getInteractables();
         for (Interactable interactable : interactables) {
-            if (LitiMapFunctions.isInProximity(LitiPlayer.instance(), interactable.getCenter()) && LitiMapFunctions.isFacingInteractable(this, interactable.getCenter())) {
+            if (LitiMapUtils.isInProximity(LitiPlayer.instance(), interactable.getCenter()) && LitiMapUtils.isFacingInteractable(this, interactable.getCenter())) {
                 interactable.interact();
             }
         }

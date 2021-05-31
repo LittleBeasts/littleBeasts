@@ -5,7 +5,7 @@ import calculationEngine.entities.CeAi;
 import calculationEngine.entities.CeBeasts;
 import calculationEngine.entities.CePlayer;
 import com.littlebeasts.Program;
-import com.littlebeasts.battleanimation.BattleAnimations;
+import com.littlebeasts.battleanimation.BattleAnimationsUtils;
 import com.littlebeasts.entities.LitiBeast;
 import com.littlebeasts.entities.LitiPlayer;
 import de.gurkenlabs.litiengine.Direction;
@@ -15,9 +15,9 @@ import de.gurkenlabs.litiengine.graphics.Camera;
 import java.util.ArrayList;
 import java.util.List;
 
-import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
+import static config.GlobalConstants.DEBUG_CONSOLE_OUT;
 
-public class LitiBattle {
+public class LitiBattleUtils {
     private static CeBattle ceBattle;
     private static boolean nextBattlePossible = true;
     private static final List<LitiBeast> LITI_BEAST_LIST = new ArrayList<>(); // list to resolve all animation before removing entity TODO: find a way to finish animation w/o this list.
@@ -54,8 +54,8 @@ public class LitiBattle {
         if (ceBattle == null) return;
         if (Program.getGameLogic().getState() == GameState.BATTLE) {
             if (ceBattle.getTurn() != null) {
-                if (ceBattle.getTurn().getNumber() == cePlayer.getNumber()) {
-                    if (DEBUG_CONSOLE_OUT) System.out.println("Battle round");
+                if (ceBattle.getTurn().getNumber() == cePlayer.getNumber() && DEBUG_CONSOLE_OUT) {
+                    System.out.println("Battle round");
                 }
             } else {
 
@@ -67,15 +67,15 @@ public class LitiBattle {
     public static void createDamageAnimations() {
         if (litiBeast != null) {
             for (int damage : litiBeast.getCeEntity().getDamages())
-                BattleAnimations.animateDamage(litiBeast, damage);
+                BattleAnimationsUtils.animateDamage(litiBeast, damage);
         }
         for (LitiBeast litiBeast : LitiPlayer.instance().getLittleBeastTeam().getBeasts()) {
             for (int damage : litiBeast.getCeEntity().getDamages()) {
-                BattleAnimations.animateDamage(LitiPlayer.instance(), damage);
+                BattleAnimationsUtils.animateDamage(LitiPlayer.instance(), damage);
             }
         }
         for (int damage : LitiPlayer.instance().getCePlayer().getDamages()) {
-            BattleAnimations.animateDamage(LitiPlayer.instance(), damage);
+            BattleAnimationsUtils.animateDamage(LitiPlayer.instance(), damage);
         }
     }
 
@@ -86,7 +86,7 @@ public class LitiBattle {
     public static void removeBeast() {
         if (Program.getGameLogic().getState() == GameState.INGAME) {
             for (int i = 0; i < LITI_BEAST_LIST.size(); i++) {
-                if (BattleAnimations.allAnimationsDone()) {
+                if (BattleAnimationsUtils.allAnimationsDone()) {
                     LITI_BEAST_LIST.get(i).die();
                     Game.world().environment().remove(LITI_BEAST_LIST.get(i));
                     LITI_BEAST_LIST.remove(LITI_BEAST_LIST.get(i));
@@ -111,7 +111,7 @@ public class LitiBattle {
     }
 
     public static void setNextBattlePossible(boolean nextBattlePossible) {
-        LitiBattle.nextBattlePossible = nextBattlePossible;
+        LitiBattleUtils.nextBattlePossible = nextBattlePossible;
     }
 
     public static void update() {

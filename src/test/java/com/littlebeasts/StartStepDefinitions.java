@@ -7,7 +7,7 @@ import cucumber.api.java.en.When;
 import de.gurkenlabs.litiengine.Game;
 import org.junit.Assert;
 
-import java.awt.*;
+import java.awt.FontFormatException;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 
@@ -24,8 +24,8 @@ public class StartStepDefinitions {
 
     @When("^the Player presses the button to start the game$")
     public void thePlayerPressesTheButtonToStartTheGame() {
-        TestRobot.robotButtonPress(KeyEvent.VK_UP);
-        TestRobot.robotButtonPress(KeyEvent.VK_ENTER);
+        TestRobotUtils.robotButtonPress(KeyEvent.VK_UP);
+        TestRobotUtils.robotButtonPress(KeyEvent.VK_ENTER);
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -35,7 +35,7 @@ public class StartStepDefinitions {
 
     @Then("^the game starts$")
     public void theGameStarts() {
-        TestRobot.robotButtonPress(KeyEvent.VK_ESCAPE);
+        TestRobotUtils.robotButtonPress(KeyEvent.VK_ESCAPE);
         Assert.assertEquals(Program.getGameLogic().getState(), GameState.INGAME);
     }
 }

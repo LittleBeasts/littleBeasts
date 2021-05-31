@@ -6,19 +6,29 @@ import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.gui.Menu;
 import de.gurkenlabs.litiengine.input.Input;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
-import static config.HudConstants.*;
+import static config.HudConstants.BUTTON_BLACK;
+import static config.HudConstants.BUTTON_RED;
+import static config.HudConstants.HEIGHT;
+import static config.HudConstants.MENU_BACKGROUND;
+import static config.HudConstants.MENU_BUTTON_WIDTH;
+import static config.HudConstants.MENU_CENTER_X;
+import static config.HudConstants.MENU_CENTER_Y;
+import static config.HudConstants.MENU_DELAY;
+import static config.HudConstants.MENU_FONT;
+import static config.HudConstants.MENU_FONT_COLOR;
+import static config.HudConstants.WIDTH;
 
 public class KeyboardMenu extends Menu {
 
     private final List<Consumer<Integer>> confirmConsumer;
     private int currentPosition;
-    private static long lastMenuInput;
+    private long lastMenuInput;
 
     public KeyboardMenu(String... menuItems) {
         super(MENU_CENTER_X - MENU_BUTTON_WIDTH / 2, MENU_CENTER_Y * 1.3, MENU_BUTTON_WIDTH, MENU_CENTER_Y / 2, menuItems);
@@ -52,6 +62,8 @@ public class KeyboardMenu extends Menu {
                     }
                     Game.audio().playSound("Menu_change");
                     incPosition();
+                    break;
+                default:
                     break;
             }
         });

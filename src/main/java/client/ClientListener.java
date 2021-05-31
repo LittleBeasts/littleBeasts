@@ -11,12 +11,10 @@ import static client.Message.decodeMessage;
 
 public class ClientListener extends Thread {
 
-    private BufferedReader in;
-    private Socket socket;
-    private List<String> messageBuffer;
+    private final BufferedReader in;
+    private final List<String> messageBuffer;
 
     ClientListener(Socket socket) throws IOException {
-        this.socket = socket;
         messageBuffer = new ArrayList<>();
         this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.start();

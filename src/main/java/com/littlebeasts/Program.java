@@ -7,10 +7,10 @@ import com.littlebeasts.screens.IngameScreen;
 import com.littlebeasts.screens.MenuScreen;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.resources.Resources;
-import utilities.LitiFonts;
+import utilities.LitiFontsUtils;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.FontFormatException;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -36,7 +36,7 @@ public class Program {
         Game.window().setIcon(ImageIO.read(Objects.requireNonNull(Program.class.getResourceAsStream("/sprites/icon.png"))));
         Game.graphics().setBaseRenderScale(1.001f);
         Resources.load(Program.class.getResource("/game.litidata"));
-        LitiFonts.loadFonts();
+        LitiFontsUtils.loadFonts();
 
         ingameScreen = new IngameScreen();
         Game.screens().add(ingameScreen);

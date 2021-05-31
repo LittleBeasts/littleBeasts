@@ -1,9 +1,16 @@
 package com.littlebeasts.gamelogic;
 
 import com.littlebeasts.Program;
-import com.littlebeasts.entities.*;
+import com.littlebeasts.entities.Interactable;
+import com.littlebeasts.entities.LitiAreaSign;
+import com.littlebeasts.entities.LitiNPC;
+import com.littlebeasts.entities.LitiPet;
+import com.littlebeasts.entities.LitiPlayer;
+import com.littlebeasts.entities.LitiPropChest;
+import com.littlebeasts.entities.LitiPropDoor;
+import com.littlebeasts.entities.LitiPropSign;
 import com.littlebeasts.scenemanager.SceneNotPossibleError;
-import com.littlebeasts.scenemanager.ScenePlayer;
+import com.littlebeasts.scenemanager.ScenePlayerHelper;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.entities.IEntity;
 import de.gurkenlabs.litiengine.entities.MapArea;
@@ -17,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
+import static config.GlobalConstants.DEBUG_CONSOLE_OUT;
 
 public class LitiMap {
 
@@ -67,7 +74,7 @@ public class LitiMap {
     public void checkSceneAreas(String scene) throws SceneNotPossibleError {
         int dayInt = Integer.parseInt(scene.substring(0, scene.indexOf("-")));
         int sceneInt = Integer.parseInt(scene.substring(scene.indexOf("-") + 1));
-        ScenePlayer.startScene(dayInt, sceneInt);
+        ScenePlayerHelper.startScene(dayInt, sceneInt);
     }
 
     private boolean checkMapAreaForSpawnPoint(Spawnpoint spawnpoint) {
@@ -116,6 +123,8 @@ public class LitiMap {
                 break;
             case UP:
                 LitiPet.instance().setY(LitiPet.instance().getY() - 16);
+                break;
+            default:
                 break;
         }
     }
