@@ -18,7 +18,7 @@ public class KeyboardMenu extends Menu {
 
     private final List<Consumer<Integer>> confirmConsumer;
     private int currentPosition;
-    private static long lastMenuInput;
+    private long lastMenuInput;
 
     public KeyboardMenu(String... menuItems) {
         super(MENU_CENTER_X - MENU_BUTTON_WIDTH / 2, MENU_CENTER_Y * 1.3, MENU_BUTTON_WIDTH, MENU_CENTER_Y / 2, menuItems);
@@ -52,6 +52,8 @@ public class KeyboardMenu extends Menu {
                     }
                     Game.audio().playSound("Menu_change");
                     incPosition();
+                    break;
+                default:
                     break;
             }
         });
