@@ -17,7 +17,6 @@ import java.util.Collection;
 
 import static config.HudConstants.BATTLE_ANIMATION_KEYFRAME_DURATION;
 
-
 @EntityInfo(width = 16, height = 16)
 @MovementInfo(velocity = 100)
 @CollisionInfo(collisionBoxWidth = 0, collisionBoxHeight = 0, collision = false, align = Align.CENTER, valign = Valign.DOWN, collisionType = Collision.DYNAMIC)
