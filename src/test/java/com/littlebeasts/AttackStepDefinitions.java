@@ -60,7 +60,7 @@ public class AttackStepDefinitions {
         TestRobot.robotButtonPress(KeyEvent.VK_ENTER);
     }
 
-
+/*
     //Scenario 2
     @Given("^the attack menu is open$")
     public void theAttackMenuIsOpen() {
@@ -97,6 +97,8 @@ public class AttackStepDefinitions {
     @Then("^the Player does not deal damage to its target$")
     public void thePlayerDoesNotDealDamageToItsTarget() {
     }
+
+ */
 
 }
 
