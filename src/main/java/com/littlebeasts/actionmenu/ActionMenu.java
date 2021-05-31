@@ -9,7 +9,11 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
-import static config.HudConstants.*;
+import static config.HudConstants.BOTTOM_PAD;
+import static config.HudConstants.HEIGHT;
+import static config.HudConstants.ITEMLISTLENGTH;
+import static config.HudConstants.NO_ITEMS_PLACEHOLDER;
+import static config.HudConstants.SUBMENUSHIFT;
 
 public abstract class ActionMenu {
     protected final int y;
