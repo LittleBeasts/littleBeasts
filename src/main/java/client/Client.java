@@ -11,8 +11,8 @@ public class Client {
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
-    private ClientListener clientListener;
-    private String name;
+    private final ClientListener clientListener;
+    private final String name;
 
     public void startConnection(String ip, int port) throws IOException {
         clientSocket = new Socket(ip, port);
