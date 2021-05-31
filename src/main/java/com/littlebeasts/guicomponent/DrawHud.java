@@ -2,7 +2,7 @@ package com.littlebeasts.guicomponent;
 
 import com.littlebeasts.Program;
 import com.littlebeasts.actionmenu.BattleMenu;
-import com.littlebeasts.battleanimation.BattleAnimations;
+import com.littlebeasts.battleanimation.BattleAnimationsUtils;
 import com.littlebeasts.entities.LitiBeast;
 import com.littlebeasts.entities.LitiPlayer;
 import com.littlebeasts.gamelogic.GameState;
@@ -55,7 +55,7 @@ public class DrawHud extends GuiComponent {
     }
 
     private void drawDamageRolls(Graphics2D g) {
-        BattleAnimations.draw(g);
+        BattleAnimationsUtils.draw(g);
     }
 
     private void drawBattleHud(Graphics2D g) throws IOException {

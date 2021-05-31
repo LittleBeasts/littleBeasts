@@ -2,7 +2,7 @@ package config;
 
 import org.json.JSONObject;
 
-import static utilities.JsonReader.readJson;
+import static utilities.JsonReaderUtils.readJson;
 
 public class LootConstants {
 

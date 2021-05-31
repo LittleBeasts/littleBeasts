@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BattleAnimations {
+public class BattleAnimationsUtils {
 
     private static final List<DamageAnimation> damageAnimationList = new ArrayList<>();
 

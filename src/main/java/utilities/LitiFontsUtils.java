@@ -3,12 +3,13 @@ package utilities;
 import com.littlebeasts.Program;
 import config.FontConstants;
 
-import java.awt.*;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class LitiFonts {
+public class LitiFontsUtils {
     private static final ArrayList<Font> gameFonts = new ArrayList<>();
 
     public static void loadFonts() throws IOException, FontFormatException {

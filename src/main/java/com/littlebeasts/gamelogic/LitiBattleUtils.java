@@ -5,7 +5,7 @@ import calculationEngine.entities.CeAi;
 import calculationEngine.entities.CeBeasts;
 import calculationEngine.entities.CePlayer;
 import com.littlebeasts.Program;
-import com.littlebeasts.battleanimation.BattleAnimations;
+import com.littlebeasts.battleanimation.BattleAnimationsUtils;
 import com.littlebeasts.entities.LitiBeast;
 import com.littlebeasts.entities.LitiPlayer;
 import de.gurkenlabs.litiengine.Direction;
@@ -67,15 +67,15 @@ public class LitiBattleUtils {
     public static void createDamageAnimations() {
         if (litiBeast != null) {
             for (int damage : litiBeast.getCeEntity().getDamages())
-                BattleAnimations.animateDamage(litiBeast, damage);
+                BattleAnimationsUtils.animateDamage(litiBeast, damage);
         }
         for (LitiBeast litiBeast : LitiPlayer.instance().getLittleBeastTeam().getBeasts()) {
             for (int damage : litiBeast.getCeEntity().getDamages()) {
-                BattleAnimations.animateDamage(LitiPlayer.instance(), damage);
+                BattleAnimationsUtils.animateDamage(LitiPlayer.instance(), damage);
             }
         }
         for (int damage : LitiPlayer.instance().getCePlayer().getDamages()) {
-            BattleAnimations.animateDamage(LitiPlayer.instance(), damage);
+            BattleAnimationsUtils.animateDamage(LitiPlayer.instance(), damage);
         }
     }
 
@@ -86,7 +86,7 @@ public class LitiBattleUtils {
     public static void removeBeast() {
         if (Program.getGameLogic().getState() == GameState.INGAME) {
             for (int i = 0; i < LITI_BEAST_LIST.size(); i++) {
-                if (BattleAnimations.allAnimationsDone()) {
+                if (BattleAnimationsUtils.allAnimationsDone()) {
                     LITI_BEAST_LIST.get(i).die();
                     Game.world().environment().remove(LITI_BEAST_LIST.get(i));
                     LITI_BEAST_LIST.remove(LITI_BEAST_LIST.get(i));

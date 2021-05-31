@@ -1,14 +1,7 @@
 package com.littlebeasts.gamelogic;
 
 import com.littlebeasts.Program;
-import com.littlebeasts.entities.Interactable;
-import com.littlebeasts.entities.LitiAreaSign;
-import com.littlebeasts.entities.LitiNPC;
-import com.littlebeasts.entities.LitiPet;
-import com.littlebeasts.entities.LitiPlayer;
-import com.littlebeasts.entities.LitiPropChest;
-import com.littlebeasts.entities.LitiPropDoor;
-import com.littlebeasts.entities.LitiPropSign;
+import com.littlebeasts.entities.*;
 import com.littlebeasts.scenemanager.SceneNotPossibleError;
 import com.littlebeasts.scenemanager.ScenePlayerHelper;
 import de.gurkenlabs.litiengine.Game;
@@ -123,6 +116,8 @@ public class LitiMap {
                 break;
             case UP:
                 LitiPet.instance().setY(LitiPet.instance().getY() - 16);
+                break;
+            default:
                 break;
         }
     }
