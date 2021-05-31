@@ -3,7 +3,7 @@ package com.littlebeasts.screens;
 import client.Client;
 import com.littlebeasts.Program;
 import com.littlebeasts.gamelogic.GameState;
-import com.littlebeasts.gamelogic.LitiClient;
+import com.littlebeasts.gamelogic.LitiClientUtils;
 import com.littlebeasts.gamelogic.MapNames;
 import com.littlebeasts.guicomponent.SaveMenu;
 import de.gurkenlabs.litiengine.Game;
@@ -15,7 +15,6 @@ import de.gurkenlabs.litiengine.gui.screens.Screen;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.io.IOException;
-import java.util.Collection;
 
 import static config.HudConstants.MAIN_MENU_ITEMS;
 
@@ -25,7 +24,6 @@ public class MenuScreen extends Screen implements IUpdateable {
     private SaveMenu saveMenu;
     public long lastPlayed;
     private static final String COPYRIGHT = "2020 littleBeasts";
-    private static Collection<MapArea> mapAreas;
 
     public MenuScreen() {
         super("MAINMENU");
@@ -92,14 +90,14 @@ public class MenuScreen extends Screen implements IUpdateable {
 
     private void startLocalGame() {
         this.mainMenu.setEnabled(false);
-        LitiClient.setOnlineGame(false);
+        LitiClientUtils.setOnlineGame(false);
         loadUpMap();
     }
 
     private void startOnlineGame() throws IOException {
         this.mainMenu.setEnabled(false);
-        LitiClient.setClient(new Client("TestUser"));
-        LitiClient.setOnlineGame(true);
+        LitiClientUtils.setClient(new Client("TestUser"));
+        LitiClientUtils.setOnlineGame(true);
         loadUpMap();
     }
 

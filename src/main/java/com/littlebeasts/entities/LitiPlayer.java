@@ -9,7 +9,7 @@ import calculationEngine.entities.CeNature;
 import calculationEngine.entities.CePlayer;
 import calculationEngine.entities.CeStats;
 import com.littlebeasts.Program;
-import com.littlebeasts.gamelogic.LitiMapFunctions;
+import com.littlebeasts.gamelogic.LitiMapUtils;
 import com.littlebeasts.gamelogic.PlayerState;
 import config.FontConstants;
 import de.gurkenlabs.litiengine.Align;
@@ -68,7 +68,7 @@ public class LitiPlayer extends Creature implements IMobileEntity {
         if (DEBUG_CONSOLE_OUT) System.out.println("Interaction");
         ArrayList<Interactable> interactables = Program.getGameLogic().getCurrentLitiMap().getInteractables();
         for (Interactable interactable : interactables) {
-            if (LitiMapFunctions.isInProximity(LitiPlayer.instance(), interactable.getCenter()) && LitiMapFunctions.isFacingInteractable(this, interactable.getCenter())) {
+            if (LitiMapUtils.isInProximity(LitiPlayer.instance(), interactable.getCenter()) && LitiMapUtils.isFacingInteractable(this, interactable.getCenter())) {
                 interactable.interact();
             }
         }

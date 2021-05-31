@@ -1,7 +1,6 @@
 package com.littlebeasts.actionmenu;
 
 import calculationEngine.environment.CeItem;
-import config.HudConstants;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;

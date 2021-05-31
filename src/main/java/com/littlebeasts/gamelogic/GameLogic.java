@@ -112,7 +112,7 @@ public class GameLogic implements IUpdateable {
             sceneNotPossibleError.printStackTrace();
         }
         LitiBattleUtils.update();
-        LitiClient.update();
+        LitiClientUtils.update();
     }
 
     public LitiMap getCurrentLitiMap() {
