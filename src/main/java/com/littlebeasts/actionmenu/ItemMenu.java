@@ -6,7 +6,7 @@ import com.littlebeasts.entities.LitiPlayer;
 
 import java.util.ArrayList;
 
-import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
+import static config.GlobalConstants.DEBUG_CONSOLE_OUT;
 import static config.HudConstants.*;
 
 public class ItemMenu extends ActionMenu {

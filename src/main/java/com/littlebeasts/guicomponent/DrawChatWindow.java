@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static client.Message.encodeOutgoingMessageForClient;
-import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
+import static config.GlobalConstants.DEBUG_CONSOLE_OUT;
 import static config.HudConstants.ChatWindowFont;
 
 public class DrawChatWindow extends GuiComponent {

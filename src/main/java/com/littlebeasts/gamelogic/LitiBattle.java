@@ -15,7 +15,7 @@ import de.gurkenlabs.litiengine.graphics.Camera;
 import java.util.ArrayList;
 import java.util.List;
 
-import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
+import static config.GlobalConstants.DEBUG_CONSOLE_OUT;
 
 public class LitiBattle {
     private static CeBattle ceBattle;

@@ -17,7 +17,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
+import static config.GlobalConstants.DEBUG_CONSOLE_OUT;
 
 @EntityInfo(width = 16, height = 16)
 @MovementInfo(velocity = 100)

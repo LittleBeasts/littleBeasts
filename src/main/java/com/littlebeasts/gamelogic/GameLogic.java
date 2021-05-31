@@ -13,7 +13,7 @@ import de.gurkenlabs.litiengine.graphics.Camera;
 import de.gurkenlabs.litiengine.graphics.PositionLockCamera;
 import de.gurkenlabs.litiengine.input.Input;
 
-import static config.GlobalConfig.DEBUG_CONSOLE_OUT;
+import static config.GlobalConstants.DEBUG_CONSOLE_OUT;
 
 public class GameLogic implements IUpdateable {
     private static GameState state = GameState.INGAME;

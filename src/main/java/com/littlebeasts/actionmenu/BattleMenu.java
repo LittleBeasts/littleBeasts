@@ -1,7 +1,7 @@
 package com.littlebeasts.actionmenu;
 
 import com.littlebeasts.entities.LitiPlayer;
-import config.PlayerConfig;
+import config.PlayerConstants;
 
 import java.awt.*;
 
@@ -14,17 +14,17 @@ public class BattleMenu extends ActionMenu {
     private ItemMenu itemMenu;
 
     public BattleMenu(boolean focus) {
-        super(PlayerConfig.PLAYER_ACTIONS);
+        super(PlayerConstants.PLAYER_ACTIONS);
         createSubMenus();
         this.setFocus(focus);
 
         onConfirm(c -> {
             setFocus(false);
-            if (c == PlayerConfig.PLAYER_ACTIONS.indexOf("Attack")) {
+            if (c == PlayerConstants.PLAYER_ACTIONS.indexOf("Attack")) {
                 getAttackMenu().setFocus(true);
-            } else if (c == PlayerConfig.PLAYER_ACTIONS.indexOf("Catch")) {
+            } else if (c == PlayerConstants.PLAYER_ACTIONS.indexOf("Catch")) {
                 getCatchMenu().setFocus(true);
-            } else if (c == PlayerConfig.PLAYER_ACTIONS.indexOf("Item")) {
+            } else if (c == PlayerConstants.PLAYER_ACTIONS.indexOf("Item")) {
                 getItemMenu().setFocus(true);
             }
         });
@@ -53,13 +53,13 @@ public class BattleMenu extends ActionMenu {
         draw(g);
         setFocus(!(getAttackMenu().isFocused() || getCatchMenu().isFocused() || getItemMenu().isFocused()));
         if (getAttackMenu().isFocused()) {
-            getAttackMenu().draw(g, PlayerConfig.PLAYER_ACTIONS.indexOf("Attack") - firstDrawnItem);
+            getAttackMenu().draw(g, PlayerConstants.PLAYER_ACTIONS.indexOf("Attack") - firstDrawnItem);
         }
         if (getCatchMenu().isFocused()) {
-            getCatchMenu().draw(g, PlayerConfig.PLAYER_ACTIONS.indexOf("Catch") - firstDrawnItem);
+            getCatchMenu().draw(g, PlayerConstants.PLAYER_ACTIONS.indexOf("Catch") - firstDrawnItem);
         }
         if (getItemMenu().isFocused()) {
-            getItemMenu().draw(g, PlayerConfig.PLAYER_ACTIONS.indexOf("Item") - firstDrawnItem);
+            getItemMenu().draw(g, PlayerConstants.PLAYER_ACTIONS.indexOf("Item") - firstDrawnItem);
         }
     }
 

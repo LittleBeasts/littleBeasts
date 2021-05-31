@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 import static utilities.JsonReader.readJson;
 
-public class LootConfig {
+public class LootConstants {
 
     public static final int dropCommon = 60;
     public static final int dropRare = 35;
