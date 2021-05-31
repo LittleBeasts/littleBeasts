@@ -7,7 +7,7 @@ import cucumber.api.java.en.When;
 import de.gurkenlabs.litiengine.Game;
 import org.junit.Assert;
 
-import java.awt.*;
+import java.awt.FontFormatException;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 

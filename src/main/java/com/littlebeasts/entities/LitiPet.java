@@ -3,7 +3,11 @@ package com.littlebeasts.entities;
 import calculationEngine.entities.CeAttack;
 import calculationEngine.entities.CeAttacks;
 import de.gurkenlabs.litiengine.IUpdateable;
-import de.gurkenlabs.litiengine.entities.*;
+import de.gurkenlabs.litiengine.entities.CollisionInfo;
+import de.gurkenlabs.litiengine.entities.Creature;
+import de.gurkenlabs.litiengine.entities.EntityInfo;
+import de.gurkenlabs.litiengine.entities.IMobileEntity;
+import de.gurkenlabs.litiengine.entities.MovementInfo;
 import de.gurkenlabs.litiengine.physics.MovementController;
 
 import java.awt.geom.Point2D;

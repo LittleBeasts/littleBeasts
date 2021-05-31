@@ -7,7 +7,8 @@ import com.littlebeasts.entities.LitiPlayer;
 import java.util.ArrayList;
 
 import static config.GlobalConstants.DEBUG_CONSOLE_OUT;
-import static config.HudConstants.*;
+import static config.HudConstants.BATTLE_MENU_OFFSET;
+import static config.HudConstants.BATTLE_MENU_START;
 
 public class ItemMenu extends ActionMenu {
 

@@ -3,7 +3,7 @@ package com.littlebeasts.actionmenu;
 import com.littlebeasts.entities.LitiPlayer;
 import config.PlayerConstants;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 
 import static config.HudConstants.BATTLE_MENU_START;
 

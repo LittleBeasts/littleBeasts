@@ -4,7 +4,7 @@ import de.gurkenlabs.litiengine.gui.SpeechBubbleAppearance;
 import org.json.JSONObject;
 import utilities.JsonReader;
 
-import java.awt.*;
+import java.awt.Color;
 
 public class DialogueConstants {
 

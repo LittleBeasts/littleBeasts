@@ -10,7 +10,9 @@ import com.littlebeasts.gamelogic.LitiBattle;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.gui.GuiComponent;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.io.IOException;
 
 import static config.HudConstants.*;

@@ -9,7 +9,7 @@ import de.gurkenlabs.litiengine.entities.Creature;
 import de.gurkenlabs.litiengine.entities.Spawnpoint;
 import de.gurkenlabs.litiengine.resources.Resources;
 
-import java.awt.*;
+import java.awt.Image;
 
 import static config.GlobalConstants.DEBUG_CONSOLE_OUT;
 

@@ -12,7 +12,8 @@ import de.gurkenlabs.litiengine.entities.MapArea;
 import de.gurkenlabs.litiengine.graphics.TextRenderer;
 import de.gurkenlabs.litiengine.gui.screens.Screen;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.io.IOException;
 import java.util.Collection;
 

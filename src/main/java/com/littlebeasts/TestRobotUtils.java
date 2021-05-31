@@ -1,6 +1,7 @@
 package com.littlebeasts;
 
-import java.awt.*;
+import java.awt.AWTException;
+import java.awt.Robot;
 
 import static config.TestConstants.ROBOT_SLEEP;
 

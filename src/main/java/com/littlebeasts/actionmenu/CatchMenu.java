@@ -4,7 +4,8 @@ import calculationEngine.environment.CeItem;
 
 import java.util.ArrayList;
 
-import static config.HudConstants.*;
+import static config.HudConstants.BATTLE_MENU_OFFSET;
+import static config.HudConstants.BATTLE_MENU_START;
 
 public class CatchMenu extends ActionMenu {
 

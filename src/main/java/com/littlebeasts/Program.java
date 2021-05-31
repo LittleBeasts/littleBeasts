@@ -10,7 +10,7 @@ import de.gurkenlabs.litiengine.resources.Resources;
 import utilities.LitiFonts;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.FontFormatException;
 import java.io.IOException;
 import java.util.Objects;
 

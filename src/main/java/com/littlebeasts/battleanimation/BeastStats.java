@@ -3,7 +3,7 @@ package com.littlebeasts.battleanimation;
 import com.littlebeasts.Program;
 import com.littlebeasts.entities.LitiBeast;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 
 import static config.HudConstants.*;
 

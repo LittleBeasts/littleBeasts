@@ -9,7 +9,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
 
-import java.awt.*;
+import java.awt.FontFormatException;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 

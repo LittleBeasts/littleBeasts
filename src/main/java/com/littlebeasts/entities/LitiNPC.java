@@ -7,7 +7,7 @@ import de.gurkenlabs.litiengine.gui.SpeechBubble;
 import org.json.JSONObject;
 import utilities.LitiFonts;
 
-import java.awt.*;
+import java.awt.Font;
 import java.awt.geom.Point2D;
 import java.util.Random;
 

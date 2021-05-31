@@ -2,7 +2,7 @@ package com.littlebeasts.battleanimation;
 
 import de.gurkenlabs.litiengine.entities.IEntity;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
