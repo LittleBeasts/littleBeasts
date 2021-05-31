@@ -11,13 +11,14 @@ import java.util.List;
 
 import static com.littlebeasts.scenemanager.ScriptParser.parseScript;
 
-public class ScenePlayer {
+public class ScenePlayerHelper {
 
-    private static int day = 1, scene = 1;
+    private static int day = 1;
+    private static int scene = 1;
     private static Script script;
 
     public static void startScene(int day, int scene) throws SceneNotPossibleError {
-        if (ScenePlayer.day == day && ScenePlayer.scene == scene) {
+        if (ScenePlayerHelper.day == day && ScenePlayerHelper.scene == scene) {
             script = parseScript(day, scene);
             if (!isScenePossible()) throw new SceneNotPossibleError();
             Program.getGameLogic().setState(GameState.DIALOGUE);

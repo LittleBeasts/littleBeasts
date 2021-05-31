@@ -6,7 +6,7 @@ import com.littlebeasts.gamelogic.GameState;
 import com.littlebeasts.gamelogic.LitiBattle;
 import com.littlebeasts.gamelogic.LitiClient;
 import com.littlebeasts.gamelogic.PlayerState;
-import com.littlebeasts.scenemanager.ScenePlayer;
+import com.littlebeasts.scenemanager.ScenePlayerHelper;
 import com.littlebeasts.screens.IngameScreen;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.input.Input;
@@ -22,7 +22,7 @@ public final class PlayerInput {
             if (Program.getGameLogic().getState().equals(GameState.BATTLE)) {
                 battleControls(e);
             } else if (Program.getGameLogic().getState().equals(GameState.DIALOGUE) && e.getKeyCode() == KeyEvent.VK_E) {
-                ScenePlayer.getScript().getDialogue().getSpeechBubble().hide();
+                ScenePlayerHelper.getScript().getDialogue().getSpeechBubble().hide();
             } else if (Program.getGameLogic().getState().equals(GameState.INVENTORY)) {
                 inventoryControls(e);
             } else {
