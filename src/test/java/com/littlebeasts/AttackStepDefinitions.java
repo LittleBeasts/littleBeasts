@@ -24,11 +24,11 @@ public class AttackStepDefinitions {
         input[0] = "Arkham";
         Program.main(input);
         if (Program.getGameLogic().getState() == GameState.MENU) {
-            TestRobot.robotButtonPress(KeyEvent.VK_UP);
-            TestRobot.robotButtonPress(KeyEvent.VK_ENTER);
+            TestRobotUtils.robotButtonPress(KeyEvent.VK_UP);
+            TestRobotUtils.robotButtonPress(KeyEvent.VK_ENTER);
         }
         Assert.assertEquals(Program.getGameLogic().getState(), GameState.INGAME);
-        TestRobot.robotButtonPress(KeyEvent.VK_B);
+        TestRobotUtils.robotButtonPress(KeyEvent.VK_B);
         Assert.assertEquals(Program.getGameLogic().getState(), GameState.BATTLE);
     }
 
@@ -40,24 +40,24 @@ public class AttackStepDefinitions {
     @When("^the Player chooses to attack$")
     public void thePlayerChoosesToAttack() {
         Assert.assertTrue(Program.getIngameScreen().getHud().getBattleMenu().isFocused());
-        TestRobot.robotButtonPress(KeyEvent.VK_D);
+        TestRobotUtils.robotButtonPress(KeyEvent.VK_D);
         Assert.assertFalse(Program.getIngameScreen().getHud().getBattleMenu().isFocused());
     }
 
     @Then("^a menu opens where the Player can choose an attack$")
     public void aMenuOpensWhereThePlayerCanChooseAnAttack() {
         Assert.assertTrue(Program.getIngameScreen().getHud().getBattleMenu().getAttackMenu().isFocused());
-        TestRobot.robotButtonPress(KeyEvent.VK_E);
-        TestRobot.robotButtonPress(KeyEvent.VK_B);
+        TestRobotUtils.robotButtonPress(KeyEvent.VK_E);
+        TestRobotUtils.robotButtonPress(KeyEvent.VK_B);
         Assert.assertEquals(Program.getGameLogic().getState(), GameState.INGAME);
         returnToMainMenu();
         Assert.assertEquals(Program.getGameLogic().getState(), GameState.MENU);
     }
 
     private void returnToMainMenu() {
-        TestRobot.robotButtonPress(KeyEvent.VK_ESCAPE);
-        TestRobot.robotButtonPress(KeyEvent.VK_DOWN);
-        TestRobot.robotButtonPress(KeyEvent.VK_ENTER);
+        TestRobotUtils.robotButtonPress(KeyEvent.VK_ESCAPE);
+        TestRobotUtils.robotButtonPress(KeyEvent.VK_DOWN);
+        TestRobotUtils.robotButtonPress(KeyEvent.VK_ENTER);
     }
 
 /*

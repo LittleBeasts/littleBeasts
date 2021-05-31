@@ -1,18 +1,18 @@
 package com.littlebeasts;
 
-import config.TestConstants;
-
 import java.awt.*;
 
-public class TestRobot {
+import static config.TestConstants.ROBOT_SLEEP;
+
+public class TestRobotUtils {
     public static void robotButtonPress(int i) {
         try {
             Robot robert = new Robot();
-            Thread.sleep(TestConstants.ROBOT_SLEEP);
+            Thread.sleep(ROBOT_SLEEP);
             robert.keyPress(i);
             Thread.sleep(100);
             robert.keyRelease(i);
-            Thread.sleep(TestConstants.ROBOT_SLEEP);
+            Thread.sleep(ROBOT_SLEEP);
         } catch (AWTException | InterruptedException awtException) {
             awtException.printStackTrace();
         }

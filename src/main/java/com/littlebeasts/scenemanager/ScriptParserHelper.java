@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 import static config.DialogueConstants.dialogueTree;
 
-public class ScriptParser {
+public class ScriptParserHelper {
 
     public static Script parseScript(int day, int scene) {
         JSONObject JSONDay = dialogueTree.getJSONObject("day" + day);
