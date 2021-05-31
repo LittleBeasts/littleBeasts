@@ -17,7 +17,7 @@ import java.util.List;
 
 import static config.GlobalConstants.DEBUG_CONSOLE_OUT;
 
-public class LitiBattle {
+public class LitiBattleUtils {
     private static CeBattle ceBattle;
     private static boolean nextBattlePossible = true;
     private static final List<LitiBeast> LITI_BEAST_LIST = new ArrayList<>(); // list to resolve all animation before removing entity TODO: find a way to finish animation w/o this list.
@@ -54,8 +54,8 @@ public class LitiBattle {
         if (ceBattle == null) return;
         if (Program.getGameLogic().getState() == GameState.BATTLE) {
             if (ceBattle.getTurn() != null) {
-                if (ceBattle.getTurn().getNumber() == cePlayer.getNumber()) {
-                    if (DEBUG_CONSOLE_OUT) System.out.println("Battle round");
+                if (ceBattle.getTurn().getNumber() == cePlayer.getNumber() && DEBUG_CONSOLE_OUT) {
+                    System.out.println("Battle round");
                 }
             } else {
 
@@ -111,7 +111,7 @@ public class LitiBattle {
     }
 
     public static void setNextBattlePossible(boolean nextBattlePossible) {
-        LitiBattle.nextBattlePossible = nextBattlePossible;
+        LitiBattleUtils.nextBattlePossible = nextBattlePossible;
     }
 
     public static void update() {

@@ -67,9 +67,9 @@ public class GameLogic implements IUpdateable {
                 }
                 break;
             case BATTLE:
-                LitiBattle.setNextBattlePossible(false);
+                LitiBattleUtils.setNextBattlePossible(false);
                 Game.audio().playMusic("battle");
-                LitiBattle.triggerBattle();
+                LitiBattleUtils.triggerBattle();
                 break;
             case INGAME:
                 firstStart = false;
@@ -111,7 +111,7 @@ public class GameLogic implements IUpdateable {
         } catch (SceneNotPossibleError sceneNotPossibleError) {
             sceneNotPossibleError.printStackTrace();
         }
-        LitiBattle.update();
+        LitiBattleUtils.update();
         LitiClient.update();
     }
 

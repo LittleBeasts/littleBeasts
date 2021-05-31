@@ -6,7 +6,7 @@ import com.littlebeasts.battleanimation.BattleAnimations;
 import com.littlebeasts.entities.LitiBeast;
 import com.littlebeasts.entities.LitiPlayer;
 import com.littlebeasts.gamelogic.GameState;
-import com.littlebeasts.gamelogic.LitiBattle;
+import com.littlebeasts.gamelogic.LitiBattleUtils;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.gui.GuiComponent;
 
@@ -93,8 +93,8 @@ public class DrawHud extends GuiComponent {
         for (LitiBeast beast : LitiPlayer.instance().getLittleBeastTeam().getBeasts()) {
             beast.getBeastStats().draw(g, LitiPlayer.instance().getLittleBeastTeam().getBeasts().indexOf(beast));
         }
-        if (LitiBattle.getBeastList() != null) {
-            for (LitiBeast beast : LitiBattle.getBeastList()) {
+        if (LitiBattleUtils.getBeastList() != null) {
+            for (LitiBeast beast : LitiBattleUtils.getBeastList()) {
                 if (beast.getBeastStats() != null)
                     beast.getBeastStats().draw(g, 0);
             }

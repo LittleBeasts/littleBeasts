@@ -3,7 +3,7 @@ package com.littlebeasts;
 import com.littlebeasts.actionmenu.ActionMenu;
 import com.littlebeasts.entities.LitiPlayer;
 import com.littlebeasts.gamelogic.GameState;
-import com.littlebeasts.gamelogic.LitiBattle;
+import com.littlebeasts.gamelogic.LitiBattleUtils;
 import com.littlebeasts.gamelogic.LitiClient;
 import com.littlebeasts.gamelogic.PlayerState;
 import com.littlebeasts.scenemanager.ScenePlayerHelper;
@@ -128,7 +128,7 @@ public final class PlayerInput {
     }
 
     private static void onOtherKey(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_B && Program.getGameLogic().getState() == GameState.INGAME && LitiBattle.isNextBattlePossible()) {
+        if (e.getKeyCode() == KeyEvent.VK_B && Program.getGameLogic().getState() == GameState.INGAME && LitiBattleUtils.isNextBattlePossible()) {
             Program.getGameLogic().setState(GameState.BATTLE);
         } else if (e.getKeyCode() == KeyEvent.VK_B && Program.getGameLogic().getState() == GameState.BATTLE) {
             Program.getGameLogic().setState(GameState.INGAME);
