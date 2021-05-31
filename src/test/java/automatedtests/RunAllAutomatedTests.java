@@ -1,4 +1,4 @@
-package automatedTests;
+package automatedtests;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         features = "src/test/resources",
         glue = "com.littleBeasts",
-        tags = "" // Add tags you want to test here e.g.: "@StartGame, @AttackPlayerPicksActivity"
+        tags = "@All"
 )
-public class TagCaseTests {
+public class RunAllAutomatedTests {
 }
