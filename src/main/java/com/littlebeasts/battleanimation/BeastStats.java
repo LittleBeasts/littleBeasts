@@ -2,7 +2,6 @@ package com.littlebeasts.battleanimation;
 
 import com.littlebeasts.Program;
 import com.littlebeasts.entities.LitiBeast;
-import config.HudConstants;
 
 import java.awt.*;
 
@@ -25,17 +24,17 @@ public class BeastStats {
     }
 
     private void drawPlayerBeastStats(Graphics2D g, int teamPosition) {
-        int offset = teamPosition * (HudConstants.TILE_GAP + HudConstants.HUD_TILE_WIDTH);
+        int offset = teamPosition * (TILE_GAP + HUD_TILE_WIDTH);
 
         // background of tile
-        g.setColor(HudConstants.BACKGROUND);
+        g.setColor(BACKGROUND);
         g.fillRect(TEAM_START_POINT + offset, HUD_BOTTOM_START, HUD_TILE_WIDTH, HUD_ROW_HEIGHT);
 
         // draw portrait
         g.drawImage(beast.getPortrait(), TEAM_START_POINT + offset, HUD_BOTTOM_START, BEAST_PORTRAIT_WIDTH, BEAST_PORTRAIT_HEIGHT, null);
 
         // draw health bar overlay
-        g.setColor(HudConstants.HPBARCOLOR);
+        g.setColor(HPBARCOLOR);
         int hpRatio = beast.getCeEntity().getCeStats().getCurrentHitPoints() * 100 / beast.getCeEntity().getCeStats().getMaxHitPoints();
         g.fillRect(TEAM_START_POINT + offset, HUD_BOTTOM_START + HUD_ROW_HEIGHT, BEAST_PORTRAIT_WIDTH, -(BEAST_PORTRAIT_HEIGHT * hpRatio) / 100);
 
@@ -45,8 +44,8 @@ public class BeastStats {
         beastInfo += beast.getCeEntity().getCeStats().getCurrentHitPoints() + "/" + beast.getCeEntity().getCeStats().getMaxHitPoints() + "\n";
 
         // draw beast info
-        g.setFont(HudConstants.HUD_FONT);
-        g.setColor(HudConstants.TEXTCOLOR);
+        g.setFont(HUD_FONT);
+        g.setColor(TEXTCOLOR);
         Program.getIngameScreen().getHud().drawString(g, beastInfo, TEAM_START_POINT + offset + BEAST_PORTRAIT_WIDTH, HUD_BOTTOM_START);
     }
 }
