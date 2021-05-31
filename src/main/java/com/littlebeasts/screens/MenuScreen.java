@@ -8,7 +8,6 @@ import com.littlebeasts.gamelogic.MapNames;
 import com.littlebeasts.guicomponent.SaveMenu;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
-import de.gurkenlabs.litiengine.entities.MapArea;
 import de.gurkenlabs.litiengine.graphics.TextRenderer;
 import de.gurkenlabs.litiengine.gui.screens.Screen;
 
