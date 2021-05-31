@@ -25,14 +25,10 @@ public class DrawInventory extends GuiComponent {
     private static InventoryState inventoryState = InventoryState.HEAD;
     private final int ITEM_SLOT_SIZE = 150;
     //TODO Add Stats Class and Inventory Class when Leon did stuff and things
-    private final int attackStat;
-    private final int defenceStat;
-    private final int staminaStat;
-    private final int speedStat;
     private final int maxHealth;
     private final int currentHealth;
-    private final int level;
-    private int currentCursorPosition, indicatorPosition;
+    private int currentCursorPosition;
+    private int indicatorPosition;
     private final int inventorySize;
     private final int maxItemsOnPage = 5;
     private int firstItem;
@@ -40,13 +36,8 @@ public class DrawInventory extends GuiComponent {
 
     public DrawInventory() {
         super(0, 0, WIDTH, HEIGHT);
-        this.attackStat = LitiPlayer.instance().getCePlayer().getCeStats().getAttack();
-        this.defenceStat = LitiPlayer.instance().getCePlayer().getCeStats().getDefense();
-        this.speedStat = LitiPlayer.instance().getCePlayer().getCeStats().getSpeed();
-        this.staminaStat = LitiPlayer.instance().getCePlayer().getCeStats().getStamina();
         this.maxHealth = LitiPlayer.instance().getCePlayer().getCeStats().getMaxHitPoints();
         this.currentHealth = LitiPlayer.instance().getCePlayer().getCeStats().getCurrentHitPoints();
-        this.level = LitiPlayer.instance().getCePlayer().getCeStats().getLevel();
 
         Input.keyboard().onKeyTyped(KeyEvent.VK_E, e -> {
             if (Program.getGameLogic().getState() == GameState.MENU) {
@@ -122,7 +113,7 @@ public class DrawInventory extends GuiComponent {
         int i = 0;
         g.setStroke(new BasicStroke(2));
         for (InventoryState invState : InventoryState.values()) {
-            if (invState.equals(inventoryState) && images.get(i).equals(inventoryState.name().toLowerCase())) {
+            if (invState.equals(inventoryState) && images.get(i).equalsIgnoreCase(inventoryState.name())) {
                 g.drawRect(x, HEIGHT / 20, 50, 50);
             }
             ImageRenderer.renderScaled(g, Resources.images().get("sprites/" + images.get(i) + ".png"), x, HEIGHT / 20, 0.1);
@@ -182,12 +173,11 @@ public class DrawInventory extends GuiComponent {
     }
 
     private void drawItems(Graphics2D g) {
-        int itemWidth, itemHeight, leftBorderPosition, topBorderPosition, verticalGap;
-        itemHeight = 75;
-        itemWidth = 900;
-        leftBorderPosition = 985;
-        topBorderPosition = 150;
-        verticalGap = 15;
+        int itemWidth = 900;
+        int itemHeight = 75;
+        int leftBorderPosition = 985;
+        int topBorderPosition = 150;
+        int verticalGap = 15;
         int count = 0;
         for (CeSlot ceSlot : LitiPlayer.instance().getCeInventory().getSlots()) {
             if (count >= firstItem && count < firstItem + maxItemsOnPage) {
@@ -217,15 +207,12 @@ public class DrawInventory extends GuiComponent {
     }
 
     private void drawScrollBar(Graphics2D g) {
-        int startTop, height, width;
-        int indicatorWidth, indicatorHeight;
+        int startTop = 125;
+        int width = 4;
+        int height = 500;
+        int indicatorWidth = 8;
+        int indicatorHeight = height / (inventorySize - maxItemsOnPage + 1);
 
-        startTop = 125;
-        width = 4;
-        height = 500;
-
-        indicatorWidth = 8;
-        indicatorHeight = height / (inventorySize - maxItemsOnPage + 1);
         height = indicatorHeight * (inventorySize - maxItemsOnPage + 1);
 
         g.setColor(Color.GREEN);
