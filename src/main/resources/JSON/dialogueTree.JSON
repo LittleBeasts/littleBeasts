@@ -1,57 +1,600 @@
 {
-    "day1": {
-      "scene1": {
-        "heading": "At Home",
-        "dialoguePartner": [],
-        "dialogue": [
-          {
-            "speaker": "$name",
-            "text": "Hey sweety, did you also have a strange dream?"
-          },
-          {
-            "speaker": "$nameCat",
-            "text": "Meow"
-          },
-          {
-            "speaker": "$name",
-            "text": "Something is not right, I should talk to the Professor."
-          },
-          {
-            "speaker": "$nameCat",
-            "text": "Meow?"
-          },
-          {
-            "speaker": "$name",
-            "text": "Let's go to his office!"
-          }
-        ],
-        "trigger":{
-          "Cat": "dialog1"
+  "day1": {
+    "scene1": {
+      "heading": "At Home",
+      "dialoguePartner": [
+        "$nameCat"
+      ],
+      "dialogue1": [
+        {
+          "speaker": "$name",
+          "text": "Hey sweety, did you also have a strange dream?"
+        },
+        {
+          "speaker": "$nameCat",
+          "text": "Meow"
+        },
+        {
+          "speaker": "$name",
+          "text": "Something is not right, I should talk to the Professor."
+        },
+        {
+          "speaker": "$nameCat",
+          "text": "Meow?"
+        },
+        {
+          "speaker": "$name",
+          "text": "Let's go to his office!"
         }
-      },
-      "tutorial":{
-        "...":"..."
+      ],
+      "trigger": {
+        "$nameCat": "dialogue1"
       }
     },
+    "scene2": {
+      "heading": "At the Professors Office",
+      "dialoguePartner": [
+        "Professor Weintraub"
+      ],
+      "dialogue1": [
+        {
+          "speaker": "$name",
+          "text": "Hello Professor!"
+        },
+        {
+          "speaker": "Professor Weintraub",
+          "text": "Hello $name, did you find some rest?"
+        },
+        {
+          "speaker": "$name",
+          "text": "I couldn't say... I had this dream again."
+        },
+        {
+          "speaker": "Professor Weintraub",
+          "text": "..."
+        },
+        {
+          "speaker": "$name",
+          //TODO: is "they" a placeholder? with which word should this be replaced?
+          "text": "Didn't we do everything as it is written in the books? Why won't \"they\" leave me alone."
+        },
+        {
+          "speaker": "Professor Weintraub",
+          "text": "..."
+        },
+        {
+          "speaker": "$name",
+          "text": "Professor? Don't tell me it was all for nothing!!"
+        },
+        {
+          "speaker": "Professor Weintraub",
+          "text": "No need to be overly dramatic, we did everything right. You need to give it more time, your soul hasn't realized the new situation yet."
+        },
+        {
+          "speaker": "$name",
+          "text": "What should I do?"
+        },
+        {
+          "speaker": "Professor Weintraub",
+          "text": "I have a small task for you, this will surely lift up your spirits."
+        },
+        {
+          "speaker": "$name",
+          "text": "Nods"
+        },
+        {
+          "speaker": "Professor Weintraub",
+          "text": "A new artifact made it's way to town. With it we can finally make everything right. Have you ever heard of Lois?"
+        },
+        {
+          "speaker": "$name",
+          "text": "Shakes head"
+        },
+        {
+          "speaker": "Professor Weintraub",
+          //TODO: is "item" a placeholder? with which word should this be replaced?
+          "text": "She is an old friend of mine, got to her and tell her I sent you to receive the \"item\". Can you do that for me?"
+        },
+        {
+          "speaker": "$name",
+          "text": "You know I can! I will bring it to you ASAP."
+        }
+      ],
+      "trigger": {
+        "Professor Weintraub": "dialogue1"
+      }
+    },
+    "scene3": {
+      "heading": "Flea Market",
+      "dialoguePartner": [
+        "Louis"
+      ],
+      "dialogue1": [
+        {
+          "speaker": "Lois",
+          "text": "How can I help you honey? You seem lost."
+        },
+        {
+          "speaker": "$name",
+          "text": "Are you Lois?"
+        },
+        {
+          "speaker": "Lois",
+          "text": "The one and only, who is asking?"
+        },
+        {
+          "speaker": "$name",
+          "text": "I'm $name, Professor Weintraub has sent me to get an \"item\"."
+        },
+        {
+          "speaker": "Lois",
+          "text": "You work with that old geezer? My condolences. But business is business. Yeah I heard chatter on the streets that someone is willing to surrender it for the right price."
+        },
+        {
+          "speaker": "$name",
+          "text": "And what would that price be?"
+        },
+        {
+          "speaker": "Lois",
+          "text": "A piece of the meteor of course, that's is all the rage right now."
+        },
+        {
+          "speaker": "$name",
+          "text": "I see what I can do."
+        },
+        {
+          "speaker": "Lois",
+          "text": "I would take a look around the meteor crater if I where you, perhaps you will get lucky."
+        }
+      ],
+      "trigger": {
+        "Lois": "dialogue1"
+      }
+    },
+    "scene4": {
+      "heading": "Meteor Crater",
+      "dialoguePartner": [
+        "Agent Scully"
+      ],
+      "dialogue1": [
+        {
+          "speaker": "Agent Scully",
+          "text": "What do you think you are doing here?!?"
+        },
+        {
+          "speaker": "$name",
+          "text": "I'm just having a stroll through the park."
+        },
+        {
+          "speaker": "Agent Scully",
+          "text": "Then stroll somewhere else, will you?!"
+        },
+        {
+          "speaker": "$name",
+          "text": "I need a way to find a piece of the meteor. Perhaps someone saw something"
+        }
+      ],
+      "trigger": {
+        "Agent Scully": "dialogue1"
+      }
+    },
+    "scene5": {
+      "heading": "Lincoln Park",
+      "dialoguePartner": [
+        "Stinky Pete"
+      ],
+      "dialogue1": [
+        {
+          "speaker": "$name",
+          "text": "Hello Pete."
+        },
+        {
+          "speaker": "Stinky Pete",
+          "text": "Stinky Pete if you will!"
+        },
+        {
+          "speaker": "$name",
+          "text": "I'm sorry - Stinky Pete."
+        },
+        {
+          "speaker": "Stinky Pete",
+          "text": "Manners are important."
+        },
+        {
+          "speaker": "$name",
+          "text": "Word is that you are the one to come to, for meteorite scraps."
+        },
+        {
+          "speaker": "Stinky Pete",
+          "text": "Perhaps."
+        },
+        {
+          "speaker": "$name",
+          "text": "Perhaps we can make a deal?"
+        },
+        {
+          "speaker": "Stinky Pete",
+          "text": "Actually I lost something - My lucky bottle, it fell right down a storm drain, when the F.B.I. people removed me from my usual spot. When you find it we can be friends."
+        },
+        {
+          "speaker": "$name",
+          "text": "We'll do."
+        }
+      ],
+      "trigger": {
+        "Stinky Pete": "dialogue1"
+      }
+    },
+    "scene6": {
+      "heading": "The first Catch",
+      "dialoguePartner": [
+        "Lois"
+      ],
+      "dialogue1": [
+        {
+          "speaker": "Lois",
+          "text": "Hello Hon, back already? You are quick to deliver."
+        },
+        {
+          "speaker": "$name",
+          "text": "I don't have it yet, but I have a source."
+        },
+        {
+          "speaker": "Lois",
+          "text": "Uhh, how facinating."
+        },
+        {
+          "speaker": "$name",
+          "text": "I need to get into the sewers, do you know a way in?"
+        },
+        {
+          "speaker": "Lois",
+          "text": "Of course I do. But it comes at a price. Catch me on of those Beasts and you can have the key, here take this cage."
+        }
+      ],
+      "trigger": {
+        "Lois": "dialogue1"
+      }
+    },
+    "scene7": {
+      "heading": "Heroes reward",
+      "dialoguePartner": [
+        "Stinky Pete"
+      ],
+      "dialogue1": [
+        {
+          "speaker": "Stinky Pete",
+          "text": "Thank you stranger, your good manners will be rewarded."
+        }
+      ],
+      "trigger": {
+        "Stinky Pete": "dialogue1"
+      }
+    },
+    "scene8": {
+      "heading": "Doing business",
+      "dialoguePartner": [
+        "Lois"
+      ],
+      "dialogue1": [
+        {
+          "speaker": "Lois",
+          "text": "Well look at that, I was kidding, but you did it anyway. I should ask you more often to retrieve items for me. Tell the Professor that I will get the \"item\" for him and he can lay his rotting head to rest"
+        }
+      ],
+      "trigger": {
+        "Lois": "dialogue1"
+      }
+    },
+    "scene9": {
+      "heading": "Back at new Campus",
+      "dialoguePartner": [
+        "Professor Weintraub"
+      ],
+      "dialogue1": [
+        {
+          "speaker": "Professor Weintraub",
+          "text": "She is always a blast, you did good. Rest now, tommorow will be a huge day for you and me, we need to be at our best."
+        }
+      ],
+      "trigger": {
+        "Professor Weintraub": "dialogue1"
+      }
+    },
+    "tutorial": {
+      "...": "..."
+    }
+  },
+  "day2": {
+    //TODO: this dialog has no scene number
+    "scene1": {
+      "heading": "At Home",
+      "dialoguePartner": [
+        "$nameCat"
+      ],
+      "dialogue1": [
+        {
+          "speaker": "$nameCat",
+          "text": "Meow?"
+        },
+        {
+          "speaker": "$name",
+          "text": "No, the dream is still there."
+        },
+        {
+          "speaker": "$nameCat",
+          "text": "Meow?"
+        },
+        {
+          "speaker": "$name",
+          "text": "You're right, I should talk to the Professor again."
+        }
+      ],
+      "trigger": {
+        "$nameCat": "dialogue1"
+      }
+    },
+    "scene2": {
+      //TODO: heading missing
+      "heading": "",
+      "dialoguePartner": [
+        "Lois"
+      ],
+      "dialogue1": [
+        {
+          "speaker": "Lois",
+          "text": "You look dreadfull hon, what happened"
+        },
+        {
+          "speaker": "$name",
+          "text": "I can't find the Proffesor, do you have an idea where he could be?"
+        },
+        {
+          "speaker": "Lois",
+          "text": "We met today at the break of dawn, always a good time for a deal, not that there is a bad time to earn some money."
+        },
+        {
+          "speaker": "$name",
+          "text": "Do you know where he went after that?"
+        },
+        {
+          "speaker": "Lois",
+          "text": "Not really. The old man said something about \"only one thing is missing now\" and then left."
+        },
+        {
+          "speaker": "$name",
+          "text": "Thank you Lois."
+        },
+        {
+          "speaker": "Lois",
+          "text": "Don't mention it, I mean it. My reputation is important for my business."
+        }
+      ],
+      "trigger": {
+        "Lois": "dialogue1"
+      }
+    },
+    "scene3": {
+      "heading": "Mr. Paulsens Antiquariate",
+      "dialoguePartner": [
+        "Mr. Paulsen",
+        "$nameCat"
+      ],
+      "dialogue1": [
+        {
+          "speaker": "Mr. Paulsen",
+          "text": "Please don't touch anything."
+        },
+        {
+          "speaker": "$name",
+          "text": "Have you seen Professor Weintraub today?"
+        },
+        {
+          "speaker": "Mr. Paulsen",
+          "text": "No... I have not. Why would you think that?"
+        },
+        {
+          "speaker": "$name",
+          "text": "I was told he was here."
+        },
+        {
+          "speaker": "Mr. Paulsen",
+          "text": "Okay okay, stop the interrogation, I confess. He was here."
+        },
+        {
+          "speaker": "$name",
+          "text": "I wasn't... I ..."
+        },
+        {
+          "speaker": "Mr. Paulsen",
+          "text": "And I gave him what he wanted... I'm ashamed myself."
+        },
+        {
+          "speaker": "$name",
+          "text": "And what would that be?"
+        },
+        {
+          "speaker": "Mr. Paulsen",
+          "text": "I is a book."
+        },
+        {
+          "speaker": "$name",
+          "text": "... that much was obvious."
+        },
+        {
+          "speaker": "Mr. Paulsen",
+          "text": "I guess your right, but it was not any old book. This book has power"
+        },
+        {
+          "speaker": "$name",
+          "text": "What do you mean."
+        },
+        {
+          "speaker": "Mr. Paulsen",
+          "text": "I can't tell you more otherwise you would be doomed too. Just leave it at that and hope that the Professor will never use it. You need to go now"
+        }
+      ],
+      "dialogue2": [
+        {
+          "speaker": "$name",
+          "text": "What do you make of this?"
+        },
+        {
+          "speaker": "$nameCat",
+          "text": "Meow!"
+        },
+        {
+          "speaker": "$name",
+          "text": "That sound dangerous. But you are right, we need to find the Professor."
+        }
+      ],
+      "trigger": {
+        "Mr. Paulsen": "dialogue1",
+        "$nameCat": "dialogue2"
+      }
+    },
+    "scene4": {
+      "heading": "The F.B.I.",
+      "dialoguePartner": [
+        "Agent Scully"
+      ],
+      "dialogue1": [
+        {
+          "speaker": "Agent Scully",
+          "text": "What are you doing here, do you work with that lunatic old geezer?"
+        },
+        {
+          "speaker": "$name",
+          "text": "Have you seen the Profssor"
+        },
+        {
+          "speaker": "Agent Scully",
+          "text": "Do I look like someone who cares about the academic title of someone who attacks me?!?"
+        },
+        {
+          "speaker": "$name",
+          "text": "What do you mean?"
+        },
+        {
+          "speaker": "Agent Scully",
+          "text": "The old fart came up to me and hit me on the head, next thing I knew we were down here and he cut my arm with a strange knife, said something and this doorway opened."
+        },
+        {
+          "speaker": "$name",
+          "text": "I need to go after him!"
+        },
+        {
+          "speaker": "Agent Scully",
+          "text": "Do what you want, but leave me out of it, when you come back out there will be dozens of agent waiting for the both of you."
+        }
+      ],
+      "trigger": {
+        "Agent Scully": "dialogue1"
+      }
+    },
+    "scene5": {
+      "heading": "The finale",
+      "dialoguePartner": [
+        "Professor Weintraub","Agent Scully","$nameCat"
+      ],
+      "dialogue1": [
+        {
+          "speaker": "Professor Weintraub",
+          "text": "I knew you would come my child."
+        },
+        {
+          "speaker": "$name",
+          "text": "What are you doing Professor?"
+        },
+        {
+          "speaker": "Professor Weintraub",
+          "text": "As soon as I heard of your dreams, I knew it had to be you!"
+        },
+        {
+          "speaker": "$name",
+          "text": "Professor? What are you talking about?"
+        },
+        {
+          "speaker": "Professor Weintraub",
+          "text": "Come here my child, fullfill your destiny!"
+        },
+        {
+          "speaker": "$name",
+          "text": "Professor, why can't I stop?"
+        },
+        {
+          "speaker": "Professor Weintraub",
+          "text": "We will end it here, right now. Believe me, it will be great."
+        }
+      ],
+      "dialogue2": [
+        {
+          "speaker": "Agent Scully",
+          "text": "What happened, are you O.K.?"
+        },
+        {
+          "speaker": "$name",
+          "text": "I don't know, the Professor, he wasn't himself... I think..."
+        },
+        {
+          "speaker": "Agent Scully",
+          "text": "It is alright, we will take it from here."
+        }
+      ],
+      "dialogue3": [
+        {
+          "speaker": "$name",
+          "text": "What do you think did the Professor talk about?"
+        },
+        {
+          "speaker": "$nameCat",
+          "text": "Meow?"
+        },
+        {
+          "speaker": "$name",
+          "text": "You're right: Thank you $nameCat for saving me in there. Your treats are well earned."
+        },
+        {
+          "speaker": "$nameCat",
+          "text": "Meow!!"
+        }
+      ],
+      "trigger": {
+        "Professor Weintraub": "dialogue1",
+        "Agent Scully": "dialogue2",
+        "$nameCat": "dialogue3"
+      }
+    }
+  },
   "default": {
     "K": {
-      "greetings": ["Der Klimawandel ist eine Lüge!.. ähhh Ich meine MEOW?"],
+      "greetings": [
+        "Der Klimawandel ist eine Lüge!.. ähhh Ich meine MEOW?"
+      ],
       "tips": {
         "day1": {
           "scene1": "Go to Prof W"
         }
       }
     },
-    "ProfW":{
-      "greetings": ["Hmmm... Ah yes.. No... Oh Hi <name> I didn't saw you!", "YES IT WORKS!"],
+    "ProfW": {
+      "greetings": [
+        "Hmmm... Ah yes.. No... Oh Hi <name> I didn't saw you!",
+        "YES IT WORKS!"
+      ],
       "tips": {
         "day1": {
           "scene1": "Go to Prof W"
         }
       }
-    } ,
-    "Helena":{
-      "greetings": ["Hey sweety, want a good time??", "Just tree fiddy.", "What do you think about Scottland?", "I got a monster deal for you."],
+    },
+    "Helena": {
+      "greetings": [
+        "Hey sweety, want a good time??",
+        "Just tree fiddy.",
+        "What do you think about Scottland?",
+        "I got a monster deal for you."
+      ],
       "tips": {
         "day1": {
           "scene1": "You won't get anything out of me hon."
