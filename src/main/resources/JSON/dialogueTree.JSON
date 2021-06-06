@@ -566,6 +566,7 @@
       }
     }
   },
+  //TODO: defaults of other NPCs missing
   "default": {
     "K": {
       "greetings": [
