@@ -3,7 +3,6 @@
     "scene1": {
       "heading": "At Home",
       "dialoguePartner": [
-        "$nameCat"
       ],
       "dialogue1": [
         {
@@ -55,7 +54,6 @@
         },
         {
           "speaker": "$name",
-          //TODO: is "they" a placeholder? with which word should this be replaced?
           "text": "Didn't we do everything as it is written in the books? Why won't \"they\" leave me alone."
         },
         {
@@ -92,7 +90,6 @@
         },
         {
           "speaker": "Professor Weintraub",
-          //TODO: is "item" a placeholder? with which word should this be replaced?
           "text": "She is an old friend of mine, got to her and tell her I sent you to receive the \"item\". Can you do that for me?"
         },
         {
@@ -107,7 +104,7 @@
     "scene3": {
       "heading": "Flea Market",
       "dialoguePartner": [
-        "Louis"
+        "Lois"
       ],
       "dialogue1": [
         {
@@ -306,11 +303,9 @@
     }
   },
   "day2": {
-    //TODO: this dialog has no scene number
     "scene1": {
       "heading": "At Home",
       "dialoguePartner": [
-        "$nameCat"
       ],
       "dialogue1": [
         {
@@ -335,7 +330,6 @@
       }
     },
     "scene2": {
-      //TODO: heading missing
       "heading": "",
       "dialoguePartner": [
         "Lois"
@@ -377,8 +371,7 @@
     "scene3": {
       "heading": "Mr. Paulsens Antiquariate",
       "dialoguePartner": [
-        "Mr. Paulsen",
-        "$nameCat"
+        "Mr. Paulsen"
       ],
       "dialogue1": [
         {
@@ -495,7 +488,7 @@
     "scene5": {
       "heading": "The finale",
       "dialoguePartner": [
-        "Professor Weintraub","Agent Scully","$nameCat"
+        "Professor Weintraub","Agent Scully"
       ],
       "dialogue1": [
         {
@@ -566,7 +559,6 @@
       }
     }
   },
-  //TODO: defaults of other NPCs missing
   "default": {
     "K": {
       "greetings": [
